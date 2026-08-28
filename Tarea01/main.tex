@@ -1,0 +1,54 @@
+% =========================================================================
+%  DOCUMENTO PRINCIPAL - Tarea 1: Conceptos basicos
+%  Equipo ÑIPGG
+%
+%  Este archivo junta todos los modulos. Para anadir o quitar secciones,
+%  agregar/eliminar los \input{} correspondientes.
+%
+%  COMPILACION (desde la carpeta Tarea01/):
+%     pdflatex main.tex
+%     bibtex   main
+%     pdflatex main.tex
+%     pdflatex main.tex
+%  El PDF resultante es main.pdf.
+% =========================================================================
+
+\input{preambulo.tex}
+
+\begin{document}
+
+    % Portada
+    \input{secciones/portada.tex}
+
+    % Indice (opcional; descomentar si se desea un indice)
+    % \tableofcontents
+    % \newpage
+
+    % --------------------- SECCION 1: Conceptos generales ---------------------
+    \section*{1. Conceptos generales de bases de datos}
+    \addcontentsline{toc}{section}{1. Conceptos generales de bases de datos}
+
+    \input{secciones/ejercicio_1a.tex}
+    \input{secciones/ejercicio_1b.tex}
+    \input{secciones/ejercicio_1c.tex}
+    \input{secciones/ejercicio_1d.tex}
+    \input{secciones/ejercicio_1e.tex}
+    \input{secciones/ejercicio_1f.tex}
+    \input{secciones/ejercicio_1g.tex}
+    \input{secciones/ejercicio_1h.tex}
+    \input{secciones/ejercicio_1i.tex}
+    \input{secciones/ejercicio_1j.tex}
+
+    % --------------------------- SECCION 2: Lectura ---------------------------
+    \section*{2. Lectura de artículo}
+    \addcontentsline{toc}{section}{2. Lectura de artículo}
+
+    \input{secciones/ejercicio_2a.tex}
+    \input{secciones/ejercicio_2b.tex}
+
+    % ------------------------------ Referencias -------------------------------
+    \newpage
+    \bibliographystyle{apalike}
+    \bibliography{bibliografia}
+
+\end{document}
