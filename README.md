@@ -16,8 +16,9 @@ entregas del semestre (tareas, prácticas y proyecto final).
 │   ├── secciones/       ← un archivo por inciso (trabajo modular)
 │   │   ├── portada.tex
 │   │   ├── ejercicio_1a.tex  …  ejercicio_1j.tex
-│   │   ├── ejercicio_2a.tex
-│   │   └── ejercicio_2b.tex
+│   │   ├── ejercicio_2a.tex  ← resumen (por equipo)
+│   │   ├── ejercicio_2b_<apellido>.tex  ← ensayo individual (1 por persona)
+│   │   └── ...
 │   └── README_Equipo.tex  ← README de entrega (README_Equipo.pdf)
 └── Tarea02/ ...         ← copiar la plantilla para las siguientes entregas
 └── PracticaNN/ ...
@@ -60,15 +61,34 @@ Tarea01_Equipo.zip
 Cada inciso vive en su propio archivo de `secciones/`. Así cada integrante
 edita únicamente sus archivos y no hay conflictos de edición en el repositorio.
 
-Reparto sugerido (5 integrantes; ajusten cuando decidan quién hace qué):
+### Nota sobre la Sección 2 (lectura)
 
-| Integrante | Incisos asignados       | Archivos                     |
-|------------|-------------------------|------------------------------|
-| 1          | 1a, 1b                  | `ejercicio_1a.tex`, `ejercicio_1b.tex` |
-| 2          | 1c, 1d                  | `ejercicio_1c.tex`, `ejercicio_1d.tex` |
-| 3          | 1e, 1f, 1g              | `ejercicio_1e.tex`, `ejercicio_1f.tex`, `ejercicio_1g.tex` |
-| 4          | 1h, 1i, 1j              | `ejercicio_1h.tex`, `ejercicio_1i.tex`, `ejercicio_1j.tex` |
-| 5          | 2a, 2b                  | `ejercicio_2a.tex`, `ejercicio_2b.tex` |
+- **2a. Resumen** → es **por equipo** (un solo resumen). Archivo
+  `ejercicio_2a.tex`.
+- **2b. Ensayo** → es **individual** (uno por cada integrante). Hay un archivo
+  por persona: `ejercicio_2b_<apellido>.tex`.
+
+### Reparto sugerido (equitativo por dificultad)
+
+El reparto equilibra la carga de la Sección 1 entre los 5 integrantes, emparejando
+incisos de alta dificultad con otros más ligeros. Recuerda que **cada integrante
+además redacta su propio ensayo (2b)**.
+
+| Integrante | Incisos (Sección 1)    | Dificultad      | Archivos de Sección 1      |
+|------------|------------------------|-----------------|----------------------------|
+| 1          | 1h, 1d                 | alta + ligera   | `ejercicio_1h.tex`, `ejercicio_1d.tex` |
+| 2          | 1j, 1e                 | alta + ligera   | `ejercicio_1j.tex`, `ejercicio_1e.tex` |
+| 3          | 1b, 1f                 | alta + ligera   | `ejercicio_1b.tex`, `ejercicio_1f.tex` |
+| 4          | 1a, 1i                 | media + ligera  | `ejercicio_1a.tex`, `ejercicio_1i.tex` |
+| 5          | 1c, 1g                 | media + media   | `ejercicio_1c.tex`, `ejercicio_1g.tex` |
+
+- **1h** (tabla comparativa de 4+ modelos) y **1j** (varias desventajas de
+  sistema de archivos) son los de mayor extensión/razonamiento → van emparejados
+  con **1d** y **1e** (conceptuales y cortos).
+- **1b** (comparar 2 SMBD) y **1f** (investigación) son de extensión media-alta →
+  emparejados con incisos cortos.
+- **2a** (resumen) queda como esfuerzo **colaborativo** de todo el equipo o a
+  cargo de quien coordine la sección; no se suma a la carga individual.
 
 Para crear una nueva entrega, copia la carpeta `Tarea01/` y renómbrala según la
 convención, vaciando el contenido de `secciones/`.
