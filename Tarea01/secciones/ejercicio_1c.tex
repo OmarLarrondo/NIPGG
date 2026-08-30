@@ -1,10 +1,34 @@
 % =========================================================================
 %  Ejercicio 1c - Independencia logica y fisica
-%  Responsable: [nombre]
+%  Responsable: [Jiménez Ramírez, Miguel Ángel]
 % =========================================================================
 
 \section*{Ejercicio 1c. Independencia de los datos}
+Una empresa de logística necesita adaptar su sistema de base de datos para incluir nuevas funcionalidades, como el seguimiento en tiempo real de paquetes y una nueva categoría de clientes corporativos. Antes de realizar estos cambios, el equipo de desarrollo debe considerar los niveles de independencia de los datos. Responde lo siguiente:
 
+\begin{itemize}[leftmargin=*]
+    \item[$\blacksquare$] \textbf{Qué riesgos podrían surgir sí no existe independencia lógica entre el diseño conceptual y las aplicaciones que consumen los datos?}
+\end{itemize}
+
+El riesgo principal es que cualquier cambio en la estructura, nos obligaría a modificar, recompilar y reinstalar casi todas las aplicaciones y consultas existentes.
+
+Las aplicaciones que consumen los datos podrían tener interrupciones constantes, lo que afectaría en la toma de decisiones de la empresa porque los datos están desactualizados por ejemplo.
+
+\begin{itemize}[leftmargin=*]
+    \item[$\blacksquare$] \textbf{Qué problemas operativos aparecerían sí no se logra la independencia física, especialmente en términos de almacenamiento y rendimiento?}
+\end{itemize}
+
+Probablemente todas las aplicaciones tendrían que ser modificadas por tener que apuntar a las nuevas rutas físicas del hardware, y en cuanto rendimiento las consultas de los clientes se volverían muy lentas por no poder optimizar el almacenamiento físico de manera independiente.
+
+\begin{itemize}[leftmargin=*]
+    \item[$\blacksquare$] \textbf{Proporciona un ejemplo realista en el que un cambio físico no afecte la lógica del sistema, y otro donde un cambio lógico pueda impactar múltiples aplicaciones sí no se gestiona adecuadamente.}
+\end{itemize}
+
+Ejemplo en el que un cambio físico no afecta la lógica del sistema sería que el administrador de la base de datos mueva los archivos donde se guardan los paquetes a otro disco o a una carpeta diferente (por ejemplo, de la unidad C:\textbackslash a la D:\textbackslash). A la app web no le importa en qué disco o carpeta estén guardados los datos. La aplicación le pide la información al motor de la base de datos (SMBD) y este se encarga de buscarla en la nueva ubicación. Como existe independencia física, la app sigue funcionando exactamente igual sin enterarse del cambio de carpeta.
+
+Ahora un ejemplo donde un cambio lógico pueda impactar múltiples aplicaciones sí no se gestiona adecuadamente podría ser agregar una nueva columna opcional llamada Telefono\_Contacto a la tabla de clientes corporativos. La app móvil de los repartidores consultaría únicamente el nombre del destinatario y la dirección de entrega. Debido a la independencia lógica de datos, añadir este nuevo atributo en el esquema conceptual no impacta en sus operaciones, ya que la vista externa de esta app ignora los campos que no requiere.
+
+Sin embargo, si en lugar de añadir un campo opcional se renombra o elimina un atributo crítico para la app de los repartidores (por ejemplo, cambiar Direccion por Domicilio\_Entrega), la aplicación fallará de inmediato al intentar consultar la columna original, ya que la estructura lógica esperada por la consulta ha dejado de existir.
 % Responder aqui. Contenido minimo:
 % - Contexto: empresa de logistica que agrega seguimiento en tiempo real de
 %   paquetes y una nueva categoria de clientes corporativos.
