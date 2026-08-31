@@ -6,23 +6,20 @@
 \section*{Ejercicio 1c. Independencia de los datos}
 Una empresa de logística necesita adaptar su sistema de base de datos para incluir nuevas funcionalidades, como el seguimiento en tiempo real de paquetes y una nueva categoría de clientes corporativos. Antes de realizar estos cambios, el equipo de desarrollo debe considerar los niveles de independencia de los datos. Responde lo siguiente:
 
-\begin{itemize}[leftmargin=*]
-    \item[$\blacksquare$] \textbf{Qué riesgos podrían surgir sí no existe independencia lógica entre el diseño conceptual y las aplicaciones que consumen los datos?}
-\end{itemize}
+\textbf{Qué riesgos podrían surgir sí no existe independencia lógica entre el diseño conceptual y las aplicaciones que consumen los datos?}
+
 
 El riesgo principal es que cualquier cambio en la estructura, nos obligaría a modificar, recompilar y reinstalar casi todas las aplicaciones y consultas existentes.
 
 Las aplicaciones que consumen los datos podrían tener interrupciones constantes, lo que afectaría en la toma de decisiones de la empresa porque los datos están desactualizados por ejemplo.
 
-\begin{itemize}[leftmargin=*]
-    \item[$\blacksquare$] \textbf{Qué problemas operativos aparecerían sí no se logra la independencia física, especialmente en términos de almacenamiento y rendimiento?}
-\end{itemize}
+\textbf{Qué problemas operativos aparecerían sí no se logra la independencia física, especialmente en términos de almacenamiento y rendimiento?}
+
 
 Probablemente todas las aplicaciones tendrían que ser modificadas por tener que apuntar a las nuevas rutas físicas del hardware, y en cuanto rendimiento las consultas de los clientes se volverían muy lentas por no poder optimizar el almacenamiento físico de manera independiente.
 
-\begin{itemize}[leftmargin=*]
-    \item[$\blacksquare$] \textbf{Proporciona un ejemplo realista en el que un cambio físico no afecte la lógica del sistema, y otro donde un cambio lógico pueda impactar múltiples aplicaciones sí no se gestiona adecuadamente.}
-\end{itemize}
+\textbf{Proporciona un ejemplo realista en el que un cambio físico no afecte la lógica del sistema, y otro donde un cambio lógico pueda impactar múltiples aplicaciones sí no se gestiona adecuadamente.}
+
 
 Ejemplo en el que un cambio físico no afecta la lógica del sistema sería que el administrador de la base de datos mueva los archivos donde se guardan los paquetes a otro disco o a una carpeta diferente (por ejemplo, de la unidad C:\textbackslash a la D:\textbackslash). A la app web no le importa en qué disco o carpeta estén guardados los datos. La aplicación le pide la información al motor de la base de datos (SMBD) y este se encarga de buscarla en la nueva ubicación. Como existe independencia física, la app sigue funcionando exactamente igual sin enterarse del cambio de carpeta.
 

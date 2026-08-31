@@ -1,10 +1,27 @@
 % =========================================================================
 %  Ejercicio 1g - DBA en una empresa aseguradora
-%  Responsable: [nombre]
+%  Responsable: [Jiménez Ramírez Miguel Ángel]
 % =========================================================================
 
 \section*{Ejercicio 1g. Rol del DBA en una empresa aseguradora}
 
+Imagina que formas parte del equipo de tecnología de una empresa aseguradora que gestiona información sobre pólizas, clientes, siniestros, evaluaciones de riesgo y cumplimiento normativo. Responde lo siguiente:
+
+\textbf{Cuáles son las principales responsabilidades del DBA en este contexto, considerando la necesidad de confidencialidad, trazabilidad y disponibilidad continua de la información?}
+
+
+Las principales responsabillidades del DBA serían garantizar que los datos estén protegidos frente a accesos no autorizados, también asegurar que la información en las tablas siempre sea válida y lógica, mantener un registro de quien hizo qué y cuándo dentro de la base de datos para detectar anomalías, diseñar y cumplir con estrategias de respaldos diarios, vigilar constantemente el rendimiento de las consultas, el uso de memoria y el espacio en disco.
+
+\textbf{Qué habilidades técnicas y conocimientos específicos (por ejemplo, manejo de datos sensibles, normativas como protección de datos personales, respaldo y recuperación ante desastres) son más críticos para este entorno?}
+
+
+Pues para empezar debe dominar motores de bases de datos a gran escala, debe estar capacitado para traducir los requerimientos legales en estructuras en la base de datos, por ejemplo diseñando tablas y flujos lógicos que registren el consentimiento de los asegurados antes de tratar sus datos financeros o de salud. También debería saber hacer respaldos avanzados y recuperación ante desastres, como en el caso de un incendio, inundación del centro de datos o algún ataque informático.
+
+
+\textbf{Si el DBA no ejecuta consultas directamente, por qué sigue siendo necesario que comprenda el modelo lógico de la base de datos? Justifica tu respuesta considerando la importancia de la integridad de los datos en procesos como la evaluación de riesgos o la detección de fraudes.}
+
+
+Porque si no se corre el risgo de permitir que los progamadores implementen un archivo para pólizas, otro para clientes otro para reclamos, etc. Dando paso a una redundancia no controlada donde un cliente que actualice su dirección en la sucursal de pólizas de vida conserve su dirección antigua en el sistema de seguros de autos, destruyendo la consistencia de la información y generando costos excesivos de acceso y almacenamiento.
 % Responder aqui. Contenido minimo:
 % - Contexto: aseguradora que gestiona polizas, clientes, siniestros,
 %   evaluaciones de riesgo y cumplimiento normativo.
