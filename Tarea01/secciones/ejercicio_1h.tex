@@ -3,31 +3,188 @@
 %  Responsable: [nombre]
 % =========================================================================
 
+\begin{landscape}
 \section*{Ejercicio 1h. Modelos de datos}
+\addcontentsline{toc}{subsection}{Ejercicio 1h. Modelos de datos}
 
-% Responder aqui. Contenido minimo:
-% - Tabla comparativa entre al menos CUATRO modelos de datos (jerarquico,
-%   de red, relacional, orientado a objetos, NoSQL: llave-valor, documento,
-%   columnar, grafo), destacando caracteristicas, ventajas, desventajas y
-%   casos de uso tipicos. Se puede usar un entorno \texttt{tabular} o
-%   \texttt{tabularx}.
-% - Argumentar por que el modelo relacional se volvio el mas adoptado.
-% - Contextos actuales donde los modelos NoSQL superan al relacional en
-%   eficiencia o flexibilidad, con ejemplos.
+\begin{tcolorbox}[
+  colback=lightgray,
+  colframe=unamblue,
+  title=Enunciado,
+  fonttitle=\bfseries,
+  boxrule=1pt,
+  arc=2mm
+]
+A lo largo del tiempo han existido diversos modelos de datos, como el modelo
+jerárquico, el modelo de red, el modelo relacional, el modelo orientado a
+objetos y los modelos NoSQL (llave-valor, documento, columnares, grafos).
+Responde lo siguiente:
 
-% Ejemplo de tabla comparativa (editar y completar):
-% \begin{table}[H]
-%     \centering
-%     \caption{Comparativa de modelos de datos.}
-%     \begin{tabularx}{\textwidth}{l X X X X}
-%         \toprule
-%         \textbf{Modelo} & \textbf{Caracteristicas} & \textbf{Ventajas} &
-%         \textbf{Desventajas} & \textbf{Casos de uso} \\
-%         \midrule
-%         Relacional & ... & ... & ... & ... \\
-%         Documento & ... & ... & ... & ... \\
-%         Columnares & ... & ... & ... & ... \\
-%         Grafos & ... & ... & ... & ... \\
-%         \bottomrule
-%     \end{tabularx}
-% \end{table}
+\begin{itemize}
+  \item Elabora una tabla comparativa entre al menos cuatro modelos de datos,
+  destacando sus principales características, ventajas, desventajas y casos de
+  uso típicos.
+  \item ¿Por qué crees que el modelo relacional se convirtió en el más
+  ampliamente adoptado durante décadas?
+  \item ¿En qué contextos actuales los modelos NoSQL superan al modelo
+  relacional en eficiencia o flexibilidad? Justifica con ejemplos.
+\end{itemize}
+\end{tcolorbox}
+
+\subsection*{Desarrollo}
+
+Un \textit{modelo de datos} establece los conceptos mediante los cuales se
+representan las entidades, sus atributos, las relaciones y las restricciones
+de una base de datos. Su elección condiciona tanto la forma de consultar la
+información como las garantías de integridad, el costo de escalar y la facilidad
+con la que el sistema puede adaptarse a nuevos requerimientos.
+
+\subsection*{Comparación de modelos}
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.25cm}
+                  >{\raggedright\arraybackslash}p{4.25cm}
+                  >{\raggedright\arraybackslash}p{4.15cm}
+                  >{\raggedright\arraybackslash}p{4.15cm}
+                  >{\raggedright\arraybackslash}p{4.15cm}}
+\caption{Comparación de modelos de datos.}\label{tab:modelos-datos}\\
+\toprule
+\rowcolor{unamblue}
+\color{white}\textbf{Modelo} & \color{white}\textbf{Características} &
+\color{white}\textbf{Ventajas} & \color{white}\textbf{Desventajas} &
+\color{white}\textbf{Casos de uso típicos} \\
+\midrule
+\endfirsthead
+\toprule
+\rowcolor{unamblue}
+\color{white}\textbf{Modelo} & \color{white}\textbf{Características} &
+\color{white}\textbf{Ventajas} & \color{white}\textbf{Desventajas} &
+\color{white}\textbf{Casos de uso típicos} \\
+\midrule
+\endhead
+Jerárquico &
+Organiza registros en un árbol de relaciones padre--hijo. Cada hijo posee un
+único padre y el acceso suele seguir rutas predefinidas. &
+Ofrece navegación rápida y predecible cuando la estructura es estable; preserva
+de forma natural relaciones uno a muchos. &
+Representa con dificultad relaciones muchos a muchos; genera dependencia de
+las rutas y presenta poca flexibilidad ante cambios estructurales. &
+Sistemas heredados, directorios, catálogos con jerarquías estables y
+procesamiento de transacciones altamente estructuradas. \\
+\rowcolor{softblue}
+De red &
+Representa registros enlazados mediante conjuntos; un registro puede tener
+varios padres, por lo que admite relaciones muchos a muchos. &
+Permite recorridos eficientes y mayor expresividad que el modelo jerárquico
+para relaciones complejas. &
+Su diseño y mantenimiento son complejos; las aplicaciones quedan acopladas a
+las rutas de navegación y a la estructura física. &
+Manufactura, telecomunicaciones y sistemas heredados con redes de relaciones
+conocidas de antemano. \\
+Relacional &
+Representa la información en tablas vinculadas por claves. Utiliza esquemas,
+restricciones y un lenguaje declarativo, usualmente SQL. &
+Proporciona integridad, transacciones ACID, independencia lógica y consultas
+ad hoc; cuenta con estándares, herramientas y personal ampliamente disponibles. &
+El escalamiento horizontal y las uniones distribuidas pueden ser costosos;
+los esquemas rígidos dificultan datos muy variables o semiestructurados. &
+Banca, contabilidad, inventarios, ventas y sistemas administrativos donde la
+consistencia transaccional es prioritaria. \\
+\rowcolor{softblue}
+Orientado a objetos &
+Almacena objetos con identidad, estado, clases, herencia y, según el sistema,
+métodos; aproxima la persistencia al modelo de programación. &
+Reduce el desajuste objeto--relacional y maneja con naturalidad estructuras
+anidadas, tipos complejos y contenido multimedia. &
+Posee menor estandarización y adopción; dificulta la interoperabilidad y las
+consultas analíticas generales frente a SQL. &
+CAD/CAM, simulación científica, sistemas geoespaciales y aplicaciones con
+objetos complejos persistentes. \\
+Documento (NoSQL) &
+Agrupa datos semiestructurados en documentos autocontenidos, por ejemplo JSON,
+con campos anidados y esquema flexible. &
+Facilita la evolución del esquema, concentra datos que se leen juntos y admite
+particionado horizontal con relativa sencillez. &
+Puede duplicar información; las relaciones, uniones y restricciones entre
+documentos suelen ser más limitadas o recaer en la aplicación. &
+Catálogos de comercio electrónico, perfiles de usuario, sistemas de contenido
+y aplicaciones con atributos heterogéneos. \\
+\rowcolor{softblue}
+Llave--valor (NoSQL) &
+Asocia una clave única con un valor opaco o poco estructurado. Las operaciones
+fundamentales son lectura, escritura y eliminación por clave. &
+Brinda latencia muy baja, gran simplicidad y distribución horizontal eficiente. &
+Ofrece consultas secundarias y relaciones muy limitadas; no resulta adecuado
+cuando deben explorarse atributos internos o imponerse reglas complejas. &
+Cachés, sesiones web, carritos de compra, preferencias y contadores de alta
+frecuencia. \\
+Grafo (NoSQL) &
+Modela nodos, aristas y propiedades; las relaciones son elementos de primer
+nivel y las consultas se expresan como recorridos o patrones. &
+Resuelve eficientemente relaciones profundas y rutas variables sin cadenas de
+uniones; refleja de forma directa dominios altamente conectados. &
+No es la opción más eficiente para agregaciones tabulares masivas; su
+distribución y operación pueden ser especializadas. &
+Redes sociales, detección de fraude, recomendadores, rutas logísticas y grafos
+de conocimiento. \\
+\bottomrule
+\end{longtable}
+\end{landscape}
+
+\subsection*{Predominio histórico del modelo relacional}
+
+La amplia adopción del modelo relacional se explica por la combinación de una
+base matemática clara, independencia respecto de las rutas físicas de acceso y
+un lenguaje declarativo. En lugar de indicar cómo recorrer cada registro, se
+especifica qué resultado se requiere, y el optimizador determina un plan de
+ejecución. Esta separación redujo el acoplamiento entre aplicaciones y
+almacenamiento, y permitió modificar índices u otras estructuras físicas sin
+reescribir la lógica de negocio \citep{codd1970}.
+
+Asimismo, las claves, restricciones y formas normales ofrecieron mecanismos
+sistemáticos para controlar la redundancia y conservar la consistencia. Las
+transacciones ACID resultaron especialmente valiosas en banca, contabilidad y
+administración empresarial, donde una actualización parcial puede producir
+consecuencias graves. A ello se sumaron la normalización de SQL, la madurez de
+los optimizadores, la disponibilidad de herramientas y la existencia de un
+ecosistema profesional común. El predominio no obedeció solamente al desempeño,
+sino a que el modelo ofrecía un equilibrio estable entre rigor, flexibilidad de
+consulta, portabilidad y costo de operación \citep{dbconcepts}.
+
+\subsection*{Contextos en los que NoSQL ofrece ventajas}
+
+Los modelos NoSQL superan al relacional cuando el patrón de acceso y la forma
+de los datos permiten sacrificar parte de la generalidad de SQL a cambio de
+distribución, baja latencia o flexibilidad estructural. No se trata de una
+superioridad absoluta, sino condicionada por la carga de trabajo.
+
+\begin{tcolorbox}[colback=softblue,colframe=unamblue,title=Ejemplos de elección]
+\begin{itemize}
+  \item En una tienda con millones de sesiones activas, un almacén
+  llave--valor permite recuperar el carrito mediante una sola clave y repartir
+  las claves entre nodos. Se evita el costo de relaciones que la operación no
+  necesita y se obtiene una latencia baja y predecible.
+  \item En un catálogo donde cada categoría posee atributos distintos, el modelo
+  documental admite que una cámara tenga resolución y tipo de sensor mientras
+  una prenda tenga talla y material. La incorporación de nuevos atributos no
+  exige alterar de inmediato una tabla global ni poblar numerosas columnas
+  nulas.
+  \item En detección de fraude, un grafo permite consultar conexiones entre
+  cuentas, dispositivos, domicilios y transferencias. La búsqueda de caminos de
+  varios saltos se expresa directamente y evita una sucesión variable de
+  auto-uniones, costosa y difícil de mantener en un esquema relacional.
+  \item En telemetría distribuida, un almacén columnar de familia ancha puede
+  distribuir escrituras continuas por clave de partición y conservar grandes
+  series temporales dispersas. La arquitectura favorece el crecimiento
+  horizontal y la consulta de rangos definidos por dispositivo y tiempo.
+\end{itemize}
+\end{tcolorbox}
+
+La elección debe basarse en requisitos verificables: consistencia requerida,
+tipo de consulta, volumen, velocidad de escritura, variabilidad del esquema y
+tolerancia a fallos. Cuando existen transacciones entre varias entidades y
+restricciones rigurosas, el modelo relacional suele seguir siendo la alternativa
+más adecuada. Cuando predominan accesos simples a escala masiva, documentos
+heterogéneos o relaciones profundas, un modelo NoSQL especializado puede
+reducir complejidad y costo. En sistemas reales también resulta válida la
+persistencia políglota: cada componente utiliza el modelo que corresponde a su
+carga de trabajo, con reglas explícitas para mantener la coherencia global.

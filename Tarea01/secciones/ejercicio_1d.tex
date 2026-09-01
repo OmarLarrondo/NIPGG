@@ -4,9 +4,151 @@
 % =========================================================================
 
 \section*{Ejercicio 1d. Papel de los SMBD y del DBA}
+\addcontentsline{toc}{subsection}{Ejercicio 1d. Papel de los SMBD y del DBA}
 
-% Responder aqui. Contenido minimo:
-% - Describir el papel de los Sistemas Manejadores de Bases de Datos (SMBD)
-%   en el enfoque de bases de datos.
-% - Argumentar por que es importante (o no) que un administrador de bases
-%   de datos (DBA) conozca las caracteristicas de un SMBD.
+\begin{tcolorbox}[
+  colback=lightgray,
+  colframe=unamblue,
+  title=Enunciado,
+  fonttitle=\bfseries,
+  boxrule=1pt,
+  arc=2mm
+]
+Describe el papel que tienen los Sistemas Manejadores de Bases de Datos (SMBD)
+en el enfoque de bases de datos. ¿Por qué consideras que es importante (o no)
+que un administrador de bases de datos (DBA) conozca las características de un
+SMBD?
+\end{tcolorbox}
+
+\subsection*{Desarrollo}
+
+El enfoque de bases de datos propone que la información sea administrada como
+un recurso compartido, estructurado y sujeto a reglas comunes, en lugar de
+quedar dispersa en archivos aislados controlados por cada aplicación. Dentro de
+este enfoque, el \textit{Sistema Manejador de Bases de Datos} (SMBD) constituye
+la capa de software que media entre los datos persistentes, las aplicaciones y
+las personas usuarias. Su función no se limita a guardar registros: interpreta
+consultas, aplica restricciones, coordina accesos simultáneos y conserva las
+propiedades necesarias para que la información permanezca disponible y
+confiable \citep{dbconcepts}.
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+    node distance=8mm and 18mm,
+    every node/.style={font=\small,align=center},
+    actor/.style={draw=unamgold,fill=white,rounded corners=2mm,
+      minimum width=3.1cm,minimum height=1cm},
+    dbms/.style={draw=unamblue,fill=softblue,rounded corners=2mm,
+      very thick,minimum width=4.2cm,minimum height=1.25cm},
+    data/.style={draw=unamblue,fill=white,cylinder,shape border rotate=90,
+      aspect=.25,minimum width=3.1cm,minimum height=1.15cm},
+    flow/.style={{Stealth[length=2.5mm]}-{Stealth[length=2.5mm]},
+      thick,color=unamblue}
+  ]
+    \node[actor] (users) {Personas usuarias\\y aplicaciones};
+    \node[dbms,right=of users] (smdb) {SMBD\\gestión y control};
+    \node[data,right=of smdb] (database) {Base de datos\\compartida};
+    \draw[flow] (users) -- (smdb);
+    \draw[flow] (smdb) -- (database);
+  \end{tikzpicture}
+  \caption{El SMBD como intermediario del enfoque de bases de datos.}
+  \label{fig:papel-smdb}
+\end{figure}
+
+Las responsabilidades centrales de un SMBD pueden agruparse de la siguiente
+manera:
+
+\begin{table}[H]
+\centering
+\caption{Funciones del SMBD dentro del enfoque de bases de datos.}
+\label{tab:funciones-smdb}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries}p{3.7cm} X}
+\toprule
+\rowcolor{unamblue}
+\color{white}Función & \color{white}\textbf{Contribución} \\
+\midrule
+Definición y organización &
+Permite declarar esquemas, tipos, relaciones y restricciones; además, mantiene
+un catálogo con metadatos que describe la estructura de la base. \\
+\rowcolor{softblue}
+Manipulación y consulta &
+Proporciona lenguajes e interfaces para insertar, modificar, eliminar y
+recuperar información sin exigir que cada aplicación controle directamente los
+archivos o las rutas físicas. \\
+Control de transacciones &
+Agrupa operaciones en unidades lógicas y preserva propiedades ACID, de modo que
+un fallo no deje actualizaciones parciales o estados inválidos. \\
+\rowcolor{softblue}
+Concurrencia e integridad &
+Coordina accesos simultáneos y aplica claves, dominios y reglas referenciales
+para impedir interferencias y datos contradictorios. \\
+Seguridad y auditoría &
+Autentica identidades, autoriza operaciones según privilegios y registra
+eventos relevantes para la trazabilidad. \\
+\rowcolor{softblue}
+Almacenamiento y rendimiento &
+Administra archivos, páginas, memoria intermedia, índices y planes de ejecución
+para utilizar los recursos con eficiencia. \\
+Disponibilidad y recuperación &
+Ofrece mecanismos de bitácora, respaldo, restauración y, según el producto,
+réplica y alta disponibilidad para enfrentar fallos. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+En conjunto, estas funciones favorecen la independencia de los datos. Las
+aplicaciones pueden trabajar con una representación lógica estable mientras el
+SMBD modifica detalles internos como los índices, la ubicación de páginas o el
+plan empleado para resolver una consulta. También se reduce la duplicación de
+mecanismos: no es necesario que cada programa implemente por separado el
+control de permisos, la recuperación o la coordinación de accesos concurrentes.
+
+\subsection*{Importancia del conocimiento del SMBD para el DBA}
+
+Resulta indispensable que el administrador de bases de datos (DBA) conozca las
+características del SMBD que opera. Aunque una parte de la administración pueda
+automatizarse, las decisiones de configuración producen efectos directos sobre
+la integridad, el rendimiento, la seguridad y la continuidad del servicio. El
+DBA debe comprender tanto las capacidades como los límites del producto para
+seleccionar mecanismos compatibles con las necesidades de la organización.
+
+Por ejemplo, el diseño de una estrategia de respaldo exige conocer si el SMBD
+admite copias en línea, recuperación a un punto en el tiempo y verificación de
+respaldos. La configuración de concurrencia requiere entender los niveles de
+aislamiento, el bloqueo y el control multiversión; de lo contrario, podrían
+aparecer lecturas inconsistentes, esperas prolongadas o interbloqueos. De manera
+semejante, la protección de datos depende de dominar los modelos de usuarios,
+roles, privilegios, cifrado y auditoría implementados por el sistema.
+
+\begin{tcolorbox}[
+  colback=softblue,
+  colframe=unamblue,
+  title=Criterio profesional del DBA,
+  fonttitle=\bfseries
+]
+El conocimiento del SMBD permite traducir requisitos institucionales en
+decisiones técnicas verificables: objetivos de recuperación en planes de
+respaldo; políticas de confidencialidad en roles y privilegios; niveles de
+servicio en esquemas de réplica; y metas de rendimiento en índices, estadísticas
+y configuración de recursos.
+\end{tcolorbox}
+
+El desconocimiento del producto puede conducir a ajustes basados en supuestos
+incorrectos, uso inseguro de valores predeterminados, índices innecesarios o
+planes de recuperación que nunca fueron probados. Sin embargo, conocer una lista
+de comandos tampoco es suficiente. La administración responsable requiere
+relacionar el funcionamiento específico del SMBD con el modelo de datos, la
+carga de trabajo y los riesgos del negocio. Esta comprensión integral permite
+anticipar consecuencias y justificar cada cambio antes de aplicarlo en un
+entorno productivo.
+
+\subsection*{Conclusión}
+
+El SMBD es la infraestructura que convierte una colección de datos almacenados
+en un servicio compartido, consistente, seguro y recuperable. Al centralizar la
+definición, el acceso y el control, hace viable el enfoque de bases de datos y
+reduce la dependencia entre aplicaciones y almacenamiento. En consecuencia, el
+conocimiento profundo del SMBD constituye una competencia esencial del DBA:
+permite aprovechar sus mecanismos, reconocer sus limitaciones y proteger la
+información conforme a los objetivos de la organización.
