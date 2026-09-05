@@ -1,14 +1,43 @@
 % =========================================================================
 %  Ejercicio 1a - Bases de datos vs hojas de calculo
-%  Responsable: [nombre]
+%  Responsable: [Diego Hernández Gómez]
 % =========================================================================
 
 \section*{Ejercicio 1a. Bases de datos frente a hojas de cálculo}
 
-% Responder aqui. Contenido minimo:
-% - Caracteristicas fundamentales del enfoque de bases de datos frente a
-%   las hojas de calculo.
-% - Limitaciones de las hojas de calculo: escalabilidad, integridad y
-%   consistencia de los datos.
-% - Escenario 1: cuando NO es adecuado usar hojas de calculo (justificar).
-% - Escenario 2: cuando SI es preferible usar hojas de calculo (justificar).
+\noindent
+
+\vspace{0.3cm}
+
+La principal característica del enfoque de bases de datos frente al uso de hojas de cálculo es su capacidad para almacenar, organizar, relacionar, consultar y actualizar grandes cantidades de datos de manera controlada. Una base de datos se caracteriza por tener datos estructurados, relacionados, fiables y homogéneos; organizados para un propósito específico y accesibles por usuarios concurrentes con diferentes necesidades. Además, el Sistema Manejador de Bases de Datos (SMBD) permite establecer restricciones, controlar el acceso a la información y facilitar su consulta y actualización.
+
+\vspace{0.3cm}
+
+\subsubsection*{\textcolor{unamblue}{Limitaciones de las hojas de cálculo}}
+
+En cuanto a la \textbf{escalabilidad}, las hojas de cálculo tienen límites en la cantidad de información que pueden manejar. Por ejemplo, Excel permite como máximo 1,048,576 filas y 16,384 columnas por hoja. Además, al trabajar con grandes cantidades de datos o fórmulas complejas, puede volverse lento o incluso colapsar. Por lo tanto, aunque pueden ser útiles para cantidades pequeñas o medianas de información, su rendimiento y capacidad resultan limitados cuando el volumen de datos crece considerablemente.
+
+\vspace{0.2cm}
+
+En cuanto a la \textbf{integridad} y \textbf{consistencia}, una hoja de cálculo no garantiza que los datos estén correctamente relacionados ni que no existan duplicados o errores. También tiene mecanismos más limitados para evitar modificaciones no deseadas y para auditar los cambios realizados. Además, presenta dificultades cuando varios usuarios necesitan trabajar simultáneamente sobre la misma información y no cuenta con un sistema de relaciones equivalente al de una base de datos relacional.
+
+\vspace{0.3cm}
+
+\subsubsection*{\textcolor{unamblue}{Escenario donde no sea adecuado usar hojas de cálculo}}
+
+Un ejemplo podría ser una plataforma como \textbf{Netflix}. Una empresa de este tipo necesita gestionar enormes cantidades de datos generados por sus usuarios y por su catálogo de contenido. Entre estos datos se pueden encontrar reproducciones, preferencias, valoraciones y otra información utilizada para analizar el comportamiento de los usuarios. Debido a la gran cantidad de datos, a la necesidad de realizar consultas frecuentes y a la participación de múltiples usuarios, una hoja de cálculo no sería una solución adecuada. En este caso, una base de datos permitiría almacenar y relacionar las grandes cantidades de datos de manera más eficiente, además de ofrecer mecanismos de integridad, acceso concurrente y recuperación de datos.
+
+\vspace{0.3cm}
+
+\subsubsection*{\textcolor{unamblue}{Escenario donde sí sea preferible usar hojas de cálculo}}
+
+Un escenario adecuado sería el registro de las calificaciones de un grupo escolar. Normalmente, un profesor puede trabajar con una cantidad relativamente pequeña de alumnos y de actividades, por lo que el volumen de datos no representa un problema de escalabilidad. Además, una hoja de cálculo permite organizar fácilmente las calificaciones y utilizar fórmulas para calcular promedios, porcentajes y calificaciones finales. En este contexto, una base de datos podría resultar innecesaria, ya que una hoja de cálculo puede resolver la necesidad de manera sencilla y práctica.
+
+\vspace{0.3cm}
+
+\noindent
+\textcolor{unamblue}{\rule{\textwidth}{1.2pt}}
+
+\vspace{0.3cm}
+
+En conclusión, las hojas de cálculo son apropiadas para tareas relativamente pequeñas, individuales y con una estructura sencilla. En cambio, cuando se manejan grandes volúmenes de datos, múltiples usuarios o se requiere mayor control sobre la integridad, consistencia, seguridad y recuperación de la información, resulta más adecuado utilizar un sistema de bases de datos.
