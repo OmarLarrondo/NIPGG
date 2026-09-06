@@ -1,2 +1,44 @@
 \section{Problemas encontrados y comentarios}
-% TODO: registrar dificultades, soluciones y comentarios finales.
+
+\subsection{Incidencias reales}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries}p{0.23\textwidth}XX}
+    \toprule
+    Incidencia & Causa & Solución aplicada \\
+    \midrule
+    Acceso denegado al socket de Docker & Aunque el usuario ya pertenecía al
+    grupo \texttt{docker}, la sesión activa todavía no había cargado dicha
+    pertenencia. & Se aplicó el grupo en una subsesión con \texttt{sg docker};
+    un nuevo inicio de sesión produce el mismo efecto. \\
+    \addlinespace
+    Instrucciones no específicas para Fedora & La guía proporcionaba ejemplos
+    para Debian, Ubuntu, Windows y macOS. & Se conservaron los objetivos de la
+    práctica y se utilizaron los paquetes y el gestor de servicios propios de
+    Fedora. \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Problemas observados y soluciones empleadas.}
+\end{table}
+
+\subsection{Comentarios finales}
+
+El uso de contenedores permitió desplegar PostgreSQL sin incorporar archivos
+del servidor al sistema operativo anfitrión. El volumen independiente conserva
+los datos aunque el contenedor se detenga o se sustituya, mientras que el mapeo
+limitado a \texttt{localhost} reduce la superficie de exposición durante el
+trabajo local.
+
+La validación se efectuó en tres niveles: ejecución de un contenedor mínimo,
+consulta directa con \texttt{psql} y conexión mediante DBeaver. Esta secuencia
+permitió distinguir problemas del motor Docker, del servidor PostgreSQL y del
+cliente gráfico. Al concluir, la credencial temporal en texto plano se eliminó;
+DBeaver conservó únicamente su representación dentro del almacén seguro de la
+aplicación.
+
+\begin{nota}{Resultado}
+Docker quedó habilitado y activo; PostgreSQL 18.6 permaneció en ejecución bajo
+el nombre \texttt{postgres-practica01}; y DBeaver Community 26.2.0 se conectó
+correctamente a la base \texttt{postgres} mediante JDBC.
+\end{nota}
