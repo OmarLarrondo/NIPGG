@@ -1,9 +1,27 @@
 % =========================================================================
-%  Ejercicio 1f - Redundancia de datos
-%  Responsable: [nombre]
+%  Ejercicio 1f - Redundancia de datos 
+%  Responsable: [León Bautista Yahir]
 % =========================================================================
 
 \section*{Ejercicio 1f. Redundancia de datos}
+Investiga qué es la redundancia de datos. ¿Cuál sería la diferencia entre redundancia de datos
+controlada y no controlada? Proporciona un ejemplo claro de cada tipo. ¿Por qué la redundancia
+no controlada suele ser un problema para la integridad y consistencia de los datos?
+
+La redundancia de datos ocurre cuando los mismos datos se almacenan en múltiples copias, ubicaciones o sistemas diferentes.
+\begin{itemize}
+    \item Redundancia de datos controlada: Se refiere a la duplicación de datos que se gestiona de manera intencional y planificada, 
+    generalmente para mejorar el rendimiento o la disponibilidad del sistema. Un ejemplo de redundancia controlada es el uso de bases de datos replicadas
+    en diferentes servidores para garantizar la disponibilidad continua de los datos en caso de fallos del sistema.
+    \item Redundancia de datos no controlada: Se refiere a la duplicación de datos que ocurre de manera accidental o sin una gestión adecuada, 
+    lo que puede llevar a inconsistencias y errores en los datos. Un ejemplo de redundancia no controlada es cuando un usuario introduce la misma 
+    información en diferentes formularios o sistemas sin coordinación, lo que puede resultar en registros duplicados y conflictos de datos cuando se realicen modificaciones.
+\end{itemize}
+La redundancia no controlada suele ser un problema para la integridad y consistencia de los datos porque puede generar conflictos y errores en la información almacenada.
+Cuando un dato existe en varios lugares sin supervisión del sistema, inevitablemente surgen problemas conocidos como anomalías de modificación, que se generan al actualizar, insertar o eliminar datos en diferentes ubicaciones sin coordinación.
+
+
+% Ref: Elmasri, R., & Navathe, S. B. (2016). Fundamentals of database systems (7th ed.). Pearson. 
 
 % Responder aqui. Contenido minimo:
 % - Definir que es la redundancia de datos (investigacion con fuentes).
