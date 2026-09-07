@@ -1,2 +1,44 @@
 \section{Problemas encontrados y comentarios}
-% TODO: registrar dificultades, soluciones y comentarios finales.
+
+\subsection{Incidencias y soluciones}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash\bfseries}p{0.27\textwidth}XX}
+    \toprule
+    Incidencia & Causa & Solución aplicada \\
+    \midrule
+    Cierre de DBeaver con \texttt{SIGBUS} & El fallo ocurrió en la biblioteca
+    nativa \texttt{libgtk-3.so.0} durante el inicio con Java 25. & Se utilizó
+    OpenJDK 21 y se inició DBeaver con \texttt{GDK\_BACKEND=x11}. \\
+    \addlinespace
+    Puerto 5432 ocupado & Ya existía un contenedor \texttt{postgres} publicado
+    en ese puerto. & Se mantuvo el contenedor existente y se publicó
+    \texttt{postgres-practica01} en el puerto 5433. \\
+    \addlinespace
+    Fallo de autenticación en DBeaver & La conexión conservaba una contraseña
+    distinta de la generada para el nuevo contenedor. & Se actualizó la
+    credencial guardada en la conexión y se probó nuevamente. \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Problemas observados durante la instalación y conexión.}
+\end{table}
+
+\evidencia{05_evidencia.png}{Estado de los contenedores después de resolver el conflicto del puerto y validación de PostgreSQL.}
+
+\subsection{Comentarios finales}
+
+La práctica permitió comprobar el funcionamiento de Docker en Debian y
+desplegar PostgreSQL sin instalar el servidor directamente en el sistema
+anfitrión. El volumen independiente mantiene los datos del contenedor y la
+publicación en la interfaz local evita exponer el servicio a otros equipos de
+la red.
+
+La validación se realizó en tres niveles: ejecución de \texttt{hello-world},
+consulta directa con \texttt{psql} y conexión mediante DBeaver. Además, el
+conflicto del puerto mostró la diferencia entre el puerto publicado en el
+anfitrión (5433) y el puerto interno del servidor (5432).
+
+\textbf{Resultado.} Docker quedó habilitado y activo; el contenedor
+\texttt{postgres-practica01} permaneció funcionando con PostgreSQL 18.6; y
+DBeaver se conectó correctamente mediante el puerto local 5433.

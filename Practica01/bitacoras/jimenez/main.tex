@@ -3,6 +3,28 @@
 \def\NumeroCuenta{119000887}
 \input{preambulo.tex}
 
+\usepackage{listings}
+\usepackage{mathpazo}
+
+\definecolor{terminalgray}{RGB}{242,242,242}
+\lstdefinestyle{terminal}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{terminalgray},
+  frame=single,
+  rulecolor=\color{unamblue},
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible
+}
+
+\newcommand{\evidencia}[3][0.96\textwidth]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#1]{#2}
+    \caption{#3}
+  \end{figure}%
+}
+
 \begin{document}
 \input{plantilla_portada.tex}
 \tableofcontents
