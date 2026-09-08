@@ -1,14 +1,65 @@
 % =========================================================================
 %  Ejercicio 1j - Sistema de archivos vs BD en gestion hospitalaria
-%  Responsable: [nombre]
+%  Responsable: [Carballido Camacateco Ana Lilia]
 % =========================================================================
 
 \section*{Ejercicio 1j. Aplicación hospitalaria y sistema de archivos}
 
+\noident
+
+\vspace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Redundancia de datos e inconsistencia}}
+En el contexto de una aplicación para la gestión hospitalaria, concretamente para la gestión de datos de pacientes, la redundancia de datos e inconsistencia puede ser un problema significativo. 
+Por ejemplo, si un paciente asiste a distintos departamentos del hospital, es posible que su información se almacene en diferentes archivos, lo que puede llevar a la duplicación de datos y a la inconsistencia de la información.
+Lo cual se traduce en un mayor costo de almacenamiento y acceso, así como en la posibilidad de que se presenten errores en la información del paciente, lo que puede afectar la calidad de la atención médica.
+Además, podría pasar que un paciente cuenta con un diagnostico en un departamento, pero en otro departamento se le asigna un tratamiento diferente debido a la inconsistencia de la información. Esto puede llevar a errores médicos graves y afectar la seguridad del paciente.
+
+\vspace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Dificultad de acceso a los datos}}
+Si se desea buscar información sobre las citas de un paciente, se tendría que hacer una lista de archivos y recorrerlos para encontrar la información deseada. Esto puede ser un proceso lento. 
+En este contexto, es primordial contar con un acceso eficiente y rápido a la información del paciente, ya que esto puede afectar la calidad de la atención médica y la toma de decisiones clínicas.
+
+\vsapace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Aislamiento de datos}}
+Imaginemos el escenario donde cada uno de los médicos de un hospital tiene que guardar información sobre las citas de sus pacientes. Sin embargo, no existe un estándar para el almacenamiento de dicha información, lo que puede llevar a que los datos se almacenen en diferentes formatos y ubicaciones.
+Si en algún momento, se decidiera realizar una aplicación que integre la información de todos los pacientes del hospital, sería un desafío debido a la falta de estandarización y la dispersión de los datos. 
+
+\vsapace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Problemas de integridad}}
+Supongamos que se necesita hacer una restricción sobre los datos de los pacientes, como por ejemplo, que un paciente no puede tener más de una cita en el mismo día. Si se hace un cambio en esta restricción, puede ser difícil garantizar que se cumpla para todas las especialidades ya que se tendría
+que revisar cada uno de los archivos donde se almacena la información de los pacientes.
+
+\vsapace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Problemas de atomicidad}}
+Si se estuviera actualizando el historial médico de un paciente y la operación falla a mitad del proceso, es posible que se pierda información importante como el diagnostico, el tratamiento o la especialidad a la que va a ser canalizado.
+
+\vsapace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Anomalías de acceso concurrente}}
+Supongamos que algún paciente va acompañado de un familiar y ambos intentan sacar una cita para el paciente al mismo tiempo y ambos lo logran. El sistema tendrpa el registro de dos citas para el mismo paciente en el mismo día y con unos minutos de diferencia. 
+Esto generaría una inconsistencia en la información de citas del paciente. Entonces podría quitarle tiempo de cita a otra persona, además de que el próximo paciente no sabría si su cita es en una hora o con unos minutos de diferencia.
+
+\vsapace{0.3cm}
+
+\subsection*{\textcolor{unamblue}{Desventaja: Problemas de seguridad}}
+En un sistema de archivos, es difícil garantizar la seguridad y privacidad de los datos. Entonces, posría ocurrir que algún médico general, pudiera acceder a la información sobre tratamientos de pacientes que le corresponden a un especialista y hacer modificaciones sobre ello.
+Esto podría ser muy grave, ya que podría afectar la salud del paciente y poner en riesgo su vida.
+
+\vspace{0.3cm}
+
+\subsection*{Bibliografía}
+\nocite{dbconcepts}
+\bibliographystyle{plain}
+\bibliography{../bibliografia}
+
 % Responder aqui. Contenido minimo:
-% - Contexto: aplicacion para gestion hospitalaria (historial medico,
-%   diagnosticos, tratamientos, citas, acceso a registros medicos, medicos,
-%   especialidades).
+% - Contexto: aplicacion para gestion hospitalaria con respecto a la gestión de datos de pacientes.
+%   (historial médico, diagnósticos, tratamientos,citas, acceso a registros médicos, médicos, especialidades, etc.)
 % - Considerar cada desventaja indicada en el documento ``Purpose of
 %   Database Systems'' al administrar datos en un sistema de archivos.
 % - Discutir la relevancia de cada desafio en el contexto de la gestion de
