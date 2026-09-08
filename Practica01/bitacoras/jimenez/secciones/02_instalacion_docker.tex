@@ -1,0 +1,24 @@
+\section{Instalación de Docker}
+
+Docker ya se encontraba instalado en Debian. Por ello, se verificó el servicio
+y se habilitó para iniciar automáticamente con el sistema:
+
+\begin{lstlisting}[style=terminal]
+$ sudo systemctl enable --now docker
+$ sudo systemctl is-enabled docker
+enabled
+$ sudo systemctl is-active docker
+active
+\end{lstlisting}
+
+La comunicación entre el cliente y el demonio se comprobó consultando las
+versiones de Docker Engine y Docker Compose. Finalmente se ejecutó el contenedor
+de prueba oficial \texttt{hello-world}, que confirmó que el motor podía
+descargar imágenes, crear contenedores y devolver su salida al terminal.
+
+\begin{lstlisting}[style=terminal]
+$ sudo docker version
+$ sudo docker run --rm hello-world
+\end{lstlisting}
+
+\evidencia{02_evidencia.png}{Servicio Docker activo, versiones del motor y ejecución exitosa de \texttt{hello-world}.}

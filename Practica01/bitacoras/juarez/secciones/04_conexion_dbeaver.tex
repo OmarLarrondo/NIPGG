@@ -1,0 +1,52 @@
+\section{Conexión con DBeaver}
+
+\subsection{Instalación del cliente}
+
+Se descargó DBeaver Community 26.2.0 desde el sitio oficial. El archivo RPM se
+verificó antes de instalarse y, posteriormente, se confirmó el paquete
+registrado en Fedora.
+
+\begin{lstlisting}[style=terminal]
+$ curl -fL -o /tmp/dbeaver-ce-26.2.0-linux-x86_64.rpm \
+    https://dbeaver.io/files/dbeaver-ce-latest-linux-x86_64.rpm
+$ rpm -K /tmp/dbeaver-ce-26.2.0-linux-x86_64.rpm
+$ sudo dnf install /tmp/dbeaver-ce-26.2.0-linux-x86_64.rpm
+$ rpm -q dbeaver-ce
+dbeaver-ce-26.2.0-stable.x86_64
+\end{lstlisting}
+
+Al abrir DBeaver por primera vez se descargó el controlador PostgreSQL JDBC
+42.7.13. Después se creó una conexión con los parámetros de la
+Tabla~\ref{tab:parametros-dbeaver}.
+
+\begin{table}[H]
+  \centering
+  \rowcolors{2}{unamblue!6}{white}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Parámetro} & \textbf{Valor} \\
+    \midrule
+    Nombre de la conexión & PostgreSQL - Práctica 01 \\
+    Servidor & \texttt{localhost} \\
+    Puerto & \texttt{5432} \\
+    Base de datos & \texttt{postgres} \\
+    Usuario & \texttt{postgres} \\
+    Contraseña & Credencial temporal oculta \\
+    \bottomrule
+  \end{tabular}
+  \caption{Parámetros utilizados para la conexión local.}
+  \label{tab:parametros-dbeaver}
+\end{table}
+
+La opción de conexión se ejecutó con la contraseña suministrada desde un
+archivo de variables temporal. PostgreSQL confirmó tres contextos de DBeaver:
+la conexión principal, la consulta de metadatos y la consola SQL.
+
+\evidencia{05_evidencia.png}{Versión de DBeaver y sesiones del cliente observadas por PostgreSQL.}
+
+La interfaz mostró la conexión activa en el navegador y abrió una consola
+asociada al esquema \texttt{public} de la base \texttt{postgres}. Esta evidencia
+confirma que el controlador JDBC, la autenticación, el puerto y el servidor
+funcionaron de manera conjunta.
+
+\evidencia[0.86\textwidth]{06_dbeaver_conectado.png}{DBeaver Community conectado al servidor PostgreSQL de la práctica.}

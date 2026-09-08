@@ -1,0 +1,52 @@
+\section{Instalación y configuración de PostgreSQL}
+
+\subsection{Descarga de la imagen}
+
+PostgreSQL se desplegó dentro de un contenedor Docker utilizando la imagen
+\texttt{postgres:18}. La etiqueta fija permite identificar la versión principal
+empleada durante la práctica.
+
+\begin{lstlisting}[style=terminal]
+$ sudo docker pull postgres:18
+\end{lstlisting}
+
+\subsection{Credencial y creación del contenedor}
+
+Se generó una contraseña aleatoria y se almacenó en un archivo local con
+permisos restrictivos. El valor no se incluyó en la bitácora ni en las
+capturas.
+
+El primer intento de publicación utilizó el puerto local 5432, pero dicho
+puerto ya estaba ocupado por otro contenedor llamado \texttt{postgres}. Para
+evitar modificar o detener ese servicio, el contenedor de esta práctica se
+publicó en el puerto local 5433, conservando el puerto interno 5432 de
+PostgreSQL:
+
+\begin{lstlisting}[style=terminal]
+$ sudo docker run -d \\
+    --name postgres-practica01 \\
+    --env-file /home/maik/practica01-capturas/postgres.env \\
+    -p 127.0.0.1:5433:5432 \\
+    -v postgres_practica01_data:/var/lib/postgresql \\
+    postgres:18
+\end{lstlisting}
+
+La opción de publicación se interpreta como
+\texttt{localhost:5433 -> contenedor:5432}. El volumen permite conservar los
+datos aunque el contenedor se detenga.
+
+\evidencia{03_evidencia.png}{Contenedor \texttt{postgres-practica01} activo en el puerto local 5433 y PostgreSQL listo para aceptar conexiones.}
+
+\subsection{Comprobación con psql}
+
+La consulta se ejecutó dentro del contenedor para comprobar la base activa, el
+usuario y la versión del servidor:
+
+\begin{lstlisting}[style=terminal]
+$ sudo docker exec postgres-practica01 \\
+    psql -U postgres -d postgres \\
+    -c 'SELECT current_database(), current_user, version();'
+\end{lstlisting}
+
+El resultado confirmó PostgreSQL 18.6 sobre Debian y la disponibilidad de la
+base \texttt{postgres}.
