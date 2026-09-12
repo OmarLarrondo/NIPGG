@@ -135,13 +135,29 @@ acuerdo del equipo para evitar conflictos:
 - `README_ÑIPGG.tex` y este `README.md`.
 - `SRC/Doc/`, porque contendrá el Javadoc generado durante la integración.
 
-## Contratos de integración que deben acordarse antes de programar
+## Contrato de integración acordado
 
-- Campos, tipos y llave única de `Sucursal`, `Premio` y `Cliente`.
-- Encabezado, delimitador, codificación y reglas de escape de cada CSV.
-- Operaciones comunes de alta, consulta, edición y eliminación.
-- Forma de comunicar errores entre repositorio, servicio e interfaz.
-- Ubicación de los archivos al ejecutar y al preparar el ZIP.
+Para que los módulos se desarrollen sobre la misma estructura, se usarán los
+siguientes campos:
+
+- `Sucursal`: `idSucursal` (entero positivo y único), `nombre`, `direccion` y
+  `telefono`.
+- `Premio`: `idPremio` (entero positivo y único), `nombre`, `descripcion`,
+  `puntosRequeridos` y `existencias`.
+- `Cliente`: `idCliente` (entero positivo y único), `nombre`, `correo`,
+  `telefono` y `puntosAcumulados`.
+
+Cada entidad admitirá operaciones de alta, consulta, modificación y eliminación,
+con búsqueda por su identificador. La persistencia se realizará en
+`SRC/datos/sucursales.csv`, `SRC/datos/premios.csv` y
+`SRC/datos/clientes.csv`. Los archivos incluirán encabezado, usarán coma como
+delimitador y codificación UTF-8.
+
+La capa de validación proporcionará métodos reutilizables para texto no vacío,
+entero positivo, entero no negativo, correo y teléfono de diez dígitos. Los
+errores se comunicarán mediante `ValidationException`, con mensajes claros para
+la interfaz. La capa de repositorio comprobará, además, que los identificadores
+no estén repetidos.
 
 ## Entregables previstos
 
