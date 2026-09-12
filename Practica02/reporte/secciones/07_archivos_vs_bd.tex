@@ -1,2 +1,19 @@
 \section{Sistema de archivos frente a base de datos}
 % Pendiente: desarrollar las cinco diferencias solicitadas.
+\subsection{Diferencias entre un sistema de archivos y una base de datos}
+
+Almacenar información utilizando un sistema de archivos tiene sus diferencias con almacenarla utilizando una base de datos, algunas de esas diferencias son:
+
+\begin{enumerate}
+
+\item \textbf{La organización de la información:} En un sistema de archivos la información es almacenada directamente en archivos, por ejemplo, CSV; de esta manera el programa que utiliza la información almacenada se tiene que encargar en gran medida de controlar la estructura y relación entre los datos. Por otro lado en una base de datos la información se almacena siguiendo una estructura definida dentro de un sistema manipulador de bases de datos, de esta manera se permite establecer relaciones entre diferentes conjuntos de información.
+
+\item \textbf{Integridad y consistencia de los datos:} En un sistema de archivos es más sencillo que aparezcan datos incorrectos, repetidos o inconsistentes si el programa no implementa todas las validaciones necesarias. Por otro lado en una base de datos se aplican restricciones para mantener la integridad de los datos, lo que evita ese tipo de errores en la información almacenada desde que se almacena.
+
+\item \textbf{Consultas y búsqueda de información:} En un sistema de archivos si se quiere buscar o combinar una información generalmente el programa tiene que leer archivos y programar la lógica necesaria para encontrar los datos. Mientras que en una base de datos, el SMBD permite realizar consultas estructuradas de manera mucho más flexible y eficiente, especialmente cuando la cantidad de información aumenta.
+
+\item \textbf{Concurrencia y acceso de varios usuarios:} En un sistema de archivos llega a ser difícil el manejar correctamente varios usuarios o procesos modificando el mismo archivo al mismo tiempo. En cuanto a una base de datos, los SMBD están diseñados para permitir que múltiples usuarios accedan y trabajen con la información de forma controlada, utilizando mecanismos para evitar conflictos.
+
+\item \textbf{Seguridad y control de acceso:} En un sistema de archivos, la protección de la información depende principalmente de los permisos del sistema operativo y de cómo se haya construido la aplicación. En cambio en una base de datos un SMBD puede proporcionar mecanismos específicos para controlar quién puede consultar, modificar o administrar determinada información.
+
+\end{enumerate}
