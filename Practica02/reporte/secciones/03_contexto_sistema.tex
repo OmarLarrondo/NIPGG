@@ -1,2 +1,157 @@
 \section{Contexto del sistema}
-% Pendiente: describir actores, actividades, alcance y relaciones relevantes.
+
+\subsection{PuellaGame como organización y como sistema de información}
+
+PuellaGame es un centro de entretenimiento familiar que atraviesa un periodo de
+alta afluencia. La llegada de numerosos visitantes durante las vacaciones de
+verano vuelve especialmente visible una necesidad que ya existía: conservar de
+manera ordenada la información con la que opera el negocio. Aunque la solución
+definitiva será una base de datos, su diseño y construcción requieren tiempo. El
+prototipo planteado en esta práctica ocupa, por tanto, una posición intermedia:
+permite comenzar a registrar datos en archivos CSV sin perder de vista que estos
+serán utilizados posteriormente para poblar la base de datos.
+
+Esta circunstancia define el sentido del sistema. No se trata solamente de
+guardar texto en archivos, sino de establecer una primera representación del
+negocio. Cada dato capturado debe pertenecer a una entidad reconocible, conservar
+un significado estable y poder recuperarse mediante una llave. De este modo, el
+prototipo funciona al mismo tiempo como herramienta operativa inmediata y como
+puente hacia una solución de persistencia más completa.
+
+\begin{figure}[htbp]
+  \centering
+  \setlength{\fboxsep}{7pt}
+  \begin{tabular}{c@{\hspace{0.8em}$\longrightarrow$\hspace{0.8em}}c@{\hspace{0.8em}$\longrightarrow$\hspace{0.8em}}c}
+    \fbox{\begin{minipage}{0.22\textwidth}\centering
+      \textbf{Mundo real}\\[2pt]
+      clientes, sucursales\\
+      y premios
+    \end{minipage}}
+    &
+    \fbox{\begin{minipage}{0.25\textwidth}\centering
+      \textbf{Prototipo}\\[2pt]
+      captura, valida y\\
+      permite operar
+    \end{minipage}}
+    &
+    \fbox{\begin{minipage}{0.22\textwidth}\centering
+      \textbf{Persistencia}\\[2pt]
+      archivos CSV listos\\
+      para su migración
+    \end{minipage}}
+  \end{tabular}
+  \caption{El prototipo como enlace entre la operación cotidiana y la futura
+  base de datos.}
+  \label{fig:puellagame-puente}
+\end{figure}
+
+\subsection{Actores y relaciones}
+
+El administrador de PuellaGame es el actor que origina la necesidad. Su interés
+no está en los detalles internos de los archivos, sino en disponer cuanto antes
+de información persistente, consultable y suficientemente organizada para no
+comenzar desde cero cuando se construya la base de datos. Desde su perspectiva,
+el sistema debe ofrecer una imagen confiable de las sucursales, los premios y
+los clientes registrados.
+
+La interacción diaria recae en el personal autorizado que opera el menú del
+prototipo. Esta persona traduce hechos del entorno en registros: da de alta una
+sucursal, incorpora un premio, captura los datos de un cliente, localiza un
+registro por su llave y corrige o elimina información cuando la realidad cambia.
+El operador es, por ello, el punto de contacto entre la organización y el
+sistema; la claridad de los mensajes y la validación de las entradas resultan
+esenciales para que esa traducción sea correcta.
+
+El cliente participa de forma indirecta. Sus datos forman parte del dominio,
+pero no se establece que utilice personalmente la aplicación. Proporciona la
+información necesaria durante la atención en el centro y el personal la incorpora
+al sistema. Las sucursales y los premios tampoco son usuarios: son objetos del
+negocio cuya existencia debe representarse de forma consistente. Esta distinción
+evita confundir a quien realiza una acción con aquello sobre lo que la acción se
+realiza.
+
+\begin{figure}[htbp]
+  \centering
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{>{\centering\arraybackslash}p{0.20\textwidth}
+                  >{\centering\arraybackslash}p{0.04\textwidth}
+                  >{\centering\arraybackslash}p{0.25\textwidth}
+                  >{\centering\arraybackslash}p{0.04\textwidth}
+                  >{\centering\arraybackslash}p{0.20\textwidth}}
+    \fbox{\parbox{0.17\textwidth}{\centering\textbf{Administrador}\\define la necesidad\\y consulta resultados}}
+    & $\leftrightarrow$
+    & \fbox{\parbox{0.22\textwidth}{\centering\textbf{Personal autorizado}\\opera el menú y recibe\\la respuesta del sistema}}
+    & $\leftrightarrow$
+    & \fbox{\parbox{0.17\textwidth}{\centering\textbf{Prototipo}\\valida, procesa y\\persiste en CSV}}
+    \\[1.2em]
+    \multicolumn{5}{c}{\small\textbf{Entidades representadas:} sucursal, premio y cliente}
+  \end{tabular}
+  \caption{Mapa de actores y elementos que rodean al prototipo. Las flechas
+  representan intercambio de información, no acceso directo a los archivos.}
+  \label{fig:mapa-contexto}
+\end{figure}
+
+\subsection{Flujo de trabajo observado}
+
+El ciclo comienza cuando ocurre un hecho relevante para PuellaGame: se abre o
+modifica una sucursal, se incorpora un premio o se registra un cliente. El
+operador selecciona en el menú la entidad y la operación correspondiente, e
+introduce la información solicitada. Antes de alterar la persistencia, el
+prototipo comprueba que los campos esperados como numéricos realmente contengan
+números y que la operación pueda ejecutarse. Si encuentra un problema, conserva
+el estado previo e informa la causa mediante un mensaje comprensible.
+
+Cuando la entrada es válida, el sistema localiza el archivo asociado con la
+entidad y realiza el cambio. Una consulta sigue el recorrido inverso: a partir
+de la llave proporcionada, el prototipo busca el registro y devuelve todos sus
+datos al operador. La edición sustituye la representación anterior por la nueva,
+mientras que la eliminación retira el registro identificado. En todos los casos,
+el archivo CSV constituye la memoria del prototipo: permite que la información
+permanezca disponible después de cerrar el programa.
+
+\begin{figure}[htbp]
+  \centering
+  \small
+  \renewcommand{\arraystretch}{1.45}
+  \begin{tabularx}{0.96\textwidth}{@{}>{\bfseries}p{0.16\textwidth}X>{\centering\arraybackslash}p{0.21\textwidth}@{}}
+    \toprule
+    Momento & Transformación de la información & Resultado visible \\
+    \midrule
+    Entrada & El operador elige una entidad y expresa una alta, consulta,
+    modificación o baja mediante el menú. & Datos capturados \\
+    Control & El prototipo interpreta la solicitud, valida los valores y maneja
+    cualquier condición excepcional. & Confirmación o aviso \\
+    Persistencia & La representación de la entidad se lee o se actualiza en el
+    archivo CSV correspondiente. & Registro recuperable \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Recorrido de la información dentro del contexto del sistema.}
+  \label{fig:recorrido-informacion}
+\end{figure}
+
+\subsection{Frontera y alcance}
+
+La frontera del sistema separa las decisiones humanas y los acontecimientos del
+negocio de las responsabilidades propias del software. Fuera de ella quedan la
+decisión de abrir una sucursal, la definición comercial de un premio, la atención
+al cliente y la determinación de qué registros deben cambiar. Dentro de ella se
+encuentran la recepción de entradas, su validación, la ejecución de las cuatro
+operaciones de mantenimiento, la búsqueda por llave, el manejo de errores y la
+lectura y escritura de los archivos CSV.
+
+La futura base de datos también queda fuera del alcance inmediato. El prototipo
+no administra concurrencia entre múltiples usuarios, no define todavía un motor
+de base de datos y no sustituye el modelado posterior. Sin embargo, sí debe
+preparar ese paso: separar las tres clases de entidad, conservar llaves estables
+y evitar que los archivos contengan valores imposibles de interpretar. La
+calidad de esta primera captura determinará cuánto trabajo de limpieza será
+necesario durante la migración.
+
+Visto en conjunto, PuellaGame no necesita simplemente tres archivos, sino un
+flujo controlado que mantenga correspondencia entre la actividad real y su
+representación digital. El administrador obtiene continuidad para la operación,
+el personal dispone de un medio uniforme para trabajar y la organización genera
+un acervo inicial que podrá evolucionar hacia una base de datos. Esa relación
+entre personas, actividades, entidades y persistencia constituye el contexto
+completo del sistema propuesto.
