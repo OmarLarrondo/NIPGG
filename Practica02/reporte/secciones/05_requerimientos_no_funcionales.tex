@@ -1,2 +1,27 @@
 \section{Requerimientos no funcionales}
-% Pendiente: documentar restricciones, calidad, robustez y reglas asociadas.
+Los siguientes requerimientos establecen restricciones de calidad y operación
+para el prototipo, y complementan las operaciones de sucursales, premios y
+clientes.
+
+\begin{enumerate}[label=\textbf{RNF-\arabic*.}, leftmargin=*]
+    \item \textbf{Interacción.} El prototipo deberá ejecutarse en una terminal y
+    ofrecer un menú principal con acceso a las operaciones de las tres entidades.
+    La navegación deberá permitir regresar o salir sin terminar inesperadamente.
+    \item \textbf{Persistencia.} La información deberá almacenarse en archivos
+    CSV separados, con encabezado, delimitador coma y codificación UTF-8. Los
+    datos deberán poder recuperarse en ejecuciones posteriores.
+    \item \textbf{Integridad.} Cada identificador deberá ser positivo y único.
+    Los campos numéricos deberán rechazar texto y valores fuera del rango
+    aplicable; existencias y puntos acumulados no podrán ser negativos.
+    \item \textbf{Validación.} Los textos obligatorios no deberán estar vacíos;
+    los correos deberán tener formato válido y los teléfonos contener diez
+    dígitos. La validación se realizará antes de persistir un cambio.
+    \item \textbf{Manejo de errores.} Datos inválidos, identificadores ausentes o
+    repetidos y problemas de lectura/escritura no deberán cerrar la aplicación.
+    El sistema deberá comunicar mensajes claros y permitir corregir la entrada.
+    \item \textbf{Mantenibilidad.} El código deberá conservar la separación por
+    capas: interfaz, servicios, repositorios CSV, modelos y validaciones. Cada
+    clase y método deberá documentarse con Javadoc.
+    \item \textbf{Compatibilidad.} El proyecto deberá compilarse y probarse con
+    Maven y Java~25, en UTF-8 y sin dependencias no declaradas en \texttt{pom.xml}.
+\end{enumerate}
