@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Cliente implements Identificable<Integer> {
 
     /** Identificador único del cliente. */
-    private Integer idCliente;
+    private Integer id;
     
     /** Nombre completo del cliente. */
     private String nombre;
@@ -36,14 +36,14 @@ public class Cliente implements Identificable<Integer> {
      * Constructor parametrizado.
      * Crea una instancia de la entidad con todos sus atributos inicializados.
      *
-     * @param idCliente        El identificador único de la entidad.
+     * @param id        El identificador único de la entidad.
      * @param nombre           El nombre de la entidad.
      * @param correo           El correo electrónico asociado.
      * @param telefono         El número telefónico de contacto.
      * @param puntosAcumulados Los puntos acumulados.
      */
-    public Cliente(Integer idCliente, String nombre, String correo, String telefono, Integer puntosAcumulados) {
-        this.idCliente = idCliente;
+    public Cliente(Integer id, String nombre, String correo, String telefono, Integer puntosAcumulados) {
+        this.id = id;
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
@@ -57,7 +57,7 @@ public class Cliente implements Identificable<Integer> {
      */
     @Override
     public Integer getId() {
-        return this.idCliente;
+        return this.id;
     }
 
     /**
@@ -67,22 +67,8 @@ public class Cliente implements Identificable<Integer> {
      */
     @Override
     public void setId(Integer id) {
-        this.idCliente = id;
+        this.id = id;
     }
-
-    /**
-     * Obtiene el identificador único del cliente.
-     * 
-     * @return El ID del cliente.
-     */
-    public Integer getIdCliente() { return idCliente; }
-
-    /**
-     * Establece el identificador único del cliente.
-     * 
-     * @param idCliente El ID a establecer.
-     */
-    public void setIdCliente(Integer idCliente) { this.idCliente = idCliente; }
 
     /**
      * Obtiene el nombre del cliente.
@@ -153,7 +139,7 @@ public class Cliente implements Identificable<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return Objects.equals(idCliente, cliente.idCliente);
+        return Objects.equals(id, cliente.id);
     }
 
     /**
@@ -165,7 +151,7 @@ public class Cliente implements Identificable<Integer> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente);
+        return Objects.hash(id);
     }
 
     /**
@@ -177,6 +163,6 @@ public class Cliente implements Identificable<Integer> {
     @Override
     public String toString() {
         return String.format("Cliente [ID=%d, Nombre='%s', Correo='%s', Puntos=%d]", 
-                idCliente, nombre, correo, puntosAcumulados);
+                id, nombre, correo, puntosAcumulados);
     }
 }

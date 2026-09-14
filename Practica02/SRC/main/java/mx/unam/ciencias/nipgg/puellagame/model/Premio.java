@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Premio implements Identificable<Integer> {
 
     /** Identificador único del premio. */
-    private Integer idPremio;
+    private Integer id;
 
     /** Nombre del premio. */
     private String nombre;
@@ -36,14 +36,14 @@ public class Premio implements Identificable<Integer> {
      * Constructor parametrizado.
      * Crea una instancia de la entidad Premio con todos sus atributos inicializados.
      *
-     * @param idPremio        El identificador único del premio.
+     * @param id        El identificador único del premio.
      * @param nombre          El nombre del premio.
      * @param descripcion     La descripción del premio.
      * @param puntosRequeridos Los puntos requeridos para canjear el premio.
      * @param existencias      Las existencias disponibles del premio.
      */
-    public Premio(Integer idPremio, String nombre, String descripcion, Integer puntosRequeridos, Integer existencias) {
-        this.idPremio = idPremio;
+    public Premio(Integer id, String nombre, String descripcion, Integer puntosRequeridos, Integer existencias) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.puntosRequeridos = puntosRequeridos;
@@ -57,7 +57,7 @@ public class Premio implements Identificable<Integer> {
      */
     @Override
     public Integer getId() {
-        return this.idPremio;
+        return this.id;
     }
 
     /**
@@ -67,22 +67,8 @@ public class Premio implements Identificable<Integer> {
      */
     @Override
     public void setId(Integer id) {
-        this.idPremio = id;
+        this.id = id;
     }
-
-    /**
-     * Obtiene el identificador único del premio.
-     *
-     * @return El ID del premio.
-     */
-    public Integer getIdPremio() { return idPremio; }
-
-    /**
-     * Establece el identificador único del premio.
-     *
-     * @param idPremio El ID del premio a establecer.
-     */
-    public void setIdPremio(Integer idPremio) { this.idPremio = idPremio; }
 
     /**
      * Obtiene el nombre del premio.
@@ -153,7 +139,7 @@ public class Premio implements Identificable<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Premio premio = (Premio) o;
-        return Objects.equals(idPremio, premio.idPremio);
+        return Objects.equals(id, premio.id);
     }
 
     /**
@@ -165,7 +151,7 @@ public class Premio implements Identificable<Integer> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(idPremio);
+        return Objects.hash(id);
     }
 
     /**
@@ -177,6 +163,6 @@ public class Premio implements Identificable<Integer> {
     @Override
     public String toString() {
         return String.format("Premio [ID=%d, Nombre='%s', Puntos=%d, Existencias=%d]", 
-                idPremio, nombre, puntosRequeridos, existencias);
+                id, nombre, puntosRequeridos, existencias);
     }
 }

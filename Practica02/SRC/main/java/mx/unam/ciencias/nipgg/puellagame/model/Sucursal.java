@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Sucursal implements Identificable<Integer> {
 
     /** Identificador único de la sucursal. */
-    private Integer idSucursal;
+    private Integer id;
 
     /** Nombre de la sucursal. */
     private String nombre;
@@ -33,13 +33,13 @@ public class Sucursal implements Identificable<Integer> {
      * Constructor parametrizado.
      * Crea una instancia de la entidad Sucursal con todos sus atributos inicializados.
      *
-     * @param idSucursal El identificador único de la sucursal.
+     * @param id El identificador único de la sucursal.
      * @param nombre     El nombre de la sucursal.
      * @param direccion  La dirección física de la sucursal.
      * @param telefono   El número telefónico de contacto de la sucursal.
      */
-    public Sucursal(Integer idSucursal, String nombre, String direccion, String telefono) {
-        this.idSucursal = idSucursal;
+    public Sucursal(Integer id, String nombre, String direccion, String telefono) {
+        this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -52,7 +52,7 @@ public class Sucursal implements Identificable<Integer> {
      */
     @Override
     public Integer getId() {
-        return this.idSucursal;
+        return this.id;
     }
 
     /**
@@ -62,22 +62,8 @@ public class Sucursal implements Identificable<Integer> {
      */
     @Override
     public void setId(Integer id) {
-        this.idSucursal = id;
+        this.id = id;
     }
-
-    /**
-     * Obtiene el nombre de la sucursal.
-     *
-     * @return El nombre de la sucursal.
-     */
-    public Integer getIdSucursal() { return idSucursal; }
-
-    /**
-     * Establece el nombre de la sucursal.
-     *
-     * @param idSucursal El ID de la sucursal a establecer.
-     */
-    public void setIdSucursal(Integer idSucursal) { this.idSucursal = idSucursal; }
     
     /**
      * Obtiene el nombre de la sucursal.
@@ -134,7 +120,7 @@ public class Sucursal implements Identificable<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sucursal sucursal = (Sucursal) o;
-        return Objects.equals(idSucursal, sucursal.idSucursal);
+        return Objects.equals(id, sucursal.id);
     }
 
     /**
@@ -146,7 +132,7 @@ public class Sucursal implements Identificable<Integer> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(idSucursal);
+        return Objects.hash(id);
     }
 
     /**
@@ -158,6 +144,6 @@ public class Sucursal implements Identificable<Integer> {
     @Override
     public String toString() {
         return String.format("Sucursal [ID=%d, Nombre='%s', Dirección='%s', Teléfono='%s']", 
-                idSucursal, nombre, direccion, telefono);
+                id, nombre, direccion, telefono);
     }
 }
