@@ -1,5 +1,24 @@
 \section{Elección tecnológica}
-% Pendiente: argumentar cuál alternativa resulta más conveniente y bajo qué contexto.
 \subsection{Sistema de archivos o base de datos}
 
-Si hablamos del prototipo actual que creamos el sistema de archivos es más adecuado dado que es una solución simple y suficiente para demostrar el funcionamiento del sistema. Sin embargo, para una implementación real y completa de PuellaGame, una base de datos sería más conveniente debido al crecimiento de la información, la necesidad de mantener su integridad, realizar consultas eficientes, controlar el acceso y permitir el trabajo de varios usuarios de manera simultánea.
+Para el prototipo solicitado resulta conveniente utilizar un sistema de
+archivos. La información se limita a tres entidades, el acceso se realiza desde
+una aplicación de consola y el objetivo inmediato es disponer de persistencia
+sin esperar el diseño completo de la base de datos. Los CSV también facilitan
+la inspección de los registros y su posterior importación, siempre que se
+conserven encabezados, codificación y reglas de escape consistentes
+\cite{shafranovich2005}.
+
+Para la operación definitiva de PuellaGame, la alternativa más conveniente es
+una base de datos administrada por un SMBD. El crecimiento de clientes,
+sucursales y premios exigirá relaciones entre entidades, restricciones de
+integridad, consultas más variadas, control de acceso, respaldo y trabajo
+simultáneo de varios usuarios. Estos servicios forman parte del propósito de un
+gestor y evitan que cada aplicación tenga que implementarlos de manera aislada
+\cite{elmasri2016,silberschatz2019}.
+
+Por ello, la decisión depende del horizonte de uso: los archivos CSV son una
+solución transitoria adecuada para el avance urgente; la base de datos es la
+solución sostenible para el sistema real. El prototipo reduce el costo de la
+transición al conservar una llave estable por entidad, validar los datos desde
+su captura y separar la persistencia del resto de la aplicación.

@@ -1,11 +1,20 @@
 \section{Introducción}
-% Pendiente: delimitar el caso PuellaGame y el propósito del reporte.
-El presente reporte detalla la planeación y el desarrollo de un prototipo de software para el centro de entretenimiento familiar "PuellaGame". 
-Debido a la alta demanda de clientes durante la temporada vacacional y la urgencia de la administración por agilizar el manejo de datos, 
-se ha optado por una solución tecnológica inmediata. Dado que el diseño e implementación de una base de datos formal requiere de un proceso más extenso, 
-este proyecto propone un plan alternativo basado en el uso de archivos planos con formato .CSV.
 
-Este prototipo tiene como objetivo principal simular el almacenamiento estructurado de información, permitiendo la gestión (agregar, consultar, editar y eliminar) 
-de tres entidades fundamentales: Sucursales, Premios y Clientes. El sistema no solo garantizará la persistencia de los datos, sino que también servirá 
-como un paso previo para poblar una futura base de datos robusta una vez que esta sea creada. El desarrollo incluye la validación de tipos de datos, 
-el manejo de excepciones para garantizar la estabilidad del sistema y una interfaz de menú interactiva para el usuario final.
+El presente reporte desarrolla el análisis de requerimientos y el diseño del
+prototipo para el centro de entretenimiento familiar PuellaGame. La afluencia de
+clientes durante el periodo vacacional exige comenzar a organizar la
+información aun cuando el diseño y la implementación de una base de datos
+definitiva requieren un proceso más amplio. Como respuesta inmediata, se plantea
+una aplicación que almacena datos persistentes en archivos CSV.
+
+El prototipo administra tres entidades fundamentales: sucursales, premios y
+clientes. Para cada una permite registrar, consultar por identificador, editar y
+eliminar información mediante un menú de consola. También valida los tipos y
+formatos de entrada y maneja condiciones excepcionales para comunicar los
+errores sin interrumpir la operación.
+
+Además de describir el contexto, los actores, los requerimientos y la
+arquitectura de la solución, el reporte compara el almacenamiento en archivos
+con el uso de una base de datos. Esta comparación permite justificar el CSV como
+una medida transitoria y determinar la alternativa más conveniente para la
+operación futura de PuellaGame.

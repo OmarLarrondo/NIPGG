@@ -1,19 +1,42 @@
 \section{Sistema de archivos frente a base de datos}
-% Pendiente: desarrollar las cinco diferencias solicitadas.
 \subsection{Diferencias entre un sistema de archivos y una base de datos}
 
-Almacenar información utilizando un sistema de archivos tiene sus diferencias con almacenarla utilizando una base de datos, algunas de esas diferencias son:
+Un archivo CSV y una base de datos pueden conservar información de manera
+persistente, pero distribuyen de forma distinta las responsabilidades de
+organización, control y acceso. En un sistema de archivos, buena parte de esas
+responsabilidades recae en el programa que interpreta cada archivo; en un
+sistema manejador de bases de datos, forman parte de los servicios propios del
+gestor \cite{elmasri2016,silberschatz2019}. Las cinco diferencias relevantes
+para PuellaGame se sintetizan a continuación.
 
-\begin{enumerate}
-
-\item \textbf{La organización de la información:} En un sistema de archivos la información es almacenada directamente en archivos, por ejemplo, CSV; de esta manera el programa que utiliza la información almacenada se tiene que encargar en gran medida de controlar la estructura y relación entre los datos. Por otro lado en una base de datos la información se almacena siguiendo una estructura definida dentro de un sistema manipulador de bases de datos, de esta manera se permite establecer relaciones entre diferentes conjuntos de información.
-
-\item \textbf{Integridad y consistencia de los datos:} En un sistema de archivos es más sencillo que aparezcan datos incorrectos, repetidos o inconsistentes si el programa no implementa todas las validaciones necesarias. Por otro lado en una base de datos se aplican restricciones para mantener la integridad de los datos, lo que evita ese tipo de errores en la información almacenada desde que se almacena.
-
-\item \textbf{Consultas y búsqueda de información:} En un sistema de archivos si se quiere buscar o combinar una información generalmente el programa tiene que leer archivos y programar la lógica necesaria para encontrar los datos. Mientras que en una base de datos, el SMBD permite realizar consultas estructuradas de manera mucho más flexible y eficiente, especialmente cuando la cantidad de información aumenta.
-
-\item \textbf{Concurrencia y acceso de varios usuarios:} En un sistema de archivos llega a ser difícil el manejar correctamente varios usuarios o procesos modificando el mismo archivo al mismo tiempo. En cuanto a una base de datos, los SMBD están diseñados para permitir que múltiples usuarios accedan y trabajen con la información de forma controlada, utilizando mecanismos para evitar conflictos.
-
-\item \textbf{Seguridad y control de acceso:} En un sistema de archivos, la protección de la información depende principalmente de los permisos del sistema operativo y de cómo se haya construido la aplicación. En cambio en una base de datos un SMBD puede proporcionar mecanismos específicos para controlar quién puede consultar, modificar o administrar determinada información.
-
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Organización y relaciones.} En los CSV, la aplicación define
+    columnas, llaves y vínculos entre registros. Una base de datos proporciona
+    un esquema explícito y mecanismos para representar relaciones entre
+    conjuntos de información.
+    \item \textbf{Integridad y consistencia.} En los archivos, todas las reglas
+    para impedir valores inválidos, duplicados o referencias incoherentes deben
+    programarse y aplicarse correctamente en cada operación. Una base de datos
+    puede hacer cumplir dominios, llaves y restricciones de integridad de forma
+    centralizada.
+    \item \textbf{Consulta y escalabilidad.} Para buscar o combinar información
+    en archivos, el programa suele recorrer registros e implementar la lógica
+    necesaria. Un gestor ofrece un lenguaje de consulta, índices y un
+    optimizador, por lo que puede resolver búsquedas y combinaciones complejas
+    con mayor flexibilidad a medida que crece el volumen de datos.
+    \item \textbf{Concurrencia y recuperación.} Coordinar varios procesos que
+    modifican un mismo archivo exige bloqueos y recuperación desarrollados por
+    la aplicación. Un gestor incorpora transacciones, control de concurrencia y
+    mecanismos de recuperación para conservar resultados consistentes ante
+    accesos simultáneos o fallos.
+    \item \textbf{Seguridad y administración.} En un sistema de archivos, el
+    control depende principalmente de los permisos del sistema operativo y de
+    la aplicación. Una base de datos permite definir usuarios, privilegios y
+    vistas, además de centralizar tareas de respaldo y auditoría.
 \end{enumerate}
+
+La comparación no implica que un archivo sea incorrecto por definición. El CSV
+es un formato textual sencillo e interoperable para intercambiar datos
+tabulares \cite{shafranovich2005}; su principal limitación aparece cuando se le
+exigen servicios de integridad, consulta y acceso concurrente que el formato no
+ofrece por sí mismo.

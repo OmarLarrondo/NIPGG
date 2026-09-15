@@ -1,48 +1,45 @@
 \section{Requerimientos funcionales}
-% caracter ́ısticas, acciones, actores o entidades que definen de manera unica el flujo de trabajo de la organizaci ́on.
 
-\subsection*{Características}
-El prototipo desarrollado debe proporcionar una forma de solicitar, almacenar y manejar la información necesaria en archivos .csv
+Los requerimientos funcionales describen el comportamiento observable del
+prototipo y permiten vincular las necesidades de PuellaGame con las operaciones
+que ofrece la aplicación. Cada requerimiento se formula de manera verificable y
+se aplica, cuando corresponde, a las entidades \emph{Sucursal}, \emph{Premio} y
+\emph{Cliente}.
 
-\subsection*{Entidades y actores}
-Las entidades que nos permitirán el manejo de dicha información serán:
-\begin{itemize}
-    \item Sucursal: con un identificador entero y único, nombre, dirección y teléfono.
-    \item Premio: con un identificador entero y único, nombre, descripción, puntos requeridos y existencias.
-    \item Cliente: con un identificador entero y único, nombre, correo, teléfono y puntos acumulados.
-\end{itemize}
+\begin{enumerate}[label=\textbf{RF-\arabic*.}, leftmargin=*]
+    \item \textbf{Administrar entidades.} El sistema deberá permitir registrar,
+    consultar, editar y eliminar sucursales, premios y clientes desde una
+    interfaz de consola.
+    \item \textbf{Registrar información.} Para cada alta, el sistema solicitará
+    los atributos definidos para la entidad, validará la entrada y rechazará un
+    identificador que ya se encuentre registrado.
+    \item \textbf{Consultar por llave.} El operador proporcionará el
+    identificador de una entidad y el sistema devolverá todos los datos del
+    registro correspondiente o informará que este no existe.
+    \item \textbf{Editar información.} El sistema conservará la llave del
+    registro seleccionado y sustituirá sus demás atributos por valores nuevos
+    previamente validados.
+    \item \textbf{Eliminar información.} El sistema solicitará confirmación
+    antes de retirar de forma persistente el registro identificado.
+    \item \textbf{Persistir en CSV.} Cada cambio deberá guardarse de inmediato
+    en el archivo asociado con la entidad: \texttt{sucursales.csv},
+    \texttt{premios.csv} o \texttt{clientes.csv}. Al iniciar una ejecución, el
+    sistema deberá leer los registros existentes.
+    \item \textbf{Validar entradas.} Los identificadores deberán ser enteros
+    positivos; los puntos y existencias, enteros no negativos; los textos
+    obligatorios no podrán estar vacíos; los correos deberán tener un formato
+    válido y los teléfonos deberán contener diez dígitos.
+    \item \textbf{Manejar errores.} Ante datos inválidos, llaves ausentes o
+    duplicadas y fallos de lectura o escritura, la aplicación deberá explicar
+    la causa al operador sin finalizar inesperadamente y permitirle continuar.
+    \item \textbf{Navegar por menús.} El menú principal deberá dar acceso a las
+    tres entidades, y cada submenú deberá ofrecer las cuatro operaciones CRUD,
+    además de una opción para regresar o salir.
+\end{enumerate}
 
-Los actores principales que estarán en contacto con el prototipo serán:
-\begin{itemize}
-    \item Administrador del centro: Quien será el usuario final del prototipo y quien administra la información del centro.
-\end{itemize}
-
-\subsection*{Acciones/operaciones CRUD}
-El manejo de la información sobre sucursales, premios y clientes permitirá las siguientes acciones:
-\begin{itemize}
-    \item Agregar información sobre sucursales, premios y clientes.
-    \item Consultar la información sobre las sucursales, premios y clientes.
-    \item Editar información sobre sucursales, premios y clientes.
-    \item Eliminar información sobre sucursales, premios y clientes.
-    \item Guardar la información sobre estas tres entidades en archivos .csv de forma persistente.
-    \item Leer la información de estos archivos para poder realizar las consultas en cuqluier momento.
-    \item Organizar la información sobre los tres entes de forma adecuada.
-\end{itemize}
-
-\subsection*{Interfaz de usuario}
-Se proporcionará un menú de interacción que permite realizar las operaciones antes descritas para cada entidad.
-
-\subsection*{Consultas con llave}
-El sistema puede recibir una llave de entidad para devolver toda la información relacionada.
-
-\subsection*{Validación}
-El prototipo puede almacenar únicamente el formato específicado para cada uno de los parámetros definidos de cada entidad.
-
-\subsection*{Manejo de excepciones}
-El usuario debe poder observar el error cometido durante la ejecución del prototipo.
-
-
-
-
-
-
+Las entidades comparten un identificador entero y único. \emph{Sucursal}
+conserva nombre, dirección y teléfono; \emph{Premio}, nombre, descripción,
+puntos requeridos y existencias; y \emph{Cliente}, nombre, correo, teléfono y
+puntos acumulados. El operador autorizado es el actor que ejecuta las acciones,
+mientras que el administrador recibe la información resultante para apoyar la
+gestión del centro.

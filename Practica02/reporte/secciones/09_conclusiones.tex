@@ -1,2 +1,23 @@
 \section{Conclusiones}
-% Pendiente de redacción colaborativa después de integrar y probar el prototipo.
+
+El análisis de PuellaGame permitió transformar una necesidad operativa urgente
+en un conjunto de requerimientos verificables. La organización necesita
+conservar información de sucursales, premios y clientes, recuperarla mediante
+una llave y modificarla sin perder persistencia. El prototipo responde a ese
+alcance mediante menús de consola, operaciones CRUD, validación de entradas,
+manejo de excepciones y un archivo CSV independiente para cada entidad.
+
+La separación entre modelos, repositorios, servicios, interfaz y validaciones
+resultó fundamental para que el almacenamiento en archivos no se confundiera
+con la lógica de negocio. Esta arquitectura permite probar cada responsabilidad
+de forma independiente y deja localizada la sustitución futura de los
+repositorios CSV por componentes conectados a una base de datos.
+
+La comparación tecnológica muestra que los CSV son apropiados como mecanismo
+temporal: son simples, legibles y suficientes para iniciar la captura. No
+obstante, no proporcionan por sí mismos integridad centralizada, consultas
+declarativas, concurrencia, recuperación ni administración detallada de
+usuarios. Cuando PuellaGame evolucione hacia una operación con mayor volumen y
+múltiples usuarios, una base de datos será la alternativa adecuada. En este
+sentido, el prototipo no sustituye el diseño posterior, sino que produce un
+primer acervo estructurado y validado para facilitarlo.

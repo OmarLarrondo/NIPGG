@@ -2,9 +2,13 @@
 \input{preambulo}
 
 \begin{document}
+\pagenumbering{gobble}
 \input{secciones/00_portada}
+\clearpage
+\pagenumbering{roman}
 \tableofcontents
 \clearpage
+\pagenumbering{arabic}
 \input{secciones/01_introduccion}
 \input{secciones/02_requerimientos_candidatos}
 \input{secciones/03_contexto_sistema}
@@ -15,6 +19,21 @@
 \input{secciones/08_eleccion_tecnologica}
 \input{secciones/09_conclusiones}
 
-\section{Referencias}
-% Pendiente: incorporar aquí las fuentes citadas con formato APA.
+\clearpage
+\addcontentsline{toc}{section}{Referencias}
+\begin{thebibliography}{9}
+\bibitem{elmasri2016}
+Elmasri, R. y Navathe, S. B. (2016).
+\textit{Fundamentals of Database Systems} (7.a ed.). Pearson.
+
+\bibitem{shafranovich2005}
+Shafranovich, Y. (2005).
+\textit{Common Format and MIME Type for Comma-Separated Values (CSV) Files}
+(RFC 4180). Internet Engineering Task Force.
+\url{https://doi.org/10.17487/RFC4180}
+
+\bibitem{silberschatz2019}
+Silberschatz, A., Korth, H. F. y Sudarshan, S. (2019).
+\textit{Database System Concepts} (7.a ed.). McGraw-Hill.
+\end{thebibliography}
 \end{document}
