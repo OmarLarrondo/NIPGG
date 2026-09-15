@@ -65,21 +65,25 @@ public final class EntityCrudConsole<T> {
                 this::findById, this::update, this::delete).run();
     }
 
+    /** Solicita una entidad nueva y delega su almacenamiento al servicio. */
     private void create() {
         execute("Registro guardado", () -> service.crear(form.readNew(input)));
     }
 
+    /** Solicita una llave y muestra la entidad correspondiente. */
     private void findById() {
         int id = input.readPositiveInteger("ID a consultar: ");
         execute("Resultado", () -> service.buscarPorId(id));
     }
 
+    /** Solicita los nuevos datos de una entidad existente y los actualiza. */
     private void update() {
         int id = input.readPositiveInteger("ID a editar: ");
         execute("Registro actualizado",
                 () -> service.actualizar(form.readUpdated(id, input)));
     }
 
+    /** Solicita confirmación y elimina una entidad por su llave. */
     private void delete() {
         int id = input.readPositiveInteger("ID a eliminar: ");
         if (!input.readConfirmation("¿Confirmas la eliminación?")) {
@@ -95,6 +99,12 @@ public final class EntityCrudConsole<T> {
         }
     }
 
+    /**
+     * Ejecuta una operación y presenta de manera uniforme su resultado o error.
+     *
+     * @param title encabezado mostrado antes del resultado
+     * @param operation operación de servicio que se desea ejecutar
+     */
     private void execute(String title, ConsoleOperation<T> operation) {
         try {
             T entity = operation.run();
@@ -105,7 +115,11 @@ public final class EntityCrudConsole<T> {
         }
     }
 
-    /** Operación de consola que puede fallar por reglas de negocio. */
+    /**
+     * Operación de consola que puede fallar por reglas de negocio.
+     *
+     * @param <R> tipo de resultado producido por la operación
+     */
     @FunctionalInterface
     private interface ConsoleOperation<R> {
 

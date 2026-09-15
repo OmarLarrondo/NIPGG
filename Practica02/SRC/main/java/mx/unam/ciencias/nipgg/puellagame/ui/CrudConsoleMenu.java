@@ -73,6 +73,7 @@ public final class CrudConsoleMenu {
         }
     }
 
+    /** Muestra las operaciones disponibles para la entidad actual. */
     private void showMenu() {
         output.printf("%n=== %s ===%n", entityName);
         output.println("1. Agregar");

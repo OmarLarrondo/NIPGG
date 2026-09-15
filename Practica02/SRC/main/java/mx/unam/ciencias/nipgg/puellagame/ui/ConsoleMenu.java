@@ -67,6 +67,7 @@ public final class ConsoleMenu {
         output.println("Gracias por usar PuellaGame.");
     }
 
+    /** Muestra las opciones disponibles en el menú principal. */
     private void showMainMenu() {
         output.println();
         output.println("=== PuellaGame ===");

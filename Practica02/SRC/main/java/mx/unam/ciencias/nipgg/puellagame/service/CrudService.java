@@ -66,10 +66,42 @@ public interface CrudService<T, K> {
      */
     void eliminar(K key) throws ValidationException, EntityNotFoundException;
 
-    // Versiones asíncronas 
+    /**
+     * Crea una entidad de forma asíncrona.
+     *
+     * @param entity entidad a crear
+     * @return operación que concluye con la entidad creada
+     */
     CompletableFuture<T> crearAsync(T entity);
+
+    /**
+     * Busca una entidad por su llave de forma asíncrona.
+     *
+     * @param key llave a buscar
+     * @return operación que concluye con la entidad encontrada
+     */
     CompletableFuture<T> buscarPorIdAsync(K key);
+
+    /**
+     * Lista las entidades de forma asíncrona.
+     *
+     * @return operación que concluye con la lista de entidades
+     */
     CompletableFuture<List<T>> listarAsync();
+
+    /**
+     * Actualiza una entidad de forma asíncrona.
+     *
+     * @param entity entidad con los nuevos datos
+     * @return operación que concluye con la entidad actualizada
+     */
     CompletableFuture<T> actualizarAsync(T entity);
+
+    /**
+     * Elimina una entidad por su llave de forma asíncrona.
+     *
+     * @param key llave de la entidad a eliminar
+     * @return operación que concluye cuando finaliza la eliminación
+     */
     CompletableFuture<Void> eliminarAsync(K key);
 }

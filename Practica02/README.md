@@ -1,8 +1,9 @@
-# Práctica 02 - estructura modular de trabajo
+# Práctica 02 - PuellaGame
 
-Esta carpeta contiene únicamente el esqueleto colaborativo de la Práctica 02.
-No incluye respuestas del reporte, clases Java, métodos, archivos CSV con datos
-ni resultados de ejecución.
+Esta carpeta contiene el prototipo funcional de PuellaGame para administrar
+sucursales, premios y clientes mediante una interfaz de consola. El programa
+permite agregar, consultar por identificador, editar y eliminar registros con
+persistencia en archivos CSV, validación de entradas y manejo de errores.
 
 ## Estructura
 
@@ -28,7 +29,7 @@ Practica02/
 │       ├── 08_eleccion_tecnologica.tex
 │       └── 09_conclusiones.tex
 └── SRC/
-    ├── datos/                    # CSV persistentes, cuando se implementen
+    ├── datos/                    # CSV persistentes de las tres entidades
     ├── Doc/                      # Javadoc generado para la entrega
     ├── main/java/mx/unam/ciencias/nipgg/puellagame/
     │   ├── app/                  # composición y punto de entrada
@@ -40,13 +41,46 @@ Practica02/
     │   └── exception/            # excepciones del dominio/persistencia
     └── test/java/mx/unam/ciencias/nipgg/puellagame/
         ├── repository/
-        └── service/
+        ├── service/
+        ├── ui/
+        └── validation/
 ```
 
 La separación sigue una arquitectura por capas. El patrón **Repository** aísla
 el almacenamiento CSV del resto del programa y la capa **Service** concentra
 los casos de uso. Esto permite desarrollar o probar una capa sin mezclarla con
 el menú ni con el formato físico de los archivos.
+
+## Requisitos y uso
+
+- Java 25.
+- Maven 3.8 o posterior.
+
+Todos los comandos siguientes se ejecutan desde `Practica02/SRC`, ya que la
+aplicación resuelve los archivos persistentes respecto al directorio `datos/`.
+
+Compilar y ejecutar las pruebas:
+
+```bash
+mvn clean test
+```
+
+Iniciar la aplicación:
+
+```bash
+mvn compile
+java -cp target/classes mx.unam.ciencias.nipgg.puellagame.app.Main
+```
+
+Generar la documentación de todas las clases y métodos:
+
+```bash
+mvn javadoc:javadoc
+```
+
+El Javadoc queda disponible en `SRC/Doc/apidocs/index.html`. Los archivos
+`sucursales.csv`, `premios.csv` y `clientes.csv` incluyen encabezados, utilizan
+UTF-8 y se actualizan inmediatamente después de cada operación.
 
 ## División sugerida para cinco integrantes
 
@@ -69,10 +103,9 @@ Javadoc final, empaquetado y prueba integral se cierran entre todo el equipo.
 
 ## Archivos y directorios por opción
 
-Las rutas siguientes establecen el área principal de edición de cada opción.
-Los nombres de las clases todavía no están definidos; cada archivo Java nuevo
-deberá crearse dentro del paquete indicado. Nadie debe modificar módulos ajenos
-sin coordinarlo previamente con su responsable.
+Las rutas siguientes registran el área principal que correspondió a cada
+integrante durante el desarrollo. Cualquier cambio posterior en un módulo ajeno
+debe coordinarse con su responsable.
 
 ### Integrante 1 - Yahir León Bautista
 
@@ -159,7 +192,7 @@ errores se comunicarán mediante `ValidationException`, con mensajes claros para
 la interfaz. La capa de repositorio comprobará, además, que los identificadores
 no estén repetidos.
 
-## Entregables previstos
+## Estructura de entrega
 
 ```text
 Practica02_ÑIPGG.zip
@@ -172,5 +205,5 @@ Practica02_ÑIPGG.zip
 ```
 
 No se crea `Diagramas/` ni `SQL/` porque la Práctica 02 no los solicita. La
-estructura de desarrollo podrá conservar pruebas y paquetes; al cierre deberá
-verificarse que el paquete entregable incluya exactamente los artefactos pedidos.
+estructura de desarrollo conserva pruebas y paquetes. Antes de entregar debe
+verificarse que el archivo ZIP incluya exactamente los artefactos solicitados.

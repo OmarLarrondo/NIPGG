@@ -172,6 +172,13 @@ public final class ConsoleInput {
         }
     }
 
+    /**
+     * Muestra una pregunta y consume la siguiente línea disponible.
+     *
+     * @param prompt texto que se muestra antes de leer
+     * @return línea leída sin transformaciones
+     * @throws IllegalStateException si el flujo de entrada terminó
+     */
     private String readLine(String prompt) {
         output.print(prompt);
         if (!scanner.hasNextLine()) {
@@ -180,6 +187,11 @@ public final class ConsoleInput {
         return scanner.nextLine();
     }
 
+    /**
+     * Presenta un error de validación recuperable.
+     *
+     * @param exception error cuyo mensaje se mostrará
+     */
     private void showValidationError(ValidationException exception) {
         output.println("Error: " + exception.getMessage());
     }

@@ -29,6 +29,7 @@ import mx.unam.ciencias.nipgg.puellagame.ui.SucursalConsoleForm;
  */
 public final class Main {
 
+    /** Impide crear instancias de la clase de arranque. */
     private Main() {
     }
 
@@ -58,6 +59,11 @@ public final class Main {
         menu.run();
     }
 
+    /**
+     * Define la correspondencia entre sucursales y sus filas CSV.
+     *
+     * @return esquema CSV de sucursales
+     */
     private static CsvSchema<Sucursal, Integer> sucursalSchema() {
         return new CsvSchema<>(List.of("idSucursal", "nombre", "direccion",
                 "telefono"), Sucursal::getId,
@@ -68,6 +74,11 @@ public final class Main {
                         fields.get(1), fields.get(2), fields.get(3)));
     }
 
+    /**
+     * Define la correspondencia entre premios y sus filas CSV.
+     *
+     * @return esquema CSV de premios
+     */
     private static CsvSchema<Premio, Integer> premioSchema() {
         return new CsvSchema<>(List.of("idPremio", "nombre", "descripcion",
                 "puntosRequeridos", "existencias"), Premio::getId,
@@ -81,6 +92,11 @@ public final class Main {
                         Integer.parseInt(fields.get(4))));
     }
 
+    /**
+     * Define la correspondencia entre clientes y sus filas CSV.
+     *
+     * @return esquema CSV de clientes
+     */
     private static CsvSchema<Cliente, Integer> clienteSchema() {
         return new CsvSchema<>(List.of("idCliente", "nombre", "correo",
                 "telefono", "puntosAcumulados"), Cliente::getId,

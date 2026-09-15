@@ -1,1 +1,7 @@
+mx.unam.ciencias.nipgg.puellagame.app
+mx.unam.ciencias.nipgg.puellagame.exception
+mx.unam.ciencias.nipgg.puellagame.model
 mx.unam.ciencias.nipgg.puellagame.repository
+mx.unam.ciencias.nipgg.puellagame.service
+mx.unam.ciencias.nipgg.puellagame.ui
+mx.unam.ciencias.nipgg.puellagame.validation

@@ -21,6 +21,7 @@ import mx.unam.ciencias.nipgg.puellagame.validation.Validator;
  */
 public class PremioService implements CrudService<Premio, Integer> {
 
+    /** Repositorio utilizado para consultar y persistir premios. */
     private final CrudRepository<Premio, Integer> repository;
 
     /**

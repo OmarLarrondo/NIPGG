@@ -20,6 +20,7 @@ import mx.unam.ciencias.nipgg.puellagame.validation.Validator;
  */
 public class SucursalService implements CrudService<Sucursal, Integer> {
 
+    /** Repositorio utilizado para consultar y persistir sucursales. */
     private final CrudRepository<Sucursal, Integer> repository;
 
     /**
@@ -178,6 +179,13 @@ public class SucursalService implements CrudService<Sucursal, Integer> {
     // Validaciones privadas
     // ------------------------------------------------------------------
 
+    /**
+     * Valida y normaliza todos los campos de una sucursal.
+     *
+     * @param sucursal entidad que se desea validar
+     * @param esNueva indica si la validación corresponde a un alta
+     * @throws ValidationException si la entidad o alguno de sus campos es inválido
+     */
     private void validarSucursal(Sucursal sucursal, boolean esNueva)
             throws ValidationException {
         if (sucursal == null) {
@@ -194,6 +202,12 @@ public class SucursalService implements CrudService<Sucursal, Integer> {
         sucursal.setTelefono(Validator.validatePhone(sucursal.getTelefono()));
     }
 
+    /**
+     * Comprueba que una llave sea un entero positivo.
+     *
+     * @param id llave que se desea validar
+     * @throws ValidationException si la llave es nula o no positiva
+     */
     private void validarLlave(Integer id) throws ValidationException {
         if (id == null) {
             throw new ValidationException("El ID no puede ser nulo.");

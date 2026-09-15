@@ -5,6 +5,10 @@ import mx.unam.ciencias.nipgg.puellagame.model.Premio;
 /** Captura y presenta los premios desde la interfaz de consola. */
 public final class PremioConsoleForm implements EntityConsoleForm<Premio> {
 
+    /** Construye un formulario de premios sin estado. */
+    public PremioConsoleForm() {
+    }
+
     /** {@inheritDoc} */
     @Override
     public Premio readNew(ConsoleInput input) {
@@ -27,6 +31,13 @@ public final class PremioConsoleForm implements EntityConsoleForm<Premio> {
                 + "\nExistencias: " + premio.getExistencias();
     }
 
+    /**
+     * Captura los campos editables de un premio.
+     *
+     * @param id identificador que conservará la entidad
+     * @param input lector validado de consola
+     * @return premio construido con los valores capturados
+     */
     private Premio read(int id, ConsoleInput input) {
         return new Premio(id,
                 input.readRequiredText("Nombre: "),

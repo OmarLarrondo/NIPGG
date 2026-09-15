@@ -21,6 +21,7 @@ import mx.unam.ciencias.nipgg.puellagame.validation.Validator;
  */
 public class ClienteService implements CrudService<Cliente, Integer> {
 
+    /** Repositorio utilizado para consultar y persistir clientes. */
     private final CrudRepository<Cliente, Integer> repository;
 
     /**
