@@ -1,33 +1,328 @@
-% Fuente estructural del README_ÑIPGG.pdf requerido para la entrega.
+% Manual de instalación y ejecución de PuellaGame.
 \documentclass[11pt,letterpaper]{article}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.15cm,headheight=24pt]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\definecolor{Navy}{HTML}{172A46}
+\definecolor{Blue}{HTML}{246BCE}
+\definecolor{Teal}{HTML}{0F9D8A}
+\definecolor{Sky}{HTML}{EAF3FF}
+\definecolor{Mint}{HTML}{E9F8F5}
+\definecolor{Ink}{HTML}{263444}
+\definecolor{Muted}{HTML}{607080}
+\definecolor{Rule}{HTML}{D9E2EC}
+\definecolor{CodeBg}{HTML}{F4F7FA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Blue,
+  urlcolor=Blue,
+  pdftitle={README PuellaGame - Equipo ÑIPGG},
+  pdfauthor={Equipo ÑIPGG}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=2pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.18}
+\color{Ink}
+
+\titleformat{\section}
+  {\Large\bfseries\color{Navy}}{}{0pt}{}
+  [\vspace{-0.35em}\color{Rule}\titlerule]
+\titleformat{\subsection}
+  {\large\bfseries\color{Blue}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.65em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.35em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textcolor{Muted}{\small PuellaGame}}
+\rhead{\textcolor{Muted}{\small Equipo ÑIPGG}}
+\cfoot{\textcolor{Muted}{\small \thepage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Rule}\leaders\hrule height \headrulewidth\hfill}}
+
+\lstdefinestyle{terminal}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{CodeBg},
+  frame=single,
+  rulecolor=\color{Rule},
+  framerule=0.5pt,
+  xleftmargin=0.3em,
+  framexleftmargin=0.6em,
+  framexrightmargin=0.6em,
+  framesep=6pt,
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible
+}
+
+\newtcolorbox{summarybox}[1]{
+  enhanced,
+  colback=Sky,
+  colframe=Blue,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=4mm,right=4mm,top=2mm,bottom=2mm
+}
+
+\newtcolorbox{notebox}[1]{
+  enhanced,
+  colback=Mint,
+  colframe=Teal,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title=#1,
+  boxrule=0.7pt,
+  arc=2mm,
+  left=4mm,right=4mm,top=2mm,bottom=2mm
+}
 
 \begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[Navy] (current page.north west) rectangle ([yshift=-5.2cm]current page.north east);
+    \fill[Blue] ([yshift=-5.2cm]current page.north west) rectangle ([yshift=-5.35cm]current page.north east);
+  \end{tikzpicture}
+
+  \vspace*{0.6cm}
+  {\color{white}\large Universidad Nacional Autónoma de México\par}
+  \vspace{0.2cm}
+  {\color{white}\normalsize Facultad de Ciencias \textbullet{} Fundamentos de Bases de Datos\par}
+
+  \vspace{2.6cm}
+  {\color{Blue}\bfseries\large PRÁCTICA 02\par}
+  \vspace{0.25cm}
+  {\fontsize{30}{34}\selectfont\bfseries\color{Navy}PuellaGame\par}
+  \vspace{0.18cm}
+  {\Large\color{Muted}Manual de requisitos, compilación y ejecución\par}
+
+  \vspace{0.8cm}
+  \begin{summarybox}{Propósito del sistema}
+    Prototipo de consola para administrar \textbf{sucursales, premios y clientes}.
+    Ofrece operaciones de alta, consulta por identificador, modificación y
+    eliminación, con persistencia en archivos CSV, validación de datos y manejo
+    de excepciones.
+  \end{summarybox}
+
+  \vfill
+  {\large\bfseries\color{Navy}Equipo ÑIPGG\par}
+  \vspace{0.35cm}
+  \begin{tabularx}{\textwidth}{>{\bfseries}p{0.7cm}X>{\raggedleft\arraybackslash}p{2.8cm}}
+    \toprule
+    No. & Integrante & Número de cuenta \\
+    \midrule
+    1 & Omar Alejandro Juárez Larrondo & 322245244 \\
+    2 & Yahir León Bautista & 322176542 \\
+    3 & Diego Hernández Gómez & 321069942 \\
+    4 & Miguel Ángel Jiménez Ramírez & 119000887 \\
+    5 & Ana Lilia Carballido Camacateco & 315314601 \\
+    \bottomrule
+  \end{tabularx}
+
+  \vspace{0.7cm}
+  {\small\color{Muted}Semestre 2027-I \hfill Versión 1.0\par}
+\end{titlepage}
+\pagenumbering{arabic}
+
+\section{1. Requisitos previos}
+
+\begin{tabular}{>{\bfseries\color{Navy}}p{3.6cm}>{\raggedright\arraybackslash}p{12.1cm}}
+  \toprule
+  Componente & Requisito \\
+  \midrule
+  Sistema operativo & Linux, macOS o Windows con terminal disponible. \\
+  Java & JDK 25, requerido por \texttt{maven.compiler.release}. \\
+  Maven & Apache Maven 3.8 o posterior. \\
+  Codificación & UTF-8 para fuentes y archivos CSV. \\
+  Conectividad & Necesaria en la primera compilación si Maven aún no tiene las dependencias. \\
+  \bottomrule
+\end{tabular}
+
+Verificar las herramientas instaladas:
+
+\begin{lstlisting}[style=terminal]
+java --version
+javac --version
+mvn --version
+\end{lstlisting}
+
+\begin{notebox}{Directorio de trabajo}
+Todos los comandos de este manual deben ejecutarse desde \texttt{Practica02/SRC}.
+La aplicación busca los archivos persistentes en la ruta relativa
+\texttt{datos/}; ejecutarla desde otro directorio impediría localizar los CSV
+entregables.
+\end{notebox}
+
+\section{2. Organización del sistema}
+
+\begin{tabular}{>{\ttfamily\color{Blue}}p{3.4cm}>{\raggedright\arraybackslash}p{12.3cm}}
+  \toprule
+  Ruta & Contenido \\
+  \midrule
+  model/ & Entidades \texttt{Sucursal}, \texttt{Premio} y \texttt{Cliente}. \\
+  repository/ & Persistencia y conversión de registros CSV. \\
+  service/ & Reglas de negocio y operaciones CRUD. \\
+  ui/ & Menús, formularios y lectura validada de consola. \\
+  validation/ & Validación reutilizable de entradas. \\
+  datos/ & Archivos \texttt{sucursales.csv}, \texttt{premios.csv} y \texttt{clientes.csv}. \\
+  test/java/... & Pruebas automatizadas de repositorios, servicios, interfaz y validación. \\
+  Doc/apidocs/ & Documentación HTML generada con Javadoc. \\
+  \bottomrule
+\end{tabular}
+
+\section{3. Compilación y verificación}
+
+\subsection{Ejecutar todas las pruebas}
+
+La forma recomendada de preparar el proyecto es limpiar los artefactos previos,
+compilar las fuentes y ejecutar la suite completa:
+
+\begin{lstlisting}[style=terminal]
+cd Practica02/SRC
+mvn clean test
+\end{lstlisting}
+
+Una ejecución correcta termina con \texttt{BUILD SUCCESS}. La versión entregada
+incluye pruebas para las operaciones CRUD, persistencia CSV, validaciones y
+navegación por consola.
+
+\subsection{Compilar sin repetir las pruebas}
+
+\begin{lstlisting}[style=terminal]
+mvn compile
+\end{lstlisting}
+
+Las clases compiladas quedan en \texttt{target/classes}. El directorio
+\texttt{target/} es regenerable y no debe editarse manualmente.
+
+\subsection{Generar la documentación}
+
+\begin{lstlisting}[style=terminal]
+mvn javadoc:javadoc
+\end{lstlisting}
+
+El punto de entrada de la documentación es
+\texttt{Doc/apidocs/index.html}. La configuración del proyecto trata las
+advertencias de Javadoc como errores para evitar entregar documentación incompleta.
+
+\section{4. Ejecución de PuellaGame}
+
+Después de compilar, iniciar la aplicación con:
+
+\begin{lstlisting}[style=terminal]
+java -cp target/classes mx.unam.ciencias.nipgg.puellagame.app.Main
+\end{lstlisting}
+
+El menú principal permite seleccionar la entidad que se desea administrar:
+
+\begin{lstlisting}[style=terminal]
+=== PuellaGame ===
+1. Gestionar sucursales
+2. Gestionar premios
+3. Gestionar clientes
+0. Salir
+\end{lstlisting}
+
+\clearpage
+\subsection{Operaciones disponibles}
+
+Cada submenú ofrece las mismas operaciones:
+
+\begin{tabular}{>{\bfseries\color{Navy}}p{2.7cm}>{\raggedright\arraybackslash}p{13cm}}
+  \toprule
+  Operación & Comportamiento \\
+  \midrule
+  Agregar & Solicita todos los campos, valida el identificador y rechaza duplicados. \\
+  Consultar & Recibe la llave de la entidad y muestra todos sus datos. \\
+  Editar & Conserva la llave indicada y reemplaza los demás campos validados. \\
+  Eliminar & Solicita confirmación antes de retirar el registro del CSV. \\
+  \bottomrule
+\end{tabular}
+
+Las opciones no válidas, valores no numéricos, enteros fuera de rango, correos
+incorrectos y teléfonos que no tengan diez dígitos se informan sin cerrar el
+programa. La captura se repite hasta recibir un valor aceptable.
+
+\section{5. Persistencia y formato CSV}
+
+Los cambios se escriben inmediatamente en un archivo independiente por entidad.
+Cada archivo contiene una primera fila de encabezados y utiliza comas como
+separadores:
+
+\begin{tabular}{>{\ttfamily\color{Blue}}p{3.4cm}>{\raggedright\arraybackslash}p{12.3cm}}
+  \toprule
+  Archivo & Columnas \\
+  \midrule
+  sucursales.csv & idSucursal, nombre, direccion, telefono \\
+  premios.csv & idPremio, nombre, descripcion, puntosRequeridos, existencias \\
+  clientes.csv & idCliente, nombre, correo, telefono, puntosAcumulados \\
+  \bottomrule
+\end{tabular}
+
+\begin{notebox}{Conservación de datos}
+No se deben eliminar los encabezados ni editar los archivos mientras el programa
+esté en ejecución. Los campos que contienen comas, comillas o saltos de línea se
+escapan conforme al formato CSV antes de guardarse.
+\end{notebox}
+
+\clearpage
+\section{6. Solución de problemas}
+
+\begin{tabular}{>{\raggedright\arraybackslash\bfseries\color{Navy}}p{4.2cm}>{\raggedright\arraybackslash}p{11.5cm}}
+  \toprule
+  Mensaje o síntoma & Acción recomendada \\
+  \midrule
+  Maven no disponible & Instalar Maven y confirmar que esté disponible en \texttt{PATH}. \\
+  Error de versión de Java & Seleccionar un JDK 25 y verificar \texttt{JAVA\_HOME}. \\
+  No se encuentra \texttt{datos/} & Ejecutar el programa desde \texttt{Practica02/SRC}. \\
+  ID duplicado & Elegir un entero positivo que no exista en el CSV correspondiente. \\
+  Entidad inexistente & Confirmar la llave antes de consultar, editar o eliminar. \\
+  CSV no legible & Revisar permisos, codificación UTF-8 y encabezados del archivo. \\
+  \bottomrule
+\end{tabular}
+
+\section{7. Lista de verificación}
+
+Antes de considerar preparada la parte de código de la entrega:
+
+\begin{itemize}
+  \item \texttt{mvn clean test} termina con \texttt{BUILD SUCCESS}.
+  \item \texttt{mvn javadoc:javadoc} termina sin advertencias.
+  \item El menú abre las tres entidades y permite las cuatro operaciones CRUD.
+  \item Los tres CSV conservan sus encabezados y reflejan los cambios realizados.
+  \item La aplicación informa errores de entrada sin finalizar inesperadamente.
+  \item El directorio \texttt{Doc/apidocs/} contiene la documentación generada.
+\end{itemize}
+
+\vfill
 \begin{center}
-  {\LARGE\textbf{README del equipo ÑIPGG}}\\[0.3cm]
-  {\large Práctica 02 - Fundamentos de Bases de Datos}
+  \small\color{Muted}
+  Equipo ÑIPGG \textbullet{} Práctica 02 \textbullet{} Fundamentos de Bases de Datos
 \end{center}
 
-\section*{Integrantes}
-\setlength{\tabcolsep}{4pt}
-\noindent
-\begin{tabularx}{\textwidth}{cXc}
-\toprule
-No. & Nombre completo & Número de cuenta \\
-\midrule
-1 & Omar Alejandro Juárez Larrondo & 322245244 \\
-2 & Yahir León Bautista & 322176542 \\
-3 & Diego Hernández Gómez & 321069942 \\
-4 & Miguel Ángel Jiménez Ramírez & 119000887 \\
-5 & Carballido Camacateco Ana Lilia & 315314601 \\
-\bottomrule
-\end{tabularx}
-
-\section*{Observaciones}
-% Espacio reservado para observaciones, quejas o sugerencias del equipo.
 \end{document}
