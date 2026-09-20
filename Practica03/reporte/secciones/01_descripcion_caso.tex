@@ -1,3 +1,143 @@
 \section{Descripción del caso de uso}
 
-% TODO: documentar únicamente el alcance acordado del caso de uso.
+\begin{resumencaso}
+\textbf{Propósito del modelo.} El modelo Entidad--Relación Extendido de
+\textit{PuellaGame} representa la información necesaria para seguir la
+experiencia de un cliente dentro de un centro de entretenimiento familiar y,
+al mismo tiempo, sostener la operación cotidiana de sus sucursales. El alcance
+abarca desde la adquisición y uso de una tarjeta hasta las partidas, la
+acumulación de puntos, los canjes, el inventario de premios, el mantenimiento
+de las máquinas y la participación del personal.
+\end{resumencaso}
+
+\subsection{Contexto del sistema}
+
+PuellaGame es una organización de entretenimiento presencial distribuida en
+sucursales. Cada sucursal reúne máquinas de juego, un catálogo físico de
+premios y personal con responsabilidades diferenciadas. La operación no se
+reduce al instante en que una persona juega: comienza cuando se registra a un
+cliente y se le asocia una tarjeta, continúa con las recargas y las partidas,
+y se extiende hasta la conversión de los puntos obtenidos en premios. Por ello,
+el modelo enlaza la actividad recreativa con los procesos administrativos que
+permiten que el servicio funcione.
+
+El proyecto surge porque la información de las distintas sucursales se mantiene
+en hojas de cálculo y registros físicos. El crecimiento de la organización hace
+necesario sustituir esa administración fragmentada por una base de datos que
+concentre los registros, preserve su consistencia y permita consultar la
+operación de las sucursales de manera uniforme.
+
+La tarjeta constituye el medio operativo del cliente. En ella se concentra el
+saldo disponible para jugar y el total de puntos acumulados; también permite
+relacionar cada partida con la persona que la realizó. Una partida ocurre en
+una máquina determinada y conserva su fecha, hora, puntaje y puntos ganados.
+Las máquinas corresponden a un juego y pertenecen a una sucursal, de manera
+que el sistema puede reconocer qué experiencia se ofreció, en qué equipo y en
+qué ubicación.
+
+El modelo distingue cuatro modalidades de juego: destreza, disparos, velocidad
+y ritmo. Esta especialización permite expresar reglas de recompensa propias de
+cada modalidad sin perder los datos comunes de todo juego. La bonificación
+asociada a la categoría VIP del cliente se conserva como un valor derivado en
+la partida, pues depende tanto de la actividad registrada como de la condición
+vigente del cliente.
+
+\Needspace{10\baselineskip}
+\subsection{Flujos cubiertos}
+
+El primer flujo corresponde al acceso y consumo del servicio. El sistema
+registra la visita de un cliente a una sucursal, la recarga recibida por su
+tarjeta y las partidas ejecutadas en las máquinas disponibles. Con esta
+secuencia se conserva una trazabilidad básica entre cliente, tarjeta, sucursal,
+juego y resultado, sin convertir el modelo conceptual en una descripción de
+pantallas o de procedimientos de software.
+
+Para ingresar a este flujo, el jugador compra una tarjeta por \$20.00 MXN y
+realiza una recarga inicial de \$10.00 MXN. La tarjeta permite pagar las
+partidas y conservar digitalmente los puntos ganados. Cada jugador puede tener
+una sola tarjeta activa; las recargas posteriores se registran junto con su
+monto, fecha, hora, sucursal y medio de abono.
+
+El segundo flujo corresponde a la fidelización. Los puntos obtenidos mediante
+las partidas se acumulan en la tarjeta y posteriormente pueden utilizarse en
+un canje. Cada canje se vincula con el cliente que lo realiza, con la sucursal
+en la que ocurre y con el premio otorgado. La disponibilidad de un premio se
+entiende por sucursal, ya que un mismo artículo puede existir en cantidades
+distintas según la ubicación. Esta separación permite representar el inventario
+local sin confundirlo con las propiedades generales del premio.
+
+El tercer flujo describe la continuidad operativa. Las máquinas reciben
+mantenimientos que son realizados por personal técnico; a su vez, el personal
+se adscribe a una sucursal y se especializa, de manera disjunta, en gerente,
+cajero, encargado de premios o técnico. Los cajeros intervienen en las
+recargas, los encargados de premios procesan los canjes, los técnicos atienden
+el mantenimiento y los gerentes administran la sucursal. De este modo, el
+modelo conserva la responsabilidad humana de las operaciones relevantes.
+
+\subsection{Reglas del negocio}
+
+\begin{resumencaso}
+Las reglas siguientes delimitan el significado de los registros del modelo.
+No describen pantallas ni algoritmos: expresan condiciones del negocio que una
+implementación posterior deberá preservar.
+\end{resumencaso}
+
+\begin{description}
+  \item[Tarjetas, costos y recargas.]
+  Cada jugador mantiene como máximo una tarjeta activa. Tanto el costo de una
+  partida como el importe de una recarga son múltiplos de diez. El método de
+  abono de una recarga puede ser efectivo, tarjeta de crédito o débito, o
+  PayPal.
+
+  \item[Visitas y categoría VIP.]
+  Una visita se reconoce cuando el jugador usa su tarjeta en una sucursal
+  durante una fecha determinada; varias partidas en esa misma sucursal y día
+  constituyen una sola visita. Al acumular al menos diez visitas en un mes, el
+  jugador obtiene la categoría VIP durante el mes siguiente y recibe un
+  diez por ciento adicional sobre los puntos de cada partida. Para conservar
+  el beneficio debe cumplir nuevamente el mínimo mensual.
+
+  \item[Recompensas por tipo de juego.]
+  Los juegos de destreza y disparos conceden un punto por cada caso de éxito.
+  Los juegos de velocidad y ritmo otorgan veinte puntos cuando el resultado
+  queda entre los primeros cinco lugares. La partida conserva, además, el
+  puntaje obtenido, los puntos ganados y el momento en que terminó.
+
+  \item[Premios y canjes.]
+  Los premios se orientan a los rangos infantil (de 3 a 12 años), juvenil (de
+  3 a 17 años) y adulto (18 años o más). Por su costo en puntos se clasifican
+  como bajos, de 20 a 1,000 puntos; medios, de 1,001 a 3,999; y grandes, de
+  4,000 a más de 10,000 puntos. Un canje requiere al menos veinte puntos y el
+  valor aproximado del premio equivale al cincuenta por ciento de los puntos
+  utilizados expresados en pesos; por ejemplo, veinte puntos permiten obtener
+  un premio cercano a \$10.00 MXN.
+
+  \item[Inventario y responsabilidad operativa.]
+  La cantidad disponible de cada premio se controla por sucursal. El cajero
+  vende tarjetas y refleja recargas; el encargado de premios verifica puntos,
+  procesa el canje y entrega el premio; el técnico registra los mantenimientos
+  de las máquinas; y el gerente administra la sucursal.
+\end{description}
+
+\subsection{Alcance y frontera conceptual}
+
+\begin{center}
+\begin{tabularx}{0.94\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.25\textwidth}X@{}}
+\toprule
+Dentro del alcance & Clientes y tarjetas; visitas; recargas; partidas y
+puntajes; juegos y máquinas; sucursales; premios, existencias y canjes;
+mantenimientos; empleados y funciones operativas. \\
+\midrule
+Fuera del alcance & Contabilidad, proveedores, compras, nómina, reservaciones,
+mercadotecnia, autenticación, infraestructura tecnológica y detalles de
+implementación de la aplicación. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+La frontera anterior mantiene el diagrama centrado en la información estable
+del negocio. Los elementos incluidos son aquellos que permiten reconstruir el
+ciclo principal de PuellaGame y asignar responsabilidad a sus operaciones. Los
+procesos excluidos podrían incorporarse en versiones posteriores, pero no son
+necesarios para explicar el dominio representado en esta primera versión del
+modelo Entidad--Relación Extendido.
