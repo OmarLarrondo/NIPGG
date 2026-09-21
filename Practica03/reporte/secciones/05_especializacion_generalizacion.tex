@@ -1,3 +1,27 @@
 \section{Especialización y generalización}
 
 % TODO: registrar estos elementos sólo si el modelo acordado los utiliza.
+Las especializaciones que se utilizaron fueron las siguientes:\\[2cm]
+
+    \item Todos los empleados tienen como atributos en común: 
+        \begin{itemize}
+            \item RFC
+            \item CURP
+            \item Nombre completo (Nombre, Apellido materno, Apellido Paterno)
+            \item Fecha de nacimiento
+            \item Teléfonos
+            \item Correos
+            \item Fecha de contratación
+            \item Salario
+        \end{itemize}
+
+        Un empleado debe ser de tipo:
+        \begin{itemize}
+            \item Gerente: Tiene como atributo no compartido su cédula profesional.
+            \item Cajero: Tiene com atributo propio su horario de trabajo.
+            \item Encargado premios: Tiene com atributo propio su horario de trabajo.
+            \item Técnico: Su atributo no compartido son las certificaciones con las que cuenta.
+        \end{itemize}
+
+En este caso, se maneja por separado las entidades Cajero y Encargado de premios aunque comparten un atributo en común, 
+porque no tienen más atributos según las reglas de negocio.
