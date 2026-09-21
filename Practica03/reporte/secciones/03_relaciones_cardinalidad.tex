@@ -1,3 +1,29 @@
 \section{Relaciones y cardinalidades}
 
 % TODO: describir las relaciones y sus cardinalidades a partir del diagrama revisado.
+
+Las relaciones y sus cardinalidades son:
+
+\begin{itemize}
+    \item \textbf{Pertenecer} (Cardinalidad \textbf{1:N}): relación entre \textbf{Sucursal} y \textbf{Máquina}. Una sucursal puede albergar múltiples máquinas, pero cada máquina pertenece exclusivamente a una sola sucursal.   
+    \item \textbf{Trabajar} (Cardinalidad \textbf{1:N}): relación entre \textbf{Sucursal} y \textbf{Empleado}. Una sucursal es el lugar de trabajo de varios empleados, y cada empleado está asignado a una sucursal específica.   
+    \item \textbf{Efectuar} (Cardinalidad \textbf{1:N}): relación entre \textbf{Sucursal} y \textbf{Recarga}. En una misma sucursal se realizan numerosas transacciones de recarga, pero cada recarga queda registrada en una única sucursal.   
+    \item \textbf{Saldar} (Cardinalidad \textbf{1:N}): relación entre \textbf{Sucursal} y \textbf{Canje}. Una sucursal procesa múltiples canjes de premios, mientras que cada canje se registra en la sucursal específica donde ocurrió.   
+    \item \textbf{Proceder en} (Cardinalidad \textbf{1:N}): relación entre \textbf{Sucursal} y \textbf{Visita}. Una sucursal acumula muchas visitas a lo largo del tiempo, y cada visita corresponde a un uso de tarjeta en una sola sucursal determinada.   
+    \item \textbf{Disponer} (Cardinalidad \textbf{N:M}): relación entre \textbf{Sucursal} y \textbf{Premio}. Cada sucursal dispone de una variedad de premios en su inventario, y un mismo tipo de premio puede estar disponible en diferentes sucursales.   
+    \item \textbf{Administrar} (Cardinalidad \textbf{1:1}): relación entre \textbf{Sucursal} y \textbf{Gerente}. Una sucursal es administrada por un único gerente, y ese gerente tiene a su cargo una sola sucursal.   
+    \item \textbf{Corresponder} (Cardinalidad \textbf{N:1}): relación entre \textbf{Máquina} y \textbf{Juego}. Puede haber varias máquinas que correspondan a un mismo tipo de juego, pero una máquina específica ejecuta un solo juego.   
+    \item \textbf{Ejecutar} (Cardinalidad \textbf{1:N}): relación entre \textbf{Máquina} y \textbf{Partida}. Una máquina es utilizada para ejecutar muchas partidas de los jugadores, mientras que cada partida se juega en una única máquina. 
+    \item \textbf{Tener} (Cardinalidad \textbf{1:N}): relación entre \textbf{Máquina} y \textbf{Mantenimiento}. Una misma máquina puede recibir múltiples intervenciones de mantenimiento a lo largo del tiempo, y cada mantenimiento se realiza sobre una máquina específica. 
+    \item \textbf{Registrar} (Cardinalidad \textbf{N:1}): relación entre \textbf{Partida} y \textbf{Tarjeta}. Una única tarjeta registra y acumula todas las partidas que el jugador ha jugado, mientras que cada partida queda asociada a una tarjeta específica. 
+    \item \textbf{Recibir} (Cardinalidad \textbf{1:N}): relación entre \textbf{Tarjeta} y \textbf{Recarga}. A una misma tarjeta se le pueden abonar múltiples recargas para seguir jugando, y cada recarga se realiza sobre una tarjeta específica.
+    \item \textbf{Vender} (Cardinalidad \textbf{N:1}): relación entre \textbf{Tarjeta} y \textbf{Cajero}. Un mismo empleado con el rol de cajero es el encargado de vender y activar numerosas tarjetas, mientras que cada tarjeta es vendida por un único cajero.  
+    \item \textbf{Ingresar} (Cardinalidad \textbf{1:N}): relación entre \textbf{Tarjeta} y \textbf{Visita}. Una tarjeta puede acumular varias visitas en el sistema, y cada visita queda registrada en una tarjeta específica.   
+    \item \textbf{Poseer} (Cardinalidad \textbf{1:1}): relación entre \textbf{Tarjeta} y \textbf{Cliente}. Cada jugador registrado puede tener activa y poseer únicamente una tarjeta, y cada tarjeta pertenece a un único cliente.
+    \item \textbf{Hacer} (Cardinalidad \textbf{1:N}): relación entre \textbf{Cliente} y \textbf{Canje}. Un cliente puede realizar múltiples transacciones de canje de premios, mientras que cada canje es efectuado por un único cliente.
+    \item \textbf{Realizar} (Cardinalidad \textbf{N:1}): relación entre \textbf{Mantenimiento} y \textbf{Técnico}. Un técnico realiza múltiples intervenciones de mantenimiento en distintas máquinas, mientras que cada mantenimiento es llevado a cabo por un único técnico.
+    \item \textbf{Reflejar} (Cardinalidad \textbf{N:1}): relación entre \textbf{Recarga} y \textbf{Cajero}. Un solo empleado en puesto de cajero procesa y refleja múltiples recargas en diferentes tarjetas, mientras que cada recarga es reflejada por un único cajero.
+    \item \textbf{Procesar} (Cardinalidad \textbf{N:1}): relación entre \textbf{Canje} y \textbf{Encargado de premios}. Un solo encargado de premios se dedica a procesar, verificar puntos y entregar premios para múltiples transacciones de canje.   
+    \item \textbf{Otorgar} (Cardinalidad \textbf{N:1}): relación entre \textbf{Canje} y \textbf{Premio}. Un mismo tipo de premio puede ser otorgado a múltiples canjes, mientras que cada premio es otorgado a un único canje específico.
+\end{itemize}
+
