@@ -1,3 +1,221 @@
 \section{Entidades y atributos}
 
-% TODO: registrar las entidades, atributos, dominios e identificadores acordados.
+Esta sección registra las entidades y los atributos que se desprenden del caso
+de uso oficial de PuellaGame. Los nombres de los identificadores se mantienen
+consistentes con el resto del modelo: cada identificador permite distinguir de
+manera única a una entidad y no se confunde con un dato descriptivo.
+
+\subsection{Convenciones para los atributos}
+
+Los dominios que se presentan son dominios conceptuales; no representan aún
+tipos específicos de un sistema gestor de bases de datos. Cuando el caso de
+uso lo indica, se conserva la naturaleza del atributo:
+
+\begin{itemize}[leftmargin=*]
+  \item un atributo compuesto se divide en componentes con significado
+        propio, como el nombre completo y la dirección;
+  \item un atributo multivalorado puede tener varios valores para una misma
+        entidad, como los teléfonos, los correos y los horarios;
+  \item un atributo derivado se obtiene a partir de otros datos, como la edad
+        a partir de la fecha de nacimiento, la categoría VIP a partir de las
+        visitas y la bonificación VIP a partir de la categoría vigente del
+        cliente.
+\end{itemize}
+
+Las cantidades monetarias se expresan en pesos mexicanos (MXN), las fechas y
+horas corresponden al momento registrado por la operación, y los dominios
+enumerados conservan literalmente las opciones indicadas en el caso de uso.
+
+\subsection{Entidades del servicio}
+
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{0.8}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.19\textwidth}p{0.28\textwidth}X@{}}
+\toprule
+Entidad & Atributo & Dominio y caracterización \\
+\midrule
+Sucursal & \texttt{idSucursal} & Identificador único; entero positivo. \\
+ & \texttt{nombre} & Cadena de texto no vacía. \\
+ & \texttt{dirección} & Atributo compuesto por \texttt{calle},
+   \texttt{númeroInterior}, \texttt{númeroExterior}, \texttt{colonia} y
+   \texttt{estado}; cada componente conserva el dominio propio de una
+   dirección. \\
+ & \texttt{teléfono} & Cadena con formato de número telefónico. \\
+ & \texttt{horario} & Atributo multivalorado; conjunto de intervalos de atención
+   expresados mediante hora inicial y hora final. \\
+\midrule
+Cliente & \texttt{idCliente} & Identificador único; entero positivo. \\
+ & \texttt{nombreCompleto} & Atributo compuesto por \texttt{nombre},
+   \texttt{apellidoPaterno} y \texttt{apellidoMaterno}; cadenas de texto. \\
+ & \texttt{fechaNacimiento} & Fecha válida de nacimiento. \\
+ & \texttt{edad} & Atributo derivado; número entero no negativo calculado a
+   partir de \texttt{fechaNacimiento}. \\
+ & \texttt{sexo} & Enumeración: \texttt{masculino}, \texttt{femenino} o
+   \texttt{no binario}. \\
+ & \texttt{correoElectrónico} & Atributo multivalorado; conjunto de cadenas
+   con formato de correo electrónico. \\
+ & \texttt{teléfono} & Atributo multivalorado; conjunto de cadenas con formato
+   de número telefónico. \\
+ & \texttt{categoríaVIP} & Atributo derivado; indica si el cliente tiene la
+   categoría VIP conforme al número de visitas registrado. \\
+\midrule
+Tarjeta & \texttt{numeroTarjeta} & Identificador único; cadena o número de
+   tarjeta no repetido. \\
+ & \texttt{costoAdquisición} & Cantidad monetaria en MXN; el caso de uso fija
+   el costo de adquisición en \$20.00. \\
+ & \texttt{fechaCompra} & Fecha en la que se adquirió la tarjeta. \\
+ & \texttt{saldo} & Cantidad monetaria en MXN; valor no negativo. \\
+ & \texttt{puntosAcumulados} & Número entero no negativo. \\
+ & \texttt{estado} & Enumeración que distingue, al menos, los estados
+   \texttt{activa} e \texttt{inactiva}; permite expresar la regla de una sola
+   tarjeta activa por cliente. \\
+\midrule
+Visita & \texttt{idVisita} & Identificador único; entero positivo. \\
+ & \texttt{fecha} & Fecha en la que el jugador utilizó su tarjeta en una
+   sucursal. \\
+\midrule
+Recarga & \texttt{idRecarga} & Identificador único; entero positivo. \\
+ & \texttt{monto} & Cantidad monetaria en MXN, positiva y múltiplo de diez. \\
+ & \texttt{fecha} & Fecha en la que se realizó la recarga. \\
+ & \texttt{hora} & Hora en la que se realizó la recarga. \\
+ & \texttt{métodoAbono} & Enumeración: \texttt{efectivo}, \texttt{tarjeta de
+   crédito o débito} o \texttt{PayPal}. \\
+\midrule
+Canje & \texttt{idCanje} & Identificador único; entero positivo. \\
+ & \texttt{fecha} & Fecha en la que se realizó el canje. \\
+ & \texttt{hora} & Hora en la que se realizó el canje. \\
+ & \texttt{cantidadPremios} & Número entero positivo. \\
+ & \texttt{puntosUtilizados} & Número entero de puntos, con mínimo de veinte. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\Needspace{5\baselineskip}
+El costo de adquisición y la fecha de compra de la tarjeta se representan
+explícitamente porque aparecen como atributos en el diagrama. La recarga
+inicial de \$10.00 MXN sigue siendo una regla del negocio de la operación de
+venta y recarga. La categoría VIP de \texttt{Cliente} y la bonificación VIP de
+\texttt{Partida} se marcan como derivadas; su justificación y sus restricciones
+se documentan en las secciones correspondientes.
+
+\subsection{Entidades de juegos y operación}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.19\textwidth}p{0.28\textwidth}X@{}}
+\toprule
+Entidad & Atributo & Dominio y caracterización \\
+\midrule
+Juego & \texttt{idJuego} & Identificador único; entero positivo. \\
+ & \texttt{nombre} & Cadena de texto no vacía. \\
+ & \texttt{costo} & Cantidad monetaria en MXN, positiva y múltiplo de diez. \\
+\midrule
+Tipo de juego & \texttt{idTipo} & Identificador único; entero positivo. \\
+ & \texttt{nombre} & Nombre del tipo de juego; el dominio conserva los tipos
+   indicados en el caso de uso. \\
+ & \texttt{reglaPuntuacion} & Cadena que describe la regla para asignar puntos
+   al jugar ese tipo. \\
+ & \texttt{condicion} & Cadena que describe la condición bajo la que se aplica
+   la regla de puntuación. \\
+\midrule
+Máquina & \texttt{idMaquina} & Identificador único; entero positivo. \\
+ & \texttt{estado} & Enumeración: \texttt{activo}, \texttt{fuera de servicio}
+   o \texttt{mantenimiento}. \\
+\midrule
+Partida & \texttt{idPartida} & Identificador único; entero positivo. \\
+ & \texttt{puntajeObtenido} & Número entero no negativo obtenido por el
+   jugador. \\
+ & \texttt{puntosGanados} & Número entero no negativo otorgado por la partida,
+   de acuerdo con el tipo de juego. \\
+ & \texttt{bonificaciónVIP} & Atributo derivado; puntos adicionales que
+   corresponden al diez por ciento de la recompensa cuando el cliente tiene la
+   categoría VIP vigente. \\
+ & \texttt{fecha} & Fecha en la que terminó la partida. \\
+ & \texttt{hora} & Hora en la que terminó la partida. \\
+\midrule
+Mantenimiento & \texttt{idMantenimiento} & Identificador único; entero positivo. \\
+ & \texttt{fecha} & Fecha en la que se realizó el mantenimiento. \\
+ & \texttt{tipoMantenimiento} & Cadena que identifica el tipo de mantenimiento. \\
+ & \texttt{descripciónProblema} & Cadena de texto que describe el problema
+   atendido. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Entidad Premio}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.19\textwidth}p{0.28\textwidth}X@{}}
+\toprule
+Entidad & Atributo & Dominio y caracterización \\
+\midrule
+Premio & \texttt{idPremio} & Identificador único; entero positivo. \\
+ & \texttt{nombre} & Cadena de texto no vacía. \\
+ & \texttt{categoría} & Enumeración por puntos: \texttt{bajo} de 20 a 1,000;
+   \texttt{medio} de 1,001 a 3,999; y \texttt{grande} de 4,000 a más de
+   10,000 puntos. \\
+ & \texttt{rangoEdad} & Enumeración de los rangos \texttt{infantil} (3--12),
+   \texttt{juvenil} (3--17) y \texttt{adulto} (18 o más). Los rangos se
+   conservan tal como aparecen en el caso de uso. \\
+ & \texttt{valorAproximado} & Cantidad monetaria aproximada en MXN. \\
+ & \texttt{puntosNecesarios} & Número entero de puntos; debe permitir un canje
+   a partir de veinte puntos y es consistente con \texttt{categoría}. \\
+ & \texttt{cantidadDisponible} & Número entero no negativo que representa la
+   cantidad disponible del premio. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+La cantidad disponible se conserva como atributo de \texttt{Premio}, tal como
+aparece en el diagrama. Su interpretación operativa y su relación con la
+sucursal se precisan junto con las relaciones y las decisiones de diseño.
+
+\subsection{Empleado y subentidades operativas}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.19\textwidth}p{0.28\textwidth}X@{}}
+\toprule
+Entidad & Atributo & Dominio y caracterización \\
+\midrule
+Empleado & \texttt{CURP} & Identificador único de la persona empleada. \\
+ & \texttt{RFC} & Cadena con formato de RFC. \\
+ & \texttt{nombreCompleto} & Atributo compuesto por \texttt{nombre},
+   \texttt{apellidoPaterno} y \texttt{apellidoMaterno}; cadenas de texto. \\
+ & \texttt{fechaNacimiento} & Fecha válida de nacimiento. \\
+ & \texttt{teléfono} & Atributo multivalorado; conjunto de cadenas con formato
+   de número telefónico. \\
+ & \texttt{correoElectrónico} & Atributo multivalorado; conjunto de cadenas con formato
+   de correo electrónico. \\
+ & \texttt{fechaContratación} & Fecha válida de contratación. \\
+ & \texttt{salario} & Cantidad monetaria no negativa en MXN. \\
+\midrule
+Gerente & \texttt{cédulaProfesional} & Cadena que identifica la cédula
+   profesional del gerente. Hereda \texttt{CURP} y los atributos de
+   \texttt{Empleado}. \\
+\midrule
+Cajero & \texttt{horarioTrabajo} & Enumeración: \texttt{7:00--15:00} o
+   \texttt{15:00--23:00}. Hereda \texttt{CURP} y los atributos de
+   \texttt{Empleado}. \\
+\midrule
+Encargado de premios & \texttt{horarioTrabajo} & Enumeración: \texttt{7:00--15:00}
+   o \texttt{15:00--23:00}. Hereda \texttt{CURP} y los atributos de
+   \texttt{Empleado}. \\
+\midrule
+Técnico & \texttt{áreaEspecialidad} & Cadena que identifica el área de especialidad
+   del técnico. \\
+ & \texttt{Certificación} & Atributo multivalorado; conjunto de
+   certificaciones. Hereda \texttt{CURP} y los
+   atributos de \texttt{Empleado}. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Las subentidades de \texttt{Empleado} no repiten los atributos heredados ni
+requieren un identificador distinto: se identifican mediante la \texttt{CURP}
+de la superentidad. En la versión actual del diagrama, \texttt{Juego} se
+relaciona con \texttt{Tipo de juego}; por ello, los tipos y sus reglas de
+puntuación se describen mediante los atributos de esta última entidad y no
+como cuatro subentidades independientes.
