@@ -6,13 +6,13 @@ Las restricciones de participación de las relaciones son:
 
 \item \textbf{Pertenecer}: relación entre \textbf{Sucursal} y \textbf{Máquina}, en este caso la sucursal tiene participación parcial ya que puede que aún no tenga máquinas, si es que abrió recientemente; por otra parte, Máquina debe ser total dado que dice ``Cada máquina pertenece exclusivamente a una sucursal'', lo que implica que las máquinas siempre deben pertenecer a alguna sucursal.
 
-\item \textbf{Trabajar}: relación entre \textbf{Sucursal} y \textbf{Empleado}, en este caso la sucursal tiene participación parcial ya que puede registrarse una nueva sucursal sin personal; por el contrario, el Empleado necesita forzosamente trabajar en alguna sucursal para ser empleado, por lo que tiene participación total.
+\item \textbf{Trabajar}: relación entre \textbf{Sucursal} y \textbf{Empleado}, en este caso la sucursal tiene participación parcial ya que puede existir una nueva sucursal sin personal; por el contrario, el Empleado necesita forzosamente trabajar en alguna sucursal para ser empleado, por lo que tiene participación total.
 
-\item \textbf{Realizarse en}: relación entre \textbf{Sucursal} y \textbf{Recarga}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal registrada que por x tiempo no se realicen recargas; en cuanto a Recarga, debe ser total dado que para que se realice una recarga debe ser hecha en una sucursal y debe registrar esa sucursal.
+\item \textbf{Efectuar}: relación entre \textbf{Sucursal} y \textbf{Recarga}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal registrada que no tenga ninguna recarga hecha; en cuanto a Recarga, debe ser total dado que para que se realice una recarga debe ser hecha en una sucursal y debe registrar esa sucursal.
 
-\item \textbf{Realizarse en}: relación entre \textbf{Sucursal} y \textbf{Canje}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal registrada que por x tiempo no se realicen canjes; por otro lado, un canje debe registrar la sucursal en la que se realizó, por ello debe tener participación total.
+\item \textbf{Saldar}: relación entre \textbf{Sucursal} y \textbf{Canje}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal sin canjes hechos; por otro lado, un canje debe registrar la sucursal en la que se realizó, por ello debe tener participación total.
 
-\item \textbf{Realizarse en}: relación entre \textbf{Sucursal} y \textbf{Visita}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal registrada que por x tiempo no tenga visitas; por otro lado, una Visita tiene que ser obligatoriamente en una sucursal, por lo que debe tener participación total.
+\item \textbf{Proceder en}: relación entre \textbf{Sucursal} y \textbf{Visita}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal que aun no tenga visitas; por otro lado, una Visita tiene que ser obligatoriamente en una sucursal, por lo que debe tener participación total.
 
 \item \textbf{Disponer}: relación entre \textbf{Sucursal} y \textbf{Premio}, en este caso la sucursal tiene participación total ya que cada sucursal debe tener un inventario de premios, mientras que Premio tiene participación parcial, pues puede haber premios que ya no estén en una sucursal.
 
@@ -20,21 +20,21 @@ Las restricciones de participación de las relaciones son:
 
 \item \textbf{Corresponder}: relación entre \textbf{Máquina} y \textbf{Juego}, en este caso Máquina tiene participación total ya que cada máquina debe corresponder a un juego y Juego tiene participación parcial ya que puede haber juegos que aún no tengan una máquina.
 
-\item \textbf{Ejecutar}: relación entre \textbf{Máquina} y \textbf{Partida}, en este caso Máquina tiene participación parcial, puede haber una máquina en estado de mantenimiento por lo que no puede ejecutarse, mientras que una partida tiene participación total debido a que debe ejecutarse necesariamente en una máquina.
+\item \textbf{Ejecutar}: relación entre \textbf{Máquina} y \textbf{Partida}, en este caso Máquina tiene participación parcial, puede haber una máquina que aun no se usada y no tenga partidas, mientras que Partida tiene participación total debido a que debe ejecutarse necesariamente en una máquina.
 
-\item \textbf{Recibir}: relación entre \textbf{Máquina} y \textbf{Mantenimiento}, en este caso Máquina tiene participación parcial porque puede una máquina estar en perfecto estado, mientras que Mantenimiento tiene participación total, pues debe ser obligatoriamente sobre una máquina.
+\item \textbf{Tener}: relación entre \textbf{Máquina} y \textbf{Mantenimiento}, en este caso Máquina tiene participación parcial porque puede una máquina estar en perfecto estado, mientras que Mantenimiento tiene participación total, pues debe ser obligatoriamente sobre una máquina.
 
 \item \textbf{Registrar}: relación entre \textbf{Partida} y \textbf{Tarjeta}, en este caso Partida tiene participación total debido a que no puede existir una partida si no fue registrada por una tarjeta y Tarjeta tiene participación parcial, pues puede ser recién adquirida y aún no ser usada.
 
 \item \textbf{Recibir}: relación entre \textbf{Tarjeta} y \textbf{Recarga}, en este caso Tarjeta tiene participación total, ya que al obtenerla y registrar se debe realizar una recarga de \$10.00 y Recarga también es total, dado que una recarga debe ser necesariamente dada a una tarjeta.
 
-\item \textbf{Vender}: relación entre \textbf{Tarjeta} y \textbf{Cajero}, en este caso Tarjeta tiene participación total, debido a que su registro depende de que un cajero la venda a un cliente, y Cajero es parcial, puede no vender tarjetas por un tiempo indeterminado.
+\item \textbf{Vender}: relación entre \textbf{Tarjeta} y \textbf{Cajero}, en este caso Tarjeta tiene participación total, debido a que su registro depende de que un cajero la venda a un cliente, y Cajero es parcial, puede que aun no venda ninguna tarjeta.
 
-\item \textbf{Registrar}: relación entre \textbf{Tarjeta} y \textbf{Visita}, en este caso Tarjeta tiene participación parcial dado que puede existir la tarjeta y no necesariamente registrar una visita cada día; por otro lado, Visita tiene participación total ya que solo se registra una visita una vez se usa una tarjeta.
+\item \textbf{Ingresar}: relación entre \textbf{Tarjeta} y \textbf{Visita}, en este caso Tarjeta tiene participación parcial dado que puede existir la tarjeta y no necesariamente registrar una ninguna visita; por otro lado, Visita tiene participación total ya que solo se registra una visita una vez se usa una tarjeta.
 
 \item \textbf{Poseer}: relación entre \textbf{Tarjeta} y \textbf{Cliente}, en este caso Tarjeta tiene participación total, pues no tiene sentido registrar una tarjeta inactiva, es decir, sin que ningún cliente la use, mientras que Cliente tiene participación total ya que para usar las instalaciones debe tener una tarjeta.
 
-\item \textbf{Realizar}: relación entre \textbf{Cliente} y \textbf{Canje}, en este caso Cliente tiene participación parcial, pues puede ser Cliente recién registrado que no tenga puntos en su tarjeta, y Canje tiene participación total pues un Canje debe ser hecho por un cliente.
+\item \textbf{Hacer}: relación entre \textbf{Cliente} y \textbf{Canje}, en este caso Cliente tiene participación parcial, pues puede ser Cliente recién registrado que no tenga puntos en su tarjeta, y Canje tiene participación total pues un Canje debe ser hecho por un cliente.
 
 \item \textbf{Realizar}: relación entre \textbf{Mantenimiento} y \textbf{Técnico}, en este caso Mantenimiento tiene participación total, pues necesariamente es un técnico el que lo debe realizar y Técnico tiene participación parcial, pues puede que la sucursal donde esté no tenga una máquina en mal estado.
 
@@ -63,6 +63,6 @@ Los identificadores de las entidades son:
 \item \texttt{idRecarga}: Recarga.
 \item \texttt{idCanje}: Canje.
 \item \texttt{idPremio}: Premio.
-\item \texttt{CURP}: Empleado.
+\item \texttt{CURP,RFC}: Empleado.
 
 \end{itemize}
