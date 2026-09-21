@@ -2,3 +2,43 @@
 
 % TODO Yahir-2: analizar las propuestas del inciso 2-i y sus consultas.
 % No agregar respuestas durante la etapa de estructura.
+
+A continuación, se muestran tres representaciones posibles referidas a las relaciones entre Sitios de taxis, Choferes
+y Taxis. Analiza las ventajas y desventajas de cada propuesta, contestando las preguntas que se presentan a
+continuación:
+
+% aquí imagenes de los diagramas
+% \includegraphics{Ejercicio 2i.png}
+\includegraphics[width=0.9\textwidth]{../Diagramas/Ejercicio 2i.png}
+
+\begin{itemize}
+    \item Indica qué diagramas representan la información requerida por las siguientes solicitudes de información:
+          ¿Qué taxis maneja el chofer Raúl López en el sitio Santa Fe?, ¿A qué sitios está afiliado el chofer Carlos Reyes?,
+          ¿Qué taxis están asociados al sitio Universidad?
+
+        Los diagramas a) y c) responden las preguntas. El diagrama a) relaciona las tres entidades simultáneamente mediante una relación ternaria, 
+        y el diagrama c) asocia al chofer con la dupla sitio-taxi mediante agregación. 
+        Ambos permiten saber qué taxi maneja un chofer en un sitio específico, a qué sitios se afilia un chofer, y qué taxis tiene un sitio.
+
+    \item ¿Qué modificación harías en el diagrama de la figura a), sin perder información, para que se puedan conocer qué
+          taxis que maneja cada chofer?
+        
+        Se debe agregar una nueva relación binaria (por ejemplo, "Maneja") que conecte directamente a las entidades Chofer y Taxi. 
+        Esto permite mantener la relación ternaria para cuando los tres elementos interactúan, pero añade la capacidad de registrar 
+        qué vehículos está autorizado a manejar un chofer, independientemente del sitio.
+
+    \item ¿Qué diferencia existe entre los diagramas de las figuras a) y c)?
+    
+        El diagrama a) emplea una relación ternaria, asumiendo que la interacción entre Sitio, Taxi y Chofer ocurre en el mismo nivel lógico. 
+        El diagrama c) utiliza la agregación, encapsulando la relación entre Sitio y Taxi como un todo, y estableciendo que el Chofer se relaciona con ese conjunto. 
+        El inciso c) indica que el chofer no maneja un taxi aislado, sino un "taxi perteneciente a un sitio".
+
+    \item Cómo modificarías el diagrama de la figura a) para representar las siguientes restricciones:
+          Un chofer no puede manejar más de un taxi en el mismo sitio. Un taxi no puede ser manejado por más de un chofer en el mismo sitio.
+
+        Se deben añadir indicadores de cardinalidad en las líneas que conectan el rombo Tener con las entidades en la figura a):
+        La cardinalidad en la línea hacia la entidad Taxi debe ser 1, indicando que la combinación de un Sitio y un Chofer específicos apunta a un máximo de un Taxi.   
+        La cardinalidad en la línea hacia la entidad Chofer debe ser 1, indicando que la combinación de un Sitio y un Taxi específicos apunta a un máximo de un Chofer.   
+
+\end{itemize}
+
