@@ -1,5 +1,12 @@
 \section{Modificación del modelo de una universidad}
 
-% TODO Diego-3: documentar el modelo modificado del inciso 2-ii.
-% El diagrama correspondiente se trabajará en Draw.io.
-% No agregar respuestas durante la etapa de estructura.
+Primeramente, la primer modificación importante fue el añadir a los alumnos graduados y no graduados; para esto convertimos a la entidad \textbf{Alumno} en una superentidad con todos los atributos originales y creamos 2 subentidades, \textbf{Graduado} y \textbf{NoGraduado}. Esta será una especialización total y disjunta, dado que un alumno debería ser uno de los dos y no puede ser ambos. Además, le añadimos a \textbf{Graduado} un atributo \textbf{Título} para almacenar el título que posee y a \textbf{NoGraduado} el atributo \textbf{NumExpediente} para almacenar su número de expediente.
+
+Lo siguiente fue añadir la relación \textbf{Tutorizar}, entre \textbf{Graduado} y \textbf{NoGraduado}; esta relación es de uno a muchos, donde un \textbf{NoGraduado} tiene solo un tutor \textbf{Graduado} y un \textbf{Graduado} puede Tutorizar a varios \textbf{NoGraduado}. También es una relación parcial en ambos sentidos, ya que en lo pedido no dice nada que nos dé una pista, así que decidimos dejarlo parcial, ya que podría haber graduados que no quieran ser tutores o no graduados que no necesiten tutores.
+
+El siguiente cambio fue el agregar los atributos \textbf{Cargo} y \textbf{CargaHoraria} a la relación \textbf{Trabajar} entre \textbf{Profesor} y \textbf{Departamento}; para así poder restringir que no haya más de un profesor con el mismo cargo en un solo departamento.
+
+Por último, cambio hicimos una agregación llamada ``Participación en proyecto'' que encapsula las entidades \textbf{Graduado} y \textbf{Proyecto} y su relación participación, y creamos la relación \textbf{Supervisar} de \textbf{Profesor} a la agregación. Esta relación es de uno a muchos, tal que un profesor puede supervisar varias participaciones de un alumno graduado en un proyecto y una participación de un graduado a un proyecto estará supervisada por un profesor; por otra parte, esta relación debe tener participación total de parte de la agregación, ya que cada participación de un alumno graduado debe ser supervisada por un profesor, por lo que la participación depende de un profesor.
+
+Además de estos cambios, no agregamos ni modificamos nada, ya que no se dio ninguna otra pista sobre cardinalidades o participaciones, por lo que lo dejamos como estaba.
+
