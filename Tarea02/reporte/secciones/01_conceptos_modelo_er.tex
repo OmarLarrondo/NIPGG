@@ -1,4 +1,149 @@
-\section{Conceptos del modelo Entidad-Relación}
+\section{Conceptos del modelo Entidad--Relación}
 
-% TODO Omar-1: desarrollar los incisos 1a--1e.
-% No agregar respuestas durante la etapa de estructura.
+El modelo Entidad--Relación permite describir la estructura conceptual de un
+dominio antes de decidir cómo se almacenarán físicamente sus datos. En esta
+sección se distinguen sus conceptos fundamentales y las restricciones que
+determinan cuándo una representación conserva correctamente la semántica del
+mini--mundo \cite{elmasri2016fundamentals}.
+
+\subsection{Tipo de relación e instancia de relación}
+
+Un \textbf{tipo de relación} es una definición del esquema: establece qué tipos
+de entidad pueden asociarse, qué papel desempeña cada participante, cuál es el
+grado de la asociación y qué atributos o restricciones le corresponden. Por
+ejemplo, \emph{Imparte} puede definirse entre los tipos de entidad
+\emph{Profesor} y \emph{Curso}.
+
+Una \textbf{instancia de relación}, en cambio, es una ocurrencia concreta de ese
+tipo en un estado determinado de la base de datos. Si la profesora Ana Torres
+imparte Bases de Datos, el par formado por esa profesora y ese curso constituye
+una instancia de \emph{Imparte}. En consecuencia, el tipo pertenece al esquema
+y permanece relativamente estable, mientras que sus instancias pertenecen al
+estado de la base y pueden insertarse o eliminarse con el tiempo.
+
+\begin{conceptobox}[Distinción esencial]
+El tipo de relación funciona como una regla o plantilla; el conjunto de
+instancias indica qué asociaciones cumplen actualmente esa regla.
+\end{conceptobox}
+
+\subsection{Migración de un atributo hacia un tipo de relación}
+
+La migración de un atributo desde un tipo de entidad hacia una relación binaria
+es adecuada cuando el valor describe realmente la \emph{asociación} entre las
+entidades y no a una de ellas de manera aislada. Para que el traslado de un
+atributo que sí pertenecía a una entidad sea reversible sin pérdida ni
+duplicación, cada instancia de esa entidad debe participar obligatoriamente en
+una sola instancia de la relación: participación total y cardinalidad máxima
+igual a uno desde ese lado.
+
+Si una entidad pudiera no participar, su valor dejaría de poder representarse
+al moverlo a la relación. Si pudiera participar varias veces, el valor tendría
+que repetirse en cada instancia de relación y sería necesario imponer una
+restricción adicional para mantener todas las copias iguales. Cuando el valor
+cambia según la contraparte, esa repetición no representa una migración
+meramente estructural: revela que el atributo estaba mal ubicado y que su
+dependencia semántica corresponde a la relación.
+
+El efecto del cambio es que el atributo deja de depender exclusivamente del
+identificador de la entidad y pasa a depender de la combinación de
+participantes de cada instancia de relación. Por ejemplo, \emph{horasAsignadas}
+no describe por sí sola a una persona ni a un proyecto, sino a la participación
+de una persona en un proyecto.
+
+\clearpage
+\subsection{Tipos de relación recursiva}
+
+Un tipo de relación es \textbf{recursivo} cuando un mismo tipo de entidad
+participa más de una vez en la relación, desempeñando papeles distintos. Los
+nombres de los papeles son indispensables para evitar ambigüedad
+\cite{silberschatz2019database}.
+
+Dos ejemplos son los siguientes:
+
+\begin{itemize}
+  \item En \emph{Supervisa}, el tipo de entidad \emph{Empleado} participa como
+        \emph{supervisor} y como \emph{subordinado}. Un supervisor puede tener
+        varios subordinados y cada subordinado puede tener, según la política
+        de la organización, a lo sumo un supervisor directo.
+  \item En \emph{Es prerrequisito de}, el tipo de entidad \emph{Asignatura}
+        participa como \emph{prerrequisito} y como \emph{asignatura posterior}.
+        Una asignatura puede requerir varias anteriores y también ser requisito
+        de varias asignaturas posteriores.
+\end{itemize}
+
+\subsection{Posibilidad de emplear distintos tipos de atributos}
+
+\subsubsection{¿Un atributo compuesto puede ser llave?}
+
+Sí. Puede ser llave siempre que el conjunto completo de sus componentes
+identifique de manera única y mínima a cada entidad. Por ejemplo, una clave
+compuesta por \emph{tipoDocumento}, \emph{paísEmisor} y
+\emph{númeroDocumento} puede funcionar como identificador, aunque cada
+componente por separado no sea único.
+
+\subsubsection{¿Un atributo multivaluado puede ser llave?}
+
+No en la interpretación habitual del modelo E--R. Una llave debe proporcionar
+un valor estable y unívoco por entidad, mientras que un atributo multivaluado
+representa un conjunto cuyo número de elementos puede variar. Se recomienda
+elegir un atributo monovaluado como identificador o transformar los valores en
+un tipo de entidad relacionado que posea su propia llave.
+
+\subsubsection{¿Un atributo derivado puede ser llave?}
+
+No es recomendable. Aunque una expresión derivada podría ser única en un estado
+particular, su valor no se almacena como hecho independiente, puede cambiar al
+modificarse los datos de origen y su unicidad depende de la fórmula usada. La
+llave debe formarse con atributos base, estables y controlados; el valor
+derivado puede mantenerse como información calculada.
+
+\subsubsection{¿Un atributo multivaluado puede ser compuesto?}
+
+Sí. Cada elemento del conjunto puede tener estructura interna. Por ejemplo,
+\emph{domicilios} puede ser multivaluado y cada domicilio componerse de calle,
+número, colonia, código postal y municipio. La multiplicidad indica cuántos
+domicilios existen; la composición describe las partes de cada uno.
+
+\subsubsection{¿Un atributo multivaluado puede ser derivado?}
+
+Sí, siempre que el conjunto completo pueda calcularse a partir de otros datos.
+Por ejemplo, \emph{prefijosTelefónicos} puede derivarse del atributo
+multivaluado \emph{teléfonos}: habrá un prefijo calculado por cada teléfono
+registrado. Deben documentarse la regla de cálculo y los datos base para no
+tratar el resultado derivado como una fuente independiente.
+
+\subsubsection{¿Qué implicaría una entidad cuyos atributos fueran todos derivados?}
+
+Implicaría que la entidad carece de estado propio almacenado. Incluso su
+identificación dependería de otros hechos, por lo que no podría distinguirse ni
+persistir de forma autónoma. En general, esto señala un problema de modelado:
+conviene representarla como una vista o concepto derivado, como un atributo de
+otra entidad, o incorporar al menos un identificador y datos base no derivados
+que justifiquen su existencia independiente.
+
+\subsection{Categorías o herencia múltiple}
+
+Una \textbf{categoría}, también llamada tipo unión, es una subclase cuyo
+conjunto de instancias procede de la unión de dos o más superclases diferentes.
+Una instancia de la categoría debe pertenecer al menos a una de esas
+superclases, pero no necesita pertenecer a todas. Esto la distingue de una
+subclase compartida obtenida por intersección, en la que cada instancia es
+simultáneamente miembro de todas las superclases involucradas
+\cite{elmasri2016fundamentals}.
+
+Ejemplos de aplicación en la vida real:
+
+\begin{itemize}
+  \item El \emph{TitularRegistral} de un inmueble puede ser una \emph{Persona}
+        o una \emph{Organización}. La categoría permite relacionar ambos tipos
+        con \emph{Inmueble} mediante una sola función de titularidad, conservando
+        los atributos particulares de cada superclase.
+  \item El \emph{BeneficiarioDePago} de una institución puede ser un
+        \emph{Empleado} o un \emph{Proveedor}. La operación de pago se modela
+        una sola vez sobre la categoría, mientras cada beneficiario mantiene la
+        información específica del tipo al que pertenece.
+\end{itemize}
+
+La categoría evita duplicar relaciones equivalentes para cada superclase y
+hace explícita la restricción de que sólo las entidades incluidas en la unión
+pueden desempeñar el papel común.

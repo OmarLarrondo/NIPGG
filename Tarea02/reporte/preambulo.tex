@@ -1,15 +1,76 @@
-% Configuración compartida. No contiene respuestas de la tarea.
 \documentclass[11pt,letterpaper]{article}
+
+% Codificacion e idioma
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-tabla]{babel}
-\usepackage[margin=2.5cm]{geometry}
+
+% Tipografia y composicion
+\usepackage{mathpazo}
+\usepackage{microtype}
+\usepackage[margin=2.5cm,headheight=24pt]{geometry}
+\usepackage{parskip}
+\usepackage{enumitem}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.48cm}
+\setlist[itemize]{leftmargin=1.4em,itemsep=0.25em,topsep=0.25em}
+
+% Matematicas, tablas y figuras
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{tabularx}
-\usepackage{enumitem}
-\usepackage{parskip}
-\usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
 \graphicspath{{figuras/}}
-\setlength{\parindent}{0pt}
+
+% Identidad visual inspirada en la plantilla proporcionada
+\usepackage{xcolor}
+\definecolor{unamblue}{RGB}{0,56,107}
+\definecolor{unamgold}{RGB}{188,149,92}
+\definecolor{lightgray}{RGB}{245,246,248}
+\definecolor{textgray}{RGB}{55,61,67}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{unamblue}}
+  {\thesection.}{0.55em}{}[\color{unamgold}\titlerule]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{unamblue}}
+  {\thesubsection.}{0.55em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{textgray}}
+  {\thesubsubsection.}{0.55em}{}
+
+\usepackage[most]{tcolorbox}
+\newtcolorbox{conceptobox}[1][]{
+  enhanced,
+  breakable,
+  colback=lightgray,
+  colframe=unamblue,
+  coltitle=white,
+  fonttitle=\bfseries,
+  boxrule=0.8pt,
+  arc=1.5mm,
+  left=3mm,
+  right=3mm,
+  top=2mm,
+  bottom=2mm,
+  title=#1
+}
+
+% Encabezados y pies de pagina
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Fundamentos de Bases de Datos}}
+\fancyhead[R]{\textit{Tarea 2}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{unamblue}\leaders\hrule height \headrulewidth\hfill}}
+
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={Tarea 2: Modelo Entidad-Relacion},
+  pdfauthor={Equipo NIPGG}
+}
