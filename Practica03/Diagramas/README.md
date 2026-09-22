@@ -1,18 +1,15 @@
 # Diagramas de la Práctica 03
 
-Los diagramas se elaborarán y revisarán en DrawIO en línea. Este directorio
-queda reservado para las exportaciones finales solicitadas por los
-lineamientos; no se agrega todavía ningún modelo ni archivo `.drawio`.
+Los archivos oficiales de la entrega son:
 
-## Registro colaborativo
+- `ERÑIPGG.drawio`: fuente XML editable en diagrams.net;
+- `ERÑIPGG.png`: exportación final en alta resolución (5490 x 4272 px).
 
-| Elemento | Estado | Responsable | Enlace o nota |
-|---|---|---|---|
-| Diagrama fuente DrawIO | Pendiente de acuerdo | Equipo completo | Pegar aquí el enlace compartido |
-| Revisión de legibilidad y orden | Pendiente | Equipo completo | Registrar fecha y acuerdos |
-| Exportación `.drawio` | Pendiente | Integrante designado | Nombre final: `ERNombreDeSuEquipo.drawio` |
-| Exportación `.png` | Pendiente | Integrante designado | Nombre final: `ERNombreDeSuEquipo.png` |
+Ambos representan el mismo modelo de *PuellaGame*. La equivalencia se validó
+comparando la estructura XML del archivo editable con los metadatos `mxfile`
+incrustados en el PNG. Para conservar esa correspondencia, cualquier cambio
+posterior debe realizarse en `ERÑIPGG.drawio` y volver a exportarse con la
+opción de incluir una copia editable del diagrama.
 
-El enlace debe tener permisos adecuados para que los cinco integrantes puedan
-editar o comentar según el acuerdo del equipo. La exportación final debe
-conservar la versión revisada en línea.
+`Ejercicio2.2.png` pertenece a un modelo de universidad y no forma parte de la
+Práctica 03; se excluye expresamente del ZIP de entrega.

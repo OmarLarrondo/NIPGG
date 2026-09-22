@@ -1,3 +1,12 @@
 \section{Agregación}
 
-% TODO: documentar la agregación sólo si el modelo acordado la utiliza.
+El diagrama final no utiliza agregación. Ninguna relación necesita
+participar como una entidad de nivel superior en otra relación. En particular,
+\texttt{Disponer} es una relación N:M con el atributo
+\texttt{cantidadDisponible}; no se encierra como agregado porque ninguna otra
+relación depende del par sucursal--premio.
+
+Las operaciones que requieren identidad, fecha o trazabilidad se representan
+directamente como entidades transaccionales (por ejemplo, \texttt{Canje},
+\texttt{Recarga} y \texttt{Mantenimiento}), lo que evita usar agregaciones
+innecesarias y mantiene explícitas sus relaciones con empleados y sucursales.

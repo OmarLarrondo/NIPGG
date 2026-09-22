@@ -1,3 +1,17 @@
 \section{Conclusiones}
 
-% TODO: redactar después de integrar y revisar el modelo completo.
+El modelo final cubre el ciclo operativo principal de \textit{PuellaGame}:
+registro del cliente, adquisición y recarga de la tarjeta, visitas y partidas,
+acumulación de puntos, canje de premios, inventario por sucursal y
+mantenimiento de máquinas. Las cardinalidades y participaciones establecen qué
+registros son obligatorios y cuáles pueden existir antes de iniciar operaciones.
+
+La especialización del personal asigna responsabilidades sin duplicar datos,
+mientras las entidades transaccionales conservan trazabilidad. La separación
+entre catálogos, equipos físicos, operaciones e inventario reduce redundancia y
+prepara una base consistente para transformar el modelo conceptual en un
+esquema relacional durante las siguientes etapas del proyecto.
+
+Finalmente, la revisión cruzada entre el diagrama y este reporte asegura que
+las entidades, los atributos, los identificadores, las relaciones y las
+restricciones descritas corresponden a una misma versión del diseño.

@@ -1,68 +1,94 @@
+\clearpage
 \section{Participación e identificadores}
 
-Las restricciones de participación de las relaciones son:
+\subsection{Restricciones de participación}
 
-\begin{itemize}[leftmargin=*]
+La participación total indica que toda instancia debe aparecer en la
+relación; la parcial permite que existan instancias todavía no relacionadas.
+La siguiente tabla reproduce las restricciones representadas en el diagrama
+final y explicita las decisiones de negocio que las justifican.
 
-\item \textbf{Pertenecer}: relación entre \textbf{Sucursal} y \textbf{Máquina}, en este caso la sucursal tiene participación parcial ya que puede que aún no tenga máquinas, si es que abrió recientemente; por otra parte, Máquina debe ser total dado que dice ``Cada máquina pertenece exclusivamente a una sucursal'', lo que implica que las máquinas siempre deben pertenecer a alguna sucursal.
+\begin{center}
+\fontsize{7.2}{8.1}\selectfont
+\renewcommand{\arraystretch}{0.92}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.18\textwidth}p{0.28\textwidth}p{0.24\textwidth}X@{}}
+\toprule
+Relación & Participación total & Participación parcial & Justificación \\
+\midrule
+Poseer & Cliente, Tarjeta & --- & El servicio registra al cliente con su
+tarjeta activa y no admite tarjetas sin titular. \\
+Registrar & Partida & Tarjeta & Toda partida se registra; una tarjeta nueva
+puede no tener partidas. \\
+Ejecutar & Partida & Máquina & Toda partida usa una máquina; una máquina puede
+no haberse utilizado. \\
+Corresponder & Máquina & Juego & Toda máquina implementa un juego; puede haber
+juegos aún no instalados. \\
+Pertenecer & Máquina & Sucursal & Toda máquina está asignada; una sucursal
+nueva puede no tener máquinas. \\
+Ingresar & Visita & Tarjeta & Toda visita usa una tarjeta; una tarjeta puede no
+haber originado visitas. \\
+Proceder en & Visita & Sucursal & Toda visita ocurre en una sucursal; una
+sucursal puede no tener visitas. \\
+Recibir & Tarjeta, Recarga & --- & La venta exige la recarga inicial y toda
+recarga se abona a una tarjeta. \\
+Efectuar & Recarga & Sucursal & Toda recarga ocurre en una sucursal; una
+sucursal puede no tener recargas. \\
+Reflejar & Recarga & Cajero & Toda recarga tiene responsable; un cajero puede
+no haber atendido recargas. \\
+Vender & Tarjeta & Cajero & Toda tarjeta registrada fue vendida; un cajero
+puede no haber realizado ventas. \\
+Clasificar & --- & Juego, Tipo de juego & El diagrama permite juegos aún no
+clasificados y tipos todavía sin juegos asociados. \\
+Disponer & Sucursal & Premio & Cada sucursal mantiene inventario; un premio
+puede no estar disponible actualmente. \\
+Hacer & Canje & Cliente & Todo canje tiene cliente; un cliente puede no canjear. \\
+Otorgar & Canje & Premio & Todo canje otorga un premio; un premio puede no
+haberse canjeado. \\
+Saldar & Canje & Sucursal & Todo canje ocurre en una sucursal; una sucursal
+puede no registrar canjes. \\
+Procesar & Canje & Encargado de premios & Todo canje tiene responsable; un
+encargado puede no haber procesado canjes. \\
+Trabajar & Empleado & Sucursal & Todo empleado está adscrito; una sucursal
+nueva puede no tener personal registrado. \\
+Administrar & Sucursal, Gerente & --- & Toda sucursal tiene gerente y todo
+gerente administra exactamente una sucursal. \\
+Realizar & Mantenimiento & Técnico & Todo mantenimiento tiene técnico; un
+técnico puede no haber realizado intervenciones. \\
+Tener & Mantenimiento & Máquina & Todo mantenimiento corresponde a una
+máquina; una máquina puede no requerirlo. \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
-\item \textbf{Trabajar}: relación entre \textbf{Sucursal} y \textbf{Empleado}, en este caso la sucursal tiene participación parcial ya que puede existir una nueva sucursal sin personal; por el contrario, el Empleado necesita forzosamente trabajar en alguna sucursal para ser empleado, por lo que tiene participación total.
+\subsection{Identificadores}
 
-\item \textbf{Efectuar}: relación entre \textbf{Sucursal} y \textbf{Recarga}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal registrada que no tenga ninguna recarga hecha; en cuanto a Recarga, debe ser total dado que para que se realice una recarga debe ser hecha en una sucursal y debe registrar esa sucursal.
+Los identificadores subrayados en el diagrama son:
 
-\item \textbf{Saldar}: relación entre \textbf{Sucursal} y \textbf{Canje}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal sin canjes hechos; por otro lado, un canje debe registrar la sucursal en la que se realizó, por ello debe tener participación total.
+\begin{center}
+\small
+\begin{tabularx}{0.92\textwidth}{@{}>{\bfseries\color{unamblue}}p{0.31\textwidth}X@{}}
+\toprule
+Entidad & Identificador \\
+\midrule
+Cliente & \texttt{idCliente} \\
+Tarjeta & \texttt{numeroTarjeta} \\
+Partida & \texttt{idPartida} \\
+Máquina & \texttt{idMaquina} \\
+Juego & \texttt{idJuego} \\
+Tipo de juego & \texttt{idTipo} \\
+Sucursal & \texttt{idSucursal} \\
+Visita & \texttt{idVisita} \\
+Recarga & \texttt{idRecarga} \\
+Canje & \texttt{idCanje} \\
+Premio & \texttt{idPremio} \\
+Mantenimiento & \texttt{idMantenimiento} \\
+Empleado & \texttt{CURP} y \texttt{RFC}, representados como identificadores
+candidatos únicos \\
+Gerente, Cajero, Encargado de premios y Técnico & Heredan los identificadores
+de \texttt{Empleado} \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
-\item \textbf{Proceder en}: relación entre \textbf{Sucursal} y \textbf{Visita}, en este caso la sucursal tiene participación parcial ya que puede haber una sucursal que aun no tenga visitas; por otro lado, una Visita tiene que ser obligatoriamente en una sucursal, por lo que debe tener participación total.
-
-\item \textbf{Disponer}: relación entre \textbf{Sucursal} y \textbf{Premio}, en este caso la sucursal tiene participación total ya que cada sucursal debe tener un inventario de premios, mientras que Premio tiene participación parcial, pues puede haber premios que ya no estén en una sucursal.
-
-\item \textbf{Administrar}: relación entre \textbf{Sucursal} y \textbf{Gerente}, en este caso la sucursal tiene participación total debido a que debe haber siempre un gerente administrando la sucursal; en cuanto a Gerente, este tiene participación total, ya que si el empleado tiene el puesto de gerente debe de 1.~trabajar en una sucursal y 2.~dirigir esa sucursal.
-
-\item \textbf{Corresponder}: relación entre \textbf{Máquina} y \textbf{Juego}, en este caso Máquina tiene participación total ya que cada máquina debe corresponder a un juego y Juego tiene participación parcial ya que puede haber juegos que aún no tengan una máquina.
-
-\item \textbf{Ejecutar}: relación entre \textbf{Máquina} y \textbf{Partida}, en este caso Máquina tiene participación parcial, puede haber una máquina que aun no se usada y no tenga partidas, mientras que Partida tiene participación total debido a que debe ejecutarse necesariamente en una máquina.
-
-\item \textbf{Tener}: relación entre \textbf{Máquina} y \textbf{Mantenimiento}, en este caso Máquina tiene participación parcial porque puede una máquina estar en perfecto estado, mientras que Mantenimiento tiene participación total, pues debe ser obligatoriamente sobre una máquina.
-
-\item \textbf{Registrar}: relación entre \textbf{Partida} y \textbf{Tarjeta}, en este caso Partida tiene participación total debido a que no puede existir una partida si no fue registrada por una tarjeta y Tarjeta tiene participación parcial, pues puede ser recién adquirida y aún no ser usada.
-
-\item \textbf{Recibir}: relación entre \textbf{Tarjeta} y \textbf{Recarga}, en este caso Tarjeta tiene participación total, ya que al obtenerla y registrar se debe realizar una recarga de \$10.00 y Recarga también es total, dado que una recarga debe ser necesariamente dada a una tarjeta.
-
-\item \textbf{Vender}: relación entre \textbf{Tarjeta} y \textbf{Cajero}, en este caso Tarjeta tiene participación total, debido a que su registro depende de que un cajero la venda a un cliente, y Cajero es parcial, puede que aun no venda ninguna tarjeta.
-
-\item \textbf{Ingresar}: relación entre \textbf{Tarjeta} y \textbf{Visita}, en este caso Tarjeta tiene participación parcial dado que puede existir la tarjeta y no necesariamente registrar una ninguna visita; por otro lado, Visita tiene participación total ya que solo se registra una visita una vez se usa una tarjeta.
-
-\item \textbf{Poseer}: relación entre \textbf{Tarjeta} y \textbf{Cliente}, en este caso Tarjeta tiene participación total, pues no tiene sentido registrar una tarjeta inactiva, es decir, sin que ningún cliente la use, mientras que Cliente tiene participación total ya que para usar las instalaciones debe tener una tarjeta.
-
-\item \textbf{Hacer}: relación entre \textbf{Cliente} y \textbf{Canje}, en este caso Cliente tiene participación parcial, pues puede ser Cliente recién registrado que no tenga puntos en su tarjeta, y Canje tiene participación total pues un Canje debe ser hecho por un cliente.
-
-\item \textbf{Realizar}: relación entre \textbf{Mantenimiento} y \textbf{Técnico}, en este caso Mantenimiento tiene participación total, pues necesariamente es un técnico el que lo debe realizar y Técnico tiene participación parcial, pues puede que la sucursal donde esté no tenga una máquina en mal estado.
-
-\item \textbf{Reflejar}: relación entre \textbf{Recarga} y \textbf{Cajero}, en este caso Recarga tiene participación total dado que es un cajero el que debe reflejar esa recarga en una tarjeta, mientras que Cajero tiene participación parcial, pues puede aún no haber atendido a nadie.
-
-\item \textbf{Procesar}: relación entre \textbf{Canje} y \textbf{Encargado de premios}, en este caso Canje tiene participación total ya que es Encargado de premios el que procesa la entrega de los premios, mientras Encargado de premios tiene participación parcial pues puede aún no haber atendido a nadie.
-
-\item \textbf{Otorgar}: relación entre \textbf{Canje} y \textbf{Premio}, en este caso Canje tiene participación total pues un cliente realiza un canje siempre para obtener un premio; por otro lado, Premio tiene participación parcial dado que puede haber premios aún no reclamados.
-
-\end{itemize}
-
-\subsection{Identificadores de las entidades}
-
-Los identificadores de las entidades son:
-
-\begin{itemize}[leftmargin=*]
-
-\item \texttt{idCliente}: Cliente.
-\item \texttt{numeroTarjeta}: Tarjeta.
-\item \texttt{idPartida}: Partida.
-\item \texttt{idMaquina}: Máquina.
-\item \texttt{idMantenimiento}: Mantenimiento.
-\item \texttt{idJuego}: Juego.
-\item \texttt{idSucursal}: Sucursal.
-\item \texttt{idVisita}: Visita.
-\item \texttt{idRecarga}: Recarga.
-\item \texttt{idCanje}: Canje.
-\item \texttt{idPremio}: Premio.
-\item \texttt{CURP,RFC}: Empleado.
-
-\end{itemize}
+No se modelan entidades débiles: todas las entidades principales tienen
+identificador propio y las subentidades se identifican por herencia.

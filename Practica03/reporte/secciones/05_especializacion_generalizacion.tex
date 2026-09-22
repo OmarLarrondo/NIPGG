@@ -1,27 +1,34 @@
 \section{Especialización y generalización}
 
-% TODO: registrar estos elementos sólo si el modelo acordado los utiliza.
-Las especializaciones que se utilizaron fueron las siguientes:\\[2cm]
+El modelo utiliza una especialización de \texttt{Empleado} en
+\texttt{Gerente}, \texttt{Cajero}, \texttt{Encargado de premios} y
+\texttt{Técnico}. El símbolo \texttt{d} y la línea doble entre la
+superentidad y el triángulo establecen dos restricciones:
 
-    \item Todos los empleados tienen como atributos en común: 
-        \begin{itemize}
-            \item RFC
-            \item CURP
-            \item Nombre completo (Nombre, Apellido materno, Apellido Paterno)
-            \item Fecha de nacimiento
-            \item Teléfonos
-            \item Correos
-            \item Fecha de contratación
-            \item Salario
-        \end{itemize}
+\begin{itemize}[leftmargin=*]
+  \item \textbf{disjunta}: un empleado sólo puede pertenecer a una de las
+        cuatro subentidades;
+  \item \textbf{total}: todo empleado registrado debe desempeñar exactamente
+        uno de esos puestos.
+\end{itemize}
 
-        Un empleado debe ser de tipo:
-        \begin{itemize}
-            \item Gerente: Tiene como atributo no compartido su cédula profesional.
-            \item Cajero: Tiene com atributo propio su horario de trabajo.
-            \item Encargado premios: Tiene com atributo propio su horario de trabajo.
-            \item Técnico: Su atributo no compartido son las certificaciones con las que cuenta.
-        \end{itemize}
+Las subentidades heredan \texttt{CURP}, \texttt{RFC}, nombre completo, fecha
+de nacimiento, teléfonos, correos electrónicos, fecha de contratación y
+salario. Además, cada una conserva los atributos o relaciones propios de su
+función:
 
-En este caso, se maneja por separado las entidades Cajero y Encargado de premios aunque comparten un atributo en común, 
-porque no tienen más atributos según las reglas de negocio.
+\begin{itemize}[leftmargin=*]
+  \item \texttt{Gerente}: \texttt{cédulaProfesional} y la relación
+        \texttt{Administrar};
+  \item \texttt{Cajero}: \texttt{horarioTrabajo}, \texttt{Vender} y
+        \texttt{Reflejar};
+  \item \texttt{Encargado de premios}: \texttt{horarioTrabajo} y
+        \texttt{Procesar};
+  \item \texttt{Técnico}: \texttt{áreaEspecialidad}, la certificación
+        multivalorada y \texttt{Realizar}.
+\end{itemize}
+
+\texttt{Tipo de juego} no es una especialización de \texttt{Juego}; el
+diagrama lo modela como una entidad independiente vinculada mediante
+\texttt{Clasificar}. Esto permite conservar nombre, regla de puntuación y
+condición como datos configurables, sin crear una subentidad por modalidad.

@@ -1,3 +1,45 @@
 \section{Decisiones y consideraciones de diseño}
 
-% TODO: justificar las decisiones tomadas por el equipo sin agregar respuestas anticipadas.
+\begin{description}[leftmargin=1.5em,style=nextline]
+  \item[Inventario por sucursal.]
+  \texttt{cantidadDisponible} pertenece a \texttt{Disponer} y no a
+  \texttt{Premio}. Así, un mismo premio conserva una descripción única, pero
+  puede tener existencias distintas en cada sucursal.
+
+  \item[Operaciones con identidad propia.]
+  Partidas, visitas, recargas, canjes y mantenimientos se modelan como
+  entidades porque requieren identificador, atributos temporales y relaciones
+  con varios participantes. Esta decisión preserva el historial de operación.
+
+  \item[Separación entre juego, máquina y partida.]
+  \texttt{Juego} describe la oferta; \texttt{Máquina}, el equipo físico de
+  una sucursal; y \texttt{Partida}, cada ejecución pagada por una tarjeta. La
+  separación evita repetir costo y nombre del juego en cada máquina o partida.
+
+  \item[Reglas de puntuación configurables.]
+  \texttt{Tipo de juego} se modela como catálogo relacionado mediante
+  \texttt{Clasificar}. Sus atributos permiten describir las modalidades y sus
+  condiciones sin alterar la estructura del modelo.
+
+  \item[Datos derivados.]
+  \texttt{edad}, \texttt{categoríaVIP} y \texttt{bonificaciónVIP} se marcan
+  como derivados para evitar valores incompatibles con la fecha de nacimiento,
+  el historial de visitas o los puntos obtenidos.
+
+  \item[Tarjeta como medio operativo.]
+  La tarjeta concentra saldo y puntos, registra partidas, recibe recargas y
+  origina visitas. La relación 1:1 con el cliente expresa la regla de una sola
+  tarjeta activa, mientras \texttt{estado} permite conservar antecedentes de
+  activación.
+
+  \item[Responsabilidad del personal.]
+  La especialización total y disjunta de \texttt{Empleado} permite vincular
+  cada operación con el puesto autorizado sin duplicar los datos comunes del
+  personal.
+
+  \item[Identidad del empleado.]
+  El diagrama subraya \texttt{CURP} y \texttt{RFC}. Se interpretan como claves
+  candidatas únicas y heredadas por las subentidades; la implementación
+  relacional posterior podrá elegir una como clave primaria y mantener la otra
+  con restricción de unicidad.
+\end{description}

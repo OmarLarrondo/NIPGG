@@ -162,15 +162,13 @@ Premio & \texttt{idPremio} & Identificador único; entero positivo. \\
  & \texttt{valorAproximado} & Cantidad monetaria aproximada en MXN. \\
  & \texttt{puntosNecesarios} & Número entero de puntos; debe permitir un canje
    a partir de veinte puntos y es consistente con \texttt{categoría}. \\
- & \texttt{cantidadDisponible} & Número entero no negativo que representa la
-   cantidad disponible del premio. \\
 \bottomrule
 \end{tabularx}
 \end{center}
 
-La cantidad disponible se conserva como atributo de \texttt{Premio}, tal como
-aparece en el diagrama. Su interpretación operativa y su relación con la
-sucursal se precisan junto con las relaciones y las decisiones de diseño.
+La cantidad disponible no es una propiedad global de \texttt{Premio}. En el
+diagrama final es un atributo de la relación \texttt{Disponer}, porque el mismo
+tipo de premio puede tener existencias diferentes en cada sucursal.
 
 \subsection{Empleado y subentidades operativas}
 
@@ -180,8 +178,10 @@ sucursal se precisan junto con las relaciones y las decisiones de diseño.
 \toprule
 Entidad & Atributo & Dominio y caracterización \\
 \midrule
-Empleado & \texttt{CURP} & Identificador único de la persona empleada. \\
- & \texttt{RFC} & Cadena con formato de RFC. \\
+Empleado & \texttt{CURP} & Identificador candidato único de la persona
+   empleada. \\
+ & \texttt{RFC} & Identificador candidato único, con formato de RFC. El
+   diagrama subraya tanto \texttt{CURP} como \texttt{RFC}. \\
  & \texttt{nombreCompleto} & Atributo compuesto por \texttt{nombre},
    \texttt{apellidoPaterno} y \texttt{apellidoMaterno}; cadenas de texto. \\
  & \texttt{fechaNacimiento} & Fecha válida de nacimiento. \\
@@ -214,8 +214,9 @@ Técnico & \texttt{áreaEspecialidad} & Cadena que identifica el área de especi
 \end{center}
 
 Las subentidades de \texttt{Empleado} no repiten los atributos heredados ni
-requieren un identificador distinto: se identifican mediante la \texttt{CURP}
-de la superentidad. En la versión actual del diagrama, \texttt{Juego} se
+requieren un identificador distinto: heredan los identificadores
+\texttt{CURP} y \texttt{RFC} de la superentidad. En la versión final del
+diagrama, \texttt{Juego} se
 relaciona con \texttt{Tipo de juego}; por ello, los tipos y sus reglas de
 puntuación se describen mediante los atributos de esta última entidad y no
 como cuatro subentidades independientes.

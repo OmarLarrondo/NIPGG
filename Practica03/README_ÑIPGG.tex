@@ -1,16 +1,75 @@
 \documentclass[11pt,letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-tabla]{babel}
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
-\title{README de la Práctica 03}
-\author{Equipo ÑIPGG}
-\date{}
+
+\definecolor{unamblue}{RGB}{0,56,107}
+\definecolor{unamgold}{RGB}{188,149,92}
+\newcommand{\archivo}[1]{\texttt{#1}}
+
 \begin{document}
-\maketitle
-\section*{Estado del documento}
-Esta fuente reserva el documento PDF de coordinación de la entrega. El
-contenido definitivo se integrará cuando el equipo confirme los nombres, el
-enlace de DrawIO y la versión final del modelo.
+
+\begin{center}
+  {\Large\bfseries\color{unamblue} Universidad Nacional Autónoma de México\par}
+  \vspace{0.25cm}
+  {\large Facultad de Ciencias\par}
+  \vspace{0.8cm}
+  {\LARGE\bfseries Práctica 03\par}
+  \vspace{0.2cm}
+  {\large Modelo Entidad--Relación Extendido\par}
+  \vspace{0.45cm}
+  {\large\bfseries Equipo ÑIPGG\par}
+\end{center}
+
+\vspace{0.6cm}
+
+\section*{Integrantes}
+
+\begin{center}
+\begin{tabularx}{0.92\textwidth}{@{}X>{\raggedleft\arraybackslash}p{3.2cm}@{}}
+\toprule
+\textbf{Nombre completo} & \textbf{Número de cuenta} \\
+\midrule
+Omar Alejandro Juárez Larrondo & 322245244 \\
+Yahir León Bautista & 322176542 \\
+Diego Hernández Gómez & 321069942 \\
+Miguel Ángel Jiménez Ramírez & 119000887 \\
+Ana Lilia Carballido Camacateco & 315314601 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section*{Contenido de la entrega}
+
+\begin{itemize}[leftmargin=*]
+  \item \archivo{Docs/Practica03.pdf}: reporte del caso de uso, entidades,
+        atributos, relaciones, cardinalidades, participaciones,
+        identificadores, especialización y decisiones de diseño.
+  \item \archivo{Diagramas/ERÑIPGG.drawio}: fuente editable del modelo final.
+  \item \archivo{Diagramas/ERÑIPGG.png}: imagen en alta resolución del mismo
+        modelo.
+  \item \archivo{README\_ÑIPGG.pdf}: este documento de identificación del
+        equipo y control del contenido entregado.
+\end{itemize}
+
+\section*{Observaciones}
+
+El diagrama y el reporte fueron revisados de manera cruzada antes de generar
+el archivo comprimido. La cantidad disponible de cada premio se modela en la
+relación \emph{Disponer}, ya que depende de la sucursal. El modelo no utiliza
+agregación y especializa a \emph{Empleado} de forma total y disjunta. No se
+incluye carpeta SQL porque no es requerida para esta práctica.
+
+\vfill
+\begin{center}
+  \color{unamgold}\rule{0.75\textwidth}{0.8pt}
+\end{center}
+
 \end{document}
