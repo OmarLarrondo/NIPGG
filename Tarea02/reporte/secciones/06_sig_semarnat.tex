@@ -1,5 +1,99 @@
 \section{Mini-mundo: Sistema de Información Geográfica de SEMARNAT}
 
-% TODO Miguel-5: diseñar y documentar el inciso 3-c.
-% El diagrama correspondiente se trabajará en Draw.io.
-% No agregar respuestas durante la etapa de estructura.
+El modelo propuesto representa los objetos geográficos solicitados y conserva
+como atributos de las relaciones los datos que dependen de una asociación
+concreta. El diagrama completo, elaborado con la notación E--R, se incluye en
+la carpeta de diagramas como ``Ejercicio 3c.drawio'' y ``Ejercicio 3c.png''.
+La imagen también se inserta aquí para que el documento contenga la evidencia
+visual del diseño.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../Diagramas/Ejercicio 3c.png}
+  \caption{Modelo E--R para el SIG público de SEMARNAT.}
+  \label{fig:sig-semarnat}
+\end{figure}
+
+\subsection{Tipos de entidad, identificadores y especializaciones}
+
+\begin{itemize}
+  \item \textbf{Río}: se identifica con \texttt{idRio} y almacena
+        \texttt{nombre}, \texttt{descripción} y \texttt{longitudTotal}.
+  \item \textbf{Municipio}: se identifica con \texttt{idMunicipio} y almacena
+        \texttt{nombre} y \texttt{habitantes}.
+  \item \textbf{Sistema Montañoso}: se identifica con \texttt{CódigoSistema} y
+        almacena \texttt{nombre}, \texttt{orientación}, \texttt{longitud} y
+        \texttt{alturaMáxima}. La orientación se restringe a norte, sur, este
+        u oeste.
+  \item \textbf{Montaña}: se identifica con \texttt{CódigoMontana} y almacena
+        \texttt{nombre}, \texttt{descripción} y \texttt{altura}. Se
+        especializa de manera total y disjunta en \textbf{Montaña volcánica}
+        y \textbf{Montaña de plegamiento}: la primera agrega
+        \texttt{tipoVolcán} y la segunda agrega \texttt{periodoGeológico}.
+  \item \textbf{Satélite}: se identifica con \texttt{idSatelite} y almacena
+        \texttt{nombre} y \texttt{descripción}.
+\end{itemize}
+
+\subsection{Relaciones y restricciones}
+
+\begin{description}
+  \item[\textbf{Atravesar}] Relaciona \textbf{Río} con \textbf{Municipio}.
+        Un río atraviesa uno o varios municipios $(1,N)$ y un municipio puede
+        ser atravesado por cero o varios ríos $(0,N)$. El atributo
+        \texttt{longitudTramo} pertenece a la relación, porque su valor
+        depende del par río--municipio y no del río ni del municipio por
+        separado. Cada longitud de tramo es positiva y la suma de los tramos
+        de un río debe ser igual a su \texttt{longitudTotal}.
+  \item[\textbf{Alimentar}] Es una relación ternaria y recursiva de
+        \textbf{Río}, con los papeles \emph{río afluente} y \emph{río
+        receptor}, junto con \textbf{Municipio}. Un río puede no ser afluente
+        o ser afluente de un solo río receptor $(0,1)$; un río receptor puede
+        recibir cero o varios afluentes $(0,N)$. Cada ocurrencia de la relación
+        debe indicar exactamente un municipio de confluencia. Un río no puede
+        afluir a sí mismo.
+  \item[\textbf{Pertenecer}] Relaciona \textbf{Montaña} con
+        \textbf{Sistema Montañoso}. Cada montaña pertenece obligatoriamente a
+        un solo sistema $(1,1)$, mientras que un sistema está formado por una
+        o varias montañas $(1,N)$.
+  \item[\textbf{Ocupar}] Relaciona \textbf{Sistema Montañoso} con
+        \textbf{Municipio}. Todo sistema ocupa uno o varios municipios $(1,N)$;
+        un municipio puede contener cero o varios sistemas $(0,N)$.
+  \item[\textbf{Ubicar}] Relaciona \textbf{Montaña} con
+        \textbf{Municipio}. Una montaña se encuentra en uno o varios
+        municipios $(1,N)$ y un municipio puede contener cero o varias
+        montañas $(0,N)$.
+  \item[\textbf{Monitorear}] Relaciona un \textbf{Satélite} con la categoría
+        \textbf{Elemento geológico}, definida como una categoría (unión) de
+        \textbf{Río} y \textbf{Montaña}. La participación de la categoría es
+        parcial: un elemento geológico puede no monitorearse o estar asociado
+        con un satélite $(0,1)$, mientras que un satélite puede monitorear cero
+        o varios elementos $(0,N)$. \texttt{fechaInicioMonitoreo} es un
+        atributo de la relación, porque describe el inicio de esa asignación.
+\end{description}
+
+\subsection{Decisiones y consideraciones de diseño}
+
+\begin{itemize}
+  \item Se usan los identificadores proporcionados por el enunciado y no se
+        supone que los nombres sean únicos. Los identificadores de ríos,
+        montañas, sistemas, municipios y satélites pertenecen a dominios
+        separados.
+  \item Se modela \textbf{Alimentar} como relación ternaria para conservar en
+        la misma ocurrencia el río afluente, el río receptor y el municipio
+        exacto donde se unen. El municipio puede participar en muchas
+        confluencias.
+  \item Se modela \textbf{Elemento geológico} como categoría, no como una
+        entidad almacenada adicional: una instancia proviene de \textbf{Río}
+        o de \textbf{Montaña}. Así se evita duplicar la relación de monitoreo y
+        se mantiene explícito que no todos los elementos son monitoreados.
+  \item Las longitudes se interpretan en kilómetros y las alturas en metros;
+        estas unidades son una convención documentada para que los valores
+        sean comparables. El enunciado no fija unidades concretas.
+  \item La especialización de \textbf{Montaña} es total y disjunta: cada
+        montaña pertenece exactamente a una de las dos subclases. Por ello
+        \texttt{tipoVolcán} y \texttt{periodoGeológico} no son atributos
+        multivaluados ni derivados, sino atributos propios de sus subtipos.
+  \item No se agrega una entidad para el acceso web, usuarios o mapas porque
+        son aspectos de la aplicación y no hechos solicitados en las reglas de
+        negocio.
+\end{itemize}
