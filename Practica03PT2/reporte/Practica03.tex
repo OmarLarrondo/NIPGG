@@ -1,0 +1,218 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{pdfpages}
+\usepackage{lmodern,microtype,geometry,xcolor,graphicx,tabularx,booktabs,array,amsmath,fancyhdr,tcolorbox,hyperref}
+\geometry{left=2.15cm,right=2.15cm,top=2.25cm,bottom=2.15cm}
+\definecolor{azul}{HTML}{17354D}
+\definecolor{oro}{HTML}{B58A43}
+\definecolor{claro}{HTML}{F0F4F7}
+\hypersetup{colorlinks=true,linkcolor=azul,urlcolor=azul,hypertexnames=false,pdftitle={Práctica 03. Modelo Entidad-Relación Extendido, Parte 2},pdfauthor={Equipo ÑIPGG}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\renewcommand{\arraystretch}{1.25}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\color{azul}PUELLAGAME\enspace /\enspace MODELO E-R EXTENDIDO}
+\fancyhead[R]{\small Parte 2}
+\fancyfoot[L]{\small Equipo ÑIPGG\enspace ·\enspace Fundamentos de Bases de Datos}
+\fancyfoot[R]{\small\thepage}
+\setlength{\headheight}{14pt}
+\newcommand{\titulo}[2]{\noindent{\small\color{oro}\textbf{#1}}\par\vspace{2pt}{\LARGE\color{azul}\bfseries #2}\par\vspace{7pt}}
+\newcommand{\subtitulo}[1]{\par\vspace{5pt}{\large\color{azul}\bfseries #1}\par}
+\newcommand{\dato}[1]{\texttt{#1}}
+\newenvironment{nota}{\begin{tcolorbox}[colback=claro,colframe=azul,boxrule=.5pt,arc=1mm,left=3mm,right=3mm,top=2mm,bottom=2mm]}{\end{tcolorbox}}
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}
+{\color{oro}\rule{\textwidth}{2pt}}
+\vspace{.7cm}
+{\Large\color{azul}\bfseries Universidad Nacional Autónoma de México\par}
+{\large Facultad de Ciencias\par}
+\vspace{.4cm}
+Fundamentos de Bases de Datos\hfill Semestre 2027-I\par
+\vspace{1.6cm}
+{\fontsize{38}{42}\selectfont\color{azul}\bfseries Práctica 03\par}
+\vspace{.35cm}
+{\LARGE Modelo Entidad-Relación Extendido\par}
+\vspace{.25cm}
+{\Large Parte 2\par}
+\vspace{.8cm}
+\begin{nota}
+\large\textbf{Correcciones y consideraciones del modelo}\par
+\normalsize Comparación de la versión anterior y la versión actual del diagrama de PuellaGame, en atención a las observaciones del 24 de septiembre.
+\end{nota}
+\vfill
+{\large\color{azul}\bfseries Equipo ÑIPGG\par}
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+\toprule
+\textbf{Integrante} & \textbf{Número de cuenta}\\\midrule
+Omar Alejandro Juárez Larrondo & 322245244\\
+Yahir León Bautista & 322176542\\
+Diego Hernández Gómez & 321069942\\
+Miguel Ángel Jiménez Ramírez & 119000887\\
+Ana Lilia Carballido Camacateco & 315314601\\\bottomrule
+\end{tabularx}\par
+\vspace{.6cm}
+Profesor: Gerardo Avilés Rosas\par
+28 de septiembre de 2026
+\end{titlepage}
+
+\titulo{01 / ALCANCE Y COMPARACIÓN}{Correcciones de la segunda versión}
+La segunda versión del modelo de PuellaGame atiende las observaciones recibidas sobre los horarios de las sucursales, la dependencia de las entidades operativas y la elección de la llave de Empleado. Este informe explica las correcciones realizadas respecto de la primera versión y establece las consideraciones necesarias para interpretar el diagrama que acompaña la entrega.
+
+No se incorporaron nuevas entidades, relaciones de negocio ni atributos. Los símbolos añadidos corresponden principalmente a contornos dobles y a la sustitución de elementos gráficos existentes. El cambio de \dato{horario} a \dato{horarios} conserva el significado del atributo y hace explícita su multiplicidad.
+
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.7cm}XX@{}}
+\toprule
+\textbf{Aspecto} & \textbf{Versión anterior} & \textbf{Versión actual}\\\midrule
+Horarios de Sucursal & Atributo rotulado \dato{horario}; su representación no mostraba claramente el óvalo doble. & Se denomina \dato{horarios} y utiliza una figura de doble elipse.\\
+Entidades débiles & Tarjeta, Partida, Visita, Recarga, Canje y Mantenimiento tenían rectángulos simples. & Las seis entidades presentan contornos dobles y sus atributos identificadores reciben un formato diferenciado.\\
+Relaciones identificadoras & Las relaciones involucradas se mostraban con rombos simples. & Se incorporan rombos dobles en las relaciones de dependencia descritas en la sección 2.\\
+Llave de Empleado & CURP y RFC estaban subrayados simultáneamente. & Se conserva únicamente CURP subrayada. RFC permanece como llave candidata alternativa.\\
+Tipo de juego & Entidad con identificador propio y relación Clasificar. & Se conserva como entidad fuerte y se explicita su función de catálogo independiente.\\
+Personal & La proximidad de los recorridos podía sugerir una relación entre Gerente y Encargado de premios. & Se conserva la distribución y se aclara que ambos son subtipos de Empleado, sin una relación directa entre ellos.\\\bottomrule
+\end{tabularx}
+\normalsize
+
+\subtitulo{Alcance de las consideraciones}
+Las consideraciones explicitan las decisiones representadas en el modelo: CURP es la llave elegida de Empleado; RFC conserva su condición de llave candidata; Tipo de juego funciona como catálogo independiente; y las entidades débiles se interpretan a partir de sus propietarios y discriminantes. Las secciones siguientes desarrollan estas decisiones y sus restricciones.
+
+\newpage
+\titulo{02 / DEPENDENCIA E IDENTIFICACIÓN}{Entidades débiles y propietarios}
+La presencia de un atributo denominado \dato{id} no demuestra por sí sola que una entidad sea fuerte. En esta versión se expresa la dependencia de las operaciones respecto de los objetos que les dan contexto. Los atributos locales se interpretan como discriminantes: distinguen ocurrencias dentro de ese contexto, sin suponer por ello una identidad global independiente.
+
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.5cm}p{3.1cm}Xp{3.1cm}@{}}
+\toprule
+\textbf{Entidad} & \textbf{Discriminante} & \textbf{Propietarios} & \textbf{Relaciones identificadoras}\\\midrule
+Tarjeta & \dato{numeroTarjeta} & Cliente & Poseer\\
+Partida & \dato{idPartida} & Tarjeta y Máquina & Registrar y Ejecutar\\
+Visita & \dato{idVisita} & Tarjeta y Sucursal & Ingresar y Proceder en\\
+Recarga & \dato{idRecarga} & Tarjeta y Sucursal & Recibir y Efectuar\\
+Canje & \dato{idCanje} & Cliente, Premio y Sucursal & Hacer, Otorgar y Saldar\\
+Mantenimiento & \dato{idMantenimiento} & Máquina & Tener\\\bottomrule
+\end{tabularx}
+\normalsize
+
+\subtitulo{Interpretación de las dependencias}
+Una \textbf{Visita} se registra mediante una tarjeta y ocurre en una sucursal. La relación con el cliente se obtiene a través de Poseer; no se incorpora una nueva relación directa Cliente--Visita. Una \textbf{Recarga} requiere la tarjeta receptora y la sucursal donde se realiza. La relación Reflejar conserva al cajero responsable, pero no se convierte en identificadora.
+
+Una \textbf{Partida} requiere una tarjeta y una máquina concreta. Un \textbf{Canje} requiere al cliente que lo solicita, al premio otorgado y a la sucursal que lo atiende. Procesar registra al encargado responsable. Un \textbf{Mantenimiento} depende de la máquina intervenida; Realizar registra al técnico, sin hacerlo propietario identificador.
+
+\subtitulo{Alcance de la decisión sobre Tarjeta}
+El contorno doble de Tarjeta y el rombo doble de Poseer expresan que la tarjeta registrada pertenece a un cliente. Se excluye del modelo conceptual el inventario de tarjetas físicas todavía sin asignar. Por tanto, la dependencia de Tarjeta se establece respecto de su titular, mientras que Partida, Visita, Recarga, Canje y Mantenimiento dependen de los participantes de cada operación.
+
+\begin{nota}
+\textbf{Participación obligatoria.} Toda ocurrencia débil requiere sus propietarios. La existencia de una máquina, sucursal o cliente no exige por sí sola que ya se hayan registrado partidas, visitas, canjes o mantenimientos. La obligatoriedad de la entidad dependiente no debe confundirse con la obligación de que cada propietario tenga operaciones.
+\end{nota}
+
+\newpage
+\titulo{03 / LLAVES Y RESTRICCIONES}{Identificación dentro de un contexto}
+Para explicitar la lectura de los rombos dobles, se utiliza $K(E)$ para denotar la identificación completa de una entidad $E$. Cuando existen varios propietarios identificadores, se considera conjuntamente su contexto. Las siguientes expresiones describen identificaciones suficientes; la minimalidad de una llave debe comprobarse además contra las restricciones de cardinalidad.
+
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.8cm}X@{}}
+\toprule
+\textbf{Entidad} & \textbf{Contexto de identificación y discriminante}\\\midrule
+Tarjeta & $K(\text{Cliente})$ y \dato{numeroTarjeta}.\\
+Partida & $K(\text{Tarjeta})$, \dato{idMaquina} e \dato{idPartida}.\\
+Visita & $K(\text{Tarjeta})$, \dato{idSucursal} e \dato{idVisita}.\\
+Recarga & $K(\text{Tarjeta})$, \dato{idSucursal} e \dato{idRecarga}.\\
+Canje & \dato{idCliente}, \dato{idPremio}, \dato{idSucursal} e \dato{idCanje}.\\
+Mantenimiento & \dato{idMaquina} e \dato{idMantenimiento}.\\\bottomrule
+\end{tabularx}
+\normalsize
+
+La unicidad de un discriminante se exige dentro del conjunto de propietarios correspondiente. Dos operaciones de contextos distintos pueden utilizar el mismo valor local. Dentro de un mismo contexto, el discriminante no debe repetirse. Estas identificaciones no implican agregar atributos nuevos al diagrama: las llaves de los propietarios se obtienen mediante sus relaciones identificadoras.
+
+\subtitulo{Precisiones para la relación Poseer}
+La relación 1:1 conservada limita a una tarjeta por cliente en el estado representado. Bajo esa restricción, \dato{idCliente} basta para distinguir la tarjeta asociada y agregar \dato{numeroTarjeta} produce una identificación redundante, no una llave compuesta mínima. Si posteriormente se desea conservar varias tarjetas históricas por cliente, será necesario precisar la temporalidad y la cardinalidad antes de trasladar el modelo a tablas. El reporte no supone ese cambio.
+
+\subtitulo{Llave elegida de Empleado}
+Se elige \textbf{CURP} como identificador de Empleado. RFC se conserva como llave candidata alternativa y debe mantener su unicidad. Ambos valores identifican individualmente al empleado; no se utiliza el par (CURP, RFC) como una llave compuesta. La elección elimina la ambigüedad causada por el subrayado simultáneo de la versión anterior.
+
+Gerente, Cajero, Encargado de premios y Técnico heredan la identificación de Empleado. No requieren una llave independiente por el hecho de ser subtipos. El cambio de llave seleccionada no modifica los atributos específicos de cada puesto ni sus responsabilidades.
+
+\subtitulo{Entidades fuertes conservadas}
+Cliente, Máquina, Juego, Sucursal y Premio conservan, respectivamente, \dato{idCliente}, \dato{idMaquina}, \dato{idJuego}, \dato{idSucursal} e \dato{idPremio}. Tipo de juego conserva \dato{idTipo}. Estos identificadores corresponden a las entidades fuertes representadas en la versión actual.
+
+\newpage
+\titulo{04 / CONSIDERACIONES}{Horarios, catálogo y personal}
+\subtitulo{Horarios de Sucursal}
+Una sucursal puede registrar varios horarios; por ello, \dato{horarios} es un atributo multivaluado representado mediante un óvalo doble. Cada valor corresponde a un horario de atención de la misma sucursal. No constituye una entidad nueva, no funciona como llave y no se confunde con \dato{horarioTrabajo}, que describe la jornada del personal.
+
+El nombre plural atiende la observación recibida y expresa la posibilidad de registrar varios horarios para una sucursal. La multiplicidad se representa mediante la notación del atributo, sin introducir una relación adicional. El modelo no descompone cada horario en nuevos atributos de día, apertura o cierre.
+
+\subtitulo{Tipo de juego como catálogo independiente}
+Se conserva Tipo de juego como entidad fuerte porque las modalidades pueden definirse antes de registrar juegos concretos. Su existencia no depende de que en ese momento haya un juego clasificado. Por ejemplo, puede mantenerse una modalidad temporalmente sin juegos disponibles, conservando sus reglas para una incorporación posterior.
+
+\dato{idTipo} identifica cada tipo; \dato{nombre}, \dato{reglaPuntuacion} y \dato{condicion} describen la modalidad. Clasificar permanece como relación ordinaria. Se conserva la lectura 1:N desde Tipo de juego hacia Juego: un tipo puede clasificar varios juegos y cada juego se asocia, como máximo, con un tipo. La independencia del catálogo justifica que no se represente con un rectángulo doble.
+
+\subtitulo{Especialización de Empleado}
+Se conserva la especialización total y disjunta en Gerente, Cajero, Encargado de premios y Técnico. Cada empleado corresponde a un puesto de la especialización; los subtipos comparten los datos generales y mantienen sus atributos particulares.
+
+Gerente participa en Administrar con Sucursal; Encargado de premios participa en Procesar con Canje. Las ramas que salen de la especialización expresan pertenencia a un subtipo, no una relación de negocio entre Gerente y Encargado de premios. Los cruces o proximidades de líneas tampoco crean una relación adicional.
+
+\begin{nota}
+\textbf{Lectura de las conexiones del personal.} La distribución de los subtipos se conserva respecto de la primera versión. Administrar vincula exclusivamente a Gerente con Sucursal, y Procesar vincula a Encargado de premios con Canje. La pertenencia de ambos puestos a Empleado se expresa mediante las ramas de la especialización.
+\end{nota}
+
+\newpage
+\titulo{05 / CONTINUIDAD DEL MODELO}{Restricciones de las operaciones}
+La incorporación de notación identificadora no cambia el significado de las operaciones existentes. Se conservan las siguientes restricciones de asociación; la lectura 1:N se realiza desde el propietario o participante hacia la operación.
+
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.6cm}Xp{4.2cm}@{}}
+\toprule
+\textbf{Operación} & \textbf{Asociaciones conservadas} & \textbf{Restricción por ocurrencia}\\\midrule
+Partida & Tarjeta--Partida y Máquina--Partida, 1:N. & Una tarjeta y una máquina por partida.\\
+Visita & Tarjeta--Visita y Sucursal--Visita, 1:N. & Una tarjeta y una sucursal por visita.\\
+Recarga & Tarjeta--Recarga, Sucursal--Recarga y Cajero--Recarga, 1:N. & Una tarjeta, una sucursal y un cajero por recarga.\\
+Canje & Cliente--Canje, Premio--Canje, Sucursal--Canje y Encargado--Canje, 1:N. & Un cliente, un tipo de premio, una sucursal y un encargado por canje.\\
+Mantenimiento & Máquina--Mantenimiento y Técnico--Mantenimiento, 1:N. & Una máquina y un técnico por mantenimiento.\\\bottomrule
+\end{tabularx}
+\normalsize
+
+\subtitulo{Atributos y restricciones que se mantienen}
+Las entidades conservan sus atributos operativos: fecha en Visita; fecha, hora, monto y método de abono en Recarga; fecha, hora y resultados de puntuación en Partida; fecha, hora, cantidad de premios y puntos utilizados en Canje; fecha, tipo y descripción del problema en Mantenimiento. El cambio afecta la interpretación del identificador local, no la incorporación de nuevos datos.
+
+Disponer conserva la relación N:M entre Sucursal y Premio. Su atributo \dato{cantidadDisponible} expresa existencias por combinación de sucursal y premio, no una cantidad global del catálogo. Se mantiene así la separación entre la descripción de un premio y su disponibilidad local.
+
+\subtitulo{Alcance de la corrección conceptual}
+La dependencia de existencia requiere que la operación no quede sin sus participantes obligatorios. Esta regla no establece por sí misma una política de borrado en cascada ni autoriza eliminar el historial cuando un participante deja de estar activo. Las políticas de conservación y la implementación relacional corresponden a una etapa posterior.
+
+\subtitulo{Balance de las observaciones recibidas}
+La versión actual explicita la multiplicidad de horarios, incorpora entidades débiles y relaciones identificadoras y selecciona una sola llave de Empleado. También se justifican la independencia de Tipo de juego y la lectura de la especialización. La distribución del personal se conserva, acompañada de la aclaración de sus relaciones. Estas consideraciones atienden las preguntas recibidas y precisan las decisiones adoptadas en el modelo.
+
+\newpage
+\titulo{06 / INTERPRETACIÓN DEL MODELO}{Notación y consideraciones finales}
+\subtitulo{Convenciones de lectura}
+La interpretación del diagrama se basa en la notación del modelo Entidad-Relación Extendido. La siguiente tabla reúne el significado de los elementos utilizados y permite relacionar las correcciones gráficas con las restricciones descritas en este informe.
+
+\begin{tabularx}{\textwidth}{@{}p{5.1cm}X@{}}
+\toprule
+\textbf{Elemento} & \textbf{Significado}\\\midrule
+Rectángulo simple & Entidad fuerte, con identificación independiente de una entidad propietaria.\\
+Rectángulo doble & Entidad débil, interpretada dentro del contexto de sus propietarios.\\
+Rombo doble & Relación identificadora entre una entidad débil y su propietario.\\
+Línea doble de participación & Participación total de la entidad en la relación correspondiente.\\
+Óvalo doble & Atributo multivaluado, como los horarios de Sucursal.\\
+Llave y discriminante & La llave identifica la entidad; el discriminante distingue ocurrencias dentro de un contexto propietario.\\
+Especialización disjunta & Los subtipos representan puestos excluyentes de Empleado.\\\bottomrule
+\end{tabularx}
+
+\subtitulo{Identificación y dependencia}
+Los contornos dobles expresan dependencia e identificación contextual; no representan entidades ni relaciones adicionales. La participación total establece la obligación de que cada ocurrencia intervenga en una relación, mientras que la cardinalidad limita cuántas ocurrencias pueden asociarse. Ambas restricciones deben interpretarse conjuntamente.
+
+Los atributos \dato{numeroTarjeta}, \dato{idPartida}, \dato{idVisita}, \dato{idRecarga}, \dato{idCanje} e \dato{idMantenimiento} se interpretan como discriminantes en los contextos definidos en las secciones 2 y 3. La convención de Chen distingue el discriminante mediante un subrayado discontinuo y la llave mediante un subrayado continuo. Su función semántica queda establecida por las dependencias y restricciones expuestas.
+
+\begin{nota}
+\textbf{Restricciones de interpretación.} La identificación contextual debe distinguirse de una llave mínima, especialmente en Poseer (1:1). Asimismo, un cruce de líneas no crea una relación: los participantes se determinan por las conexiones con los rombos y por las ramas de la especialización.
+\end{nota}
+
+\subtitulo{Consideraciones finales}
+La segunda versión sustituye el criterio de identificación aislada por una descripción explícita de las dependencias de Tarjeta y de las operaciones. El catálogo Tipo de juego conserva autonomía y Empleado se identifica mediante CURP. Estas decisiones precisan el modelo de PuellaGame y documentan tanto los cambios efectivos como las restricciones que deben respetarse en su interpretación.
+\includepdf[pages=-,fitpaper=true]{../tmp/pdfs/diagrama.pdf}
+\end{document}
