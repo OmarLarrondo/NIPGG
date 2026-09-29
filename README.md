@@ -15,9 +15,14 @@ Actualmente el equipo trabaja en las siguientes entregas:
   modular para documentar el caso de uso, sus diagramas en Draw.io y el reporte
   correspondiente. La coordinación está en
   [`Practica03/README.md`](Practica03/README.md).
+- **Práctica 04 - Modelo Relacional:** contiene la estructura modular para
+  convertir el modelo E-R de la Práctica 03, registrar los dominios,
+  restricciones y llaves, y preparar los diagramas y el reporte. Las opciones
+  de trabajo y convenciones están en [`Practica04/README.md`](Practica04/README.md).
 
-Los diagramas de ambas entregas se trabajarán en línea y las respuestas se
-integrarán por módulos conforme avance el equipo.
+Los diagramas se trabajarán en línea y sus exportaciones se guardarán en la
+carpeta `Diagramas/` de cada práctica. Las respuestas se integrarán por módulos
+conforme avance el equipo.
 
 ```
 ÑIPGG/
@@ -33,6 +38,11 @@ integrarán por módulos conforme avance el equipo.
 │   ├── Docs/                   # destino del PDF final
 │   ├── reporte/                # fuentes modulares de LaTeX
 │   └── README.md               # coordinación y reparto
+├── Practica04/                 # entrega activa: Modelo Relacional
+│   ├── Diagramas/              # exportaciones de diagrams.net
+│   ├── Docs/                   # destino del PDF final
+│   ├── reporte/                # fuentes modulares del PDF
+│   └── README.md               # opciones de trabajo y coordinación
 ├── Practica02/                 # práctica anterior
 ├── Practica01/                 # práctica anterior
 └── Tarea01/                    # tarea anterior
@@ -56,5 +66,5 @@ Cada entrega tendrá su propio paquete final conforme a los lineamientos de
 Classroom. Los nombres definitivos y el contenido exacto de cada ZIP se
 verificarán antes de publicar las entregas.
 
-Las carpetas de `Practica02/`, `Practica01/` y `Tarea01/` se conservan como
-historial; no son las entregas activas actuales.
+Las carpetas de `Practica03/`, `Practica02/`, `Practica01/` y `Tarea01/` se
+conservan como entregas anteriores; `Practica04/` es la práctica actual.
