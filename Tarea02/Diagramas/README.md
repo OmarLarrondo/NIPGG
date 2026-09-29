@@ -1,27 +1,24 @@
 # Diagramas de la Tarea 02
 
-Los diagramas se elaborarán en línea con Draw.io. Este archivo funcionará como
-registro compartido cuando el equipo confirme los enlaces, responsables,
-versiones y nombres de exportación.
+Cada modelo solicitado se conserva en formato editable de Draw.io y en una
+exportación PNG legible. Las mismas imágenes se insertan en el reporte.
 
-## Registro de diagramas
+| Ejercicio | Fuente editable | Exportación | Estado |
+|---|---|---|---|
+| 2-ii. Modelo de universidad | `Ejercicio2ii.drawio` | `Ejercicio2ii.png` | Completo |
+| 3-a. Números racionales | `Ejercicio3a.drawio` | `Ejercicio3a.drawio.png` | Completo |
+| 3-b. Modelo E-R para el modelo E-R | `Ejercicio3b.drawio` | `Ejercicio3b.drawio.png` | Completo |
+| 3-c. SIG SEMARNAT | `Ejercicio 3c.drawio` | `Ejercicio 3c.png` | Completo |
 
-| Ejercicio | Enlace Draw.io | Responsable | Exportación requerida | Estado |
-|---|---|---|---|---|
-| 2-ii. Modelo de universidad | TODO | Diego-3 | TODO | Pendiente |
-| 3-a. Números racionales | TODO | Ana-4 | TODO | Pendiente |
-| 3-b. Modelo E-R para el modelo E-R | TODO | Ana-4 | TODO | Pendiente |
-| 3-c. SIG SEMARNAT | TODO | Miguel-5 | TODO | Pendiente |
+La imagen `Ejercicio 2i.png` reproduce las tres propuestas proporcionadas por
+el enunciado para su análisis; no es un modelo nuevo solicitado al equipo y,
+por ello, no forma parte de los cuatro pares editables de la entrega.
 
-El análisis de sitios, choferes y taxis del ejercicio 2-i se documentará en el
-reporte; si el equipo decide acompañarlo con un diagrama, se agregará aquí.
+## Verificación común
 
-## Lista de verificación común
-
-- [ ] Notación vista en clase.
-- [ ] Entidades y relaciones identificadas.
-- [ ] Identificadores explícitos.
-- [ ] Cardinalidades explícitas.
-- [ ] Participación explícita.
-- [ ] Restricciones y decisiones de diseño documentadas.
-- [ ] Exportaciones legibles con nombres definitivos.
+- Notación E--R tipo Chen.
+- Identificadores explícitos.
+- Participación total con línea doble y parcial con línea simple.
+- Restricciones de unicidad mediante flechas, conforme a la notación del equipo.
+- Restricciones que no caben en la notación gráfica expresadas mediante notas.
+- Decisiones de diseño justificadas en el reporte.

@@ -1,95 +1,59 @@
 # Tarea 02 - Modelo Entidad-Relación
 
-Esta carpeta contiene la estructura modular de trabajo para la Tarea 02 de
-Fundamentos de Bases de Datos. En esta etapa se preparan únicamente las
-fronteras de trabajo, los archivos de coordinación y el esqueleto del reporte;
-no se incluyen respuestas, modelos terminados, datos ni diagramas.
+Entrega del equipo **ÑIPGG** para Fundamentos de Bases de Datos.
 
-## Lineamientos considerados
+## Contenido
 
-La tarea solicita responder los conceptos del modelo E-R, analizar las
-propuestas de sitios de taxis, modificar el modelo E-R de una universidad y
-diseñar tres mini-mundos: números racionales, el modelo E-R y un SIG para
-SEMARNAT. Los ejercicios que requieren modelo deben elaborarse con la
-notación vista en clase y explicitar cardinalidad, participación,
-identificadores, restricciones y decisiones de diseño. Los diagramas se
-trabajarán en línea con Draw.io.
+- `Docs/Tarea02.pdf`: reporte completo con los ejercicios 1, 2-i, 2-ii y
+  3-a a 3-c, las decisiones de diseño y las referencias.
+- `Diagramas/`: fuentes editables de Draw.io y exportaciones PNG de los
+  ejercicios 2-ii, 3-a, 3-b y 3-c.
+- `README_ÑIPGG.pdf`: nombres completos y números de cuenta de los cinco
+  integrantes.
+- `reporte/`: fuentes LaTeX utilizadas para generar el reporte.
 
-La entrega se realizará conforme a los lineamientos indicados en Classroom.
-Los nombres definitivos del equipo y de los archivos de entrega se completarán
-cuando el equipo los confirme.
+## Integrantes
 
-## Estructura modular
+| Integrante | Número de cuenta |
+|---|---:|
+| Omar Alejandro Juárez Larrondo | 322245244 |
+| Yahir León Bautista | 322176542 |
+| Diego Hernández Gómez | 321069942 |
+| Miguel Ángel Jiménez Ramírez | 119000887 |
+| Ana Lilia Carballido Camacateco | 315314601 |
 
-```text
-Tarea02/
-├── README.md
-├── Diagramas/
-│   └── README.md
-├── Docs/
-│   └── .gitkeep
-└── reporte/
-    ├── main.tex
-    ├── preambulo.tex
-    ├── bibliografia.bib
-    ├── figuras/
-    │   └── .gitkeep
-    └── secciones/
-        ├── 00_portada.tex
-        ├── 01_conceptos_modelo_er.tex
-        ├── 02_sitios_taxis.tex
-        ├── 03_modelo_universidad.tex
-        ├── 04_numeros_racionales.tex
-        ├── 05_modelo_er_modelo_er.tex
-        ├── 06_sig_semarnat.tex
-        ├── 07_decisiones_diseno.tex
-        └── 08_conclusiones.tex
+## Compilación
+
+El reporte se compila desde `reporte/`:
+
+```bash
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-## División propuesta para cinco integrantes
+El README de entrega se compila desde la raíz de `Tarea02/`:
 
-La división separa cada ejercicio en un módulo principal. Cada integrante
-documentará también las decisiones y restricciones de su propio ejercicio,
-para evitar concentrar toda la integración conceptual en una sola persona.
-
-| Integrante | Responsabilidad principal | Rutas editables | Revisión cruzada |
-|---|---|---|---|
-| Omar-1 | Conceptos del modelo E-R, coordinación del reporte y cierre editorial | `reporte/secciones/00_portada.tex`, `reporte/secciones/01_conceptos_modelo_er.tex` | Diego-3 |
-| Yahir-2 | Análisis de sitios, choferes y taxis | `reporte/secciones/02_sitios_taxis.tex` | Ana-4 |
-| Diego-3 | Modificación del modelo E-R de la universidad | `reporte/secciones/03_modelo_universidad.tex` | Miguel-5 |
-| Ana-4 | Mini-mundos de números racionales y del modelo E-R | `reporte/secciones/04_numeros_racionales.tex`, `reporte/secciones/05_modelo_er_modelo_er.tex` | Yahir-2 |
-| Miguel-5 | Sistema de Información Geográfica de SEMARNAT | `reporte/secciones/06_sig_semarnat.tex` | Omar-1 |
-
-La sección `07_decisiones_diseno.tex` reunirá las decisiones transversales y
-se completará con aportaciones de los cinco integrantes. La sección
-`08_conclusiones.tex`, `main.tex`, `preambulo.tex`, `bibliografia.bib` y
-`Diagramas/README.md` son archivos compartidos: se modifican únicamente por
-acuerdo del equipo. Omar-1 coordina la integración editorial, pero
-no absorbe el contenido técnico de los demás módulos.
-
-## Reglas de colaboración
-
-- Cada integrante trabaja principalmente dentro de las rutas asignadas.
-- Los diagramas se mantienen en Draw.io en línea; esta estructura no crea una
-  copia local provisional del archivo fuente.
-- Antes de integrar, cada módulo debe acordar nombres, atributos,
-  identificadores, cardinalidades, participación y restricciones.
-- Las decisiones asumidas por falta de información deben quedar documentadas
-  en el módulo correspondiente y resumidas en `07_decisiones_diseno.tex`.
-- No se agregan respuestas, resultados ni implementaciones hasta que el equipo
-  termine la etapa de estructura.
-
-## Estructura prevista de entrega
-
-```text
-Tarea02_ÑIPGG.zip
-├── Diagramas/
-│   ├── <diagramas-exportados-desde-DrawIO>
-│   └── README.md
-├── Docs/
-│   └── Tarea02.pdf
-└── README_<nombre-del-equipo>.pdf
+```bash
+latexmk -pdf -interaction=nonstopmode -halt-on-error README_ÑIPGG.tex
 ```
 
-Los nombres exactos y formatos finales se verificarán contra los lineamientos
-de entrega antes de preparar el archivo comprimido.
+## Paquete de entrega
+
+El archivo `Tarea02_ÑIPGG.zip` contiene únicamente:
+
+```text
+Tarea02_ÑIPGG/
+├── README_ÑIPGG.pdf
+├── Diagramas/
+│   ├── Ejercicio2ii.drawio
+│   ├── Ejercicio2ii.png
+│   ├── Ejercicio3a.drawio
+│   ├── Ejercicio3a.drawio.png
+│   ├── Ejercicio3b.drawio
+│   ├── Ejercicio3b.drawio.png
+│   ├── Ejercicio 3c.drawio
+│   └── Ejercicio 3c.png
+└── Docs/
+    └── Tarea02.pdf
+```
+
+No se incluye una carpeta `SQL`, ya que esta tarea no solicita archivos SQL.

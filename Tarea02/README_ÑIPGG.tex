@@ -1,13 +1,57 @@
-% Esqueleto del README de entrega. Pendiente de completar conforme a los
-% lineamientos finales y a los nombres confirmados por el equipo.
 \documentclass[11pt,letterpaper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
+\usepackage[spanish,es-tabla]{babel}
 \usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
 
+\definecolor{unamblue}{RGB}{0,56,107}
+\definecolor{unamgold}{RGB}{188,149,92}
+
 \begin{document}
-\section*{Tarea 02 - Modelo Entidad-Relación}
-% TODO: completar integrantes, grupo, enlaces y notas de entrega.
+\thispagestyle{empty}
+
+\begin{center}
+  {\Large\bfseries\color{unamblue} Universidad Nacional Autónoma de México\par}
+  \vspace{0.2cm}
+  {\large Facultad de Ciencias\par}
+  \vspace{0.8cm}
+  {\LARGE\bfseries Tarea 02\par}
+  \vspace{0.15cm}
+  {\Large Modelo Entidad--Relación\par}
+  \vspace{0.35cm}
+  {\large\bfseries Equipo ÑIPGG\par}
+\end{center}
+
+\vspace{0.7cm}
+
+\section*{Integrantes}
+
+\renewcommand{\arraystretch}{1.25}
+\noindent\begin{tabularx}{\textwidth}{@{}Xr@{}}
+  \toprule
+  \textbf{Nombre completo} & \textbf{Número de cuenta} \\
+  \midrule
+  Omar Alejandro Juárez Larrondo & 322245244 \\
+  Yahir León Bautista & 322176542 \\
+  Diego Hernández Gómez & 321069942 \\
+  Miguel Ángel Jiménez Ramírez & 119000887 \\
+  Ana Lilia Carballido Camacateco & 315314601 \\
+  \bottomrule
+\end{tabularx}
+
+\vfill
+\begin{center}
+  \color{unamgold}\rule{0.72\textwidth}{1pt}
+
+  \vspace{0.25cm}
+  {\small Fundamentos de Bases de Datos\par}
+  {\small Profesor: M. en I. Gerardo Avilés Rosas\par}
+  {\small Fecha de entrega: 22 de septiembre de 2026\par}
+\end{center}
+
 \end{document}

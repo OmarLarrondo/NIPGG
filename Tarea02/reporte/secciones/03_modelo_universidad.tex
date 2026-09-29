@@ -1,12 +1,51 @@
 \section{Modificación del modelo de una universidad}
 
-Primeramente, la primer modificación importante fue el añadir a los alumnos graduados y no graduados; para esto convertimos a la entidad \textbf{Alumno} en una superentidad con todos los atributos originales y creamos 2 subentidades, \textbf{Graduado} y \textbf{NoGraduado}. Esta será una especialización total y disjunta, dado que un alumno debería ser uno de los dos y no puede ser ambos. Además, le añadimos a \textbf{Graduado} un atributo \textbf{Título} para almacenar el título que posee y a \textbf{NoGraduado} el atributo \textbf{NumExpediente} para almacenar su número de expediente.
+La Figura~\ref{fig:modelo-universidad} presenta la modificación propuesta por
+el equipo, conservando la notación de Chen empleada en los demás diagramas.
+Las líneas dobles indican participación total, las líneas simples indican
+participación parcial y las flechas representan restricciones de unicidad.
 
-Lo siguiente fue añadir la relación \textbf{Tutorizar}, entre \textbf{Graduado} y \textbf{NoGraduado}; esta relación es de uno a muchos, donde un \textbf{NoGraduado} tiene solo un tutor \textbf{Graduado} y un \textbf{Graduado} puede Tutorizar a varios \textbf{NoGraduado}. También es una relación parcial en ambos sentidos, ya que en lo pedido no dice nada que nos dé una pista, así que decidimos dejarlo parcial, ya que podría haber graduados que no quieran ser tutores o no graduados que no necesiten tutores.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{../Diagramas/Ejercicio2ii.png}
+  \caption{Modelo E--R modificado para la universidad.}
+  \label{fig:modelo-universidad}
+\end{figure}
 
-El siguiente cambio fue el agregar los atributos \textbf{Cargo} y \textbf{CargaHoraria} a la relación \textbf{Trabajar} entre \textbf{Profesor} y \textbf{Departamento}; ademas de cambiar la cardinalidad a uno a muchos, para asi no pueda exisitir en un departamento con dos profesores trabajando con el mismo cargo. 
+\subsection{Especialización de alumnos y tutoría}
 
-Por último, cambio hicimos una agregación llamada ``Participación en proyecto'' que encapsula las entidades \textbf{Graduado} y \textbf{Proyecto} y su relación participación, y creamos la relación \textbf{Supervisar} de \textbf{Profesor} a la agregación. Esta relación es de uno a muchos, tal que un profesor puede supervisar varias participaciones de un alumno graduado en un proyecto y una participación de un graduado a un proyecto estará supervisada por un profesor; por otra parte, esta relación debe tener participación total de parte de la agregación, ya que cada participación de un alumno graduado debe ser supervisada por un profesor, por lo que la participación depende de un profesor.
+\textbf{Alumno} se presenta como superentidad de \textbf{Graduado} y
+\textbf{NoGraduado}. El triángulo marcado con ``d'' establece una
+especialización disjunta: un alumno no puede pertenecer simultáneamente a
+ambos subtipos. \textbf{Graduado} incorpora el atributo \emph{Título}, mientras
+\textbf{NoGraduado} incorpora \emph{NumExpediente}.
 
-Además de estos cambios, no agregamos ni modificamos nada, ya que no se dio ninguna otra pista sobre cardinalidades o participaciones, por lo que lo dejamos como estaba.
+La relación \textbf{Tutoriza} conecta ambos subtipos. La flecha dirigida hacia
+\textbf{Graduado} expresa que un alumno no graduado se vincula, como máximo,
+con un solo tutor; un graduado puede tutorizar a varios alumnos no graduados.
+El diagrama conserva una línea simple del lado de \textbf{NoGraduado}, por lo
+que su participación se representa como parcial en la propuesta gráfica.
 
+\subsection{Cargo y carga horaria por departamento}
+
+Los atributos \emph{Cargo} y \emph{CargaHoraria} se colocan en la relación
+\textbf{Trabajar} entre \textbf{Departamento} y \textbf{Profesor}. Esta
+ubicación indica que sus valores describen la asignación de un profesor dentro
+de un departamento y no al profesor o al departamento de forma aislada. La
+flecha incluida en la propuesta representa la restricción de unicidad elegida
+por el equipo para impedir la repetición de un cargo dentro del mismo
+departamento.
+
+\subsection{Participación en proyectos y supervisión}
+
+\textbf{Graduado} participa en \textbf{Proyecto} mediante la relación
+\textbf{Participar}. El recuadro que agrupa ambas entidades y su relación
+constituye la agregación \emph{Participación en proyecto}. Esta agregación se
+relaciona con \textbf{Profesor} mediante \textbf{Supervisar}, lo que permite
+asignar un profesor a cada participación concreta de un alumno graduado en un
+proyecto. La línea doble entre la agregación y \textbf{Supervisar} expresa la
+participación total mostrada en el diagrama.
+
+Las relaciones \textbf{Administrar}, \textbf{Estudiar} y las demás estructuras
+del modelo original se conservan sin alteraciones, pues el enunciado no solicita
+modificarlas.
