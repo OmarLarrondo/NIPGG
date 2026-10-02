@@ -7,14 +7,10 @@ de *Fundamentos de Bases de Datos* (Facultad de Ciencias, UNAM).
 
 Actualmente el equipo trabaja en las siguientes entregas:
 
-- **Tarea 02 - Modelo Entidad-Relación:** incluye conceptos del modelo E-R,
-  análisis de sitios de taxis, modificación de un modelo universitario y tres
-  mini-mundos. La estructura modular y la asignación del equipo están en
-  [`Tarea02/README.md`](Tarea02/README.md).
-- **Práctica 03 - Modelo Entidad-Relación Extendido:** contiene la estructura
-  modular para documentar el caso de uso, sus diagramas en Draw.io y el reporte
-  correspondiente. La coordinación está en
-  [`Practica03/README.md`](Practica03/README.md).
+- **Tarea 03 - Modelo Relacional:** preguntas de repaso, traducción de
+  modelos E-R al modelo relacional, inserción de tuplas y restricciones de
+  integridad. La estructura modular y el reparto propuesto están en
+  [`Tarea03/README.md`](Tarea03/README.md).
 - **Práctica 04 - Modelo Relacional:** contiene la estructura modular para
   convertir el modelo E-R de la Práctica 03, registrar los dominios,
   restricciones y llaves, y preparar los diagramas y el reporte. Las opciones
@@ -27,25 +23,19 @@ conforme avance el equipo.
 ```
 ÑIPGG/
 ├── README.md
-├── Tarea02/                    # entrega activa: Modelo E-R
-│   ├── Diagramas/              # registro de diagramas en Draw.io
+├── Tarea03/                    # entrega activa: Modelo Relacional
+│   ├── Diagramas/              # exportaciones de diagrams.net
 │   ├── Docs/                   # destino del PDF final
-│   ├── reporte/                # fuentes modulares de LaTeX
-│   ├── README_ÑIPGG.tex        # fuente del README de entrega
-│   └── README.md               # coordinación y reparto
-├── Practica03/                 # entrega activa: Modelo E-R Extendido
-│   ├── Diagramas/              # registro de diagramas en Draw.io
-│   ├── Docs/                   # destino del PDF final
-│   ├── reporte/                # fuentes modulares de LaTeX
-│   └── README.md               # coordinación y reparto
+│   ├── reporte/                # fuentes modulares del PDF
+│   └── README.md               # opciones de trabajo y coordinación
 ├── Practica04/                 # entrega activa: Modelo Relacional
 │   ├── Diagramas/              # exportaciones de diagrams.net
 │   ├── Docs/                   # destino del PDF final
 │   ├── reporte/                # fuentes modulares del PDF
 │   └── README.md               # opciones de trabajo y coordinación
+├── Tarea02/                    # entrega anterior
+├── Practica03/                 # entrega anterior
 ├── Practica02/                 # práctica anterior
-├── Practica01/                 # práctica anterior
-└── Tarea01/                    # tarea anterior
 ```
 
 ## Convenciones de colaboración
@@ -66,5 +56,6 @@ Cada entrega tendrá su propio paquete final conforme a los lineamientos de
 Classroom. Los nombres definitivos y el contenido exacto de cada ZIP se
 verificarán antes de publicar las entregas.
 
-Las carpetas de `Practica03/`, `Practica02/`, `Practica01/` y `Tarea01/` se
-conservan como entregas anteriores; `Practica04/` es la práctica actual.
+Las carpetas de `Tarea02/`, `Practica03/`, `Practica02/`, `Practica01/` y
+`Tarea01/` se conservan como entregas anteriores; `Tarea03/` y `Practica04/`
+son las entregas actuales.
