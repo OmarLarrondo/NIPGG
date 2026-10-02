@@ -3,30 +3,27 @@
 Estructura de coordinación para la práctica del equipo **ÑIPGG**. La actividad
 parte del modelo E-R elaborado en la Práctica 03 y solicita su conversión a un
 diagrama relacional, además de un PDF que describa dominios, restricciones y
-llaves de cada relación. Este documento propone cinco opciones de trabajo; no
-asigna integrantes ni confirma un reparto.
+llaves de cada relación. El equipo confirmó la distribución de las cinco
+opciones que se detalla a continuación.
 
 ## Opciones para dividir el trabajo
 
-Cada integrante puede elegir una opción cuando el equipo acuerde el reparto.
 Cada opción incluye una zona del diagrama y el contenido relacionado del
-reporte. Los nombres `Integrante 1` a `Integrante 5` son solo marcadores
-neutrales y no representan una asignación. Las zonas indican quién prepara o
-revisa cada parte; el resultado se integra en el mismo archivo Draw.io.
+reporte. El trabajo del diagrama se realizará sobre un único archivo Draw.io;
+las conexiones que crucen zonas se coordinarán entre las personas responsables.
 
-| Opción | Módulo | Alcance propuesto |
-| --- | --- | --- |
-| 1 | Clientes y partidas | **Diagrama:** `Cliente`, `Tarjeta`, `Partida` y sus atributos; revisar las relaciones `Poseer` y `Registrar`. **Reporte:** documentar la conversión de esas entidades y relaciones, con dominios, tipos y llaves. |
-| 2 | Juegos y máquinas | **Diagrama:** `Máquina`, `Juego`, `Tipo de juego`, `Mantenimiento` y sus atributos; revisar `Ejecutar`, `Corresponder`, `Clasificar` y `Tener`. **Reporte:** documentar sus relaciones, dominios, tipos, llaves y restricciones. |
-| 3 | Canjes y premios | **Diagrama:** `Canje`, `Premio` y sus atributos; revisar `Hacer`, `Otorgar`, `Disponer` y `Saldar`. **Reporte:** documentar su conversión, incluidas las llaves y los atributos que pertenecen a las relaciones. |
-| 4 | Sucursal, visitas y recargas | **Diagrama:** `Sucursal`, `Visita`, `Recarga` y sus atributos; revisar `Pertenecer`, `ingresar`, `Recibir`, `Efectuar` y `Proceder en`. **Reporte:** documentar dominios, tipos, llaves y restricciones de esta zona. |
-| 5 | Personal e integración | **Diagrama:** `Empleado`, `Gerente`, `Cajero`, `Encargado de premios` y `Técnico`, incluida la especialización y relaciones `Vender`, `Reflejar`, `Trabajar`, `Administrar` y `Realizar`. **Reporte:** documentar esta conversión y revisar de extremo a extremo llaves, dominios, tipos, cardinalidades, participaciones y consistencia entre ambos diagramas y el PDF. |
+| Opción | Responsable | Módulo | Alcance |
+| --- | --- | --- | --- |
+| 1 | Diego | Clientes y partidas | **Diagrama:** `Cliente`, `Tarjeta`, `Partida` y sus atributos; revisar las relaciones `Poseer` y `Registrar`. **Reporte:** documentar la conversión de esas entidades y relaciones, con dominios, tipos y llaves. |
+| 2 | Miguel | Juegos y máquinas | **Diagrama:** `Máquina`, `Juego`, `Tipo de juego`, `Mantenimiento` y sus atributos; revisar `Ejecutar`, `Corresponder`, `Clasificar` y `Tener`. **Reporte:** documentar sus relaciones, dominios, tipos, llaves y restricciones. |
+| 3 | Yahir | Canjes y premios | **Diagrama:** `Canje`, `Premio` y sus atributos; revisar `Hacer`, `Otorgar`, `Disponer` y `Saldar`. **Reporte:** documentar su conversión, incluidas las llaves y los atributos que pertenecen a las relaciones. |
+| 4 | Omar | Sucursal, visitas y recargas | **Diagrama:** `Sucursal`, `Visita`, `Recarga` y sus atributos; revisar `Pertenecer`, `ingresar`, `Recibir`, `Efectuar` y `Proceder en`. **Reporte:** documentar dominios, tipos, llaves y restricciones de esta zona. |
+| 5 | Ana | Personal e integración | **Diagrama:** `Empleado`, `Gerente`, `Cajero`, `Encargado de premios` y `Técnico`, incluida la especialización y relaciones `Vender`, `Reflejar`, `Trabajar`, `Administrar` y `Realizar`. **Reporte:** documentar esta conversión y revisar de extremo a extremo llaves, dominios, tipos, cardinalidades, participaciones y consistencia entre ambos diagramas y el PDF. |
 
-Las opciones son propuestas de alcance para que el equipo las discuta. Las
-conexiones que cruzan zonas deben conservarse en el diagrama y revisarse con
-quienes tengan asignadas las zonas involucradas. La opción 5 contempla la
-revisión global, pero no implica que esa persona sea la única responsable de
-integrar el archivo o el PDF.
+Las conexiones que cruzan zonas deben conservarse en el diagrama y revisarse
+entre las personas responsables de las zonas involucradas. La revisión global
+de la opción 5 complementa la responsabilidad compartida de integrar el
+diagrama y el PDF.
 
 ## Estructura
 

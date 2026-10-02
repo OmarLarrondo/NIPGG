@@ -9,3 +9,6 @@ exportaciones se guardarán en esta carpeta. Se requieren un archivo editable
 
 Al integrar los archivos, comprobar que cada PNG corresponda a su fuente
 editable y que los dos modelos mantengan la misma nomenclatura.
+
+La distribución de las zonas del diagrama relacional está en
+[`../README.md`](../README.md), junto con las responsabilidades del reporte.
