@@ -41,8 +41,7 @@ conforme avance el equipo.
 ## Convenciones de colaboración
 
 - Cada cambio debe limitarse al módulo asignado y entrar mediante una rama
-  corta; se recomienda el prefijo `codex/` para ramas creadas desde este
-  repositorio.
+  corta.
 - Los commits siguen Conventional Commits, por ejemplo:
   `docs(tarea02): integrar decisiones de diseño`.
 - Antes de integrar se revisan los diagramas, la documentación de restricciones
