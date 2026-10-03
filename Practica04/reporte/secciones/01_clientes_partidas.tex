@@ -1,3 +1,102 @@
 % Responsable: Diego.
 % Opción 1: Cliente, Tarjeta, Partida y sus relaciones.
-% TODO: documentar la conversión, dominios, tipos y llaves.
+\subsection*{Conversión a tablas:}
+
+\subsubsection*{Cliente}
+
+Cliente es una entidad fuerte, ninguna de sus relaciones modifican su tabla, por lo que su tabla tiene su PK (id cliente) y sus atributos, excepto 4, edad y categoríaVIP por ser calculados y, correoElectrónico y teléfono por ser multivaluados, así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{Cliente(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, fechaNacimiento, nombre, apellidoMaterno, apellidoPaterno, sexo)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
+    \item \texttt{fechaNacimiento : date}
+    \item \texttt{nombre : varchar(50)}
+    \item \texttt{apellidoMaterno : varchar(50)}
+    \item \texttt{apellidoPaterno : varchar(50)}
+    \item \texttt{sexo : varchar(50)}
+\end{itemize}
+
+\subsubsection*{correoElectrónico}
+
+correoElectrónico es un atributo multivaluado por lo que necesita su propia tabla con la PK de Cliente y el mismo, así su tabla queda como:
+
+\begin{center}
+\texttt{correoElectrónico(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{,}\textcolor{red}{\underline{\texttt{correoElectrónico}}}\texttt{)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
+    \item \textcolor{red}{\underline{\texttt{correoElectrónico}}} : \texttt{varchar(100)}
+\end{itemize}
+
+\subsubsection*{teléfono}
+
+teléfon es un atributo multivaluado por lo que necesita su propia tabla con la PK de Cliente y el mismo, así su tabla queda como:
+
+\begin{center}
+\texttt{teléfono(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{,}\textcolor{red}{\underline{\texttt{teléfono}}}\texttt{)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
+    \item \textcolor{red}{\underline{\texttt{teléfono}}} : \texttt{char(10)}
+\end{itemize}
+
+\subsubsection*{Tarjeta}
+
+Tarjeta es una entidad débil que depende de Cliente, por lo que necesita su PK, no tiene atributos calculados ni multivaluados, y la única relación que la modifica es Vender, por lo cual se le agrega FK \textcolor{blue}{\texttt{CURP}} del Empleado Cajero; así la tabla queda como:
+
+\begin{center}
+\texttt{Tarjeta(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, numeroTarjeta, costoAdquisición, fechaCompra, saldo, estado, puntosAcumulados, }\textcolor{blue}{\texttt{CURP}}\texttt{)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
+    \item \texttt{numeroTarjeta : int}
+    \item \texttt{costoAdquisición : int}
+    \item \texttt{fechaCompra : date}
+    \item \texttt{saldo : int}
+    \item \texttt{estado : varchar(50)}
+    \item \texttt{puntosAcumulados : int}
+    \item \textcolor{blue}{\texttt{CURP}} : \texttt{char(18)}
+\end{itemize}
+
+\subsubsection*{Partida}
+
+Partida es una entidad débil que depende de Tarjeta y Máquina, por lo que necesita sus PK de ambas entidades, y el suyo propio; no tiene relaciones que la modifiquen mas, pro lo que su tabla queda así:
+
+\begin{center}
+\texttt{Partida(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, }\textcolor{red}{\underline{\texttt{numeroTarjeta}}}\texttt{, }\textcolor{red}{\underline{\texttt{idMaquina}}}\texttt{, }\textcolor{red}{\underline{\texttt{idPartida}}}\texttt{, fecha, puntosGanados, hora, puntajeObtenido)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
+    \item \textcolor{red}{\underline{\texttt{numeroTarjeta}}} : \texttt{int}
+    \item \textcolor{red}{\underline{\texttt{idMaquina}}} : \texttt{int}
+    \item \textcolor{red}{\underline{\texttt{idPartida}}} : \texttt{int}
+    \item \texttt{fecha : date}
+    \item \texttt{puntosGanados : int}
+    \item \texttt{hora : timetz}
+    \item \texttt{puntajeObtenido : int}
+\end{itemize}
+
+\subsubsection*{Relaciones}
+
+\begin{itemize}
+    \item \textbf{Poseer:} Es una relación entre Cliente y Tarjeta, con cardinalidad 1 a 1 con participación total en ambos sentidos.
+
+    \item \textbf{Registrar:} Es una relación entre Tarjeta y Partida, con cardinalidad 1 a muchos, donde una Tarjeta puede tener muchas partidas registradas; y con participación parcial por Tarjeta y total por Partida.
+\end{itemize}
