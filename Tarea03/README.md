@@ -87,3 +87,33 @@ compartido y se completa al integrar. Al desarrollar el contenido,
 documentar las decisiones de diseño, las llaves primarias y foráneas, y la
 integridad referencial donde aplique. La integración debe asegurar que la
 nomenclatura y las decisiones coincidan con los diagramas.
+
+## Ensamblado del reporte
+
+`reporte/main.tex` es el único punto de integración: invoca los ocho módulos en
+el orden del enunciado y no debe modificarse al escribir contenido. El preámbulo
+común vive en `reporte/preambulo.tex` y las referencias en
+`reporte/bibliografia.bib`, de modo que las secciones no dependan entre sí.
+
+Para que los incisos de un mismo ejercicio queden agrupados bajo un único
+encabezado, cada módulo debe respetar el siguiente contrato de niveles de
+sección:
+
+| Archivo | Encabezado | Ejercicio |
+| --- | --- | --- |
+| `01_repaso.tex` | `\section` | Ejercicio 1 |
+| `02_ejercicio2a.tex` | `\section` | Ejercicio 2 |
+| `03_ejercicio2b.tex` | `\subsection` | Ejercicio 2.b |
+| `04_insercion_3abc.tex` | `\section` | Ejercicio 3 |
+| `05_insercion_3d.tex` | `\subsection` | Ejercicio 3.d |
+| `06_integridad_4abcde.tex` | `\section` | Ejercicio 4 |
+| `07_integridad_4fghij.tex` | `\subsection` | Ejercicio 4, incisos f a j |
+| `08_decisiones_diseno.tex` | `\section` | Decisiones de diseño |
+
+La regla es que el primer módulo de cada ejercicio abre con `\section` y los que
+lo continúan usan `\subsection`. Las decisiones de diseño de cada módulo se
+registran en la subsección correspondiente de `08_decisiones_diseno.tex`.
+
+El PDF final se genera en `Docs/Tarea03.pdf` con cuatro pasadas de `pdflatex` y
+`bibtex`. Antes de publicar la entrega conviene comprobar que no queden
+referencias indefinidas ni cajas de texto desbordadas.

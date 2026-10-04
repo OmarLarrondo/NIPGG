@@ -1,4 +1,50 @@
-% Estructura inicial del reporte de la Tarea 03.
-% Integrar aquí el preámbulo y las secciones cuando el equipo acuerde su formato.
+% Ensamblador del reporte de la Tarea 03.
+% La integracion de los ocho modulos se realiza unicamente en este archivo; el
+% contenido de cada modulo permanece en reporte/secciones/ y no se modifica
+% desde aqui.
+%
+% Contrato de niveles de seccion (documentado en Tarea03/README.md):
+%   01_repaso.tex              \section      Ejercicio 1
+%   02_ejercicio2a.tex         \section      Ejercicio 2
+%   03_ejercicio2b.tex         \subsection   Ejercicio 2.b
+%   04_insercion_3abc.tex      \section      Ejercicio 3
+%   05_insercion_3d.tex        \subsection   Ejercicio 3.d
+%   06_integridad_4abcde.tex   \section      Ejercicio 4
+%   07_integridad_4fghij.tex   \subsection   Ejercicio 4, incisos f a j
+%   08_decisiones_diseno.tex   \section      Decisiones de diseno
+%
+% Los modulos que inician un ejercicio abren con \section y los que lo
+% continuam con \subsection, de modo que el documento resultante agrupa los
+% incisos de cada ejercicio bajo un único encabezado.
+%
+% Para recuperar la portada institucional usada en Tarea 02, agregar aqui un
+% \input{secciones/00_portada} dentro de un bloque \pagenumbering{gobble}, con
+% el correspondiente \clearpage antes del \tableofcontents.
 
-% TODO: definir el documento y agregar las secciones modulares.
+\input{preambulo}
+
+\begin{document}
+
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\input{secciones/01_repaso}
+
+\input{secciones/02_ejercicio2a}
+\input{secciones/03_ejercicio2b}
+
+\input{secciones/04_insercion_3abc}
+\input{secciones/05_insercion_3d}
+
+\input{secciones/06_integridad_4abcde}
+\input{secciones/07_integridad_4fghij}
+
+\input{secciones/08_decisiones_diseno}
+
+\clearpage
+\bibliographystyle{apalike}
+\bibliography{bibliografia}
+
+\end{document}
