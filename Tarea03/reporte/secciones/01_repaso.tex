@@ -1,2 +1,404 @@
 % Omar - Ejercicio 1: Preguntas de repaso.
-% TODO: desarrollar después de acordar el reparto.
+
+\section{Preguntas de repaso}
+
+Las respuestas siguientes se apoyan en una distinción que atraviesa todo el
+modelo relacional: el \emph{esquema} describe la estructura de los datos y el
+\emph{estado} describe el conjunto de hechos que, en un momento dado,
+satisface esa estructura. Confundir ambos niveles lleva a preguntarse, por
+ejemplo, si una llave existe en una base vacía, pregunta que sólo tiene
+sentido en el primer nivel \cite{elmasri2016fundamentals}.
+
+\subsection{La relación y sus características}
+
+Una \textbf{relación} es un conjunto de tuplas homogéneas que representa
+hechos acerca de una entidad o de una asociación entre entidades. En términos
+precisos, dado un nombre de relación $R$ y un conjunto de dominios $D_1, D_2,
+\ldots, D_n$, la relación es un subconjunto del producto cartesiano
+
+\begin{equation}
+  R \subseteq D_1 \times D_2 \times \cdots \times D_n,
+\end{equation}
+
+de modo que cada elemento de $R$ es una $n$-tupla $(a_1, a_2, \ldots, a_n)$
+con $a_i \in D_i$. La interpretación usual es que cada posición de la tupla
+corresponde a un atributo con nombre propio; por ello dos tuplas que coinciden
+componente a componente se consideran la misma tupla, aunque se hayan escrito
+en distinto orden.
+
+La noción de relación es más restrictiva que la de tabla, y sus
+características son precisamente las que la hacen útil como base de un modelo
+formal \cite{codd1970relational}. Las seis propiedades siguientes enuncian el
+carácter de conjunto y de estructura fija que debe tener una relación:
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=0.4em]
+  \item \textbf{Es un conjunto.} No puede contener tuplas repetidas. Si dos
+    filas tienen exactamente los mismos valores, son la misma tupla y la
+    segunda no se almacena. Es la característica que más claramente distingue
+    una relación de una lista, donde la repetición y el orden sí tienen
+    significado.
+  \item \textbf{Las tuplas son homogéneas.} Todas tienen el mismo número de
+    componentes y cada componente ocupa una posición con un dominio asociado.
+    No existen tuplas de menor o mayor longitud dentro de una misma relación.
+  \item \textbf{Los componentes están ordenados y son atómicos.} El orden de
+    los atributos es parte de la estructura del esquema y se establece al
+    declarar la relación; además, cada componente corresponde a un único valor
+    del dominio y no a un conjunto de valores. La consecuencia de la
+    atomicidad es que un atributo compuesto no puede ocupar una sola posición:
+    sus partes deben ocupar posiciones distintas.
+  \item \textbf{El orden de las tuplas es irrelevante.} La relación es un
+    conjunto y, en consecuencia, no admite un orden canónico. Recuperar las
+    filas en un orden distinto no produce una relación distinta.
+  \item \textbf{Cada componente pertenece a un dominio.} El dominio acota los
+    valores admisibles y aporta el tipo y el rango, lo que impide mezclar
+    incoherentemente, por ejemplo, un número de empleado con un nombre.
+  \item \textbf{La instancia y el tipo son objetos distintos.} El tipo de
+    relación, formado por el nombre, el grado y los dominios, pertenece al
+    esquema; la relación como subconjunto del producto cartesiano es una
+    instancia, es decir, parte del estado y susceptible de cambiar.
+\end{enumerate}
+
+\begin{conceptobox}[Consecuencia práctica]
+Que una relación sea un conjunto implica que la búsqueda de una tupla es una
+  búsqueda de miembro y no de posición. Ésta es la razón formal de que un
+  modelo relacional no pueda ofrecer la noción de última fila insertada: el
+  orden en que las instancias se incorporan al estado no forma parte de la
+  relación.
+\end{conceptobox}
+
+\subsection{El esquema de relación}
+
+El \textbf{esquema de relación} es la definición del tipo de relación: es la
+especificación de la estructura contra la que se valida cualquier instancia.
+Se enuncia como un nombre seguido de los atributos con su dominio
+
+\begin{equation}
+  R(A_1{:}D_1,\; A_2{:}D_2,\; \ldots,\; A_n{:}D_n),
+\end{equation}
+
+junto con las restricciones que el modelo impone sobre la relación. La parte
+relacionada con la estructura ---el nombre, el número de atributos y sus
+dominios--- se denomina \emph{intensión} de la relación, en tanto que el valor
+concreto que la relación adopta en un estado determinado es su
+\emph{extensión}.
+
+Cabe subrayar que un esquema relacional no queda determinado por la lista de
+atributos. Cuando un modelo relacional se obtiene por traducción de un modelo
+Entidad--Relación, el esquema incorpora además las llaves primarias, las
+llaves foráneas, las dependencias funcionales y las restricciones de
+integridad que la traducción haya hecho explícitas. En el sublenguaje SQL esta
+correspondencia es directa: el nombre de la tabla y sus columnas son la
+intensión, y las cláusulas \texttt{PRIMARY KEY}, \texttt{FOREIGN KEY},
+\texttt{UNIQUE} y \texttt{CHECK} son la parte declarativa de las
+restricciones. Un esquema que omite tales restricciones admite instancias que
+satisfacen la declaración pero que son semánticamente imposibles en el
+mini--mundo que se quiere representar.
+
+\subsection{Superllave, llave mínima, llave candidata y llave primaria}
+
+Las cuatro nociones se ordenan por inclusión estricta: toda llave primaria es
+una llave candidata, toda llave candidata es una llave mínima y toda llave
+mínima es una superllave. La diferencia entre ellas no está en lo que
+identifican, sino en el grado de justificación que exigen
+\cite{elmasri2016fundamentals}.
+
+\medskip
+\noindent\textbf{Superllave.} Conjunto de atributos $K$ tal que dos tuplas
+  distintasde la relación no pueden coincidir en todos los atributos de $K$.
+  Equivalentemente,$K$ determina funcionalmente al resto de los atributos de
+  larelación. La condición es suficiente pero no necesaria: se admiten
+  superllavesque contienen atributos innecesarios, por lo que la definición
+  noimpone economía alguna. Todo conjunto que contenga una llave es,
+  automáticamente,una superllave.
+\medskip
+\noindent\textbf{Llave mínima.} Superllave de la que no puede extraerse
+  ningúnatributo sin perder la propiedad de superllave. Equivale a exigir que
+  todosubconjunto propio de $K$ deje de ser superllave. La minimalidad es una
+  propiedadque se comprueba atributo por atributo y sólo tiene sentido
+  respectode una superllave determinada.
+\medskip
+\noindent\textbf{Llave candidata.} Llave mínima, esto es, una superllave sin
+  atributosredundantes. Es el candidato más económico que el modelo ofrece
+  paraidentificar las tuplas de la relación. Una relación puede tener varias
+  llavescandidatas, y el esquema debe documentar todas ellas, incluso si sólo
+  unase designa como primaria: las restantes no dejan de ser candidatas por
+  nohaber sido elegidas.
+\medskip
+\noindent\textbf{Llave primaria.} La llave candidata que el diseñador elige
+  comoidentificador único de las tuplas de la relación. Se declara
+  explícitamenteen el esquema, sus atributos pasan a ser obligatorios y no
+  admitenulos, y su valor es el que las demás relaciones referencian mediante
+  llavesforáneas. Existe a lo sumo una llave primaria por relación; elegida
+  ella,las demás llaves candidatas se reducen a candidatas alternativas o se
+  declinanmediante la restricción \texttt{UNIQUE}.
+
+La diferencia entre candidata y primaria suele originar confusión. Que un
+atributo no sea primario no significa que sea irrelevante para la
+identificación: si también determina al resto de los atributos, sigue siendo
+candidato. Lo que hace la llave primaria es notificar la elección en el
+esquema, y esa notificación es la que las demás relaciones aprovechan al
+declarar sus llaves foráneas.
+
+Para ilustrar las cuatro nociones con un esquema de empleados, considérese
+
+\begin{equation}
+  \mathit{Empleado}(\mathit{N\acute{u}mEmpleado},\;
+  \mathit{Nombre},\; \mathit{Paterno},\; \mathit{Materno},\;
+  \mathit{Nacimiento},\; \mathit{G\acute{e}nero},\;
+  \mathit{FechaContrataci\acute{o}n}).
+\end{equation}
+
+De $\{N\acute{u}mEmpleado\}$ se afirma en el esquema que es llave primaria y
+por tanto candidata y mínima. El conjunto completo de los siete atributos es
+también superllave, pero no es mínima: al retirar \emph{Paterno},
+\emph{Materno}, \emph{Nacimiento}, \emph{G\'enero} y
+\emph{FechaContrataci\'on} se conserva la propiedad, y lo mismo ocurre al
+retirar únicamente $N\acute{u}mEmpleado$. La combinación $\{Nombre, Paterno,
+Materno, Nacimiento\}$ es superllave en el dominio del negocio y, en la
+mayoría de los casos, también es mínima, porque ninguno de sus cuatro
+atributos resulta superfluo; se trata por tanto de una llave candidata que el
+esquema no eligió como primaria. La omisión de esa declaración se documenta
+como una decisión de diseño: se descarta la dependencia de los nombres y de la
+fecha de nacimiento por su propia inestabilidad ante la homonimia y ante los
+cambios de nombre.
+
+\subsection{Restricciones que imponen las llaves primaria y foránea}
+
+Una llave primaria impone un conjunto de restricciones que sólo se enuncia
+respecto del esquema y que el sistema debe hacer cumplir en todo momento:
+
+\begin{itemize}
+  \item \textbf{Unicidad.} Dos tuplas distintas de la relación no pueden
+    coincidir en el valor de la llave primaria. Es la definición de
+    superllave, aplicada a los atributos elegidos como primarios.
+  \item \textbf{No nulabilidad.} Ningún componente de la llave primaria puede
+    tomar el valor nulo. Esta restricción es lo que garantiza que la llave
+    exista siempre y por tanto identifique siempre a la tupla; sin ella, la
+    noción de identificador se vuelve ambigua y las referencias desde otras
+    relaciones quedan sin destino.
+  \item \textbf{Identificación.} La llave primaria determina funcionalmente a
+    todos los demás atributos de la relación, lo que permite afirmar que una
+    entidad del mini--mundo queda descrita por los datos de una sola tupla.
+  \item \textbf{Existencia de un punto de referencia.} Al ser el único
+    mecanismo de direccionamiento entre relaciones, su declaración convierte a
+    la relación en el destino válido de las llaves foráneas que otras
+    relaciones declaren.
+\end{itemize}
+
+Una llave foránea impone, por su parte, la restricción de integridad
+referencial, que se apoya en la compatibilidad entre el atributo o conjunto de
+atributos declarados y la llave primaria de la relación referenciada:
+
+\begin{itemize}
+  \item \textbf{Integridad de la referencia.} El valor de la llave foránea
+    debe coincidir con el valor de la llave primaria de alguna tupla de la
+    relación referenciada. Si el valor es nulo y la columna lo permite, la
+    referencia queda simplemente sin destino; en caso contrario, la inserción
+    debe rechazarse.
+  \item \textbf{Tipos compatibles.} El número de atributos, su orden y sus
+    dominios deben corresponder con los de la llave primaria referenciada. Una
+    llave foránea sobre columnas de tipo distinto no puede validarse y debe
+    rechazarse en el esquema, no en tiempo de ejecución.
+  \item \textbf{Efecto sobre la operación.} La restricción condiciona el orden
+    de las operaciones: un hijo no puede insertarse antes que su padre, y un
+    padre no puede eliminarse mientras tener hijos que lo referencien, salvo
+    que la definición de la llave foránea especifique una acción determinada.
+    Las acciones habituales son restringir la operación, propagar en cascada o
+    asignar nulo a la referencia.
+  \item \textbf{No confunde llave foránea con participación total.} Que el
+    lado foráneo sea obligatorio y que el lado referenciado admita varias
+    referencias son hechos distintos. La llave foránea dice que cada tupla
+    hija apunta exactamente a un padre; no dice que todo padre deba tener
+    hijos.
+  \item \textbf{Puede formar parte de la llave primaria y, entonces, no ser
+    nulable.} Cuando un atributo es simultáneamente parte de la llave primaria
+    de su relación y llave foránea de otra, hereda la no nulabilidad de la
+    primera. Es el caso típico de las relaciones que registran hechos
+    asociados a un periodo, como las que aparecen en el Ejercicio~4.
+\end{itemize}
+
+\begin{conceptobox}[Distinción operativa]
+La llave primaria protege la \emph{identidad} de la tupla dentro de su
+  relación; la llave foránea protege la \emph{existencia} de lo que la tupla
+  referencia. La primera hace imposible tener dos tuplas iguales; la segunda
+  hace imposible tener una tupla que apunte a la nada.
+\end{conceptobox}
+
+\subsection{Las reglas de Codd}
+
+En 1970, Edgar F. Codd publicó un modelo para el manejo de grandes bases de
+datos compartidas y estableció un conjunto de criterios que permitían
+distinguir un sistema relacional de un sistema de archivos organizado en
+jerarquías \cite{codd1970relational}. Esas doce reglas enumeran propiedades
+que un sistema debe satisfacer para poder considerarse relacional; no
+constituyen una especificación técnica, sino un criterio de diseño que sigue
+siendo el marco habitual para discutir la calidad de un sistema de gestión de
+bases de datos \cite{elmasri2016fundamentals}.
+
+Las ocho primeras reglas se refieren a una base de datos personal, es decir,
+no distribuida, y las cuatro restantes se ocupan de la distribución.
+
+\subsubsection*{Reglas de acceso a los datos}
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=0.55em]
+  \item \textbf{Regla de información.} Todo dato almacenado debe poder
+    localizarse de manera unívoca, y únicamente, con el nombre de la relación,
+    el nombre del atributo y el valor de la llave. La regla prohíbe, en
+    consecuencia, direccionar los datos mediante rutas físicas, direcciones de
+    disco o punteros. En términos de los apartados anteriores, exige que todo
+    hecho esté en una tupla y que esa tupla sea alcanzable sin conocer la
+    organización del almacenamiento.
+  \item \textbf{Regla de acceso garantizado.} Si un usuario tiene autorizada
+    la consulta, el sistema debe permitirle acceder a cualquier dato de la
+    base. No puede existir información que sea alcanzable un día e
+    inalcanzable al siguiente. La consecuencia práctica es que el esquema debe
+    reflejar toda la información que el mini--mundo requiere; si un dato no
+    puede nombrarse, es un dato mal modelado.
+\end{enumerate}
+
+\subsubsection*{Reglas de integridad de los datos}
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=0.55em,start=3]
+  \item \textbf{Regla de tratamiento sistemático de los valores nulos.} La
+    información ausente debe representarse mediante un mecanismo explícito y
+    homogéneo. El modelo relacional original no admite el valor nulo como
+    miembro de un dominio y prefiere, para cada situación, o bien separar el
+    atributo opcional en otra relación, o bien dividir la relación en dos. La
+    regla admite cualquier método sistemático, pero exige que sea uniforme y
+    conocido, porque de lo contrario la semántica de la base queda
+    indeterminada.
+  \item \textbf{Regla de datos dinámicos.} El contenido de la base puede
+    cambiar sin que sea necesario modificar su definición. Insertar o eliminar
+    una tupla es una operación ordinaria del modelo y no obliga a redefinir el
+    esquema, a diferencia de lo que ocurría en los sistemas de archivos, donde
+    añadir un campo obligaba a reorganizar los registros.
+  \item \textbf{Regla de datos consolidados.} Un hecho determinado debe
+    almacenarse en un solo lugar de la base de datos, y todos los datos
+    necesarios para identificarlo y describirlo deben residir en esa misma
+    tupla o en tuplas relacionadas de manera explícita. La regla admite la
+    redundancia, que es la base de la normalización, pero exige que la
+    duplicación no contenga copias desactualizadas: si un dato se repite,
+    todas sus copias deben coincidir.
+  \item \textbf{Regla de almacenamiento en forma lógica.} El usuario accede a
+    los datos por su significado y no por su ubicación física. El conocimiento
+    de los nombres de relación y de atributo debe bastar para operar sobre la
+    base, sin pedirle que se entienda cómo están organizados los registros en
+    disco.
+  \item \textbf{Regla de independencia física de los datos.} La organización
+    física de los datos puede modificarse sin afectar a las aplicaciones ni a
+    las consultas lógicas. Es la regla que autoriza añadir un índice,
+    reorganizar los archivos o repartir los registros en distintos
+    dispositivos de almacenamiento sin reescribir el código que los consulta.
+  \item \textbf{Regla de independencia lógica de los datos.} La estructura
+    lógica de los datos puede modificarse de una manera que no afecte a las
+    aplicaciones ni a sus datos. A diferencia de la anterior, aquí los cambios
+    --añadir una relación, dividir una en dos, reorganizar los atributos-- sí
+    modifican la forma en que se presenta la información, y la regla exige que
+    ese cambio pueda realizarse sin la intervención de los programas.
+\end{enumerate}
+
+\subsubsection*{Reglas de distribución de los datos}
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=0.55em,start=9]
+  \item \textbf{Regla de distribución física.} La base de datos puede estar
+    repartida físicamente entre varios sitios de almacenamiento, por ejemplo
+    en una red de servidores o en dispositivos distintos, y el usuario debe
+    poder consumirla como si fuera una sola base centralizada.
+  \item \textbf{Regla de distribución lógica.} La base de datos sigue siendo
+    relacional para el usuario aunque su implementación se encuentre
+    físicamente repartida. La experiencia de uso --consultar y actualizar
+    relaciones completas mediante un lenguaje declarativo-- no cambia por el
+    hecho de que los datos residan en máquinas distintas.
+\end{enumerate}
+
+\subsubsection*{Reglas de sustitutibilidad}
+
+\begin{enumerate}[leftmargin=1.9em,itemsep=0.55em,start=11]
+  \item \textbf{Regla de sustitutibilidad de los datos.} Si un usuario opera
+    sobre una relación derivada, por ejemplo una vista, debe disponer de las
+    mismas oportunidades de lectura y de escritura que si operara sobre la
+    relación almacenada. En términos del modelo, una vista es una relación,
+    con tuplas y, por extensión, con instancias, inasmuch como cualquier otra.
+  \item \textbf{Regla de sustitutibilidad de la integridad.} Las restricciones
+    del esquema de la base almacenada, incluidas sus llaves primarias y
+    candidatas, deben conservarse en cualquier relación derivada. Por
+    consiguiente, los datos derivados tienen la misma fiabilidad que los
+    almacenados, y una vista jamás puede revelar un estado que la base real no
+    permita.
+\end{enumerate}
+
+\begin{conceptobox}[Alcance de las doce reglas]
+Las reglas del bloque central remiten directamente a las cuatro llaves
+  estudiadas en el apartado anterior. La regla de información supone la
+  existencia de llaves primarias que permitan designar toda tupla; la regla de
+  integridad exige que no se declaren nulos donde la llave primaria ya los
+  prohíbe; la regla de datos consolidados remite a la noción de superllave, ya
+  que un hecho se identifica por una combinación mínima de atributos; y la
+  regla de sustitutibilidad de la integridad exige que las relaciones
+  derivadas respeten las mismas claves que las relaciones almacenadas.
+\end{conceptobox}
+
+\subsubsection*{Por qué son importantes}
+
+Las reglas de Codd son importantes porque desplazan el objeto de la
+construcción: no un programa que accede a sus datos, sino un sistema cuya
+descripción lógica de los datos constituye el punto de partida del trabajo.
+
+\begin{itemize}
+  \item \textbf{Hacen posible la independencia de los datos.} Las reglas siete
+    y ocho convierten la independencia física y lógica en un requisito del
+    modelo y no en un accidento de la implementación. Gracias a ellas, una
+    aplicación puede permanecer escrita una sola vez mientras la base cambia
+    de organización, y un mismo esquema puede servir a aplicaciones distintas
+    sin que cada una conozca la representación interna. Ésta es,
+    probablemente, la consecuencia práctica de mayor alcance de todo el
+    modelo.
+  \item \textbf{Sostienen los lenguajes declarativos de consulta.} Si la regla
+    de almacenamiento en forma lógica obliga a acceder a los datos por su
+    significado y no por su recorrido físico, entonces el usuario puede
+    describir qué desea obtener en lugar de cómo obtenerlo. Ésa es la
+    condición precisa para que exista un optimizador que elija el plan de
+    ejecución. En la práctica, el álgebra relacional y el SQL son la
+    manifestación de esta regla, y el optimizador de consultas es la prueba de
+    que el modelo tuvo efecto.
+  \item \textbf{Dan fundamento a las vistas.} Las reglas once y doce autorizan
+    a tratar una relación derivada como si fuera almacenada, en igualdad de
+    condiciones para leer y para escribir. Ésa es la razón por la que la
+    lógica de vistas de SQL es exacta en lugar de aproximada: la vista no es
+    una copia que pueda desactualizarse, sino una fórmula sobre el estado
+    real.
+  \item \textbf{Fundamentan el tratamiento de la integridad.} La regla de
+    datos consolidados obliga a identificar dónde reside cada hecho y, con
+    ello, a determinar qué atributos dependen de cuáles. Ese análisis de
+    dependencias funcionales es el fundamento de la normalización y de la
+    detección de llaves candidatas, de modo que las reglas conectan la
+    formulación relacional con el diseño de esquemas que se estudia al aplicar
+    el modelo relacional.
+  \item \textbf{Anticipan las bases de datos distribuidas.} Las reglas nueve a
+    doce extienden la formulación inicial a un contexto en el que los datos
+    residen en varios servidores. La anticipación es notable, porque fue
+    enunciada en 1970, mucho antes de que la distribución se generalizara en
+    la práctica. El hecho de que las reglas resulten anticipatorias obliga a
+    precisar que Codd no las plantea como un catálogo de requisitos, sino como
+    criterios: varias de ellas no se cumplen íntegramente en la práctica.
+  \item \textbf{Sirven como criterio de evaluación y de diseño.} Leídas como
+    una lista de requisitos, las reglas describen sistemas que hoy no existen.
+    Leídas como un criterio, cumplen la función opuesta: señalan con precisión
+    qué sacrifica un sistema de gestión de bases de datos al apartarse del
+    modelo.
+\end{itemize}
+
+\begin{conceptobox}[Una lectura crítica]
+Ningún sistema relacional comercial cumple las doce reglas al pie de la letra,
+  y conviene señalar por qué. La tercera es la más conflictiva: SQL incorpora
+  el valor nulo como un miembro más de los dominios, lo que resuelve problemas
+  prácticos, porque los datos ausentes son inevitables, a costa de introducir
+  una semántica de tres valores que complica la lógica de las restricciones.
+  La quinta, por su parte, cede ante consideraciones de rendimiento: la
+  desnormalización y la duplicación de datos calculados se practican de forma
+  habitual. La segunda supone, en fin, un control de acceso que ningún sistema
+  practica de manera uniforme. Que el modelo puro y los sistemas reales
+  coincidan sólo parcialmente no invalida las reglas: indica, más bien, que
+  funcionan como una especificación ideal desde la cual medir la distancia
+  \cite{silberschatz2019database}.
+\end{conceptobox}

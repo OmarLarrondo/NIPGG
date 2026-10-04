@@ -1,2 +1,253 @@
 % Omar - Ejercicio 4 incisos a-e.
-% TODO: desarrollar después de acordar el reparto.
+
+\section{Modelo de relaciones y restricciones de integridad}
+
+El enunciado remite a un modelo relacional de un departamento de recursos
+humanos que controla varias empresas, y pide determinar si un conjunto de
+afirmaciones se cumple o no, considerando únicamente las restricciones de
+cardinalidad y de participación que la figura declara.
+
+\subsection{El esquema y sus restricciones}
+
+Las cinco relaciones de la figura se transcriben en la
+Tabla~\ref{tab:esquema}. El modelo separa los datos permanentes de las
+entidades ---los atributos de \emph{Empleado} y de \emph{Departamento}--- de
+los hechos que las relacionan a lo largo del tiempo, los cuales se registran
+en tres relaciones de asociación.
+
+\begin{table}[htbp]
+  \centering \caption{Esquema relacional del departamento de recursos
+    humanos.}
+  \label{tab:esquema}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash} X l@{}}
+    \toprule
+    \textbf{Relación} & \textbf{Atributos} & \textbf{Llave primaria} \\
+    \midrule
+    \emph{Empleado}
+      & NúmEmpleado, Nombre, Paterno, Materno, Nacimiento, Género,
+        FechaContratación
+      & NúmEmpleado \\
+    \emph{Departamento}
+      & NúmDepto, NombreDepto
+      & NúmDepto \\
+    \emph{Salario}
+      & NúmEmpleado, Desde, Salario, Hasta
+      & NúmEmpleado, Desde \\
+    \emph{Trabajar}
+      & NúmEmpleado, NúmDepto, Desde, Hasta
+      & NúmEmpleado, NúmDepto, Desde \\
+    \emph{Administrar}
+      & NúmEmpleado, NúmDepto, Desde, Hasta
+      & NúmEmpleado, NúmDepto, Desde \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Las llaves foráneas se deducen de los atributos subrayados en la figura:
+\emph{Salario.NúmEmpleado} referencia a \emph{Empleado.NúmEmpleado}, y tanto
+\emph{Trabajar} como \emph{Administrar} referencian a
+\emph{Empleado.NúmEmpleado} y a \emph{Departamento.NúmDepto}. Una observación
+relevante para el inciso~d es que \emph{Salario} no contiene ninguna
+referencia a \emph{Departamento}: el esquema afirma que un empleado cobra un
+salario, independientemente del departamento al que pertenezca.
+
+\subsection{Lectura de la notación de cardinalidad y participación}
+
+La figura emplea una notación de pata de cuervo con dos marcadores. Junto a la
+entidad que ocupa el lado uno de la asociación aparece el par $\circ|$ ---un
+círculo y una barra---, que indica que la cardinalidad máxima es uno; junto a
+la entidad del lado muchos aparece la pata de cuervo. El círculo exterior
+marca la participación parcial. La Tabla~\ref{tab:cardin} resume la lectura.
+
+\begin{table}[htbp]
+  \centering \caption{Cardinalidad y participación declaradas en la figura.}
+  \label{tab:cardin}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash} X@{}}
+    \toprule
+    \textbf{Entidad} & \textbf{Relación} & \textbf{Cardinalidad y participación} \\
+    \midrule
+    Empleado & Salario
+      & De $0$ a $N$ filas de \emph{Salario} por empleado; participación
+        parcial en el lado de \emph{Empleado} y total en el lado de
+        \emph{Salario} \\
+    Empleado & Trabajar
+      & De $0$ a $N$ filas de \emph{Trabajar} por empleado; participación
+        parcial en el lado de \emph{Empleado} \\
+    Empleado & Administrar
+      & De $0$ a $N$ filas de \emph{Administrar} por empleado; participación
+        parcial en el lado de \emph{Empleado} \\
+    Departamento & Trabajar
+      & De $0$ a $N$ filas de \emph{Trabajar} por departamento; participación
+        parcial en el lado de \emph{Departamento} \\
+    Departamento & Administrar
+      & De $0$ a $N$ filas de \emph{Administrar} por departamento;
+        participación parcial en el lado de \emph{Departamento} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Los dos incisos que dependen de esta lectura son el~b y el~d. Conviene
+anticipar que ambos veredictos resultan invariantes: el~b porque el lado
+muchos de la asociación es \emph{Administrar} en cualquiera de las dos
+lecturas posibles de los glifos, y el~d porque ninguna marca de la figura
+vincula \emph{Trabajar} con \emph{Administrar}.
+
+\subsection{La convención del periodo}
+
+El enunciado define el periodo como el intervalo $[desde, hasta)$, con
+\texttt{desde} inclusivo y \texttt{hasta} exclusivo. La elección no es
+cosmética: hace que dos periodos consecutivos, $[d_1, h_1)$ y $[d_2, h_2)$, no
+se solapen cuando $h_1 = d_2$, ya que el instante $h_1$ pertenece al primero y
+no al segundo. En general, dos periodos se solapan cuando el máximo de sus
+inicios es menor que el mínimo de sus términos, es decir, cuando
+
+\begin{equation}
+  \max(d_1, d_2) < \min(h_1, h_2).
+\end{equation}
+
+\subsection{Evaluación de las afirmaciones}
+\label{sec:ej4}
+
+Los veredictos siguientes se obtienen contrastando cada afirmación con las
+restricciones de las Tablas~\ref{tab:esquema} y~\ref{tab:cardin}. Se recuerda
+que, por indicación del enunciado, no se consideran restricciones adicionales.
+
+\subsubsection*{a. Dos departamentos con el nombre \emph{Sistemas} podrían existir al mismo tiempo}
+
+\textbf{Se cumple.} La llave primaria de \emph{Departamento} es
+\texttt{NúmDepto}, y \texttt{NombreDepto} no forma parte de ella ni aparece
+declarado como candidato en la figura. En consecuencia, las tuplas $(10,\;
+\mathit{Sistemas})$ y $(11,\; \mathit{Sistemas})$ son distintas para el
+esquema, porque difieren en el valor de la llave primaria, y ambas satisfacen
+la integridad de entidad. El modelo restringe la identidad del departamento,
+no su denominación.
+
+Dos observaciones acotan el alcance del veredicto. La primera es que
+\texttt{NombreDepto} admite valores repetidos porque no existe restricción de
+unicidad sobre él. La segunda es que para impedirlo habría que declararlo
+llave candidata y reforzarla con \texttt{UNIQUE}, lo cual constituye una
+restricción adicional que el enunciado excluye.
+
+\subsubsection*{b. Dos o más empleados pueden administrar el mismo departamento al mismo tiempo}
+
+\textbf{Se cumple.} La llave primaria de \emph{Administrar} es la terna
+$(\mathit{N\acute{u}mEmpleado},\; \mathit{N\acute{u}mDepto},\;
+\mathit{Desde})$, de modo que el número de empleado forma parte de la
+identidad de la tupla. Por ello, dos empleados distintos producen tuplas
+distintas aunque coincidan en el departamento y en la fecha de inicio. Así, el
+estado
+
+\begin{equation}
+  \bigl\{
+    (10,\, 5,\, \mathit{2015\text{-}01\text{-}01},\; 2020\text{-}01\text{-}01),\;
+    (11,\, 5,\, \mathit{2015\text{-}01\text{-}01},\; 2020\text{-}01\text{-}01)
+  \bigr\}
+\end{equation}
+
+es válido: no se produce colisión de llave primaria. La cardinalidad de la
+Tabla~\ref{tab:cardin} lo permite, ya que un departamento admite de $0$ a $N$
+filas en \emph{Administrar}.
+
+La figura aporta además el periodo, y con él el sentido de la expresión
+\emph{al mismo tiempo}: los dos periodos se solapan, pues $\max(2015, 2015) <
+\min(2020, 2020)$, y nada en el esquema lo prohíbe. Nótese que la
+simultaneidad ni siquiera es necesaria para el veredicto: dos empleados que
+administraran el mismo departamento en periodos disjuntos también satisfarían
+la afirmación.
+
+\subsubsection*{c. Un empleado puede trabajar en un departamento y administrar otro al mismo tiempo}
+
+\textbf{Se cumple.} \emph{Trabajar} y \emph{Administrar} son relaciones
+independientes, y el esquema no declara ninguna restricción que las relacione.
+Cada una mantiene su propia integridad referencial por separado: basta con que
+el empleado exista en \emph{Empleado} y con que el departamento exista en
+\emph{Departamento}. Por tanto, son admisibles y simultáneas las tuplas
+$(10,\, 3,\, 2020\text{-}01\text{-}01,\, \mathit{NULO})$ en \emph{Trabajar} y
+$(10,\, 7,\, 2020\text{-}01\text{-}01,\, \mathit{NULO})$ en
+\emph{Administrar}. El modelo permite, en consecuencia, que la administración
+de un departamento recaiga en alguien que no pertenece a él, que es
+precisamente el supuesto del inciso~d.
+
+\subsubsection*{d. Para administrar un departamento, un empleado debe trabajar en dicho departamento}
+
+\textbf{No se cumple.} El esquema no impone ninguna restricción que vincule
+las dos relaciones. \emph{Administrar} declara dos llaves foráneas, a
+\emph{Empleado} y a \emph{Departamento}, y ninguna de ellas apunta a
+\emph{Trabajar}. En consecuencia, es válido insertar en \emph{Administrar} la
+tupla $(10,\, 7,\, 2020\text{-}01\text{-}01,\, \mathit{NULO})$ sin que exista
+tupla alguna de \emph{Trabajar} con el mismo empleado y el mismo departamento.
+
+La participación parcial declarada en \emph{Departamento} refuerza el
+argumento desde el otro extremo: un departamento puede no tener asignaciones
+de personal y, aun así, figurar como administrado. La restricción que falta se
+analiza en la Sección~\ref{sec:restriccion-faltante}.
+
+\subsubsection*{e. Un empleado podría trabajar en dos departamentos a partir de la misma fecha}
+
+\textbf{Se cumple.} La llave primaria de \emph{Trabajar} es la terna
+$(\mathit{N\acute{u}mEmpleado},\; \mathit{N\acute{u}mDepto},\;
+\mathit{Desde})$. Para un mismo empleado y una misma fecha, cambiar de
+departamento cambia el valor de \texttt{NúmDepto} y, por tanto, cambia la
+llave. Las tuplas $(10,\, 3,\, 2022\text{-}01\text{-}01,\, \mathit{NULO})$ y
+$(10,\, 4,\, 2022\text{-}01\text{-}01,\, \mathit{NULO})$ son por ello
+distintas y admitidas simultáneamente.
+
+El modelo no impone que las asignaciones de un empleado sean disjuntas en el
+tiempo, ni siquiera dentro de un mismo departamento: dos tuplas con la misma
+pareja $(\mathit{N\acute{u}mEmpleado},\; \mathit{N\acute{u}mDepto})$ y fechas
+de inicio distintas pueden solaparse sin violar ninguna restricción. La
+afirmación~f, que se ocupa precisamente del orden de \texttt{hasta}, se
+resuelve en el módulo siguiente y no modifica este veredicto.
+
+\subsection{La restricción que falta en el inciso~d}
+\label{sec:restriccion-faltante}
+
+Exigir que quien administra un departamento trabaje en él requiere una
+restricción de integridad que el modelo mostrado no puede expresar mediante
+una llave foránea ordinaria. La razón es precisa: la condición deseada es que
+todo par $(\mathit{N\acute{u}mEmpleado},\; \mathit{N\acute{u}mDepto})$
+presente en \emph{Administrar} aparezca también en \emph{Trabajar}, pero la
+única llave primaria de \emph{Trabajar} es la terna
+$(\mathit{N\acute{u}mEmpleado},\; \mathit{N\acute{u}mDepto},\;
+\mathit{Desde})$. El par es una superllave de \emph{Trabajar}, pero no una
+llave candidata, porque históricamente puede haber varios periodos de
+asignación para una misma pareja. Una llave foránea debe referenciar una llave
+candidata o una clave única, de modo que la referencia no puede establecerse
+tal como está el modelo.
+
+La restricción correcta es una \emph{asercción} que verifique la ausencia de
+tuplas huérfanas en \emph{Administrar}. En el sublenguaje SQL se escribiría
+como una restricción de tabla sobre esa relación:
+
+\begin{verbatim}
+CHECK (NOT EXISTS (
+  SELECT * FROM Administrar A
+  WHERE NOT EXISTS (
+    SELECT * FROM Trabajar T
+    WHERE T.NúmEmpleado = A.NúmEmpleado
+      AND T.NúmDepto    = A.NúmDepto)))
+\end{verbatim}
+
+De esta observación se derivan tres consecuencias. Primera: el veredicto del
+inciso~d permanece en \emph{no se cumple}, porque el enunciado excluye
+expresamente las restricciones adicionales. Segunda: la corrección del
+inciso~d no consiste en añadir una columna, sino una regla que abarca dos
+relaciones, lo que la sitúa fuera del alcance de las llaves primarias y
+foráneas. Tercera: si se quisiera preservar el requisito sin recurrir a
+aserciones, la única vía sería revisar el modelo detranslated, por ejemplo
+incluyendo el departamento como atributo redundante en \emph{Administrar} y
+manteniendo ambas copias sincronizadas; tal solución introduce redundancia y,
+con ella, el problema inherente de mantener las copias al día.
+
+\begin{conceptobox}[Síntesis de los veredictos]
+Los incisos~a, b, c y~e se cumplen porque el modelo restringe únicamente lo
+  que la figura declara ---las llaves y las participaciones--- y deja libre
+  todo lo demás. El inciso~d no se cumple, y la causa es precisa: la relación
+  entre \emph{Administrar} y \emph{Trabajar} no está modelada. Esta diferencia
+  entre lo que el esquema afirma y lo que el mini--mundo exige delimita el
+  espacio donde el diseñador debe intervenir, ya sea introduciendo una
+  restricción adicional, ya sea revisando la traducción del modelo
+  Entidad--Relación.
+\end{conceptobox}
