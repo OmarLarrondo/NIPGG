@@ -1,2 +1,109 @@
 % Decisiones de diseño e integración (equipo).
-% TODO: desarrollar al integrar.
+\section{Decisiones de diseño}
+
+Este capítulo reúne las decisiones que el equipo tomó al traducir los modelos y
+al evaluar las restricciones de integridad. Ninguna de ellas se sigue de manera
+automática del enunciado: todas proceden de una lectura deliberada de los datos
+disponibles y deben declararse para que el reporte sea reproducible. Cada
+módulo documenta aquí sus propias decisiones; las convenciones generales y el
+estado de avance se registran al inicio.
+
+\subsection{Convenciones generales del reporte}
+
+\begin{itemize}
+  \item \textbf{Entidades y relaciones.} Los nombres de entidad se escriben en
+        singular y sin artículo, de modo que la entidad \emph{Departamento} no
+        se confunda con una instancia. Las relaciones que expresan una acción
+        se nombran con el verbo en infinitivo, como en \emph{Trabajar},
+        \emph{Administrar} y \emph{Estudiar}.
+  \item \textbf{Atributos.} Se escriben en una sola palabra, con inicial en
+        mayúscula y sin espacios ni guiones, del tipo \emph{NombreDepto} o
+        \emph{FechaContratacion}. Las abreviaturas se conservan sin punto.
+  \item \textbf{Llaves.} La llave primaria se marca de forma explícita en el
+        diagrama y se declara en el esquema; los atributos que la componen
+        conservan el nombre del diagrama de origen. Las llaves foráneas
+        coinciden con la llave primaria que referencian y se identifican en el
+        diagrama con la notación de llave foránea.
+  \item \textbf{Atributos de tiempo.} Los periodos se representan con el par
+        \emph{Desde} y \emph{Hasta}, con \emph{Desde} inclusivo y \emph{Hasta}
+        exclusivo, según la convención $[desde, hasta)$ fijada en el enunciado.
+\end{itemize}
+
+\begin{conceptobox}[Divergencia de nomenclatura entre entregas]
+Los diagramas de la Tarea~02 escriben sus atributos sin acentos, con
+\emph{NumProf} y \emph{Titulo} como ejemplos, mientras que la figura del
+Ejercicio~4 de esta tarea los emplea con acento, con \emph{NúmEmpleado} y
+\emph{Género}. Ambas formas aparecen en el material del equipo y no es posible
+unificarlas sin modificar una entrega anterior ya evaluada. Se adopta el
+criterio de conservar la grafía de la fuente: cada módulo emplea literalmente
+los nombres del enunciado o del diagrama de Draw.io que le corresponde.
+Resolver esta divergencia exige una decisión colectiva en la próxima entrega,
+que debería fijar una sola política de acentos en los nombres de atributo.
+\end{conceptobox}
+
+\subsection{Estado de los módulos}
+
+Al momento de esta integración únicamente el módulo~1 está desarrollado. Los
+módulos~2 a~5 y el~7 permanecen como marcadores de posición, y las secciones
+correspondientes del documento aparecen sin contenido.
+
+\subsection{Módulo 1. Ejercicio~1 y Ejercicio~4, incisos a a e}
+
+\begin{itemize}
+  \item \textbf{Lectura de la notación de cardinalidad.} La figura del
+        Ejercicio~4 emplea dos marcadores: el par $\circ|$ junto a la entidad
+        del lado uno, que indica cardinalidad máxima uno, y la pata de cuervo
+        junto a la entidad del lado muchos. El círculo exterior se interpretó
+        como participación parcial. Dado que \emph{NúmEmpleado} y
+        \emph{NúmDepto} forman parte de las llaves primarias, las llaves
+        foráneas se declararon obligatorias. Se dejó constancia de que los
+        veredictos de los incisos~b y~d no dependen de esta lectura.
+  \item \textbf{El atributo \emph{Hasta} fuera de la llave primaria.} En
+        \emph{Salario}, \emph{Trabajar} y \emph{Administrar}, el atributo
+        \emph{Hasta} no forma parte de la llave primaria, tal como aparece en
+        la figura del enunciado. La decisión tiene una consecuencia que el
+        ejercicio hace visible: el esquema admite periodos solapados siempre
+        que las fechas de inicio sean distintas.
+  \item \textbf{Atributo no clave.} En \emph{Departamento}, el atributo
+        \emph{NombreDepto} no se declaró único. Es la decisión que permite el
+        inciso~a y se documentó como tal, junto con la restricción adicional
+        que la haría imposible.
+  \item \textbf{Llaves candidatas no declaradas.} En \emph{Empleado} se
+        documentó que la combinación de nombres y fecha de nacimiento es una
+        llave candidata que el esquema no elige como primaria, en lugar de
+        omitir la observación.
+  \item \textbf{Restricción no modelada en el inciso~d.} Se documentó que la
+        exigencia de que quien administra un departamento trabaje en él no
+        puede expresarse como llave foránea, porque el par
+        (\emph{NúmEmpleado}, \emph{NúmDepto}) es superllave de \emph{Trabajar}
+        pero no llave candidata al incluir \emph{Desde} en su llave primaria.
+        Se propuso como alternativa una aserción.
+\end{itemize}
+
+\subsection{Módulo 2. Ejercicio~2.a}
+
+Pendiente de documentar por el responsable del módulo: decisiones del modelo
+E-R original y divergencias, si las hay, entre el modelo del enunciado y el de
+los diagramas exportados.
+
+\subsection{Módulo 3. Ejercicio~2.b, Sistema de Información Geográfica}
+
+Pendiente de documentar por el responsable del módulo: cambios introducidos
+sobre el diseño de la Tarea~02 y justificación de cada uno.
+
+\subsection{Módulo 4. Ejercicio~3, incisos a a c}
+
+Pendiente de documentar por el responsable del módulo: formato de traducción de
+los atributos, que el enunciado indica leer de izquierda a derecha, y
+convención adoptada para la tabla de cardinalidades.
+
+\subsection{Módulo 5. Ejercicio~3, inciso d}
+
+Pendiente de documentar por el responsable del módulo: criterio de
+inseribilidad adoptado para los conjuntos propuestos y para los conjuntos de
+cinco tuplas que se ofrecen como alternativa.
+
+\subsection{Módulo 7. Ejercicio~4, incisos f a j}
+
+Pendiente de documentar por el responsable del módulo: tratamiento del atributo
+\emph{Hasta} y lectura de las afirmaciones f a j.
