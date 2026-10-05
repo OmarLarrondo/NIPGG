@@ -1,3 +1,85 @@
 % Responsable: Yahir.
 % Opción 3: Canje, Premio y sus relaciones.
 % TODO: documentar la conversión, atributos de relaciones y llaves.
+
+\subsection*{Canje}
+
+Canje es una entidad débil que depende de Cliente, Sucursal, Encargado de premios y Premio, por lo que necesita sus PK, no tiene atributos calculados ni multivaluados, y
+participa en las siguientes relaciones con cardinalidad M:1 (muchos del lado de Canje):
+\begin{itemize}
+    \item "Otorgar" con Premio (M:1)
+    \item "Procesar" con Encargado de Premios (M:1)
+    \item "Saldar" con Sucursal (M:1)
+    \item "Hacer" con Cliente (M:1)
+\end{itemize}
+Tiene un discriminante idCanje, además ninguna de sus relaciones modifican su tabla, por lo tanto su tabla queda de la siguiente manera:
+\begin{center}
+\texttt{Canje(}\textcolor{red}{\underline{\texttt{idCanje}}}\texttt{, hora, puntosUtilizados, cantidadPremios, fecha, }\textcolor{blue}{\texttt{idPremio}}\texttt{, }\textcolor{blue}{\texttt{idCliente}}\texttt{, }\textcolor{blue}{\texttt{idSucursal}}\texttt{, }\textcolor{blue}{\texttt{CURP}}\texttt{)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idCanje}}} : \texttt{int}
+    \item \texttt{hora : Time}
+    \item \texttt{puntosUtilizados : int}
+    \item \texttt{cantidadPremios : int}
+    \item \texttt{fecha : Date}
+    \item \textcolor{blue}{\texttt{idPremio}} : \texttt{int} \quad (FK 
+    →
+    → \texttt{Premio.idPremio})
+    \item \textcolor{blue}{\texttt{CURP}} : \texttt{char(18)} \quad (FK 
+    →
+    → \texttt{EncargadoDePremios.CURP} 
+    →
+    → \texttt{Empleado.CURP})
+    \item \textcolor{blue}{\texttt{idSucursal}} : \texttt{int} \quad (FK 
+    →
+    → \texttt{Sucursal.idSucursal})
+    \item \textcolor{blue}{\texttt{idCliente}} : \texttt{int} \quad (FK 
+    →
+    → \texttt{Cliente.idCliente})
+\end{itemize}
+
+\subsection*{Premio}
+
+Premio es una entidad fuerte, ninguna de sus relaciones modifican su tabla, no tiene atributos multivaluados ni calculados y participa en las siguientes relaciones:
+\begin{itemize}
+    \item "Otorgar" con Canje (1:M)
+    \item "Disponer" con Sucursal (M:N), en donde la relación tiene un atributo cantidadDisponible.
+\end{itemize}
+Así su tabla queda de la siguiente manera:
+\begin{center}
+\texttt{Premio(}\textcolor{red}{\underline{\texttt{idPremio}}}\texttt{, valorAproximado, puntosNecesarios, nombre, categoría, rangoEdad)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{idPremio}}} : \texttt{int}
+    \item \texttt{valorAproximado : int}
+    \item \texttt{puntosNecesarios : int}
+    \item \texttt{nombre : varchar(50)}
+    \item \texttt{categoría : varchar(50)}
+    \item \texttt{rangoEdad : varchar(50)}
+\end{itemize}
+
+\subsection*{Disponer}
+La relación Disponer es de cardinalidad N:M entre Premio y Sucursal, por lo que se convierte en una tabla con las PK de Sucursal y Premio, 
+además cuenta con un atributo cantidadDisponible, así su tabla queda de la siguiente manera:
+\begin{center}
+\texttt{Disponer(}\textcolor{blue}{\underline{\texttt{idPremio}}}\texttt{, }\textcolor{blue}{\underline{\texttt{idSucursal}}}\texttt{, cantidadDisponible)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+
+\begin{itemize}
+    \item \textcolor{blue}{\underline{\texttt{idPremio}}} : \texttt{int} \quad (FK 
+    →
+    → \texttt{Premio.idPremio})
+    \item \textcolor{blue}{\underline{\texttt{idSucursal}}} : \texttt{int} \quad (FK 
+    →
+    → \texttt{Sucursal.idSucursal})
+    \item \texttt{cantidadDisponible : int}
+\end{itemize}
+
