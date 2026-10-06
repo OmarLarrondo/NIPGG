@@ -1,0 +1,46 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry,titlesec,parskip,xcolor,graphicx,fancyhdr,tcolorbox,enumitem,mathpazo,microtype,booktabs,longtable,needspace,array,pdflscape,hyperref}
+\geometry{letterpaper,margin=2.5cm}
+\setlength{\parskip}{.22cm}
+\setlength{\parindent}{0pt}
+\setlength{\headheight}{15pt}
+\definecolor{unamblue}{RGB}{0,56,107}
+\definecolor{unamgold}{RGB}{188,149,92}
+\definecolor{lightgray}{RGB}{240,240,240}
+\titleformat{\section}{\normalfont\Large\bfseries\color{unamblue}}{\thesection}{.6em}{}[\titlerule]
+\titleformat{\subsection}{\normalfont\large\bfseries\color{unamblue}}{\thesubsection}{.6em}{}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small\textit{Fundamentos de Bases de Datos}}
+\fancyhead[R]{\small\textit{Práctica 04}}
+\fancyfoot[L]{\small Equipo ÑIPGG}\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{.4pt}\renewcommand{\footrulewidth}{.4pt}
+\hypersetup{colorlinks=true,linkcolor=unamblue,urlcolor=unamblue,hypertexnames=false,pdfauthor={Equipo ÑIPGG},pdftitle={Práctica 04: Modelo Relacional}}
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.18}
+\newcommand{\portada}[1]{\begin{titlepage}\thispagestyle{empty}\begin{center}
+\vspace*{.4cm}
+\begin{tcolorbox}[colback=white,colframe=unamblue,width=.8\textwidth,arc=5mm,boxrule=1pt]
+\centering\vspace{.3cm}{\fontsize{24}{28}\selectfont\color{unamblue}\bfseries UNAM}\par\vspace{.3cm}\end{tcolorbox}
+\vspace{.8cm}
+{\fontsize{24}{28}\selectfont\color{unamblue}\bfseries Universidad Nacional Autónoma de México\par}
+\vspace{.5cm}{\Large\color{unamblue}Facultad de Ciencias\par}
+\vspace{1cm}
+\begin{tcolorbox}[colback=lightgray,colframe=unamblue,width=.9\textwidth,arc=0mm,boxrule=2pt]
+\centering\vspace{.3cm}{\Large\bfseries Fundamentos de Bases de Datos\par}\vspace{.5cm}
+{\fontsize{28}{32}\selectfont\color{unamblue}\bfseries Práctica 04\par}\vspace{.2cm}{\Large Modelo Relacional\par}\vspace{.3cm}#1\par\end{tcolorbox}
+\vfill
+\begin{tcolorbox}[colback=white,colframe=unamgold,width=.95\textwidth,arc=2mm,boxrule=1pt]
+\centering\textbf{Equipo ÑIPGG}\par\small
+\begin{tabular}{@{}lr@{}}\toprule
+\textbf{Nombre completo}&\textbf{Número de cuenta}\\\midrule
+Omar Alejandro Juárez Larrondo&322245244\\
+Yahir León Bautista&322176542\\
+Diego Hernández Gómez&321069942\\
+Miguel Ángel Jiménez Ramírez&119000887\\
+Ana Lilia Carballido Camacateco&315314601\\\bottomrule
+\end{tabular}
+\end{tcolorbox}
+\vspace{.3cm}Profesor: Gerardo Avilés Rosas\par Semestre 2027-I\par 5 de octubre de 2026
+\end{center}\end{titlepage}}

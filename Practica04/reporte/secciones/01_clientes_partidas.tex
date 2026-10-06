@@ -1,102 +1,85 @@
-% Responsable: Diego.
-% Opción 1: Cliente, Tarjeta, Partida y sus relaciones.
-\subsection*{Conversión a tablas:}
-
-\subsubsection*{Cliente}
-
-Cliente es una entidad fuerte, ninguna de sus relaciones modifican su tabla, por lo que su tabla tiene su PK (id cliente) y sus atributos, excepto 4, edad y categoríaVIP por ser calculados y, correoElectrónico y teléfono por ser multivaluados, así su tabla queda de la siguiente manera:
-
-\begin{center}
-\texttt{Cliente(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, fechaNacimiento, nombre, apellidoMaterno, apellidoPaterno, sexo)}
-\end{center}
-
-\textbf{Tipos de los atributos:}
-
-\begin{itemize}
-    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
-    \item \texttt{fechaNacimiento : date}
-    \item \texttt{nombre : varchar(50)}
-    \item \texttt{apellidoMaterno : varchar(50)}
-    \item \texttt{apellidoPaterno : varchar(50)}
-    \item \texttt{sexo : varchar(50)}
+\section{Clientes y partidas}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Cliente}
+nombreCompleto se descompone en nombre y apellidos. edad y categoríaVIP son derivados y no se almacenan. La edad se calcula desde fechaNacimiento; la categoría VIP se determina con la regla del caso, sin duplicar su resultado.\par
+\textbf{Llave primaria:} idCliente.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+fechaNacimiento & \texttt{date} & Fecha válida del calendario. No posterior a la fecha actual. \\
+nombre & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+apellidoMaterno & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+apellidoPaterno & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+sexo & \texttt{varchar(50)} & Descriptor de sexo; el modelo no fija un catálogo cerrado. \\
+\bottomrule\end{tabular}}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{CorreoCliente}
+Conversión del atributo multivaluado correoElectrónico de Cliente.\par
+\textbf{Llave primaria:} idCliente, correoElectrónico.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+correoElectrónico & \texttt{varchar(100)} & Dirección de correo no vacía con parte local y dominio; longitud máxima indicada. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Cliente(idCliente).
 \end{itemize}
-
-\subsubsection*{correoElectrónico}
-
-correoElectrónico es un atributo multivaluado por lo que necesita su propia tabla con la PK de Cliente y el mismo, así su tabla queda como:
-
-\begin{center}
-\texttt{correoElectrónico(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{,}\textcolor{red}{\underline{\texttt{correoElectrónico}}}\texttt{)}
-\end{center}
-
-\textbf{Tipos de los atributos:}
-
-\begin{itemize}
-    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
-    \item \textcolor{red}{\underline{\texttt{correoElectrónico}}} : \texttt{varchar(100)}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{TelefonoCliente}
+Conversión del atributo multivaluado teléfono de Cliente.\par
+\textbf{Llave primaria:} idCliente, teléfono.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+teléfono & \texttt{char(10)} & Exactamente diez dígitos; no se almacena como número para conservar ceros iniciales. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Cliente(idCliente).
 \end{itemize}
-
-\subsubsection*{teléfono}
-
-teléfon es un atributo multivaluado por lo que necesita su propia tabla con la PK de Cliente y el mismo, así su tabla queda como:
-
-\begin{center}
-\texttt{teléfono(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{,}\textcolor{red}{\underline{\texttt{teléfono}}}\texttt{)}
-\end{center}
-
-\textbf{Tipos de los atributos:}
-
-\begin{itemize}
-    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
-    \item \textcolor{red}{\underline{\texttt{teléfono}}} : \texttt{char(10)}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Tarjeta}
+Poseer es 1:1: idCliente identifica la única tarjeta de un cliente. numeroTarjeta es el discriminante conceptual conservado como dato, pero no integra una llave redundante. Vender es Cajero 1:N Tarjeta y exige un cajero por tarjeta. La participación total de Cliente en Poseer debe verificarse además de la FK: todo cliente debe tener su tarjeta.\par
+\textbf{Llave primaria:} idCliente.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+numeroTarjeta & \texttt{int} & Entero positivo. \\
+costoAdquisición & \texttt{int} & Importe no negativo en pesos; se conservan los importes enteros del esquema. \\
+fechaCompra & \texttt{date} & Fecha válida del calendario. \\
+saldo & \texttt{int} & Saldo no negativo en pesos. \\
+estado & \texttt{varchar(50)} & Estado de la tarjeta; sin catálogo cerrado en el modelo conceptual. \\
+puntosAcumulados & \texttt{int} & Entero no negativo. \\
+CURP & \texttt{char(18)} & Identificador del cajero vendedor. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Cliente(idCliente).
+\item CURP $\rightarrow$ Cajero(CURP).
 \end{itemize}
-
-\subsubsection*{Tarjeta}
-
-Tarjeta es una entidad débil que depende de Cliente, por lo que necesita su PK, no tiene atributos calculados ni multivaluados, y la única relación que la modifica es Vender, por lo cual se le agrega FK \textcolor{blue}{\texttt{CURP}} del Empleado Cajero; así la tabla queda como:
-
-\begin{center}
-\texttt{Tarjeta(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, numeroTarjeta, costoAdquisición, fechaCompra, saldo, estado, puntosAcumulados, }\textcolor{blue}{\texttt{CURP}}\texttt{)}
-\end{center}
-
-\textbf{Tipos de los atributos:}
-
-\begin{itemize}
-    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
-    \item \texttt{numeroTarjeta : int}
-    \item \texttt{costoAdquisición : int}
-    \item \texttt{fechaCompra : date}
-    \item \texttt{saldo : int}
-    \item \texttt{estado : varchar(50)}
-    \item \texttt{puntosAcumulados : int}
-    \item \textcolor{blue}{\texttt{CURP}} : \texttt{char(18)}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Partida}
+Entidad débil identificada por Tarjeta, Máquina e idPartida. Registrar y Ejecutar son 1:N con participación total de Partida y parcial de sus propietarios. bonificaciónVIP es derivada; su cálculo no genera una columna adicional.\par
+\textbf{Llave primaria:} idCliente, idMaquina, idPartida.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+idMaquina & \texttt{int} & Entero positivo. \\
+idPartida & \texttt{int} & Entero positivo. \\
+fecha & \texttt{date} & Fecha válida del calendario. \\
+hora & \texttt{timetz} & Hora válida del día con zona horaria. \\
+puntosGanados & \texttt{int} & Entero no negativo. \\
+puntajeObtenido & \texttt{int} & Entero no negativo. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Tarjeta(idCliente).
+\item idMaquina $\rightarrow$ Máquina(idMaquina).
 \end{itemize}
-
-\subsubsection*{Partida}
-
-Partida es una entidad débil que depende de Tarjeta y Máquina, por lo que necesita sus PK de ambas entidades, y el suyo propio; no tiene relaciones que la modifiquen mas, pro lo que su tabla queda así:
-
-\begin{center}
-\texttt{Partida(}\textcolor{red}{\underline{\texttt{idCliente}}}\texttt{, }\textcolor{red}{\underline{\texttt{numeroTarjeta}}}\texttt{, }\textcolor{red}{\underline{\texttt{idMaquina}}}\texttt{, }\textcolor{red}{\underline{\texttt{idPartida}}}\texttt{, fecha, puntosGanados, hora, puntajeObtenido)}
-\end{center}
-
-\textbf{Tipos de los atributos:}
-
-\begin{itemize}
-    \item \textcolor{red}{\underline{\texttt{idCliente}}} : \texttt{int}
-    \item \textcolor{red}{\underline{\texttt{numeroTarjeta}}} : \texttt{int}
-    \item \textcolor{red}{\underline{\texttt{idMaquina}}} : \texttt{int}
-    \item \textcolor{red}{\underline{\texttt{idPartida}}} : \texttt{int}
-    \item \texttt{fecha : date}
-    \item \texttt{puntosGanados : int}
-    \item \texttt{hora : timetz}
-    \item \texttt{puntajeObtenido : int}
-\end{itemize}
-
-\subsubsection*{Relaciones}
-
-\begin{itemize}
-    \item \textbf{Poseer:} Es una relación entre Cliente y Tarjeta, con cardinalidad 1 a 1 con participación total en ambos sentidos.
-
-    \item \textbf{Registrar:} Es una relación entre Tarjeta y Partida, con cardinalidad 1 a muchos, donde una Tarjeta puede tener muchas partidas registradas; y con participación parcial por Tarjeta y total por Partida.
-\end{itemize}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}

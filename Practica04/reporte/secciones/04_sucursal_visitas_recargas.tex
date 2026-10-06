@@ -1,260 +1,71 @@
-% Responsable: Omar.
-% Opción 4: Sucursal, Visita, Recarga y sus relaciones.
-% Fuente: modelo E-R de la Práctica 03, parte 2 (ERÑIPGG.drawio) y su informe
-% de correcciones. Paquetes requeridos: booktabs, tabularx, array, enumitem.
-
-\section{Sucursal, visitas y recargas en el modelo relacional}
-
-\subsection{Ámbito de la conversión}
-
-La zona objeto de este apartado comprende la entidad fuerte \texttt{Sucursal}, las
-entidades débiles \texttt{Visita} y \texttt{Recarga} y las cinco relaciones que las
-involucran: \texttt{Pertenecer}, \texttt{ingresar}, \texttt{Proceder en},
-\texttt{Recibir} y \texttt{Efectuar}. El modelo de partida es el diagrama
-entidad--relación de la Práctica 03 en su versión corregida, donde
-\texttt{Visita} y \texttt{Recarga} aparecen con contorno doble y se relacionan con
-sus propietarios mediante las relaciones identificadoras \texttt{ingresar},
-\texttt{Proceder en}, \texttt{Recibir} y \texttt{Efectuar}, también con rombo doble.
-
-Dicha versión asigna a cada entidad débil un discriminante y un conjunto de
-propietarios: \texttt{Visita} posee el discriminante \texttt{idVisita} y depende de
-\texttt{Tarjeta} y \texttt{Sucursal}; \texttt{Recarga} posee el discriminante
-\texttt{idRecarga} y depende igualmente de \texttt{Tarjeta} y \texttt{Sucursal}. La
-conversión relacional se realiza, en consecuencia, sobre esa lectura y no sobre la
-primera versión del modelo.
-
-\subsection{Entidad fuerte Sucursal}
-
-\texttt{Sucursal} conserva su identificador propio y se convierte en una relación
-cuyos atributos son los del diagrama. El atributo compuesto \texttt{dirección} se
-descompone en sus cinco componentes, y el atributo simple \texttt{teléfono} conserva
-su carácter unitario.
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.17\textwidth}X@{}}
-\toprule
-\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio} \\
-\midrule
-\texttt{idSucursal} & \texttt{int} & Identificador de la sucursal; entero
-positivo y único. Llave primaria. \\
-\texttt{nombre} & \texttt{varchar(50)} & Nombre de la sucursal; cadena de texto no
-vacía. \\
-\texttt{teléfono} & \texttt{char(10)} & Número telefónico de la sucursal; cadena de
-diez dígitos. \\
-\texttt{calle} & \texttt{varchar(100)} & Componente de \texttt{dirección}; nombre de
-la calle. \\
-\texttt{númeroExterior} & \texttt{int} & Componente de \texttt{dirección}; entero
-positivo. \\
-\texttt{númeroInterior} & \texttt{int} & Componente de \texttt{dirección}; entero
-positivo que admite valor nulo cuando la dirección no lo registra. \\
-\texttt{colonia} & \texttt{varchar(50)} & Componente de \texttt{dirección}; nombre de
-la colonia. \\
-\texttt{estado} & \texttt{varchar(50)} & Componente de \texttt{dirección}; entidad
-federativa donde se ubica la sucursal. \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-\subsection{Atributo multivaluado horarios}
-
-El diagrama representa \texttt{horarios} mediante un óvalo doble, por lo que se
-convierte en una relación propia y no en una columna, conforme a la regla de
-atributos multivaluados. Cada valor del atributo corresponde al horario de atención
-de una misma sucursal; el modelo corregido declara expresamente que ese valor no se
-descompone en atributos adicionales de día, apertura o cierre, por lo que se
-conserva como literal.
-
-La relación resultante se denomina \texttt{HorarioSucursal}, con el propósito de
-distinguirla del atributo \texttt{horarioTrabajo} de las subentidades de
-\texttt{Empleado}; la confusión entre ambos es prevista de forma expresa por el
-modelo.
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.17\textwidth}X@{}}
-\toprule
-\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio} \\
-\midrule
-\texttt{idSucursal} & \texttt{int} & Llave foránea que referencia
-\texttt{Sucursal(idSucursal)}; forma parte de la llave primaria. \\
-\texttt{horario} & \texttt{varchar(50)} & Literal del horario de atención de la
-sucursal; forma parte de la llave primaria. \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-La llave primaria de la relación es compuesta e integrada por
-\texttt{(idSucursal, horario)}. De esa forma se garantiza la unicidad del horario
-dentro de una sucursal y se admite que dos sucursales distintas registren horarios
-idénticos.
-
-\subsection{Entidad débil Visita}
-
-La dependencia de \texttt{Visita} respecto de \texttt{Tarjeta} y \texttt{Sucursal}
-produce una llave primaria compuesta. El discriminante \texttt{idVisita} se exige
-único dentro del contexto de sus propietarios y no de forma global.
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.17\textwidth}X@{}}
-\toprule
-\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio} \\
-\midrule
-\texttt{idCliente} & \texttt{int} & Llave foránea que referencia la tarjeta
-registrada; integra la llave primaria. \\
-\texttt{numeroTarjeta} & \texttt{int} & Llave foránea que referencia la tarjeta
-registrada; integra la llave primaria. \\
-\texttt{idSucursal} & \texttt{int} & Llave foránea que referencia
-\texttt{Sucursal(idSucursal)}; integra la llave primaria. \\
-\texttt{idVisita} & \texttt{int} & Discriminante de la entidad débil; entero
-positivo único dentro del contexto de la tarjeta y la sucursal. Integra la llave
-primaria. \\
-\texttt{fecha} & \texttt{date} & Fecha en la que el jugador utilizó su tarjeta en
-esa sucursal. \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-La llave primaria de \texttt{Visita} es, por tanto,
-\texttt{(idCliente, numeroTarjeta, idSucursal, idVisita)}. La única relación con el
-cliente se obtiene de manera indirecta a través de la tarjeta, sin incorporar una
-relación directa \texttt{Cliente}--\texttt{Visita}, tal como lo establece el modelo
-de partida.
-
-\subsection{Entidad débil Recarga}
-
-La dependencia de \texttt{Recarga} respecto de \texttt{Tarjeta} y \texttt{Sucursal}
-produce, del mismo modo, una llave primaria compuesta, y el discriminante
-\texttt{idRecarga} se exige único dentro de ese contexto.
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.17\textwidth}X@{}}
-\toprule
-\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio} \\
-\midrule
-\texttt{idCliente} & \texttt{int} & Llave foránea que referencia la tarjeta
-receptora; integra la llave primaria. \\
-\texttt{numeroTarjeta} & \texttt{int} & Llave foránea que referencia la tarjeta
-receptora; integra la llave primaria. \\
-\texttt{idSucursal} & \texttt{int} & Llave foránea que referencia la sucursal donde
-se realizó la recarga; integra la llave primaria. \\
-\texttt{idRecarga} & \texttt{int} & Discriminante de la entidad débil; entero
-positivo único dentro del contexto de la tarjeta y la sucursal. Integra la llave
-primaria. \\
-\texttt{monto} & \texttt{int} & Cantidad abonada en pesos mexicanos; entero positivo
-y múltiplo de diez. \\
-\texttt{fecha} & \texttt{date} & Fecha en la que se realizó la recarga. \\
-\texttt{hora} & \texttt{timetz} & Hora del día, con zona horaria, en la que se
-realizó la recarga. \\
-\texttt{métodoAbono} & \texttt{varchar(50)} & Enumeración de formas de pago:
-\texttt{efectivo}, \texttt{tarjeta de crédito o débito} y \texttt{PayPal}. \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-La llave primaria de \texttt{Recarga} es
-\texttt{(idCliente, numeroTarjeta, idSucursal, idRecarga)}.
-
-\subsection{Conversión de las relaciones}
-
-Todas las relaciones de la zona son de tipo uno a muchos y ninguna posee atributos
-propios. La regla de conversión aplicada traslada la llave de la entidad propietaria
-a la entidad dependiente, por lo que ninguna de ellas genera una relación adicional.
-
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}p{0.22\textwidth}X@{}}
-\toprule
-\textbf{Relación E-R} & \textbf{Cardinalidad} & \textbf{Conversión relacional} \\
-\midrule
-\texttt{Pertenecer} & \texttt{Sucursal 1:N Máquina} & La llave de \texttt{Sucursal} se
-traslada a \texttt{Máquina} como llave foránea \texttt{idSucursal}. \\
-\texttt{ingresar} & \texttt{Tarjeta 1:N Visita} & La llave de \texttt{Tarjeta} se
-traslada a \texttt{Visita} como llave foránea compuesta \texttt{(idCliente,
-numeroTarjeta)}. \\
-\texttt{Proceder en} & \texttt{Sucursal 1:N Visita} & La llave de \texttt{Sucursal} se
-traslada a \texttt{Visita} como llave foránea \texttt{idSucursal}. \\
-\texttt{Recibir} & \texttt{Tarjeta 1:N Recarga} & La llave de \texttt{Tarjeta} se
-traslada a \texttt{Recarga} como llave foránea compuesta \texttt{(idCliente,
-numeroTarjeta)}. \\
-\texttt{Efectuar} & \texttt{Sucursal 1:N Recarga} & La llave de \texttt{Sucursal} se
-traslada a \texttt{Recarga} como llave foránea \texttt{idSucursal}. \\
-\bottomrule
-\end{tabularx}
-\end{center}
-
-La relación \texttt{Reflejar}, que vincula a \texttt{Cajero} con \texttt{Recarga},
-conserva al cajero responsable sin convertirse en relación identificadora, por lo
-que su llave foránea queda fuera de la llave primaria de \texttt{Recarga} y su
-definición corresponde a la zona del personal.
-
-\subsection{Leyes de integridad}
-
-La integración de las relaciones anteriores queda sujeta a las siguientes
-condiciones, que traducen las restricciones declaradas en el modelo entidad--relación.
-
-\begin{description}[leftmargin=0pt,style=nextline,font=\normalfont\bfseries]
-  \item[Integridad de dominio.]
-  \texttt{monto} admite únicamente enteros positivos múltiplos de diez.
-  \texttt{métodoAbono} se limita a los tres literales de la enumeración. Los
-  componentes numéricos de \texttt{dirección} se acotan a enteros positivos y
-  \texttt{númeroInterior} admite el valor nulo. \texttt{fecha} y \texttt{hora} se
-  validan contra el formato de fecha y de hora con zona horaria.
-
-  \item[Integridad referencial.]
-  Las cinco relaciones resultantes --
-  \texttt{HorarioSucursal}, \texttt{Visita} y \texttt{Recarga} respecto de
-  \texttt{Sucursal}, y \texttt{Visita} y \texttt{Recarga} respecto de
-  \texttt{Tarjeta} -- deben declarar su llave foránea, y la entidad dependiente no
-  puede existir sin la tupla referenciada.
-
-  \item[No nulidad de la llave primaria.]
-  Al integrar las llaves foráneas de los propietarios en la llave primaria de
-  \texttt{Visita} y de \texttt{Recarga}, la dependencia de existencia queda
-  garantizada por la propia definición de la llave: no admite valores nulos.
-
-  \item[Unicidad del discriminante en su contexto.]
-  \texttt{idVisita} y \texttt{idRecarga} se exigen únicos dentro del par formado por
-  la tarjeta y la sucursal. Dos operaciones correspondientes a contextos distintos
-  pueden compartir el mismo valor local; dentro de un mismo contexto el valor no
-  debe repetirse.
-
-  \item[Participación.]
-  La participación total de \texttt{Visita} y de \texttt{Recarga} en sus relaciones
-  proprietarias exige que toda ocurrencia tenga una tarjeta y una sucursal. La
-  participación parcial de \texttt{Sucursal} y de \texttt{Tarjeta} admite que una
-  sucursal o una tarjeta todavía no registren visitas ni recargas.
-
-  \item[Conservación del historial.]
-  La dependencia de existencia no establece por sí misma una política de borrado en
-  cascada ni autoriza la eliminación de operaciones cuando un participante deja de
-  estar activo. Las políticas de conservación corresponden a una etapa posterior.
-\end{description}
-
-\subsection{Verificaciones para la integración}
-
-La integración del diagrama relacional exige contrastar los siguientes puntos con las
-zonas vecinas del modelo.
-
-\begin{itemize}[leftmargin=*]
-  \item \texttt{Máquina} debe incorporar la llave foránea \texttt{idSucursal} que
-  origina \texttt{Pertenecer}; esa columna pertenece a la zona de juegos y máquinas.
-  \item Las relaciones \texttt{Tarjeta}--\texttt{Visita} y
-  \texttt{Tarjeta}--\texttt{Recarga} deben trazarse en el diagrama una vez que la
-  zona de clientes y partidas defina \texttt{Tarjeta} con la llave primaria
-  \texttt{(idCliente, numeroTarjeta)} que aquí se utiliza como referencia.
-  \item La relación \texttt{Cajero}--\texttt{Recarga} debe añadir su llave foránea
-  dentro de \texttt{Recarga}; su definición corresponde a la zona del personal.
-  \item La relación \texttt{Sucursal}--\texttt{Canje} exige únicamente la flecha
-  desde la llave foránea \texttt{idSucursal}, que la zona de canjes y premios ya
-  declara.
-  \item Bajo la restricción de uno a uno de \texttt{Poseer}, el modelo corregido
-  advierte que \texttt{idCliente} basta para distinguir la tarjeta asociada y que
-  agregar \texttt{numeroTarjeta} produce una identificación redundante. La llave
-  compuesta utilizada en esta zona reproduce la que figura en el diagrama
-  compartido; su revisión corresponde a la revisión integral del modelo.
-  \item El tipo de los atributos \texttt{hora} se unifica como \texttt{timetz} en
-  toda la zona de operaciones.
+\section{Sucursal, visitas y recargas}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Sucursal}
+dirección se descompone en calle, númeroExterior, númeroInterior, colonia y estado. teléfono es unitario.\par
+\textbf{Llave primaria:} idSucursal.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idSucursal & \texttt{int} & Entero positivo. \\
+nombre & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+teléfono & \texttt{char(10)} & Exactamente diez dígitos; no se almacena como número para conservar ceros iniciales. \\
+calle & \texttt{varchar(100)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+númeroExterior & \texttt{int} & Entero positivo. \\
+númeroInterior & \texttt{int} & Entero positivo o NULL cuando no existe número interior. \\
+colonia & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+estado & \texttt{varchar(50)} & Cadena no vacía; longitud máxima indicada por el tipo. \\
+\bottomrule\end{tabular}}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{HorarioSucursal}
+Conversión del atributo multivaluado horarios. Dos sucursales pueden compartir el mismo literal.\par
+\textbf{Llave primaria:} idSucursal, horario.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idSucursal & \texttt{int} & Entero positivo. \\
+horario & \texttt{varchar(50)} & Literal no vacío del horario de atención; no se inventan componentes adicionales. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idSucursal $\rightarrow$ Sucursal(idSucursal).
 \end{itemize}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Visita}
+ingresar y Proceder en son relaciones identificadoras 1:N; cada visita requiere una tarjeta y una sucursal. Ambas pueden existir sin visitas. El cliente se obtiene a través de Tarjeta; no se agrega una relación Cliente--Visita.\par
+\textbf{Llave primaria:} idCliente, idSucursal, idVisita.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+idSucursal & \texttt{int} & Entero positivo. \\
+idVisita & \texttt{int} & Entero positivo. \\
+fecha & \texttt{date} & Fecha válida del calendario. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Tarjeta(idCliente).
+\item idSucursal $\rightarrow$ Sucursal(idSucursal).
+\end{itemize}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}
+\par\noindent\begin{minipage}{\textwidth}
+\subsection{Recarga}
+Recibir y Efectuar identifican el contexto de tarjeta y sucursal. Reflejar es Cajero 1:N Recarga; CURP es obligatorio y queda fuera de la PK. Toda recarga tiene una tarjeta, una sucursal y un cajero. Los participantes pueden no registrar recargas.\par
+\textbf{Llave primaria:} idCliente, idSucursal, idRecarga.\par
+{\small\begin{tabular}{@{}p{0.25\textwidth}p{0.20\textwidth}p{0.49\textwidth}@{}}
+\toprule Atributo & Tipo & Dominio \\ \midrule
+idCliente & \texttt{int} & Entero positivo. \\
+idSucursal & \texttt{int} & Entero positivo. \\
+idRecarga & \texttt{int} & Entero positivo. \\
+monto & \texttt{int} & Entero positivo y múltiplo de diez pesos. \\
+fecha & \texttt{date} & Fecha válida del calendario. \\
+hora & \texttt{timetz} & Hora válida del día con zona horaria. \\
+métodoAbono & \texttt{varchar(50)} & Uno de: efectivo, tarjeta de crédito o débito, PayPal. \\
+CURP & \texttt{char(18)} & Identificador del cajero que refleja la recarga. \\
+\bottomrule\end{tabular}}
+\textbf{Llaves foráneas:}\begin{itemize}[nosep]
+\item idCliente $\rightarrow$ Tarjeta(idCliente).
+\item idSucursal $\rightarrow$ Sucursal(idSucursal).
+\item CURP $\rightarrow$ Cajero(CURP).
+\end{itemize}
+Todos los atributos son obligatorios salvo las excepciones explícitas de dominio. La PK es única y no admite nulos.
+\end{minipage}\par\vspace{.35cm}

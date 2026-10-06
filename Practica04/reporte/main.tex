@@ -1,4 +1,54 @@
-% Estructura inicial del reporte de la Práctica 04.
-% Integrar aquí el preámbulo y las secciones cuando el equipo acuerde su formato.
+\documentclass[11pt]{article}
+\input{estilo}
+\begin{document}
+\portada{Caso de uso: PuellaGame}
+\tableofcontents\clearpage
+\section*{Criterios de conversión}\addcontentsline{toc}{section}{Criterios de conversión}
+El modelo relacional parte del modelo entidad--relación extendido corregido de la Práctica 03. Las entidades fuertes conservan su identificador; las débiles incorporan la identificación de sus propietarios y su discriminante. Los atributos compuestos se descomponen, los multivaluados originan relaciones independientes y los derivados se calculan sin almacenarse como columnas redundantes.
 
-% TODO: definir el documento y agregar las secciones modulares.
+Las llaves se eligen mínimas bajo las cardinalidades del modelo. En particular, Poseer es uno a uno: Tarjeta se identifica por idCliente. numeroTarjeta se conserva como atributo, pero no se propaga como componente redundante a Partida, Visita y Recarga. En Canje, el contexto identificador comprende Cliente, Premio y Sucursal; el encargado es un participante ordinario y su CURP no integra la llave primaria.
+
+Empleado se conserva como relación general y cada subtipo contiene su CURP y sus atributos específicos. Así se aplica la regla de especialización indicada por la práctica y se evita duplicar nombres, RFC, salario y contactos en cada puesto. La especialización total y disjunta exige exactamente un subtipo por empleado.
+
+\textbf{Diagrama del equipo.} Se incluye la imagen original elaborada por el equipo, sin modificar sus tablas ni sus conexiones. PK señala llaves primarias y FK, llaves foráneas; los símbolos de las conexiones conservan la notación empleada por el equipo. El archivo editable se recuperó de los datos incrustados en la imagen. El diagrama conserva decisiones distintas de las desarrolladas en este informe, en particular las llaves de Tarjeta y sus operaciones, la identificación de Canje y la representación de los subtipos de Empleado.
+
+\textbf{Dominios y decisiones de implementación.} Se conservan los tipos y longitudes propuestos por el equipo y se unifica la hora de las operaciones como timetz. Los límites varchar y las condiciones de positividad son acotaciones de implementación, salvo donde el caso impone una enumeración o un múltiplo de diez. No se inventa un catálogo para sexo, estado de tarjeta, categorías de premios o tipos de mantenimiento. NULL solo se permite en Juego.idTipo y Sucursal.númeroInterior. Las reglas sobre fechas actuales se validan al registrar los datos.
+
+\textbf{Integridad entre relaciones.} Los discriminantes de operaciones son únicos dentro de su contexto, sin imponer unicidad global. Las PK garantizan identidad y las FK, existencia de participantes. La totalidad de Poseer, Administrar y la especialización exige validación adicional entre tablas. Los movimientos deben validar saldos, puntos e inventario al realizarse; los valores históricos no se reinterpretan si cambia el catálogo de premios. Las políticas de borrado e implementación SQL quedan fuera de esta conversión.
+\clearpage
+\input{secciones/01_clientes_partidas}
+\clearpage\input{secciones/02_juegos_maquinas}
+\clearpage\input{secciones/03_canjes_premios}
+\clearpage\input{secciones/04_sucursal_visitas_recargas}
+\clearpage\input{secciones/05_personal_integracion}
+\clearpage
+\section{Diagramas}
+Los modelos completos se anexan en páginas de formato amplio para conservar la resolución y permitir su lectura con ampliación. También se entregan como imágenes y archivos editables en la carpeta Diagramas.
+\subsection*{Fuentes de la conversión}
+\begin{itemize}
+\item Avilés Rosas, G., y equipo docente. (2026). \textit{Práctica 04: Modelo Relacional}. Fundamentos de Bases de Datos, Facultad de Ciencias, UNAM, semestre 2027-I.
+\item Equipo ÑIPGG. (2026). \textit{PuellaGame: Modelo entidad--relación extendido corregido}. Práctica 03, parte 2. Modelo incluido en esta entrega.
+\end{itemize}
+% Anexos construidos directamente desde las imágenes de la entrega.
+\makeatletter
+\newcommand{\anexoDiagrama}[4]{%
+\clearpage\begingroup
+\pdfpagewidth=#3pt\pdfpageheight=#4pt
+\paperwidth=#3pt\paperheight=#4pt
+\textwidth=\dimexpr#3pt-70pt\relax
+\textheight=\dimexpr#4pt-70pt\relax
+\hsize=\textwidth\vsize=\textheight
+\columnwidth=\textwidth\linewidth=\textwidth
+\@colht=\textheight\@colroom=\textheight
+\oddsidemargin=\dimexpr35pt-1in\relax
+\evensidemargin=\oddsidemargin
+\topmargin=\dimexpr35pt-1in\relax
+\headheight=0pt\headsep=0pt
+\thispagestyle{empty}
+{\Large\bfseries\color{unamblue}#1\par}
+\vfill\noindent\includegraphics[width=\textwidth,height=\dimexpr\textheight-60pt\relax,keepaspectratio]{#2}\par\vfill
+\clearpage\endgroup}
+\makeatother
+\anexoDiagrama{Modelo relacional: PuellaGame}{../Diagramas/RelacionalÑIPGG.png}{1300}{1300}
+\anexoDiagrama{Modelo entidad--relación: Práctica 03, parte 2}{../Diagramas/ERÑIPGG.png}{1684}{1191}
+\end{document}
