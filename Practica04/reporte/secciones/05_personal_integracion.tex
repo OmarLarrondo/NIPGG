@@ -1,3 +1,185 @@
 % Responsable: Ana.
 % Opción 5: Empleado, sus subtipos y revisión global del modelo.
 % TODO: documentar la conversión y revisar la consistencia integral.
+
+\subsection*{Conversión a tablas:}
+
+
+
+\subsubsection*{Cajero}
+Un cajero es una entidad fuerte la cual tiene dos relaciones con las entidades débiles: Tarjeta y Venta, las cuales tienen cardinalidad 1:M (uno del lado de Cajero), por lo cual la llave primaria de Cajero se convierte en llave foránea de Tarjeta y Venta.
+También, recodemos que Cajero es una subentidad de Empleado, por lo cual se conserva tanto la llave primaria de Empleado, es decir, su curp, como los otros atributos que tiene más su horario de trabajo. Así como la relación que Empleado tiene con Sucursal, la cual es de cardinalidad
+ 1:M (uno del lado de Sucursal), por lo cual la llave primaria de Sucursal se convierte en llave foránea de Empleado. Así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{Cajero\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, nombre, apellidoMaterno,apellidoPaterno, RFC, Fecha de contratación, salario, fechaNacimiento, horarioTrabajo, idSucursal\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \texttt{nombre : varchar(100)}
+    \item \texttt{apellidoMaterno : varchar(100)}
+    \item \texttt{apellidoPaterno : varchar(100)}
+    \item \texttt{RFC : char(13)}
+    \item \texttt{Fecha de contratación : date}
+    \item \texttt{salario : numeric(10,2)}
+    \item \texttt{fechaNacimiento : date}
+    \item \texttt{horarioTrabajo : time}
+    \item \texttt{idSucursal : int} (FK Sucursal.idSucursal)
+\end{itemize}
+
+La entidad cajero, además tiene dos atributos multivaluados, los cuales son: correoElectrónico y teléfono, por lo cual se crean dos tablas más, las cuales contienen la llave primaria de cajero y el atributo multivaluado. Así sus tablas quedan de la siguiente manera:
+
+\begin{center}
+\texttt{correoCajero\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{correoCajero}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{correoCajero}}} : \texttt{varchar(50)}
+\end{itemize}
+
+\begin{center}
+\texttt{teléfonoCajero\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{teléfonoCajero}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{teléfonoCajero}}} : \texttt{varchar(10)}
+\end{itemize}
+
+
+\subsubsection*{Encargado de premios}
+Un encargado de premios es una entidad fuerte que heredó de Empleado, por lo cual se conserva tanto la llave primaria de Empleado, es decir, su curp, como los otros atributos que tiene más su horario de trabajo. Así como la relación que Empleado tiene con Sucursal, la cual es de cardinalidad
+1:M (uno del lado de Sucursal), por lo cual la llave primaria de Sucursal se convierte en llave foránea de Empleado. Además, tiene una relación con la entidad débil Canje, la cual tiene cardinalidad 1:M (uno del lado de Encargado de premios), por lo cual la llave
+primaria de Encargado de premios se convierte en llave foránea de Canje. Así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{EncargadoDePremios\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, nombre, apellidoMaterno,apellidoPaterno, RFC, Fecha de contratación, salario, fechaNacimiento, horarioTrabajo, idSucursal\)}   
+\end{center}    
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \texttt{nombre : varchar(100)}
+    \item \texttt{apellidoMaterno : varchar(100)}
+    \item \texttt{apellidoPaterno : varchar(100)}
+    \item \texttt{RFC : char(13)}
+    \item \texttt{Fecha de contratación : date}
+    \item \texttt{salario : numeric(10,2)}
+    \item \texttt{fechaNacimiento : date}
+    \item \texttt{horarioTrabajo : time}
+    \item \texttt{idSucursal : int} (FK Sucursal.idSucursal)
+\end{itemize}
+
+
+\subsubsection*{Gerente}
+Un gerente es una entidad fuerte que heredó de Empleado, por lo cual se conserva tanto la llave primaria de Empleado, es decir, su curp, como los otros atributos que tiene, más su cédula profesional. Así como la relación que Empleado tiene con Sucursal, la cual es de cardinalidad
+1:M (uno del lado de Sucursal), por lo cual la llave primaria de Sucursal se convierte en llave foránea de Empleado. Por lo cual su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{Gerente\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, nombre, apellidoMaterno,apellidoPaterno, RFC, Fecha de contratación, salario, fechaNacimiento, cédulaProfesional, idSucursal\)}   
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \texttt{nombre : varchar(100)}
+    \item \texttt{apellidoMaterno : varchar(100)}
+    \item \texttt{apellidoPaterno : varchar(100)}
+    \item \texttt{RFC : char(13)}
+    \item \texttt{Fecha de contratación : date}
+    \item \texttt{salario : numeric(10,2)}
+    \item \texttt{fechaNacimiento : date}
+    \item \texttt{cédulaProfesional : varchar(10)}
+    \item \texttt{idSucursal : int} (FK Sucursal.idSucursal)
+\end{itemize}
+
+Además, la entidad Gerente tiene dos atributos multivaluados, los cuales son: correoElectrónico y teléfono, por lo cual se crean dos tablas más, las cuales contienen la llave primaria de gerente y el atributo multivaluado. Así sus tablas quedan de la siguiente manera:
+
+\begin{center}
+\texttt{correoGerente\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{correoGerente}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{correoGerente}}} : \texttt{varchar(50)}
+\end{itemize}
+
+\begin{center}
+\texttt{teléfonoGerente\(}\textcolor{red}{\underline{\textt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{teléfonoGerente}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{teléfonoGerente}}} : \texttt{varchar(10)}
+\end{itemize}
+
+Por otra parte, la entidad Gerente tiene una relación Administrar de cardinalidad N:M y participación total con la entidad Sucursal, por lo cual se crea una tabla intermedia que contiene las llaves primarias de ambas entidades. Así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{Administrar\(}\textcolor{blue}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{blue}{\underline{\texttt{idSucursal}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{blue}{\underline{\texttt{CURP}}} : \texttt{char(18)} (FK Gerente.CURP)
+    \item \textcolor{blue}{\underline{\texttt{idSucursal}}} : \texttt{int} (FK Sucursal.idSucursal)
+\end{itemize}
+
+
+\subsubsection*{Técnico}
+Un técnico es una entidad fuerte que heredó de Empleado, por lo cual se conserva tanto la llave primaria de Empleado, es decir, su curp, como los otros atributos que tiene más las certificaciones que tenga. Así como la relación que Empleado tiene con Sucursal, la cual es de cardinalidad
+1:M (uno del lado de Sucursal), por lo cual la llave primaria de Sucursal se convierte en llave foránea de Empleado. Además tiene una relación con la entidad débil Mantenimiento, la cual tiene cardinalidad 1:M (uno del lado de Técnico), por lo cual la llave primaria de Técnico se convierte en llave foránea de Mantenimiento. 
+Así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{Técnico\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, nombre, apellidoMaterno,apellidoPaterno, RFC, Fecha de contratación, salario, fechaNacimiento, certificaciones, idSucursal\)}   
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \texttt{nombre : varchar(100)}
+    \item \texttt{apellidoMaterno : varchar(100)}
+    \item \texttt{apellidoPaterno : varchar(100)}
+    \item \texttt{RFC : char(13)}
+    \item \texttt{Fecha de contratación : date}
+    \item \texttt{salario : numeric(10,2)}
+    \item \texttt{fechaNacimiento : date}
+    \item \texttt{certificaciones : varchar(100)}
+    \item \texttt{idSucursal : int} (FK Sucursal.idSucursal)
+\end{itemize}
+
+Como las certificaciones son un atributo multivaluado, se crea una tabla más, la cual contiene la llave primaria de técnico y el atributo multivaluado. Así su tabla queda de la siguiente manera:
+
+\begin{center}
+\texttt{certificaciones\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{certificaciones}}}\texttt{\)}
+\end{center}
+
+Además, la entidad Empleado también tiene dos atributos multivaluados, los cuales son: correoElectrónico y teléfono, por lo cual se crean dos tablas más, las cuales contienen la llave primaria de técnico y el atributo multivaluado. Así sus tablas quedan de la siguiente manera:   
+
+\begin{center}
+\texttt{correoTécnico\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{correoTécnico}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{correoTécnico}}} : \texttt{varchar(50)}
+\end{itemize}
+
+\begin{center}
+\texttt{teléfonoTécnico\(}\textcolor{red}{\underline{\texttt{CURP}}}\texttt{, }\textcolor{red}{\underline{\texttt{teléfonoTécnico}}}\texttt{\)}
+\end{center}
+
+\textbf{Tipos de los atributos:}
+\begin{itemize}
+    \item \textcolor{red}{\underline{\texttt{CURP}}} : \texttt{char(18)}
+    \item \textcolor{red}{\underline{\texttt{teléfonoTécnico}}} : \texttt{varchar(10)}
+\end{itemize}
