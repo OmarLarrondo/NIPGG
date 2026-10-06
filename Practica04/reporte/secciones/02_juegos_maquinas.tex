@@ -1,3 +1,235 @@
 % Responsable: Miguel.
-% Opción 2: Máquina, Juego, Tipo de juego, Mantenimiento y sus relaciones.
-% TODO: documentar la conversión, dominios, tipos, llaves y restricciones.
+% Opción 2: Juego, Tipo de juego, Máquina, Mantenimiento y sus relaciones.
+% La conversión toma como fuente el modelo E-R corregido de la Práctica 03.
+% Paquetes requeridos: booktabs, tabularx.
+
+\section{Juegos y máquinas en el modelo relacional}
+
+\subsection{Alcance de la conversión}
+
+Esta sección documenta \texttt{Juego}, \texttt{Tipo de juego},
+\texttt{Máquina} y \texttt{Mantenimiento}, junto con las relaciones
+\texttt{Ejecutar}, \texttt{Corresponder}, \texttt{Clasificar} y
+\texttt{Tener}. La interpretación sigue la versión corregida del modelo E-R
+de la Práctica 03: \texttt{Juego}, \texttt{Tipo de juego} y
+\texttt{Máquina} son entidades fuertes; \texttt{Mantenimiento} es débil y
+depende de \texttt{Máquina} mediante \texttt{Tener}. El atributo
+\texttt{idMantenimiento} funciona como discriminante dentro de cada máquina,
+por lo que no se trata como identificador global independiente.
+
+\texttt{Tipo de juego} se conserva como catálogo independiente: puede existir
+antes de que haya juegos asociados. En las relaciones uno a muchos, la llave
+de la entidad del lado uno se incorpora como llave foránea a la relación del
+lado muchos; por ello, no se crea una tabla adicional para cada una.
+Los tamaños \texttt{varchar(50)} y el uso de \texttt{text} son decisiones de
+implementación para expresar los dominios descriptivos; el modelo E-R no fija
+una longitud máxima para esas cadenas.
+
+\subsection{TipoJuego}
+
+En el esquema relacional se usa \texttt{TipoJuego} como nombre de la tabla
+correspondiente a la entidad \texttt{Tipo de juego}.
+
+\begin{center}
+\texttt{TipoJuego(}\underline{\texttt{idTipo}}\texttt{, nombre, reglaPuntuacion, condicion)}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.17\textwidth}X@{}}
+\toprule
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio y llave} \\
+\midrule
+\texttt{idTipo} & \texttt{int} & Entero positivo; llave primaria. \\
+\texttt{nombre} & \texttt{varchar(50)} & Nombre de la modalidad. El caso contempla
+\texttt{destreza}, \texttt{disparos}, \texttt{velocidad} y \texttt{ritmo}. \\
+\texttt{reglaPuntuacion} & \texttt{text} & Descripción de cómo se asignan puntos
+para esta modalidad. \\
+\texttt{condicion} & \texttt{text} & Descripción de la condición que debe
+cumplirse para aplicar la regla. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Las reglas del caso distinguen, por ejemplo, las modalidades de destreza y
+disparos, que otorgan un punto por cada acierto, de velocidad y ritmo, que
+otorgan veinte puntos cuando se cumple la condición correspondiente. Las
+columnas \texttt{reglaPuntuacion} y \texttt{condicion} conservan esos datos
+descriptivos sin convertir cada modalidad en una subentidad.
+
+\subsection{Juego}
+
+\begin{center}
+\texttt{Juego(}\underline{\texttt{idJuego}}\texttt{, nombre, costo, idTipo)}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.17\textwidth}X@{}}
+\toprule
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio y llave} \\
+\midrule
+\texttt{idJuego} & \texttt{int} & Entero positivo; llave primaria. \\
+\texttt{nombre} & \texttt{varchar(50)} & Nombre del juego; el modelo no establece
+que deba ser único. \\
+\texttt{costo} & \texttt{int} & Costo en pesos mexicanos; entero positivo y
+múltiplo de diez. \\
+\texttt{idTipo} & \texttt{int} & Llave foránea opcional a
+\texttt{TipoJuego(idTipo)}. Admite nulos mientras el juego no esté
+clasificado. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Máquina}
+
+\begin{center}
+\texttt{Máquina(}\underline{\texttt{idMaquina}}\texttt{, estado, idJuego, idSucursal)}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.17\textwidth}X@{}}
+\toprule
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio y llave} \\
+\midrule
+\texttt{idMaquina} & \texttt{int} & Entero positivo; llave primaria. \\
+\texttt{estado} & \texttt{varchar(50)} & Enumeración restringida a
+\texttt{activo}, \texttt{fuera de servicio} o \texttt{mantenimiento}. \\
+\texttt{idJuego} & \texttt{int} & Llave foránea obligatoria que referencia
+\texttt{Juego(idJuego)} por \texttt{Corresponder}. \\
+\texttt{idSucursal} & \texttt{int} & Llave foránea obligatoria que referencia
+\texttt{Sucursal(idSucursal)} por \texttt{Pertenecer}; esta relación se
+documenta en la opción 4. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Mantenimiento}
+
+\texttt{Mantenimiento} depende de una máquina y su discriminante solo es único
+dentro de ella. La llave primaria, por tanto, combina la llave de la entidad
+propietaria con \texttt{idMantenimiento}.
+
+\begin{center}
+\texttt{Mantenimiento(}\underline{\texttt{idMaquina}}\texttt{, }
+\underline{\texttt{idMantenimiento}}\texttt{, fecha, tipoMantenimiento, descripciónProblema, CURP)}
+\end{center}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}p{0.17\textwidth}X@{}}
+\toprule
+\textbf{Atributo} & \textbf{Tipo} & \textbf{Dominio y llave} \\
+\midrule
+\texttt{idMaquina} & \texttt{int} & Llave foránea a
+\texttt{Máquina(idMaquina)} y primer componente de la llave primaria. \\
+\texttt{idMantenimiento} & \texttt{int} & Entero positivo; discriminante y segundo
+componente de la llave primaria. Solo debe ser único para una misma máquina. \\
+\texttt{fecha} & \texttt{date} & Fecha en que se realizó el mantenimiento. \\
+\texttt{tipoMantenimiento} & \texttt{varchar(50)} & Texto que identifica el tipo de
+mantenimiento. \\
+\texttt{descripciónProblema} & \texttt{text} & Descripción del problema atendido. \\
+\texttt{CURP} & \texttt{char(18)} & Llave foránea obligatoria a
+\texttt{Técnico(CURP)} por \texttt{Realizar}; la entidad \texttt{Técnico} y
+esta relación se integran en la opción 5. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+La llave primaria de \texttt{Mantenimiento} es
+\texttt{(idMaquina, idMantenimiento)}. \texttt{idMaquina} también es llave
+foránea; \texttt{CURP} no forma parte de la llave primaria, porque
+\texttt{Realizar} registra al técnico responsable, pero no identifica al
+mantenimiento.
+
+\subsection{Conversión de las relaciones}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.25\textwidth}p{0.12\textwidth}X@{}}
+\toprule
+\textbf{Relación E-R} & \textbf{Cardinalidad} & \textbf{Participación total}
+& \textbf{Conversión relacional} \\
+\midrule
+\texttt{Ejecutar} & \texttt{Máquina 1:N Partida} & \texttt{Partida} &
+\texttt{idMaquina} se incorpora a \texttt{Partida} como llave foránea a
+\texttt{Máquina(idMaquina)} y como componente de la llave primaria de la
+entidad débil. No se crea una tabla aparte para la relación. \\
+\texttt{Corresponder} & \texttt{Juego 1:N Máquina} & \texttt{Máquina} &
+\texttt{idJuego} se incorpora a \texttt{Máquina} como llave foránea no nula.
+Cada máquina corresponde a un juego; un juego puede aún no estar instalado. \\
+\texttt{Clasificar} & \texttt{TipoJuego 1:N Juego} & Ninguna &
+\texttt{idTipo} se incorpora a \texttt{Juego} como llave foránea que admite
+nulos.
+Cada juego se clasifica en cero o un tipo; un tipo puede no tener juegos o
+clasificar varios. \\
+\texttt{Tener} & \texttt{Máquina 1:N Mantenimiento} &
+\texttt{Mantenimiento} & \texttt{idMaquina} se incorpora a
+\texttt{Mantenimiento} como llave foránea y primer componente de su llave
+primaria compuesta con \texttt{idMantenimiento}. No se crea una tabla aparte
+para la relación identificadora. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\texttt{Pertenecer} también agrega \texttt{idSucursal} a \texttt{Máquina}
+como llave foránea obligatoria; la conversión detallada corresponde a la
+opción 4. De forma análoga, \texttt{Realizar} aporta \texttt{CURP} a
+\texttt{Mantenimiento}; la opción 5 debe definir \texttt{Técnico(CURP)} y
+conservar esa referencia al integrar el esquema.
+
+\subsection{Restricciones de integridad}
+
+\begin{description}
+  \item[Integridad de dominio.]
+  \texttt{idJuego}, \texttt{idTipo}, \texttt{idMaquina},
+  \texttt{idMantenimiento} y \texttt{costo} son enteros positivos; además,
+  \texttt{costo} debe ser múltiplo de diez. \texttt{estado} solo admite los
+  tres valores enumerados. Los campos de nombre son cadenas de hasta 50
+  caracteres; las reglas y descripciones se almacenan como texto.
+
+  \item[Integridad de llave.]
+  \texttt{Juego}, \texttt{TipoJuego} y \texttt{Máquina} se identifican,
+  respectivamente, con \texttt{idJuego}, \texttt{idTipo} e
+  \texttt{idMaquina}. La llave de \texttt{Mantenimiento} es compuesta:
+  \texttt{(idMaquina, idMantenimiento)}; el segundo valor solo es único dentro
+  de la máquina correspondiente.
+
+  \item[Integridad referencial.]
+  \texttt{Juego.idTipo} referencia \texttt{TipoJuego.idTipo};
+  \texttt{Máquina.idJuego} referencia \texttt{Juego.idJuego};
+  \texttt{Máquina.idSucursal} referencia \texttt{Sucursal.idSucursal};
+  \texttt{Mantenimiento.idMaquina} referencia \texttt{Máquina.idMaquina};
+  y \texttt{Mantenimiento.CURP} referencia \texttt{Técnico.CURP}. Además,
+  \texttt{Partida.idMaquina} referencia \texttt{Máquina.idMaquina}.
+
+  \item[Participación y nulabilidad.]
+  \texttt{Máquina.idJuego} y \texttt{Máquina.idSucursal} no admiten nulos,
+  pues toda máquina debe corresponder a un juego y pertenecer a una sucursal.
+  \texttt{Juego.idTipo} sí admite nulo, porque \texttt{Clasificar} permite
+  juegos aún no clasificados. \texttt{Mantenimiento.idMaquina} es obligatorio
+  por formar parte de su llave primaria, y \texttt{CURP} es obligatorio porque
+  cada mantenimiento tiene un técnico responsable.
+
+  \item[Existencia de operaciones.]
+  Una máquina puede no haber ejecutado partidas ni requerir mantenimiento.
+  En cambio, cada partida debe referirse a una máquina y cada mantenimiento
+  debe quedar asociado a una máquina y a un técnico. La existencia de
+  \texttt{TipoJuego} no depende de que ya haya juegos clasificados.
+\end{description}
+
+\subsection{Consistencia con las demás opciones}
+
+\begin{itemize}
+  \item La opción 1 incorpora \texttt{idMaquina} en \texttt{Partida}; ese
+  atributo es simultáneamente llave foránea y parte de la llave primaria de
+  la entidad débil.
+  \item La opción 4 incorpora \texttt{idSucursal} en \texttt{Máquina} por
+  \texttt{Pertenecer}. Debe conservarse el mismo tipo \texttt{int} y la
+  referencia a \texttt{Sucursal(idSucursal)}.
+  \item La opción 5 completa \texttt{Realizar}: \texttt{CURP} en
+  \texttt{Mantenimiento} debe referenciar la llave de \texttt{Técnico}. Esta
+  referencia no altera la llave compuesta identificadora de
+  \texttt{Mantenimiento}.
+\end{itemize}
