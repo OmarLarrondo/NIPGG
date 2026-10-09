@@ -1,2 +1,77 @@
 % Diego - Ejercicio 3 inciso d.
-% TODO: desarrollar después de acordar el reparto.
+
+\subsection{Inciso d. Inserciones con cardinalidad $1:1$}
+
+Se considera el mismo escenario del inciso~b para las relaciones
+\emph{A} y \emph{B}. Se toma como base el modelo relacional obtenido
+para la cardinalidad $1:1$, suponiendo participación parcial de ambos
+lados.
+
+Las relaciones son
+$\mathrm{A}(a_1,a_2,a_3)$ y $\mathrm{B}(b,b_1)$, mientras que la
+relación $\mathrm{AB}(a_1,a_2,b,ab_1)$ tiene como llave primaria
+$(a_1,a_2)$ y una restricción de unicidad sobre $b$.
+
+En el escenario dado, las llaves de \emph{A} son
+$(2,\text{'ww'})$, $(4,\text{'xx'})$, $(6,\text{'yy'})$ y
+$(8,\text{'zz'})$, mientras que las llaves de \emph{B} son
+$17$, $27$, $37$, $47$ y $57$.
+
+\paragraph{Conjunto de tuplas insertables.}
+
+Con los datos disponibles, no es posible proponer un conjunto de cinco
+tuplas que pueda insertarse por completo en \emph{AB}. Esto se debe
+a que existen únicamente cuatro llaves en \emph{A} y la llave primaria
+$(a_1,a_2)$ de \emph{AB} impide que una misma entidad de \emph{A}
+aparezca en más de una tupla de dicha relación.
+
+El conjunto máximo de tuplas que puede insertarse simultáneamente
+es el siguiente, expresado en el orden
+$\mathrm{AB}(a_1,a_2,b,ab_1)$:
+
+\begin{enumerate}[label=\roman*.,leftmargin=*,itemsep=0.2em]
+    \item \texttt{(2,'ww',17,5)}
+    \item \texttt{(4,'xx',27,10)}
+    \item \texttt{(6,'yy',37,15)}
+    \item \texttt{(8,'zz',47,20)}
+\end{enumerate}
+
+Las cuatro tuplas pueden insertarse porque cada pareja $(a_1,a_2)$
+existe en \emph{A}, cada valor de $b$ existe en \emph{B}, los valores
+de $ab_1$ son enteros y ninguna llave primaria ni valor sujeto a la
+restricción de unicidad se repite.
+
+La participación parcial de ambos lados permite que la entidad de
+\emph{B} con llave $57$ permanezca sin asociarse, por lo que no es
+obligatorio que todas las entidades de ambas relaciones participen
+en \emph{AB}.
+
+\paragraph{Conjunto de tuplas no insertables.}
+
+Se propone el siguiente conjunto de cinco tuplas, también en el orden
+$\mathrm{AB}(a_1,a_2,b,ab_1)$:
+
+\begin{enumerate}[label=\roman*.,leftmargin=*,itemsep=0.2em]
+    \item \texttt{(2,'ww',17,5)}
+    \item \texttt{(4,'xx',27,10)}
+    \item \texttt{(6,'yy',37,15)}
+    \item \texttt{(8,'zz',47,20)}
+    \item \texttt{(2,'ww',57,25)}
+\end{enumerate}
+
+Este conjunto no puede insertarse por completo. La quinta tupla
+repite la llave primaria $(2,\text{'ww'})$ de la primera tupla.
+Aunque el valor $57$ existe en \emph{B} y los valores de $ab_1$ son
+enteros,la cardinalidad $1:1$ exige que una entidad de \emph{A} no
+esté asociada con más de una entidad de \emph{B} a través de
+\emph{AB}. Por lo tanto, la quinta tupla no puede insertarse.
+
+\paragraph{Conclusión.}
+
+La cardinalidad $1:1$ se garantiza mediante la llave primaria
+$(a_1,a_2)$ y la restricción $\operatorname{UNIQUE}(b)$ en
+\emph{AB}. La participación parcial permite que algunas entidades
+no tengan asociación, pero no permite que una misma entidad tenga
+más de una asociación. Debido a que \emph{A} contiene únicamente
+cuatro entidades en el escenario planteado, el conjunto máximo
+insertable tiene cuatro tuplas y no cinco.
