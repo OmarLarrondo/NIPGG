@@ -1,2 +1,89 @@
 % Diego - Ejercicio 4 incisos f-j.
-% TODO: desarrollar después de acordar el reparto.
+
+\noindent\textbf{f. Para las tuplas de la relación Administrar,
+hasta no puede ser anterior a desde.}
+
+\noindent\textbf{No se cumple:}
+
+En el modelo relacional no muestra ninguna restricción que obligue a
+que: \textbf{desde} $<$ \textbf{hasta}.
+
+La llave primaria de \textbf{Administrar} es
+\textbf{(NumEmpleado, NumDepto, Desde)}, pero esto no impide que se
+introduzca una tupla con, por ejemplo:
+\textbf{desde} $= 2000$, \textbf{hasta} $= 1999$.
+
+Por lo tanto, la cardinalidad, participación y las llaves no garantizan
+que \textbf{hasta} sea posterior a \textbf{desde}.
+
+\vspace{0.5em}
+
+\noindent\textbf{g. Dado un empleado, podemos identificar exactamente
+el Departamento donde trabaja.}
+
+\noindent\textbf{No se cumple:}
+
+En \textbf{Trabajar}, la llave primaria es:
+\textbf{(NumEmpleado, NumDepto, Desde)}, y sus conexiones con
+\textbf{Empleado} y \textbf{Departamento} son de uno parcial a muchos
+total, donde muchos total es por parte de \textbf{Trabajar}.
+
+Esto permite que un mismo empleado aparezca en varias tuplas de
+\textbf{Trabajar}, por ejemplo, trabajando en distintos departamentos
+durante distintos períodos. Además, no existe una restricción que
+impida que dos períodos de trabajo se solapen. Por lo tanto, a partir
+únicamente del \textbf{NumEmpleado}, no podemos identificar exactamente
+un único departamento o puede pasar que ya no esté trabajando en algún
+departamento.
+
+\vspace{0.5em}
+
+\noindent\textbf{h. Ningún empleado puede cobrar más de un Salario al
+mismo tiempo.}
+
+\noindent\textbf{No se cumple:}
+
+En \textbf{Salario}, la llave primaria es:
+\textbf{(NumEmpleado, Desde)}, y su conexión con \textbf{Empleado}
+es de uno parcial a muchos total donde uno parcial es de parte de
+\textbf{Empleado}.
+
+Esto impide que un empleado tenga dos registros con el mismo valor de
+\textbf{Desde}, pero no impide que sus períodos salariales se traslapen.
+Por lo cual es posible que un empleado tenga más de un salario al
+mismo tiempo.
+
+\vspace{0.5em}
+
+\noindent\textbf{i. Algunas tuplas en Salario podrían no tener valor para
+el atributo desde y ningún empleado asociado a ellas.}
+
+\noindent\textbf{No se cumple:}
+
+\textbf{Desde} y \textbf{NumEmpleado} forman parte de la llave primaria
+de \textbf{Salario}. Los atributos de una llave primaria no pueden tener
+valores NULL. Además, \textbf{NumEmpleado} debe corresponder a un
+empleado existente, ya que en su conexión con empleado
+\textbf{Salario} tiene la parte de muchos total, por lo cual depende de
+Empleado, por lo que una tupla de Salario sí o sí debe estar asociada
+con un Empleado.
+
+Por lo tanto, no puede existir una tupla de \textbf{Salario} sin
+\textbf{Desde} ni sin empleado asociado.
+
+\vspace{0.5em}
+
+\noindent\textbf{j. Un Departamento siempre tiene algún empleado que lo
+administre.}
+
+\noindent\textbf{No se cumple:}
+
+En la relación \textbf{Administrar}, la llave primaria es:
+\textbf{(NumEmpleado, NumDepto, Desde)}, y su conexión con
+\textbf{Departamento} es de uno parcial a muchos total.
+
+Como la parte parcial es por parte de \textbf{Departamento} entonces
+puede existir un departamento que no tenga quien lo administre.
+
+Así que no se garantiza que todo departamento tenga un empleado que
+lo administre.
