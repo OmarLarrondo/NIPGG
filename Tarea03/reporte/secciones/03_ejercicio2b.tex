@@ -1,2 +1,19 @@
 % Ana - Ejercicio 2.b: SIG SEMARNAT.
 % TODO: desarrollar después de acordar el reparto.
+
+\section{Ejercicio 2.b: Traducción del modelo E/R al modelo relacional}
+
+Reglas de Traducción Aplicadas:
+\begin{itemize}
+    \item Entidad fuerte: se convierte en tabla con sus atributos.
+    \item Relaciones M:N: se convierten en tabla con las llaves de las entidades relacionadas más los atributos de la relación.
+    \item Relaciones 1:N: la entidad del lado N incluye la llave de la entidad del lado 1 más los atributos de la relación.
+    \item Especialización-generalización: se crea una tabla para la superentidad y una tabla para cada subentidad con los atributos propios más la llave de la superentidad.
+    \item Clasificación de entidades: se crea una tabla para la superentidad y una tabla para cada subentidad con los atributos propios más la llave de la superentidad.
+    \item Relación recursiva: se crea una tabla para la relación. Se crearon dos llaves distintas que puntan a la misma entidad para diferenciar los roles de la relación.
+\end{itemize}
+
+Decisiones de Diseño
+\begin{enumerate}
+    \item \textbf{Relación Alimentar}, la cual es recursiva ya que un Río puede alimentar a otro río. Se creó una tabla para la relación con dos llaves foráneas que apuntan a la misma entidad Río, diferenciando los roles de la relación.
+\end{enumerate}
