@@ -1,2 +1,25 @@
 % Yahir - Ejercicio 2.a: traducción E-R a relacional.
 % TODO: desarrollar después de acordar el reparto.
+
+
+\section{Ejercicio 2.a: Traducción del modelo E/R al modelo relacional}
+
+Reglas de Traducción Aplicadas:
+\begin{itemize}
+    \item Entidad fuerte: se convierte en tabla con sus atributos.
+    \item Relaciones M:N: se convierten en tabla con las llaves de las entidades relacionadas más los atributos de la relación.
+    \item Relaciones 1:N: la entidad del lado N incluye la llave de la entidad del lado 1 más los atributos de la relación.
+    \item Relaciones 1:1: depende de la participación; se siguen las reglas de N:M o se incluye la llave en uno de los lados.
+    \item Atributos multivaluados: se convierten en tablas separadas con la llave de la entidad más el atributo.
+    \item Especialización-generalización: se crea una tabla para la superentidad y una tabla para cada subentidad con los atributos propios más la llave de la superentidad.
+\end{itemize}
+
+Decisiones de Diseño
+\begin{enumerate}
+    \item \textbf{Atributos multivaluados:} Se identificaron los atributos multivaluados Teléfono (para Museo y Colección), Material (para Obra), Técnica (para Pintura) y Estilo (para Artista). Cada uno se tradujo a una tabla independiente cuya llave primaria es compuesta (llave de la entidad + atributo).
+    \item \textbf{Relaciones M:N:} Se identificaron las relaciones Interactuar (Colección-Museo) y Exhibir (Obra-Exhibición). Ambas se tradujeron a tablas intermedias con llaves compuestas.
+    \item \textbf{Redundancia en subentidades:} Las tablas Prestada y Permanente incluyen atributos Descripción, Título y Tipo, que también aparecen en Obra. 
+    \item \textbf{Tipos de datos:} Se utilizaron los tipos de datos nativos de PostgreSQL. Para atributos sin longitud especificada, se asignaron longitudes estándar (ej. varchar(50)). Los identificadores se definieron como enteros (int). Las fechas como date.
+    \item \textbf{Cardinalidad de relaciones 1:N:} Como Obra tiene una relación 1:N con Museo, Artista y Colección, entonces contiene las llaves foráneas correspondientes.
+\end{enumerate}
+
