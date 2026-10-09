@@ -1,2 +1,191 @@
-% Miguel - Ejercicio 3 incisos a-c: tabla de cardinalidades e inserción.
-% TODO: desarrollar después de acordar el reparto.
+% Miguel - Ejercicio 3, incisos a-c: traducción e inserción de tuplas.
+
+\section{Ejercicio 3. Modelo relacional e inserción de tuplas}
+
+En el modelo E/R del enunciado, \emph{A} tiene la llave compuesta
+$(a_1,a_2)$: el atributo subrayado $a$ se descompone en $a_1$ y $a_2$.
+La llave de \emph{B} es $b$, y $ab_1$ pertenece a la relación \emph{ab}.
+Se considera participación parcial de ambos lados en las cuatro
+cardinalidades, como pide el inciso~a.
+
+\subsection{Inciso a. Traducción para cada cardinalidad}
+
+La Tabla~\ref{tab:ej3-traduccion} presenta las relaciones resultantes.
+El subrayado continuo identifica la llave primaria completa; las flechas
+indican las llaves foráneas y su relación de destino. Dentro de cada esquema
+se colocan primero las llaves primarias, después los atributos propios y al
+final las llaves foráneas, conservando de izquierda a derecha el orden de los
+atributos del modelo E/R.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Traducción del modelo E/R según la cardinalidad de \emph{ab}.}
+  \label{tab:ej3-traduccion}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Cardinalidad} & \textbf{Modelo relacional e integridad referencial} \\
+    \midrule
+    $M:N$ &
+      \begin{tabular}[t]{@{}l@{}}
+        $\mathrm{A}(\underline{a_1,a_2},a_3)$;
+        $\mathrm{B}(\underline{b},b_1)$ \\
+        $\mathrm{AB}(\underline{a_1,a_2,b},ab_1)$ \\
+        $\mathrm{AB}(a_1,a_2)\to\mathrm{A}(a_1,a_2)$;
+        $\mathrm{AB}.b\to\mathrm{B}.b$
+      \end{tabular} \\
+    $1:N$ &
+      \begin{tabular}[t]{@{}l@{}}
+        $\mathrm{A}(\underline{a_1,a_2},a_3)$;
+        $\mathrm{B}(\underline{b},b_1,ab_1,a_1,a_2)$ \\
+        $\mathrm{B}(a_1,a_2)\to\mathrm{A}(a_1,a_2)$
+      \end{tabular} \\
+    $N:1$ &
+      \begin{tabular}[t]{@{}l@{}}
+        $\mathrm{A}(\underline{a_1,a_2},a_3,ab_1,b)$;
+        $\mathrm{B}(\underline{b},b_1)$ \\
+        $\mathrm{A}.b\to\mathrm{B}.b$
+      \end{tabular} \\
+    $1:1$ &
+      \begin{tabular}[t]{@{}l@{}}
+        $\mathrm{A}(\underline{a_1,a_2},a_3)$;
+        $\mathrm{B}(\underline{b},b_1)$ \\
+        $\mathrm{AB}(\underline{a_1,a_2},b,ab_1)$;
+        $\operatorname{UNIQUE}(\mathrm{AB}.b)$ \\
+        $\mathrm{AB}(a_1,a_2)\to\mathrm{A}(a_1,a_2)$;
+        $\mathrm{AB}.b\to\mathrm{B}.b$
+      \end{tabular} \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+En $M:N$ una fila de \emph{AB} identifica una pareja de entidades; su llave
+primaria $(a_1,a_2,b)$ impide registrar dos veces esa pareja. En $1:N$ se
+colocan $(a_1,a_2)$ y $ab_1$ en \emph{B}, que es el lado $N$; en $N:1$ se
+colocan $b$ y $ab_1$ en \emph{A}, que ahora es el lado $N$. Como la
+participación es parcial, la llave foránea de una entidad sin pareja puede
+quedar sin valor. En el caso de la llave compuesta, sus dos componentes deben
+estar ausentes juntos o formar una pareja existente en \emph{A}; $ab_1$ queda
+sin valor si no existe una asociación.
+
+Para $1:1$ se conserva \emph{AB} como relación independiente. La llave
+primaria $(a_1,a_2)$ impide que una fila de \emph{A} tenga dos parejas y la
+restricción $\operatorname{UNIQUE}(b)$ impide que una fila de \emph{B} tenga
+dos parejas. La ausencia de una fila en \emph{AB} representa la participación
+parcial de cualquiera de las dos entidades. Esta traducción también deja
+disponible la relación \emph{AB} que utiliza el inciso~d.
+
+\subsection{Inciso b. Inserciones con cardinalidad $M:N$}
+
+Se parte de $\mathrm{A}(a_1,a_2,a_3)$ con las llaves
+$(2,\text{'ww'})$, $(4,\text{'xx'})$, $(6,\text{'yy'})$ y
+$(8,\text{'zz'})$, y de $\mathrm{B}$ con las llaves
+$17,27,37,47,57$. Cada tupla propuesta para
+$\mathrm{AB}(a_1,a_2,b,ab_1)$ debe tener una pareja $(a_1,a_2)$ presente
+en \emph{A}, un valor $b$ presente en \emph{B}, un entero en $ab_1$ y una
+llave primaria $(a_1,a_2,b)$ no repetida.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Evaluación de los conjuntos del inciso 3.b, en el orden propuesto.}
+  \label{tab:ej3-b}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Conjunto} & \textbf{Completo} & \textbf{Justificación} \\
+    \midrule
+    i & No & La quinta tupla repite la tercera,
+      $(4,\text{'xx'},27,15)$; se repite la llave primaria
+      $(4,\text{'xx'},27)$. \\
+    ii & No & Desde la primera tupla, $(17,\text{'zz'},2,\text{'m'})$,
+      $(17,\text{'zz'})$ no es llave de \emph{A}, $2$ no es llave de
+      \emph{B} y $ab_1=\text{'m'}$ no es entero. \\
+    iii & No & La primera tupla usa $(2,\text{'a'})$ como llave foránea;
+      \emph{A} contiene $(2,\text{'ww'})$. De igual modo, las cadenas
+      \texttt{'b'}, \texttt{'c'} y \texttt{'d'} son valores de $a_3$,
+      no componentes $a_2$ de las llaves de \emph{A}. \\
+    iv & Sí & Las cinco parejas $(a_1,a_2)$ y los cinco valores $b$
+      existen, $ab_1$ es entero y las cinco llaves $(a_1,a_2,b)$
+      son distintas. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Por tanto, \textbf{únicamente el conjunto iv se inserta por completo}.
+Para cada conjunto rechazado se propone a continuación una alternativa de
+cinco tuplas válidas, en el orden
+$\mathrm{AB}(a_1,a_2,b,ab_1)$:
+
+\begin{enumerate}[label=\roman*.,leftmargin=*,itemsep=0.2em]
+  \item \texttt{(8,'zz',17,5); (6,'yy',57,10);}\\
+    \texttt{(4,'xx',27,15); (2,'ww',37,20);}\\
+    \texttt{(4,'xx',47,15).}
+    Se cambia la última llave $b=27$ por $b=47$.
+  \item \texttt{(8,'zz',17,2); (6,'yy',27,4);}\\
+    \texttt{(4,'xx',37,6); (2,'ww',47,8);}\\
+    \texttt{(4,'xx',57,10).}
+    Se usan llaves de \emph{A} y \emph{B} existentes y enteros en $ab_1$.
+  \item \texttt{(2,'ww',17,23); (4,'xx',27,24);}\\
+    \texttt{(6,'yy',37,25); (8,'zz',47,26);}\\
+    \texttt{(2,'ww',57,27).}
+    Se sustituye cada valor de $a_3$ por el $a_2$ correspondiente.
+\end{enumerate}
+
+\subsection{Inciso c. Inserciones con cardinalidad $1:N$}
+
+En esta traducción las tuplas se insertan en
+$\mathrm{B}(b,b_1,ab_1,a_1,a_2)$. Se conservan las cuatro tuplas de
+\emph{A} indicadas en el inciso~b y se evalúa cada conjunto desde una
+\emph{B} vacía: las cinco tuplas de \emph{B} citadas allí describían el
+estado del modelo $M:N$ y no son inserciones previas de este inciso.
+Se exige que $b$ sea único, que los tipos sigan el orden
+entero--cadena--entero--entero--cadena y que la pareja $(a_1,a_2)$
+referencie a \emph{A}. Varios valores de $b$ pueden referenciar a la misma
+fila de \emph{A}, pues \emph{B} es el lado $N$.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Evaluación de los conjuntos del inciso 3.c, en el orden propuesto.}
+  \label{tab:ej3-c}
+  \small
+  \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X@{}}
+    \toprule
+    \textbf{Conjunto} & \textbf{Completo} & \textbf{Justificación} \\
+    \midrule
+    i & No & En $(2,\text{'f'},57,\text{'zz'},10)$ la llave foránea
+      tendría $a_1=\text{'zz'}$ y $a_2=10$, de tipos incorrectos.
+      Además, la quinta tupla repite $b=2$ de la primera. \\
+    ii & No & En $(57,8,\text{'zz'},\text{'f'},2)$, $b_1$ y $a_2$
+      deberían ser cadenas, mientras $ab_1$ y $a_1$ deberían ser enteros.
+      El mismo cambio de posiciones afecta a las demás tuplas. \\
+    iii & No & En $(17,\text{'f'},8,\text{'zz'},1)$ los componentes
+      de la llave foránea tienen los tipos invertidos. También se repiten
+      las llaves primarias $b=27$ y $b=17$ dentro del conjunto. \\
+    iv & Sí & Los valores de $b$ son distintos, $ab_1$ es entero y las
+      llaves foráneas son $(2,\text{'ww'})$, $(4,\text{'xx'})$,
+      $(6,\text{'yy'})$, $(8,\text{'zz'})$ y $(4,\text{'xx'})$;
+      todas existen en \emph{A}. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Así, \textbf{únicamente el conjunto iv se inserta por completo}.
+Los siguientes conjuntos de cinco tuplas corrigen, respectivamente, los
+casos i, ii y iii, siempre en el orden
+$\mathrm{B}(b,b_1,ab_1,a_1,a_2)$:
+
+\begin{enumerate}[label=\roman*.,leftmargin=*,itemsep=0.2em]
+  \item \texttt{(57,'f',10,8,'zz'); (47,'g',15,6,'yy');}\\
+    \texttt{(37,'h',10,4,'xx'); (27,'i',15,2,'ww');}\\
+    \texttt{(17,'j',20,6,'yy').}
+  \item \texttt{(57,'f',2,8,'zz'); (47,'g',4,6,'yy');}\\
+    \texttt{(37,'h',6,4,'xx'); (27,'i',8,2,'ww');}\\
+    \texttt{(17,'j',6,6,'yy').}
+  \item \texttt{(17,'f',1,8,'zz'); (27,'g',2,6,'yy');}\\
+    \texttt{(37,'h',3,4,'xx'); (47,'i',4,2,'ww');}\\
+    \texttt{(57,'j',5,6,'yy').}
+\end{enumerate}
+
+En las tres alternativas los cinco valores de $b$ son distintos, los
+atributos respetan sus tipos y cada pareja $(a_1,a_2)$ existe en
+\emph{A}; por ello se pueden insertar las cinco tuplas de cada conjunto.

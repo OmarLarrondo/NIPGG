@@ -43,9 +43,9 @@ que debería fijar una sola política de acentos en los nombres de atributo.
 
 \subsection{Estado de los módulos}
 
-Al momento de esta integración únicamente el módulo~1 está desarrollado. Los
-módulos~2 a~5 y el~7 permanecen como marcadores de posición, y las secciones
-correspondientes del documento aparecen sin contenido.
+Al momento de esta integración están desarrollados los módulos~1 y~4. El
+módulo~2 tiene contenido parcial; los módulos~3,~5 y~7 permanecen como
+marcadores de posición.
 
 \subsection{Módulo 1. Ejercicio~1 y Ejercicio~4, incisos a a e}
 
@@ -93,9 +93,26 @@ sobre el diseño de la Tarea~02 y justificación de cada uno.
 
 \subsection{Módulo 4. Ejercicio~3, incisos a a c}
 
-Pendiente de documentar por el responsable del módulo: formato de traducción de
-los atributos, que el enunciado indica leer de izquierda a derecha, y
-convención adoptada para la tabla de cardinalidades.
+\begin{itemize}
+  \item \textbf{Llave compuesta de \emph{A}.} El atributo subrayado $a$ del
+        modelo E/R se descompuso en $(a_1,a_2)$; la pareja completa identifica
+        a \emph{A} y se conserva como llave foránea compuesta donde procede.
+  \item \textbf{Orden de atributos.} Se siguió el formato del enunciado:
+        llaves primarias, atributos propios y llaves foráneas. Así,
+        $\mathrm{AB}(a_1,a_2,b,ab_1)$ en $M:N$ y
+        $\mathrm{B}(b,b_1,ab_1,a_1,a_2)$ en $1:N$ fijan la posición de cada
+        valor en los incisos~b y~c.
+  \item \textbf{Participación parcial.} Para $1:N$ se permite que la pareja
+        foránea $(a_1,a_2)$ esté ausente de \emph{B}, pero no que se almacene
+        solo uno de sus componentes. En $1:1$ se eligió una relación
+        \emph{AB} independiente, con llave primaria $(a_1,a_2)$ y unicidad
+        sobre $b$; la ausencia de fila representa la no participación.
+  \item \textbf{Estado inicial del inciso~c.} Se conservó \emph{A} del
+        inciso~b para comprobar las llaves foráneas, pero se evaluó cada
+        conjunto sobre una \emph{B} vacía del nuevo modelo $1:N$. Las cinco
+        tuplas de \emph{B} citadas en el inciso~b corresponden al escenario
+        $M:N$ y no se arrastraron como inserciones previas.
+\end{itemize}
 
 \subsection{Módulo 5. Ejercicio~3, inciso d}
 
