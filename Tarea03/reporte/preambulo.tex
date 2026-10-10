@@ -7,12 +7,18 @@
 
 % Tipografia y composicion
 \usepackage{mathpazo}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 \usepackage{microtype}
 \usepackage[margin=2.5cm,headheight=24pt]{geometry}
 \usepackage{parskip}
 \usepackage{enumitem}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.48cm}
+\setlength{\parskip}{0.30cm}
+\linespread{1.06}
+\setlength{\emergencystretch}{1.5em}
+\setcounter{tocdepth}{2}
 \setlist[itemize]{leftmargin=1.4em,itemsep=0.25em,topsep=0.25em}
 
 % Matematicas, tablas y figuras
@@ -32,15 +38,17 @@
 
 \usepackage{titlesec}
 \titleformat{\section}
-  {\normalfont\Large\bfseries\color{unamblue}}
+  {\normalfont\sffamily\Large\bfseries\color{unamblue}}
   {\thesection.}{0.55em}{}[\color{unamgold}\titlerule]
 \titleformat{\subsection}
-  {\normalfont\large\bfseries\color{unamblue}}
+  {\normalfont\sffamily\large\bfseries\color{unamblue}}
   {\thesubsection.}{0.55em}{}
 \titleformat{\subsubsection}
-  {\normalfont\normalsize\bfseries\color{textgray}}
+  {\normalfont\sffamily\normalsize\bfseries\color{textgray}}
   {\thesubsubsection.}{0.55em}{}
 
+\titlespacing*{\section}{0pt}{1.6em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.5em}
 \usepackage[most]{tcolorbox}
 \newtcolorbox{conceptobox}[1][]{
   enhanced,
@@ -48,7 +56,7 @@
   colback=lightgray,
   colframe=unamblue,
   coltitle=white,
-  fonttitle=\bfseries,
+  fonttitle=\sffamily\bfseries,
   boxrule=0.8pt,
   arc=1.5mm,
   left=3mm,
@@ -62,15 +70,16 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\textit{Fundamentos de Bases de Datos}}
-\fancyhead[R]{\textit{Tarea 3}}
-\fancyfoot[C]{\thepage}
+\fancyhead[L]{\sffamily\small\color{unamblue}Fundamentos de Bases de Datos}
+\fancyhead[R]{\sffamily\small\color{textgray}MODELO RELACIONAL}
+\fancyfoot[L]{\sffamily\scriptsize\color{textgray}ÑIPGG\enspace /\enspace Tarea 03}
+\fancyfoot[R]{\sffamily\small\color{unamblue}\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 \renewcommand{\headrule}{\hbox to\headwidth{\color{unamblue}\leaders\hrule height \headrulewidth\hfill}}
 
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
   pdftitle={Tarea 3: Modelo Relacional},
-  pdfauthor={Equipo NIPGG}
+  pdfauthor={Equipo ÑIPGG}
 }

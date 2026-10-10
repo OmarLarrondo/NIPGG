@@ -1,0 +1,68 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{mathpazo}
+\usepackage[scaled=0.92]{helvet}
+\usepackage{booktabs,tabularx,xcolor,microtype,tikz}
+\usepackage[hidelinks]{hyperref}
+\definecolor{unamblue}{RGB}{0,56,107}
+\definecolor{unamgold}{RGB}{188,149,92}
+\definecolor{lightgray}{RGB}{245,246,248}
+\definecolor{textgray}{RGB}{55,61,67}
+\usepackage{parskip}
+\setlength{\parskip}{0.30cm}
+\linespread{1.06}
+\setlength{\parindent}{0pt}
+\hypersetup{pdftitle={README del equipo ÑIPGG - Tarea 03},pdfauthor={Equipo ÑIPGG}}
+\begin{document}
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[unamblue] (current page.north west) rectangle ([yshift=-10.4cm]current page.north east);
+  \fill[unamgold] ([yshift=-10.4cm]current page.north west) rectangle ([yshift=-10.53cm]current page.north east);
+  \fill[lightgray] ([xshift=-1.4cm]current page.north east) rectangle (current page.south east);
+  \draw[unamgold,line width=1.2pt] ([xshift=2.5cm,yshift=1.8cm]current page.south west) -- ([xshift=-2.5cm,yshift=1.8cm]current page.south east);
+\end{tikzpicture}
+\vspace*{-0.6cm}
+{\sffamily\color{white}\small UNIVERSIDAD NACIONAL AUTÓNOMA DE MÉXICO\par}
+\vspace{0.18cm}
+{\sffamily\color{white}\large Facultad de Ciencias\par}
+\vspace{1.05cm}
+{\sffamily\color{unamgold}\bfseries\large README DEL EQUIPO\par}
+\vspace{0.2cm}
+{\sffamily\color{white}\bfseries\fontsize{34}{39}\selectfont Equipo\\ÑIPGG\par}
+\vspace{0.35cm}
+{\sffamily\color{white}\small Tarea 03 · Modelo Relacional\par}
+\vspace{1.35cm}
+{\sffamily\color{unamblue}\Large\bfseries Integrantes del equipo\par}
+\vspace{0.15cm}
+{\color{textgray}Fundamentos de Bases de Datos · Semestre 2027-1\par}
+\vspace{0.6cm}
+{\sffamily\small\bfseries\color{unamblue}REGISTRO DE PARTICIPANTES\par}
+\vspace{0.25cm}
+\begingroup
+\renewcommand{\arraystretch}{1.55}
+\begin{tabularx}{\textwidth}{@{}Xr@{}}
+\toprule
+\sffamily\small\bfseries Nombre completo & \sffamily\small\bfseries Número de cuenta\\
+\midrule
+Omar Alejandro Juárez Larrondo & 322245244\\
+Yahir León Bautista & 322176542\\
+Diego Hernández Gómez & 321069942\\
+Miguel Ángel Jiménez Ramírez & 119000887\\
+Ana Lilia Carballido Camacateco & 315314601\\
+\bottomrule
+\end{tabularx}
+\endgroup
+\vfill
+{\sffamily\small\color{unamblue}\bfseries PROFESOR\par}
+{M. en I. Gerardo Avilés Rosas\par}
+\vspace{0.35cm}
+{\sffamily\small\color{unamblue}\bfseries FECHA DE ENTREGA\par}
+{09 de octubre de 2026\par}
+\vspace{0.75cm}
+\end{titlepage}
+
+\end{document}

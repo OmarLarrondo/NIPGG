@@ -117,3 +117,15 @@ registran en la subsección correspondiente de `08_decisiones_diseno.tex`.
 El PDF final se genera en `Docs/Tarea03.pdf` con cuatro pasadas de `pdflatex` y
 `bibtex`. Antes de publicar la entrega conviene comprobar que no queden
 referencias indefinidas ni cajas de texto desbordadas.
+
+## Paquete preparado
+
+`Tarea03_ÑIPGG.zip` contiene el README del equipo, el PDF integrado y los
+diagramas disponibles. El E/R de 2.a es la imagen del enunciado; el de 2.b
+se recuperó del SIG de Tarea02 (`Ejercicio 3c`).
+
+El inciso 3.d justifica la incompatibilidad del enunciado: en 1:1, con
+cuatro claves de A, el máximo conjunto válido tiene cuatro tuplas.
+El diagrama `Ejercicio3a.drawio` y su exportación `Ejercicio3a.png`
+contienen las cuatro traducciones M:N, 1:N, N:1 y 1:1. Se incluyen en
+el ZIP y en el reporte final.

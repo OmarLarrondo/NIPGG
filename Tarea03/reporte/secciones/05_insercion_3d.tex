@@ -17,7 +17,16 @@ $(2,\text{'ww'})$, $(4,\text{'xx'})$, $(6,\text{'yy'})$ y
 $(8,\text{'zz'})$, mientras que las llaves de \emph{B} son
 $17$, $27$, $37$, $47$ y $57$.
 
-\paragraph{Conjunto de tuplas insertables.}
+\paragraph{Incompatibilidad del enunciado y conjunto insertable.}
+
+El inciso solicita cinco tuplas válidas, pero conservar el escenario del
+inciso~b y la cardinalidad $1:1$ hace imposible cumplir esa cantidad:
+$|\mathrm{AB}|\leq\min(|\mathrm{A}|,|\mathrm{B}|)=\min(4,5)=4$.
+La participación parcial permite menos asociaciones, pero no aumenta este
+límite. Una quinta tupla exigiría agregar previamente otra entidad a
+\emph{A}, lo que modificaría el escenario solicitado. Por ello se presenta
+el máximo conjunto válido de cuatro tuplas, sin inventar datos adicionales.
+
 
 Con los datos disponibles, no es posible proponer un conjunto de cinco
 tuplas que pueda insertarse por completo en \emph{AB}. Esto se debe
@@ -62,7 +71,7 @@ $\mathrm{AB}(a_1,a_2,b,ab_1)$:
 Este conjunto no puede insertarse por completo. La quinta tupla
 repite la llave primaria $(2,\text{'ww'})$ de la primera tupla.
 Aunque el valor $57$ existe en \emph{B} y los valores de $ab_1$ son
-enteros,la cardinalidad $1:1$ exige que una entidad de \emph{A} no
+enteros, la cardinalidad $1:1$ exige que una entidad de \emph{A} no
 esté asociada con más de una entidad de \emph{B} a través de
 \emph{AB}. Por lo tanto, la quinta tupla no puede insertarse.
 

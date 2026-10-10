@@ -22,8 +22,11 @@
 % el correspondiente \clearpage antes del \tableofcontents.
 
 \input{preambulo}
+\usepackage{pdflscape}
 
 \begin{document}
+
+\input{portada}
 
 \pagenumbering{roman}
 \tableofcontents
@@ -33,9 +36,58 @@
 \input{secciones/01_repaso}
 
 \input{secciones/02_ejercicio2a}
+\clearpage
+\begin{center}
+\textbf{Ejercicio 2.a}
+
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Ejercicio2a_ER_enunciado.png}
+
+Modelo E/R proporcionado en el enunciado.
+\end{center}
+
+\clearpage
+\begin{center}
+\textbf{Ejercicio 2.a}
+
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Ejercicio2a_Relacional.png}
+
+Traducción al modelo relacional.
+\end{center}
+\clearpage
 \input{secciones/03_ejercicio2b}
+\clearpage
+\begin{center}
+\textbf{Ejercicio 2.b}
+
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Ejercicio2b_ER.png}
+
+Modelo E/R del SIG de la Tarea 02.
+\end{center}
+
+\clearpage
+\begin{center}
+\textbf{Ejercicio 2.b}
+
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Ejercicio2b.drawio.png}
+
+Traducción al modelo relacional del SIG.
+\end{center}
+\clearpage
 
 \input{secciones/04_insercion_3abc}
+\clearpage
+\begin{landscape}
+\begin{center}
+\textbf{Ejercicio 3.a. Traducciones del modelo E/R}
+
+\includegraphics[width=\linewidth,height=0.82\textheight,keepaspectratio]{Ejercicio3a.png}
+
+Modelos relacionales para $M:N$, $1:N$, $N:1$ y $1:1$, con participación parcial.
+Las marcas PK identifican la llave primaria completa y las marcas FK,
+las referencias entre relaciones. En $1:1$, $b$ es además una llave candidata.
+\end{center}
+\end{landscape}
+\clearpage
 \input{secciones/05_insercion_3d}
 
 \input{secciones/06_integridad_4abcde}
