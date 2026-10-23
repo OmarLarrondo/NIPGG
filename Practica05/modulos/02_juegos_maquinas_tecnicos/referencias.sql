@@ -1,0 +1,5 @@
+-- Práctica 05 | Juegos, máquinas y técnicos
+-- Responsable: Ana
+-- Tablas asignadas: TipoJuego, Juego, Máquina, Mantenimiento, Técnico, CertificacionTecnico
+-- Definir mediante ALTER TABLE las FOREIGN KEY de las tablas de este módulo; acordar nombre, tipo y clave destino con su responsable.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

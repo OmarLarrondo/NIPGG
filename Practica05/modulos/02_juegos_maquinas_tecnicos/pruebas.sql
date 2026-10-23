@@ -1,0 +1,5 @@
+-- Práctica 05 | Juegos, máquinas y técnicos
+-- Responsable: Ana
+-- Tablas asignadas: TipoJuego, Juego, Máquina, Mantenimiento, Técnico, CertificacionTecnico
+-- Preparar casos válidos y casos que deban rechazarse. Documentar resultado esperado y aislar cada fallo esperado para que no oculte otras pruebas. Este archivo no forma parte de DDL.sql.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

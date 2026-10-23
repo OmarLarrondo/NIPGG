@@ -1,0 +1,5 @@
+-- Práctica 05 | Clientes y contactos
+-- Responsable: Miguel
+-- Tablas asignadas: Cliente, CorreoCliente, TelefonoCliente, Tarjeta, Partida, CorreoEmpleado, TelefonoEmpleado
+-- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

@@ -1,0 +1,5 @@
+-- Práctica 05 | Premios y canjes
+-- Responsable: Omar
+-- Tablas asignadas: Premio, Canje, Disponer
+-- Definir mediante ALTER TABLE la nulabilidad, CHECK y valores predeterminados que correspondan al modelo acordado.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

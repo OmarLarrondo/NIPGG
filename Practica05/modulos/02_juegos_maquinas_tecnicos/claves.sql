@@ -1,0 +1,5 @@
+-- Práctica 05 | Juegos, máquinas y técnicos
+-- Responsable: Ana
+-- Tablas asignadas: TipoJuego, Juego, Máquina, Mantenimiento, Técnico, CertificacionTecnico
+-- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

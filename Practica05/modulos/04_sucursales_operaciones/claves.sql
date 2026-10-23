@@ -1,0 +1,5 @@
+-- Práctica 05 | Sucursales y operaciones
+-- Responsable: Yahir
+-- Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga
+-- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

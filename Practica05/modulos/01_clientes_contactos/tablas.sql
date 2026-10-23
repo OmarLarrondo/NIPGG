@@ -1,0 +1,5 @@
+-- Práctica 05 | Clientes y contactos
+-- Responsable: Miguel
+-- Tablas asignadas: Cliente, CorreoCliente, TelefonoCliente, Tarjeta, Partida, CorreoEmpleado, TelefonoEmpleado
+-- Definir únicamente las tablas, columnas y tipos mediante CREATE TABLE. Las restricciones se escriben en los otros archivos mediante ALTER TABLE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

@@ -1,0 +1,5 @@
+-- Práctica 05 | Sucursales y operaciones
+-- Responsable: Yahir
+-- Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga
+-- Definir mediante ALTER TABLE la nulabilidad, CHECK y valores predeterminados que correspondan al modelo acordado.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

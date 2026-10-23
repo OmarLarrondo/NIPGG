@@ -1,0 +1,5 @@
+-- Práctica 05 | Sucursales y operaciones
+-- Responsable: Yahir
+-- Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga
+-- Definir únicamente las tablas, columnas y tipos mediante CREATE TABLE. Las restricciones se escriben en los otros archivos mediante ALTER TABLE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

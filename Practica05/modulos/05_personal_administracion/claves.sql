@@ -1,0 +1,5 @@
+-- Práctica 05 | Personal y administración
+-- Responsable: Diego
+-- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
+-- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

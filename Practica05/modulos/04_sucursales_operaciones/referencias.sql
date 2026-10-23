@@ -1,0 +1,5 @@
+-- Práctica 05 | Sucursales y operaciones
+-- Responsable: Yahir
+-- Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga
+-- Definir mediante ALTER TABLE las FOREIGN KEY de las tablas de este módulo; acordar nombre, tipo y clave destino con su responsable.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

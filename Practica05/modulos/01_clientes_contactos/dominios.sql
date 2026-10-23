@@ -1,0 +1,5 @@
+-- Práctica 05 | Clientes y contactos
+-- Responsable: Miguel
+-- Tablas asignadas: Cliente, CorreoCliente, TelefonoCliente, Tarjeta, Partida, CorreoEmpleado, TelefonoEmpleado
+-- Definir mediante ALTER TABLE la nulabilidad, CHECK y valores predeterminados que correspondan al modelo acordado.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

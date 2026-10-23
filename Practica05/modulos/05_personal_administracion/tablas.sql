@@ -1,0 +1,5 @@
+-- Práctica 05 | Personal y administración
+-- Responsable: Diego
+-- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
+-- Definir únicamente las tablas, columnas y tipos mediante CREATE TABLE. Las restricciones se escriben en los otros archivos mediante ALTER TABLE.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

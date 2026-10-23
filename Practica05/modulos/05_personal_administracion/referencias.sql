@@ -1,0 +1,5 @@
+-- Práctica 05 | Personal y administración
+-- Responsable: Diego
+-- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
+-- Definir mediante ALTER TABLE las FOREIGN KEY de las tablas de este módulo; acordar nombre, tipo y clave destino con su responsable.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.

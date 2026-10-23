@@ -1,0 +1,5 @@
+-- Práctica 05 | Sucursales y operaciones
+-- Responsable: Yahir
+-- Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga
+-- Preparar casos válidos y casos que deban rechazarse. Documentar resultado esperado y aislar cada fallo esperado para que no oculte otras pruebas. Este archivo no forma parte de DDL.sql.
+-- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
