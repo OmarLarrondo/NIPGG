@@ -20,14 +20,14 @@ ALTER TABLE "Cliente"
 
 -- Comprobación básica de correo: un @, partes no vacías y sin espacios.
 -- No verifica la existencia del buzón ni toda la sintaxis de correo.
-ALTER TABLE "CorreoCliente"
+ALTER TABLE "correoElectrónico"
     ALTER COLUMN "idCliente" SET NOT NULL,
     ALTER COLUMN "correoElectrónico" SET NOT NULL,
     ADD CONSTRAINT ck_correo_cliente_id CHECK ("idCliente" > 0),
     ADD CONSTRAINT ck_correo_cliente_direccion
         CHECK ("correoElectrónico" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
 
-ALTER TABLE "TelefonoCliente"
+ALTER TABLE "teléfono"
     ALTER COLUMN "idCliente" SET NOT NULL,
     ALTER COLUMN "teléfono" SET NOT NULL,
     ADD CONSTRAINT ck_telefono_cliente_id CHECK ("idCliente" > 0),
@@ -52,6 +52,7 @@ ALTER TABLE "Tarjeta"
 
 ALTER TABLE "Partida"
     ALTER COLUMN "idCliente" SET NOT NULL,
+    ALTER COLUMN "numeroTarjeta" SET NOT NULL,
     ALTER COLUMN "idMaquina" SET NOT NULL,
     ALTER COLUMN "idPartida" SET NOT NULL,
     ALTER COLUMN "fecha" SET NOT NULL,
@@ -59,20 +60,58 @@ ALTER TABLE "Partida"
     ALTER COLUMN "puntosGanados" SET NOT NULL,
     ALTER COLUMN "puntajeObtenido" SET NOT NULL,
     ADD CONSTRAINT ck_partida_cliente CHECK ("idCliente" > 0),
+    ADD CONSTRAINT ck_partida_numero_tarjeta CHECK ("numeroTarjeta" > 0),
     ADD CONSTRAINT ck_partida_maquina CHECK ("idMaquina" > 0),
     ADD CONSTRAINT ck_partida_id CHECK ("idPartida" > 0),
     ADD CONSTRAINT ck_partida_fecha CHECK (isfinite("fecha")),
     ADD CONSTRAINT ck_partida_puntos CHECK ("puntosGanados" >= 0),
     ADD CONSTRAINT ck_partida_puntaje CHECK ("puntajeObtenido" >= 0);
 
--- CURP identifica al empleado; su existencia y dominio se heredan por FK.
-ALTER TABLE "CorreoEmpleado"
+-- Cada CURP debe existir en el puesto correspondiente; el dominio se hereda por FK.
+ALTER TABLE "CorreoElectrónicoGerente"
     ALTER COLUMN "CURP" SET NOT NULL,
-    ALTER COLUMN "correoElectrónico" SET NOT NULL,
-    ADD CONSTRAINT ck_correo_empleado_direccion
-        CHECK ("correoElectrónico" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
+    ALTER COLUMN "correoGerente" SET NOT NULL,
+    ADD CONSTRAINT ck_correo_gerente_formato
+        CHECK ("correoGerente" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
 
-ALTER TABLE "TelefonoEmpleado"
+ALTER TABLE "TeléfonoGerente"
     ALTER COLUMN "CURP" SET NOT NULL,
-    ALTER COLUMN "teléfono" SET NOT NULL,
-    ADD CONSTRAINT ck_telefono_empleado_numero CHECK ("teléfono" ~ '^[0-9]{10}$');
+    ALTER COLUMN "telefonoGerente" SET NOT NULL,
+    ADD CONSTRAINT ck_telefono_gerente_formato
+        CHECK ("telefonoGerente" ~ '^[0-9]{10}$');
+
+ALTER TABLE "CorreoElectrónicoCajero"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "correoCajero" SET NOT NULL,
+    ADD CONSTRAINT ck_correo_cajero_formato
+        CHECK ("correoCajero" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
+
+ALTER TABLE "TeléfonoCajero"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "telefonoCajero" SET NOT NULL,
+    ADD CONSTRAINT ck_telefono_cajero_formato
+        CHECK ("telefonoCajero" ~ '^[0-9]{10}$');
+
+ALTER TABLE "CorreoElectrónicoEncargado"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "correoEncargado" SET NOT NULL,
+    ADD CONSTRAINT ck_correo_encargado_formato
+        CHECK ("correoEncargado" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
+
+ALTER TABLE "TeléfonoEncargado"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "telefonoEncargado" SET NOT NULL,
+    ADD CONSTRAINT ck_telefono_encargado_formato
+        CHECK ("telefonoEncargado" ~ '^[0-9]{10}$');
+
+ALTER TABLE "CorreoElectrónicoTécnico"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "correoTécnico" SET NOT NULL,
+    ADD CONSTRAINT ck_correo_tecnico_formato
+        CHECK ("correoTécnico" ~ '^[^[:space:]@]+@[^[:space:]@]+$');
+
+ALTER TABLE "TeléfonoTécnivo"
+    ALTER COLUMN "CURP" SET NOT NULL,
+    ALTER COLUMN "telefonoTécnico" SET NOT NULL,
+    ADD CONSTRAINT ck_telefono_tecnico_formato
+        CHECK ("telefonoTécnico" ~ '^[0-9]{10}$');

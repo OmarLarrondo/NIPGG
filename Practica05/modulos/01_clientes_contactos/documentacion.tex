@@ -1,12 +1,14 @@
 % Práctica 05 | Responsable: Miguel
 \section{Clientes y contactos}
 
-Se toma como base la conversión del informe de la Práctica~04. Los
-atributos multivaluados de contacto se representan en relaciones
-independientes y las partidas conservan su contexto identificador.
-Todas las columnas del módulo son obligatorias y carecen de valor
-predeterminado. Las tablas se crean en \texttt{tablas.sql}; la nulabilidad,
-los dominios y las llaves se agregan mediante \texttt{ALTER TABLE}.
+Se implementan las trece tablas de este módulo a partir del diagrama
+relacional entregado en la Práctica~04. Se conservan sus nombres,
+columnas, tipos y llaves primarias, incluidos acentos y espacios mediante
+comillas dobles. Los contactos del personal se relacionan directamente
+con Gerente, Cajero, Encargado de premios y Técnico, conforme al criterio
+señalado por Diego. Todas las columnas son obligatorias y carecen de
+valor predeterminado. Las restricciones se agregan mediante
+\texttt{ALTER TABLE}, separadas de la creación de las tablas.
 
 \begingroup
 \small
@@ -24,50 +26,51 @@ los dominios y las llaves se agregan mediante \texttt{ALTER TABLE}.
 \texttt{nombre} & \texttt{varchar(50)} & No & Hasta 50 caracteres; al menos uno distinto de espacio en blanco. \\
 \texttt{apellidoMaterno} & \texttt{varchar(50)} & No & Hasta 50 caracteres; al menos uno distinto de espacio en blanco. \\
 \texttt{apellidoPaterno} & \texttt{varchar(50)} & No & Hasta 50 caracteres; al menos uno distinto de espacio en blanco. \\
-\texttt{sexo} & \texttt{varchar(50)} & No & Descriptor no vacío; sin catálogo cerrado en el modelo. \\
+\texttt{sexo} & \texttt{varchar(50)} & No & Descriptor de hasta 50 caracteres, no vacío; sin catálogo cerrado. \\
 \hline
 \end{tabular}
 
 La llave primaria es \texttt{idCliente}. El nombre completo se descompone
-en nombre y apellidos. Se permiten acentos, espacios y signos en estos
-campos, pero se rechazan cadenas vacías o formadas únicamente por
-espacios en blanco. La edad se obtiene de la fecha de nacimiento y la
-categoría VIP se calcula con la regla del caso; no se almacenan como
-columnas redundantes.
+en nombre y apellidos. Estos admiten acentos, espacios y signos, pero
+se rechazan cadenas vacías o formadas únicamente por espacios en blanco.
+La edad y la categoría VIP son atributos derivados y no se almacenan
+como columnas redundantes.
 
-\subsection{CorreoCliente}
+\subsection{correoElectrónico}
 
 \noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
 \texttt{idCliente} & \texttt{integer} & No & Entero positivo que referencia a un cliente existente. \\
-\texttt{correoElectrónico} & \texttt{varchar(100)} & No & Hasta 100 caracteres; una arroba, parte local y dominio no vacíos, sin espacios en blanco. \\
+\texttt{correoElectrónico} & \texttt{varchar(100)} & No & Hasta 100 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
 \hline
 \end{tabular}
 
-La llave primaria es \texttt{(idCliente, correoElectrónico)}. La FK
-\texttt{CorreoCliente.idCliente} $\to$ \texttt{Cliente.idCliente}
-garantiza la existencia del propietario. Un cliente puede registrar
-varios correos y distintos clientes pueden compartir la misma dirección;
-lo que no puede repetirse es la pareja completa. La validación del correo
-es básica: no comprueba la existencia del buzón ni toda su sintaxis.
+La llave primaria es \texttt{(idCliente, correoElectrónico)} y la FK
+\texttt{idCliente} referencia a \texttt{Cliente.idCliente}. Se conserva
+el nombre de tabla \texttt{correoElectrónico} del diagrama. Un cliente
+puede registrar varios correos y distintos clientes pueden compartir
+la misma dirección; se impide repetir la pareja completa. La comprobación
+de formato es básica y no certifica la existencia del buzón ni toda su
+sintaxis.
 
-\subsection{TelefonoCliente}
+\subsection{teléfono}
 
 \noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
 \texttt{idCliente} & \texttt{integer} & No & Entero positivo que referencia a un cliente existente. \\
-\texttt{teléfono} & \texttt{char(10)} & No & Exactamente diez dígitos de 0 a 9. \\
+\texttt{teléfono} & \texttt{char(10)} & No & Exactamente diez dígitos de 0 a 9; conserva ceros iniciales. \\
 \hline
 \end{tabular}
 
 La llave primaria es \texttt{(idCliente, teléfono)} y la FK referencia
-a \texttt{Cliente.idCliente}. El teléfono se guarda como cadena para
-conservar ceros iniciales. Un cliente puede registrar varios teléfonos;
-la misma cadena puede pertenecer a más de un cliente sin violar la PK.
+a \texttt{Cliente.idCliente}. El nombre de tabla es \texttt{teléfono},
+como en el diagrama. Su valor se guarda como cadena para conservar ceros
+iniciales. Se admiten varios teléfonos por cliente y teléfonos compartidos
+entre propietarios distintos; no se impone unicidad global.
 
 \clearpage
 \subsection{Tarjeta}
@@ -77,39 +80,42 @@ la misma cadena puede pertenecer a más de un cliente sin violar la PK.
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
 \texttt{idCliente} & \texttt{integer} & No & Entero positivo que identifica al cliente propietario. \\
-\texttt{numeroTarjeta} & \texttt{integer} & No & Entero positivo conservado como atributo de la tarjeta. \\
+\texttt{numeroTarjeta} & \texttt{integer} & No & Entero positivo; forma parte de la identificación de la tarjeta. \\
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de un cajero existente. \\
 \texttt{costoAdquisición} & \texttt{integer} & No & Importe entero no negativo en pesos. \\
 \texttt{fechaCompra} & \texttt{date} & No & Fecha válida y finita del calendario. \\
 \texttt{saldo} & \texttt{integer} & No & Saldo entero no negativo en pesos. \\
 \texttt{estado} & \texttt{varchar(50)} & No & Descriptor de hasta 50 caracteres, no vacío; sin catálogo cerrado. \\
 \texttt{puntosAcumulados} & \texttt{integer} & No & Entero no negativo. \\
-\texttt{CURP} & \texttt{char(18)} & No & Identificador de un cajero existente. \\
 \hline
 \end{tabular}
 
-\paragraph{Identificación y relación con Cliente.}
-La llave primaria es \texttt{idCliente}, que también referencia a
-\texttt{Cliente.idCliente}. De esta manera cada tarjeta pertenece a un
-cliente y cada cliente tiene como máximo una tarjeta. El informe de la
-Práctica~04 conserva \texttt{numeroTarjeta} como dato, sin hacerlo único
-globalmente ni incluirlo en una llave redundante. Por ello no se agrega
-\texttt{UNIQUE(numeroTarjeta)} ni se propaga ese atributo a Partida.
+\paragraph{Identificación y cardinalidad.}
+La llave primaria compuesta es \texttt{(idCliente, numeroTarjeta)}, tal
+como indican las dos marcas PK del diagrama. Se agrega
+\texttt{UNIQUE(idCliente)} para respetar la relación $1:1$ entre Cliente
+y Tarjeta: un cliente tiene como máximo una tarjeta. El número no es
+único globalmente; clientes distintos pueden usar el mismo literal.
+Esta combinación conserva la PK del dibujo y la cardinalidad de su
+conexión, aunque el identificador del cliente también sea llave candidata.
 
-\paragraph{Vendedor y dominios.}
-La FK \texttt{Tarjeta.CURP} $\to$ \texttt{Cajero.CURP} exige que
-el vendedor exista en el subtipo Cajero; no basta con que exista en
-Empleado. Se conserva el dominio de su CURP por esa referencia.
-Los importes y puntos son enteros no negativos: cero es un valor válido.
-No se asignan saldos, costos, puntos o estados predeterminados que el
-informe no establece. La fecha de compra debe ser finita; el informe no
-fija una restricción respecto de la fecha actual para esta columna.
+\paragraph{Referencias.}
+\texttt{Tarjeta.idCliente} referencia a \texttt{Cliente.idCliente} y
+\texttt{Tarjeta.CURP} referencia a \texttt{Cajero.CURP}. Por tanto, el
+vendedor debe existir específicamente como cajero. La CURP conserva
+el dominio definido en la tabla de su puesto.
 
-\paragraph{Participación y operaciones.}
-La FK desde Tarjeta y su PK no obligan a que todos los clientes tengan
-tarjeta. La participación total de Cliente en Poseer requiere validación
-adicional entre tablas. Asimismo, los \texttt{CHECK} impiden almacenar
-valores negativos, pero no sustituyen la comprobación y actualización
-conjunta de saldos y puntos al realizar recargas, partidas y canjes.
+Los importes y puntos son enteros no negativos; cero es válido. No se
+asignan valores predeterminados que el modelo no establece. La fecha
+de compra debe ser finita, sin imponer una comparación con la fecha
+actual que no se establecía para este atributo.
+
+\paragraph{Alcance.}
+Estas restricciones garantizan la pertenencia y la unicidad de la tarjeta,
+pero no obligan por sí solas a que todo cliente tenga una tarjeta.
+La participación total de Cliente en Poseer requiere validación adicional
+entre tablas. Los \texttt{CHECK} de saldos y puntos no sustituyen la
+comprobación y actualización conjunta al registrar operaciones.
 
 \clearpage
 \subsection{Partida}
@@ -118,103 +124,228 @@ conjunta de saldos y puntos al realizar recargas, partidas y canjes.
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
-\texttt{idCliente} & \texttt{integer} & No & Entero positivo que referencia a la tarjeta utilizada. \\
-\texttt{idMaquina} & \texttt{integer} & No & Entero positivo que referencia a una máquina existente. \\
-\texttt{idPartida} & \texttt{integer} & No & Entero positivo; discriminante dentro del contexto tarjeta y máquina. \\
+\texttt{idCliente} & \texttt{integer} & No & Entero positivo; primer componente de la referencia a Tarjeta. \\
+\texttt{numeroTarjeta} & \texttt{integer} & No & Entero positivo; segundo componente de la referencia a Tarjeta. \\
+\texttt{idMaquina} & \texttt{integer} & No & Entero positivo que identifica una máquina existente. \\
+\texttt{idPartida} & \texttt{integer} & No & Entero positivo; discriminante dentro de la tarjeta y la máquina. \\
 \texttt{fecha} & \texttt{date} & No & Fecha válida y finita del calendario. \\
-\texttt{hora} & \texttt{timetz} & No & Hora válida del día con desplazamiento de zona horaria. \\
 \texttt{puntosGanados} & \texttt{integer} & No & Entero no negativo. \\
+\texttt{hora} & \texttt{timetz} & No & Hora válida del día con desplazamiento de zona horaria. \\
 \texttt{puntajeObtenido} & \texttt{integer} & No & Entero no negativo. \\
 \hline
 \end{tabular}
 
-La llave primaria compuesta es
-\texttt{(idCliente, idMaquina, idPartida)}, en ese orden. Identifica a
-la entidad débil dentro de sus propietarios. Un mismo valor de
-\texttt{idPartida} puede reutilizarse si cambia la tarjeta o la máquina;
-solo se rechaza la repetición de los tres componentes simultáneamente.
+La llave primaria es
+\texttt{(idCliente, numeroTarjeta, idMaquina, idPartida)}, en el orden
+indicado por el diagrama. Se conserva \texttt{numeroTarjeta} en la
+identificación y en la referencia a su propietario. Un mismo
+\texttt{idPartida} se puede reutilizar si cambia la tarjeta o la máquina;
+se impide repetir los cuatro componentes simultáneamente.
 
-Se establecen las FK \texttt{Partida.idCliente} $\to$
-\texttt{Tarjeta.idCliente} y \texttt{Partida.idMaquina} $\to$
-\texttt{Máquina.idMaquina}. La primera exige una tarjeta existente, no
-únicamente un cliente. El propietario se obtiene a través de Tarjeta.
-Las referencias obligatorias garantizan que toda partida tenga ambos
-participantes; una tarjeta o máquina puede existir sin partidas.
+La FK compuesta \texttt{(idCliente, numeroTarjeta)} referencia a
+\texttt{Tarjeta(idCliente, numeroTarjeta)}. Los dos valores deben existir
+en la misma tarjeta: no basta con que exista el cliente o una tarjeta
+con otro número. \texttt{idMaquina} referencia a
+\texttt{Máquina.idMaquina}. Ambas asociaciones son obligatorias para
+cada partida, mientras sus propietarios pueden existir sin partidas.
 
-La hora se conserva como \texttt{timetz}, de acuerdo con la unificación
-de tipos del informe anterior. En las inserciones de prueba se proporciona
-el desplazamiento de zona explícitamente. La bonificación VIP es un
-atributo derivado y no se añade como columna. Los límites de puntos o
-puntaje que dependan de un juego concreto deben validarse al registrar
-la operación; aquí se conserva únicamente su dominio no negativo.
+Se conserva \texttt{timetz} para la hora, como aparece en el diagrama.
+Las inserciones de prueba proporcionan el desplazamiento de zona de
+forma explícita. La bonificación VIP es derivada y no se añade como
+columna. Los límites de puntos y puntaje que dependan de un juego
+requieren revisión al registrar la operación; aquí se controla su
+carácter no negativo.
 
 \clearpage
-\subsection{CorreoEmpleado}
+\subsection{Contactos de Gerente}
 
+\paragraph{CorreoElectrónicoGerente.}
 \noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
-\texttt{CURP} & \texttt{char(18)} & No & Identificador de un empleado existente. \\
-\texttt{correoElectrónico} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Gerente. \\
+\texttt{correoGerente} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
 \hline
 \end{tabular}
 
-La llave primaria es \texttt{(CURP, correoElectrónico)}. La FK
-\texttt{CorreoEmpleado.CURP} $\to$ \texttt{Empleado.CURP}
-conserva la existencia y el dominio del propietario. Un empleado puede
-tener varios correos y una dirección puede compartirse entre empleados.
-La comprobación de formato es la misma que en CorreoCliente; se conserva
-la longitud de 50 caracteres indicada para este atributo en el informe.
+La PK es \texttt{(CURP, correoGerente)}. La FK relaciona
+\texttt{CURP} con \texttt{Gerente.CURP}; se exige la existencia de
+la persona en ese puesto. La comprobación del correo es básica y no
+certifica la existencia del buzón ni toda su sintaxis.
 
-\subsection{TelefonoEmpleado}
-
+\paragraph{TeléfonoGerente.}
 \noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
-\texttt{CURP} & \texttt{char(18)} & No & Identificador de un empleado existente. \\
-\texttt{teléfono} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Gerente. \\
+\texttt{telefonoGerente} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
 \hline
 \end{tabular}
 
-La llave primaria es \texttt{(CURP, teléfono)} y la FK referencia a
-\texttt{Empleado.CURP}. Se permite más de un teléfono por empleado y
-compartirlo entre propietarios distintos. Los contactos se relacionan con
-Empleado y quedan disponibles para todos sus subtipos, sin duplicarlos
-en Gerente, Cajero, EncargadoDePremios o Técnico.
+La PK es \texttt{(CURP, telefonoGerente)} y la FK también referencia
+a \texttt{Gerente.CURP}. Ambas tablas admiten varios contactos por
+persona y contactos compartidos entre propietarios distintos; no se
+puede repetir la pareja completa.
 
+\subsection{Contactos de Cajero}
+
+\paragraph{CorreoElectrónicoCajero.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Cajero. \\
+\texttt{correoCajero} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, correoCajero)}. La FK relaciona
+\texttt{CURP} con \texttt{Cajero.CURP}; se exige la existencia de
+la persona en ese puesto. La comprobación del correo es básica y no
+certifica la existencia del buzón ni toda su sintaxis.
+
+\paragraph{TeléfonoCajero.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Cajero. \\
+\texttt{telefonoCajero} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, telefonoCajero)} y la FK también referencia
+a \texttt{Cajero.CURP}. Ambas tablas admiten varios contactos por
+persona y contactos compartidos entre propietarios distintos; no se
+puede repetir la pareja completa.
+
+\clearpage
+\subsection{Contactos de Encargado de premios}
+
+\paragraph{CorreoElectrónicoEncargado.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Encargado de premios. \\
+\texttt{correoEncargado} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, correoEncargado)}. La FK relaciona
+\texttt{CURP} con \texttt{Encargado de premios.CURP}; se exige la existencia de
+la persona en ese puesto. La comprobación del correo es básica y no
+certifica la existencia del buzón ni toda su sintaxis.
+
+\paragraph{TeléfonoEncargado.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Encargado de premios. \\
+\texttt{telefonoEncargado} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, telefonoEncargado)} y la FK también referencia
+a \texttt{Encargado de premios.CURP}. Ambas tablas admiten varios contactos por
+persona y contactos compartidos entre propietarios distintos; no se
+puede repetir la pareja completa.
+
+\subsection{Contactos de Técnico}
+
+\paragraph{CorreoElectrónicoTécnico.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Técnico. \\
+\texttt{correoTécnico} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, correoTécnico)}. La FK relaciona
+\texttt{CURP} con \texttt{Técnico.CURP}; se exige la existencia de
+la persona en ese puesto. La comprobación del correo es básica y no
+certifica la existencia del buzón ni toda su sintaxis.
+
+\paragraph{TeléfonoTécnivo.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
+\hline
+\textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
+\hline
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Técnico. \\
+\texttt{telefonoTécnico} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
+\hline
+\end{tabular}
+
+La PK es \texttt{(CURP, telefonoTécnico)} y la FK también referencia
+a \texttt{Técnico.CURP}. Ambas tablas admiten varios contactos por
+persona y contactos compartidos entre propietarios distintos; no se
+puede repetir la pareja completa.
+
+\paragraph{Nombre conservado del diagrama.}
+El rótulo original es \texttt{TeléfonoTécnivo}, con ``v'', aunque su
+columna se llama \texttt{telefonoTécnico}. Se conserva el identificador
+literal para no introducir un nombre diferente al entregado. Cualquier
+corrección de ese rótulo debe acordarse y aplicarse conjuntamente al
+modelo, al SQL y a esta documentación.
+
+\clearpage
 \subsection{Integridad referencial e integración}
 
-Las ocho FK utilizan \texttt{ON UPDATE NO ACTION} y
+Las ocho tablas de contactos de personal referencian directamente a
+los cuatro puestos. No se necesita una tabla general Empleado.
+Las reglas laborales y la exclusividad de un puesto por persona
+pertenecen a los módulos de personal; las FK de estos contactos no
+resuelven por sí solas las restricciones entre puestos distintos.
+
+Las catorce FK utilizan \texttt{ON UPDATE NO ACTION} y
 \texttt{ON DELETE NO ACTION}. Se rechazan cambios que dejen referencias
 sin destino. Esta política es una decisión de implementación, pues el
-informe no fijaba acciones de borrado. Las restricciones no se declaran
-diferibles y se comprueban al terminar cada sentencia.
+modelo no fijaba acciones de borrado. No se declaran diferibles, por
+lo que se comprueban al terminar cada sentencia.
 
-El contrato del modelo sigue pendiente. Esta implementación conserva
-los nombres y las llaves de la conversión del informe de la Práctica~04,
-que difiere del diagrama original en Tarjeta y sus operaciones. Los
-identificadores se escriben entre comillas dobles para conservar
-mayúsculas y acentos. Para integrar, el módulo~02 debe confirmar
-\texttt{"Máquina"} con \texttt{"idMaquina"} de tipo \texttt{integer};
-el módulo~05 debe confirmar \texttt{"Empleado"} y \texttt{"Cajero"},
-ambas con \texttt{"CURP"} de tipo \texttt{char(18)} y clave primaria
-o única.
+El módulo~02 debe proporcionar \texttt{"Máquina"} con
+\texttt{"idMaquina"} de tipo \texttt{integer} y \texttt{"Técnico"}
+con \texttt{"CURP"} de tipo \texttt{char(18)}. El módulo~05 debe
+proporcionar \texttt{"Gerente"}, \texttt{"Cajero"} y
+\texttt{"Encargado de premios"}, cada una con \texttt{"CURP"}
+de tipo \texttt{char(18)}. Todas las columnas destino deben ser PK o
+UNIQUE. Las operaciones de otros módulos que identifiquen una tarjeta
+según el diagrama deben conservar la pareja
+\texttt{(idCliente, numeroTarjeta)}.
+
+Los nombres de las tablas de contacto de clientes y de personal se
+conservan literalmente. El rótulo \texttt{TeléfonoTécnivo}, con ``v'',
+es una errata presente en el diagrama original; se documenta sin
+renombrarlo unilateralmente. Un cambio de ese nombre debe aplicarse
+conjuntamente al modelo y a los archivos SQL.
 
 \subsection{Comprobación de las restricciones}
 
-\texttt{pruebas.sql} se ejecuta con \texttt{psql} en una base de pruebas.
-Crea un esquema aislado y dependencias mínimas para Empleado, Cajero y
-Máquina; carga los cuatro archivos de implementación y utiliza datos
-sintéticos. Comprueba las 29 columnas obligatorias, los dominios, las
-siete PK y las ocho FK. También comprueba contactos compartidos, varios
-contactos por propietario y discriminantes de partida reutilizados en
-contextos distintos. Cada error esperado se aísla y verifica mediante
-su \texttt{SQLSTATE} y, cuando corresponde, el nombre de la restricción.
-Un resultado distinto detiene la ejecución. Se muestran los resultados
-y se revierte toda la transacción.
+Se contrasta la estructura con las marcas y columnas del archivo
+\texttt{RelacionalÑIPGG.drawio}: las trece tablas, los nombres y orden
+de sus 42 columnas, sus tipos y las trece llaves primarias. Se comprueban
+además las catorce FK, en particular los dos componentes de la referencia
+de Partida a Tarjeta y el destino específico de cada contacto de personal.
 
-Esta validación del módulo no sustituye la ejecución del DDL completo
-con los cinco módulos reales ni las evidencias de restauración del respaldo.
+\texttt{pruebas.sql} se ejecuta con \texttt{psql}. Crea un esquema
+privado de prueba y dependencias mínimas de los cuatro puestos y Máquina.
+Prueba valores válidos, contactos compartidos y discriminantes
+reutilizados en contextos distintos. Verifica las 42 columnas obligatorias,
+los dominios, la unicidad y las referencias. Cada fallo esperado se aísla
+y comprueba mediante su \texttt{SQLSTATE} y, cuando corresponde, el nombre
+de la restricción. Incluye una pareja de tarjeta inexistente aun cuando
+el cliente y otra tarjeta sí existen, y la prohibición de registrar dos
+tarjetas para el mismo cliente.
+
+Se esperan cuatro grupos válidos y 167 operaciones rechazadas. Un
+resultado distinto detiene la ejecución; se muestran los resultados y
+se revierte toda la transacción. Esta validación aislada no sustituye
+la ejecución del DDL con los cinco módulos reales ni las evidencias de
+restauración del respaldo. El contrato general y la integración del
+resto del equipo continúan pendientes.
 \endgroup
