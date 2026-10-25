@@ -32,6 +32,8 @@ ALTER TABLE Gerente
         CHECK (RFC ~ '^[A-Z&Ñ]{3,4}[0-9]{6}[A-V1-9][A-Z0-9][0-9A]$'),
     ADD CONSTRAINT ckgerentesalariononegativo
         CHECK (salario >= 0),
+    ADD CONSTRAINT ckgerentefechacontrataciónfutura
+        CHECK (fechaContratación <= CURRENT_DATE),
     ADD CONSTRAINT ckgerentefechanacimientonofutura
         CHECK (fechaNacimiento <= CURRENT_DATE),
     ADD CONSTRAINT ckgerentecedulaprofesional
@@ -65,6 +67,8 @@ ALTER TABLE Cajero
         CHECK (RFC ~ '^[A-Z&Ñ]{3,4}[0-9]{6}[A-V1-9][A-Z0-9][0-9A]$'),
     ADD CONSTRAINT ckcajerosalariononegativo
         CHECK (salario >= 0),
+    ADD CONSTRAINT ckgerentefechacontrataciónfutura
+        CHECK (fechaContratación <= CURRENT_DATE),
     ADD CONSTRAINT ckcajero_echanacimientonofutura
         CHECK (fechaNacimiento <= CURRENT_DATE),
     ADD CONSTRAINT ckcajerohorariotrabajo
@@ -98,6 +102,8 @@ ALTER TABLE EncargadoDePremios
         CHECK (RFC ~ '^[A-Z&Ñ]{3,4}[0-9]{6}[A-V1-9][A-Z0-9][0-9A]$'),
     ADD CONSTRAINT ckencargadopremiossalariononegativo
         CHECK (salario >= 0),
+    ADD CONSTRAINT ckencargadopremiosfechacontrataciónfutura
+        CHECK (fechaContratación <= CURRENT_DATE),
     ADD CONSTRAINT ck_ncargadopremiosfechanacimientonofutura
         CHECK (fechaNacimiento <= CURRENT_DATE),
     ADD CONSTRAINT ckencargadopremioshorariotrabajo
@@ -113,3 +119,4 @@ ALTER TABLE Administrar
         CHECK (CURP ~ '^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9A-Z]{2}$'),
     ADD CONSTRAINT ck_administrar_idsucursal_positivo
         CHECK (idSucursal > 0);
+
