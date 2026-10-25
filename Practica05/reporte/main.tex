@@ -4,57 +4,19 @@
 \usepackage[spanish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-\usepackage{microtype}
-\usepackage[hidelinks]{hyperref}
-\setlength{\emergencystretch}{2em}
-\date{25 de octubre de 2026}
-\title{Práctica 05: Lenguaje de Definición de Datos\\\large Avance de integración}
+\title{Práctica 05: Lenguaje de Definición de Datos}
 \author{Equipo ÑIPGG}
+\date{}
 \begin{document}
 \maketitle
-\begin{center}Universidad Nacional Autónoma de México\\Facultad de Ciencias\\
-Fundamentos de Bases de Datos · 2027-I\end{center}
-\begin{center}
-\begin{tabular}{lr}
-\textbf{Integrante} & \textbf{Número de cuenta} \\ \hline
-Omar Alejandro Juárez Larrondo & 322245244 \\
-Yahir León Bautista & 322176542 \\
-Diego Hernández Gómez & 321069942 \\
-Miguel Ángel Jiménez Ramírez & 119000887 \\
-Ana Lilia Carballido Camacateco & 315314601 \\
-\end{tabular}
-\end{center}
-\noindent\textbf{Estado del documento.} Se integran los módulos 01, 03, 04 y 05.
-El módulo 02 de juegos, máquinas y técnicos está pendiente. La restauración
-se realizará posteriormente; este avance no acredita esa actividad.
+\noindent\textbf{Plantilla de trabajo: contenido e identificación pendientes.}
+% TODO: completar portada conforme a los lineamientos de entrega.
 \tableofcontents
 \clearpage
-\section{Criterios de integración}
-Se utiliza el diagrama relacional proporcionado para conservar nombres,
-columnas, tipos y marcas de llave. Se respeta incluso el rótulo literal
-\texttt{Genrente}, aunque contiene una errata. La asociación
-\texttt{Disponer} y la relación \texttt{Administrar} reciben una PK por
-pareja de participantes para impedir filas duplicadas. No se agrega una
-tabla general de empleados que el diagrama no contiene.
-
-Se dispone de 24 tablas. Se ejecutó el DDL de avance en PostgreSQL~18,
-en una base vacía y separada de cualquier restauración. Quedan pendientes
-las FK de Partida hacia Máquina y de los dos contactos de técnicos hacia
-Técnico. Por esa razón, el SQL se identifica como avance y no como DDL final.
-
 \input{../modulos/01_clientes_contactos/documentacion.tex}
-\clearpage
-\section{Juegos, máquinas y técnicos: pendiente}
-El módulo de Ana no contiene todavía una implementación ejecutable.
-No se han inventado tipos ni restricciones para sustituir su trabajo.
-\clearpage
+\input{../modulos/02_juegos_maquinas_tecnicos/documentacion.tex}
 \input{../modulos/03_premios_canjes/documentacion.tex}
-\clearpage
 \input{../modulos/04_sucursales_operaciones/documentacion.tex}
-\clearpage
 \input{../modulos/05_personal_administracion/documentacion.tex}
-\section{Actividades pendientes}
-Faltan integrar y validar el módulo 02 y sus tres referencias externas,
-incorporar la restauración y sus evidencias y realizar la revisión final
-del conjunto antes de generar los archivos definitivos y el ZIP de entrega.
+\input{secciones/06_restauracion.tex}
 \end{document}

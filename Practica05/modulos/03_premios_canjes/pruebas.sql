@@ -1,6 +1,18 @@
 -- Práctica 05 | Omar | Ejecutar con psql -X -v ON_ERROR_STOP=1.
--- Requiere DDL_disponible.sql en una base VACÍA. ROLLBACK elimina fixtures.
+-- Prueba aislada del módulo; no depende de un DDL integrado provisional.
+-- Desde esta carpeta: psql -X -v ON_ERROR_STOP=1 -d BASE_DE_PRUEBAS -f pruebas.sql
+-- Las dependencias mínimas no sustituyen el trabajo de otros módulos.
+\set ON_ERROR_STOP on
 BEGIN;
+CREATE SCHEMA prueba_premios_03;
+SET LOCAL search_path TO prueba_premios_03, pg_temp;
+CREATE TABLE "SUCURSAL" ("idSucursal" integer PRIMARY KEY);
+CREATE TABLE "Cliente" ("idCliente" integer PRIMARY KEY);
+CREATE TABLE "Encargado de premios" ("CURP" char(18) PRIMARY KEY);
+\ir tablas.sql
+\ir dominios.sql
+\ir claves.sql
+\ir referencias.sql
 CREATE TEMP TABLE resultados_omar (caso text, resultado text);
 CREATE FUNCTION pg_temp.rechazar(caso text, sentencia text, estado text, restriccion text DEFAULT NULL)
 RETURNS void LANGUAGE plpgsql AS $$
@@ -21,14 +33,9 @@ BEGIN
     RAISE EXCEPTION 'Caso %: se aceptó un dato que debía rechazarse', caso;
 END;
 $$;
-INSERT INTO "SUCURSAL" VALUES
- (910001,'Centro','5512345678','Calle Uno',1,0,'Centro','CDMX'),
- (910002,'Norte','5512345679','Calle Dos',2,0,'Norte','CDMX');
-INSERT INTO "Cliente" VALUES
- (910001,DATE '2000-01-01','Omar','Larrondo','Juárez','H'),
- (910002,DATE '2000-01-02','Ana','Pérez','López','M');
-INSERT INTO "Encargado de premios" VALUES
- ('AAAA900101HDFBBB01',910001,'Luis','Pérez','López','AAAA900101AA1',DATE '2020-01-01',10000,DATE '1990-01-01',TIME '07:00');
+INSERT INTO "SUCURSAL" VALUES (910001), (910002);
+INSERT INTO "Cliente" VALUES (910001), (910002);
+INSERT INTO "Encargado de premios" VALUES ('AAAA900101HDFBBB01');
 INSERT INTO "Premio" VALUES
  (910001,0,1,'Pelota','Juguetes','Todas las edades'),
  (910002,100,10,'Peluche','Juguetes','6 años o más');

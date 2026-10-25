@@ -25,7 +25,18 @@ Los nombres son el alcance acordado del reparto. Antes de implementar, contrasta
 
 Consulta el [contrato del modelo](../../acuerdos/contrato_modelo.md) y el [reparto completo](../../README.md). Quien posee la tabla origen escribe su FK; quien posee la tabla destino confirma su nombre, tipo y clave. Cada autor corrige su módulo y su documentación.
 
-La integración general y los documentos de avance se prepararon por separado de estas tres tablas. Las seis fuentes técnicas están implementadas. Se validaron 58 casos en PostgreSQL 18; consulta `../../reporte/evidencias/validacion/omar.txt`.
+Las seis fuentes técnicas de este módulo están implementadas. Para probarlas
+por separado, ejecutar desde esta carpeta:
+
+```bash
+psql -X -v ON_ERROR_STOP=1 -d BASE_DE_PRUEBAS -f pruebas.sql
+```
+
+La prueba crea un esquema aislado con dependencias mínimas, incluye los cuatro
+archivos DDL del módulo y comprueba 58 casos. Termina en `ROLLBACK`.
+No modifica los módulos de otros integrantes ni realiza la restauración.
+Las FK usan los nombres del diagrama; la integración debe conciliar el nombre
+`Encargado de premios` con `EncargadoDePremios` del SQL recibido de Diego.
 
 ## Actividad adicional: restauración
 

@@ -78,9 +78,3 @@ psql -X -v ON_ERROR_STOP=1 -d BASE_DE_PRUEBAS -f Practica05/modulos/01_clientes_
 El script usa comandos de `psql` (`\ir`), prepara dependencias mínimas, prueba las restricciones y revierte todo al terminar. No se incorpora a `DDL.sql` y no utiliza las tablas reales del equipo. Si el esquema de prueba ya existe, se detiene sin borrarlo ni reutilizarlo.
 
 La restauración, los README generales, la recopilación de diagramas, el empaquetado y la integración general conservan el reparto del equipo.
-
-## Compatibilidad de integración
-
-Las dos FK de contactos de gerente y sus fixtures usan `Genrente`, rótulo
-literal del diagrama adjunto. Se corrigió la maquetación de sus tablas
-documentales. La suite aislada conserva 171 casos correctos.

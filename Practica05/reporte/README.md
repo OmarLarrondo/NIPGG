@@ -1,13 +1,10 @@
-# Fuentes del informe y README
+# Fuentes del informe y del README de entrega
 
-`main.tex` incorpora los módulos disponibles y muestra explícitamente los
-pendientes de Ana y de restauración. `README_ÑIPGG.tex` identifica al equipo
-y describe los archivos actuales. Las fuentes se compilan desde esta carpeta;
-`../herramientas/compilar_avance.py` genera ambos PDF sin auxiliares en el repo.
+- [main.tex](main.tex): plantilla del informe; incorpora la documentación de los cinco módulos. Cada responsable edita `documentacion.tex` en su módulo.
+- [secciones/06_restauracion.tex](secciones/06_restauracion.tex): procedimiento y resultados de restauración, a cargo de Omar.
+- [evidencias/restauracion/](evidencias/restauracion/): capturas y registros de respaldo.
+- [README_ÑIPGG.tex](README_ÑIPGG.tex): plantilla del README de identificación y contenido, a cargo de Omar.
 
-Resultados: `../Docs/Practica05_avance.pdf` y `../README_ÑIPGG_avance.pdf`.
-Los PDF son locales, ignorados por la configuración general del repositorio.
+Compilar desde esta carpeta para resolver correctamente las rutas de `\input`. Los destinos finales son `../Docs/Práctica05.pdf` y `../README_ÑIPGG.pdf`; los auxiliares de compilación no forman parte de la entrega.
 
-`secciones/06_restauracion.tex`, `evidencias/restauracion/` y el respaldo no se
-modificaron ni se ejecutaron. La sección se incorporará cuando se realice la
-restauración. `evidencias/validacion/` contiene solo pruebas del DDL.
+Las plantillas contienen pendientes visibles y aún no son documentos finales. No se han compilado ni validado visualmente. Completar identificación, contenido y evidencias antes de generar los PDF de entrega.

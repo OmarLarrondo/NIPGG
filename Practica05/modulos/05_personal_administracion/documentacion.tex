@@ -2,16 +2,6 @@
 
 \section{Personal y administración}
 
-\noindent\textbf{Ajuste de integración.} Se usan identificadores entre comillas:
-\texttt{Genrente} (rótulo literal del diagrama, aunque contiene una errata),
-\texttt{Cajero}, \texttt{Encargado de premios}, \texttt{Administrar}
-y \texttt{SUCURSAL}. Las columnas de nombres son
-\texttt{Nombre}, \texttt{ApellidoMaterno} y \texttt{ApellidoPaterno}.
-Las menciones a gerente en la descripción se refieren a \texttt{Genrente}.
-Todas las columnas son obligatorias y no tienen valor predeterminado.
-La PK de \texttt{Administrar} es \texttt{(CURP, idSucursal)}.
-
-
 En este módulo se implementaron cuatro tablas correspondientes a tres de los cuatro tipos de empleados definidos en el modelo, así como la relación \textit{Administrar}, que vincula a un gerente con una sucursal. La implementación respeta el modelo relacional obtenido en la Práctica 04.
 
 \subsection{Tabla Gerente}
@@ -23,11 +13,11 @@ La tabla \textit{Gerente} almacena la información de los empleados que desempe�
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. No admite valores nulos, debe ser positiva y permite identificar la sucursal asociada con el gerente.
 
-    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del gerente con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del gerente con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
-    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
-    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el Registro Federal de Contribuyentes. Tiene una longitud fija de 13 caracteres, no admite valores nulos, debe cumplir con el formato definido para el RFC y debe ser único dentro de la tabla.
 
@@ -53,11 +43,11 @@ Sus columnas son las siguientes:
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
 
-    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del cajero. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
 
@@ -83,11 +73,11 @@ Las columnas que la conforman son:
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
 
-    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del encargado. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
 
@@ -114,7 +104,7 @@ Está compuesta por las siguientes columnas:
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. Identifica la sucursal administrada y no admite valores nulos.
 \end{itemize}
 
-La clave primaria compuesta por \textit{CURP} e \textit{idSucursal} impide registrar dos veces la misma combinación de gerente y sucursal. No se impone unicidad individual a sus participantes en este avance; una cardinalidad uno a uno requeriría revisar conjuntamente el modelo y esas restricciones. Las claves foráneas garantizan que tanto el gerente como la sucursal involucrados existan en sus respectivas tablas.
+La clave primaria compuesta por \textit{CURP} e \textit{idSucursal} impide registrar dos veces la misma combinación de gerente y sucursal. Además, se establece una restricción de unicidad para cada uno de estos atributos, de acuerdo con la cardinalidad uno a uno considerada para la relación. Las claves foráneas garantizan que tanto el gerente como la sucursal involucrados existan en sus respectivas tablas.
 
 \subsection{Integridad y restricciones}
 

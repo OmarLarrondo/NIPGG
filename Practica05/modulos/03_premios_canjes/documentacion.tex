@@ -76,11 +76,15 @@ reglas resueltas por estos \texttt{CHECK}. El costo del catálogo puede
 cambiar y el canje conserva sus puntos históricos.
 
 \subsection{Validación}
-Se ejecutaron 58 casos en PostgreSQL~18 sobre el DDL de avance: datos
+Se ejecutaron 58 casos en PostgreSQL~18 sobre este módulo aislado: datos
 válidos, límites con cero, todas las columnas nulas, dominios inválidos,
 longitudes excesivas, fechas infinitas, PK duplicadas, las seis FK,
 protección de referencias y actualización a inventario negativo.
 Los fallos esperados se aislaron en bloques de excepción y se comprobaron
 por SQLSTATE y, cuando corresponde, por nombre de restricción. La ejecución
 terminó con 58 resultados correctos y \texttt{ROLLBACK}; no dejó datos de
-prueba. Esta validación no incluye la restauración del respaldo.
+prueba. Las tablas externas se representan mediante dependencias mínimas
+solo dentro del esquema de prueba; esta validación no acredita la integración
+completa ni incluye la restauración del respaldo. La integración deberá
+conciliar el nombre del encargado del diagrama con el SQL del módulo de
+personal, sin modificar ese módulo desde esta sección.

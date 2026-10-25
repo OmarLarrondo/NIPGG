@@ -5,7 +5,7 @@ Se implementan las trece tablas de este módulo a partir del diagrama
 relacional entregado en la Práctica~04. Se conservan sus nombres,
 columnas, tipos y llaves primarias, incluidos acentos y espacios mediante
 comillas dobles. Los contactos del personal se relacionan directamente
-con Genrente, Cajero, Encargado de premios y Técnico, conforme al criterio
+con Gerente, Cajero, Encargado de premios y Técnico, conforme al criterio
 señalado por Diego. Todas las columnas son obligatorias y carecen de
 valor predeterminado. Las restricciones se agregan mediante
 \texttt{ALTER TABLE}, separadas de la creación de las tablas.
@@ -17,7 +17,7 @@ valor predeterminado. Las restricciones se agregan mediante
 
 \subsection{Cliente}
 
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -38,7 +38,7 @@ como columnas redundantes.
 
 \subsection{correoElectrónico}
 
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -47,7 +47,7 @@ como columnas redundantes.
 \hline
 \end{tabular}
 
-La llave primaria combina \texttt{idCliente} y \texttt{correoElectrónico}. La FK
+La llave primaria es \texttt{(idCliente, correoElectrónico)} y la FK
 \texttt{idCliente} referencia a \texttt{Cliente.idCliente}. Se conserva
 el nombre de tabla \texttt{correoElectrónico} del diagrama. Un cliente
 puede registrar varios correos y distintos clientes pueden compartir
@@ -57,7 +57,7 @@ sintaxis.
 
 \subsection{teléfono}
 
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -75,7 +75,7 @@ entre propietarios distintos; no se impone unicidad global.
 \clearpage
 \subsection{Tarjeta}
 
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -90,7 +90,7 @@ entre propietarios distintos; no se impone unicidad global.
 \hline
 \end{tabular}
 
-\subsubsection*{Identificación y cardinalidad.}
+\paragraph{Identificación y cardinalidad.}
 La llave primaria compuesta es \texttt{(idCliente, numeroTarjeta)}, tal
 como indican las dos marcas PK del diagrama. Se agrega
 \texttt{UNIQUE(idCliente)} para respetar la relación $1:1$ entre Cliente
@@ -99,7 +99,7 @@ y Tarjeta: un cliente tiene como máximo una tarjeta. El número no es
 Esta combinación conserva la PK del dibujo y la cardinalidad de su
 conexión, aunque el identificador del cliente también sea llave candidata.
 
-\subsubsection*{Referencias.}
+\paragraph{Referencias.}
 \texttt{Tarjeta.idCliente} referencia a \texttt{Cliente.idCliente} y
 \texttt{Tarjeta.CURP} referencia a \texttt{Cajero.CURP}. Por tanto, el
 vendedor debe existir específicamente como cajero. La CURP conserva
@@ -110,7 +110,7 @@ asignan valores predeterminados que el modelo no establece. La fecha
 de compra debe ser finita, sin imponer una comparación con la fecha
 actual que no se establecía para este atributo.
 
-\subsubsection*{Alcance.}
+\paragraph{Alcance.}
 Estas restricciones garantizan la pertenencia y la unicidad de la tarjeta,
 pero no obligan por sí solas a que todo cliente tenga una tarjeta.
 La participación total de Cliente en Poseer requiere validación adicional
@@ -120,7 +120,7 @@ comprobación y actualización conjunta al registrar operaciones.
 \clearpage
 \subsection{Partida}
 
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -159,40 +159,40 @@ carácter no negativo.
 \clearpage
 \subsection{Contactos de Gerente}
 
-\subsubsection*{CorreoElectrónicoGerente.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{CorreoElectrónicoGerente.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
-\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Genrente. \\
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Gerente. \\
 \texttt{correoGerente} & \texttt{varchar(50)} & No & Hasta 50 caracteres; una arroba, partes no vacías y sin espacios en blanco. \\
 \hline
 \end{tabular}
 
 La PK es \texttt{(CURP, correoGerente)}. La FK relaciona
-\texttt{CURP} con \texttt{Genrente.CURP}; se exige la existencia de
+\texttt{CURP} con \texttt{Gerente.CURP}; se exige la existencia de
 la persona en ese puesto. La comprobación del correo es básica y no
 certifica la existencia del buzón ni toda su sintaxis.
 
-\subsubsection*{TeléfonoGerente.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{TeléfonoGerente.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
-\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Genrente. \\
+\texttt{CURP} & \texttt{char(18)} & No & Identificador de una persona existente en Gerente. \\
 \texttt{telefonoGerente} & \texttt{char(10)} & No & Exactamente diez dígitos; se conservan ceros iniciales. \\
 \hline
 \end{tabular}
 
 La PK es \texttt{(CURP, telefonoGerente)} y la FK también referencia
-a \texttt{Genrente.CURP}. Ambas tablas admiten varios contactos por
+a \texttt{Gerente.CURP}. Ambas tablas admiten varios contactos por
 persona y contactos compartidos entre propietarios distintos; no se
 puede repetir la pareja completa.
 
 \subsection{Contactos de Cajero}
 
-\subsubsection*{CorreoElectrónicoCajero.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{CorreoElectrónicoCajero.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -206,8 +206,8 @@ La PK es \texttt{(CURP, correoCajero)}. La FK relaciona
 la persona en ese puesto. La comprobación del correo es básica y no
 certifica la existencia del buzón ni toda su sintaxis.
 
-\subsubsection*{TeléfonoCajero.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{TeléfonoCajero.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -224,8 +224,8 @@ puede repetir la pareja completa.
 \clearpage
 \subsection{Contactos de Encargado de premios}
 
-\subsubsection*{CorreoElectrónicoEncargado.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{CorreoElectrónicoEncargado.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -239,8 +239,8 @@ La PK es \texttt{(CURP, correoEncargado)}. La FK relaciona
 la persona en ese puesto. La comprobación del correo es básica y no
 certifica la existencia del buzón ni toda su sintaxis.
 
-\subsubsection*{TeléfonoEncargado.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{TeléfonoEncargado.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -256,8 +256,8 @@ puede repetir la pareja completa.
 
 \subsection{Contactos de Técnico}
 
-\subsubsection*{CorreoElectrónicoTécnico.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{CorreoElectrónicoTécnico.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -271,8 +271,8 @@ La PK es \texttt{(CURP, correoTécnico)}. La FK relaciona
 la persona en ese puesto. La comprobación del correo es básica y no
 certifica la existencia del buzón ni toda su sintaxis.
 
-\subsubsection*{TeléfonoTécnivo.}
-\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.35\textwidth}@{}}
+\paragraph{TeléfonoTécnivo.}
+\noindent\begin{tabular}{@{}p{.25\textwidth}p{.20\textwidth}p{.10\textwidth}p{.36\textwidth}@{}}
 \hline
 \textbf{Columna} & \textbf{Tipo} & \textbf{NULL} & \textbf{Dominio} \\
 \hline
@@ -286,7 +286,7 @@ a \texttt{Técnico.CURP}. Ambas tablas admiten varios contactos por
 persona y contactos compartidos entre propietarios distintos; no se
 puede repetir la pareja completa.
 
-\subsubsection*{Nombre conservado del diagrama.}
+\paragraph{Nombre conservado del diagrama.}
 El rótulo original es \texttt{TeléfonoTécnivo}, con ``v'', aunque su
 columna se llama \texttt{telefonoTécnico}. Se conserva el identificador
 literal para no introducir un nombre diferente al entregado. Cualquier
@@ -311,7 +311,7 @@ lo que se comprueban al terminar cada sentencia.
 El módulo~02 debe proporcionar \texttt{"Máquina"} con
 \texttt{"idMaquina"} de tipo \texttt{integer} y \texttt{"Técnico"}
 con \texttt{"CURP"} de tipo \texttt{char(18)}. El módulo~05 debe
-proporcionar \texttt{"Genrente"}, \texttt{"Cajero"} y
+proporcionar \texttt{"Gerente"}, \texttt{"Cajero"} y
 \texttt{"Encargado de premios"}, cada una con \texttt{"CURP"}
 de tipo \texttt{char(18)}. Todas las columnas destino deben ser PK o
 UNIQUE. Las operaciones de otros módulos que identifiquen una tarjeta
@@ -346,6 +346,6 @@ Se esperan cuatro grupos válidos y 167 operaciones rechazadas. Un
 resultado distinto detiene la ejecución; se muestran los resultados y
 se revierte toda la transacción. Esta validación aislada no sustituye
 la ejecución del DDL con los cinco módulos reales ni las evidencias de
-restauración del respaldo. El avance integra los módulos 01, 03, 04 y 05. El módulo 02 y la
-restauración continúan pendientes.
+restauración del respaldo. El contrato general y la integración del
+resto del equipo continúan pendientes.
 \endgroup
