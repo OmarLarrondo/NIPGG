@@ -1,8 +1,114 @@
 % Práctica 05 | Responsable: Diego
+
 \section{Personal y administración}
-% Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar.
-% TODO: documentar cada columna: tabla, nombre exacto, tipo, longitud/precisión,
-% nulabilidad, dominio, valor predeterminado si aplica y justificación.
-% TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
-% TODO: distinguir reglas implementadas y reglas entre tablas que requieran
-% un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
+
+En este módulo se implementaron cuatro tablas correspondientes a tres de los cuatro tipos de empleados definidos en el modelo, así como la relación \textit{Administrar}, que vincula a un gerente con una sucursal. La implementación respeta el modelo relacional obtenido en la Práctica 04.
+
+\subsection{Tabla Gerente}
+
+La tabla \textit{Gerente} almacena la información de los empleados que desempeñan el puesto de gerente. Incluye los atributos generales del empleado, además de la cédula profesional, que es específica de este tipo.
+
+\begin{itemize}
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es la clave primaria de la tabla. Tiene una longitud fija de 18 caracteres, no admite valores nulos y debe cumplir con el formato establecido para una CURP.
+
+    \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. No admite valores nulos, debe ser positiva y permite identificar la sucursal asociada con el gerente.
+
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del gerente con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+
+    \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el Registro Federal de Contribuyentes. Tiene una longitud fija de 13 caracteres, no admite valores nulos, debe cumplir con el formato definido para el RFC y debe ser único dentro de la tabla.
+
+    \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha en que se contrató al gerente. No admite valores nulos y no puede ser posterior a la fecha actual.
+
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario mediante un valor numérico con precisión de hasta 10 dígitos, incluidos los decimales, y una escala de 2 posiciones decimales. No admite valores nulos ni cantidades negativas.
+
+    \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del gerente. No admite valores nulos y no puede ser posterior a la fecha actual.
+
+    \item \textbf{cédulaProfesional (\texttt{VARCHAR(8)}):} Almacena la cédula profesional del gerente. No admite valores nulos y debe contener únicamente dígitos, con una longitud de 7 u 8 caracteres.
+\end{itemize}
+
+Además de las restricciones de dominio descritas, la tabla utiliza la clave primaria para evitar CURP duplicadas y una restricción de unicidad para impedir que se registre el mismo RFC más de una vez. La clave foránea de \textit{idSucursal} permite mantener la integridad referencial con la tabla \textit{Sucursal}.
+
+\subsection{Tabla Cajero}
+
+La tabla \textit{Cajero} almacena la información de los empleados que trabajan como cajeros. Al igual que \textit{Gerente}, incorpora los atributos generales del empleado y agrega el atributo específico \textit{horarioTrabajo}.
+
+Sus columnas son las siguientes:
+
+\begin{itemize}
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es la clave primaria. No admite valores nulos y debe cumplir con el formato y la longitud establecidos para una CURP.
+
+    \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
+
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del cajero. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
+
+    \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha de contratación. No admite valores nulos ni fechas futuras.
+
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con dos posiciones decimales. No admite valores nulos ni cantidades negativas.
+
+    \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del cajero. No admite valores nulos ni fechas futuras.
+
+    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del cajero. Debe corresponder a uno de los horarios permitidos por las restricciones definidas para la tabla.
+\end{itemize}
+
+La clave primaria garantiza que cada cajero tenga una CURP distinta. Asimismo, la clave foránea de \textit{idSucursal} asegura que la sucursal asociada exista, mientras que las restricciones de dominio validan los valores almacenados en las columnas.
+
+\subsection{Tabla EncargadoDePremios}
+
+La tabla \textit{EncargadoDePremios} almacena la información de los empleados responsables de la administración de los premios. Su estructura incluye los atributos generales del empleado y el atributo específico \textit{horarioTrabajo}.
+
+Las columnas que la conforman son:
+
+\begin{itemize}
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es la clave primaria de la tabla. No admite valores nulos y debe cumplir con el formato y la longitud establecidos para una CURP.
+
+    \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
+
+    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+
+    \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del encargado. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
+
+    \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha de contratación del encargado. No admite valores nulos ni fechas futuras.
+
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con una precisión de hasta 10 dígitos y dos posiciones decimales. No admite valores nulos ni cantidades negativas.
+
+    \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del encargado. No admite valores nulos ni fechas futuras.
+
+    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del encargado. Su valor debe corresponder a uno de los horarios permitidos por las restricciones definidas para la tabla.
+\end{itemize}
+
+La clave primaria permite identificar de manera única a cada encargado. La clave foránea mantiene la relación con una sucursal existente, y las restricciones de dominio evitan almacenar valores que incumplan las condiciones establecidas para cada atributo.
+
+\subsection{Tabla Administrar}
+
+La tabla \textit{Administrar} representa la relación entre \textit{Gerente} y \textit{Sucursal}. Su finalidad es registrar qué gerente administra cada sucursal, de acuerdo con el modelo relacional definido en la Práctica 04.
+
+Está compuesta por las siguientes columnas:
+
+\begin{itemize}
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es una clave foránea que referencia la clave primaria de \textit{Gerente}. Identifica al gerente que participa en la relación y no admite valores nulos.
+
+    \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. Identifica la sucursal administrada y no admite valores nulos.
+\end{itemize}
+
+La clave primaria compuesta por \textit{CURP} e \textit{idSucursal} impide registrar dos veces la misma combinación de gerente y sucursal. Además, se establece una restricción de unicidad para cada uno de estos atributos, de acuerdo con la cardinalidad uno a uno considerada para la relación. Las claves foráneas garantizan que tanto el gerente como la sucursal involucrados existan en sus respectivas tablas.
+
+\subsection{Integridad y restricciones}
+
+En conjunto, las cuatro tablas incorporan restricciones para preservar  la integridad de los datos. Las claves primarias permiten identificar los registros; las claves foráneas mantienen las relaciones entre las tablas; las restricciones de unicidad evitan duplicados en los atributos correspondientes, y las restricciones de dominio validan valores como identificadores positivos, salarios no negativos, fechas no futuras, formatos de CURP y RFC, y horarios permitidos.
+
+Con estas restricciones se busca que la información almacenada sea consistente con el modelo relacional de la Práctica 04 y con las reglas establecidas para el sistema.
+
