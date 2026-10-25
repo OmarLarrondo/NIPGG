@@ -1,0 +1,105 @@
+                                                      version
+--------------------------------------------------------------------------------------------------------------------
+ PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+(1 row)
+
+            tabla             | tipo | count
+------------------------------+------+-------
+ "Cliente"                    | c    |     6
+ "Cliente"                    | n    |     6
+ "Cliente"                    | p    |     1
+ "correoElectrónico"          | c    |     2
+ "correoElectrónico"          | f    |     1
+ "correoElectrónico"          | n    |     2
+ "correoElectrónico"          | p    |     1
+ "teléfono"                   | c    |     2
+ "teléfono"                   | f    |     1
+ "teléfono"                   | n    |     2
+ "teléfono"                   | p    |     1
+ "Tarjeta"                    | c    |     7
+ "Tarjeta"                    | f    |     2
+ "Tarjeta"                    | n    |     8
+ "Tarjeta"                    | p    |     1
+ "Tarjeta"                    | u    |     1
+ "Partida"                    | c    |     7
+ "Partida"                    | f    |     1
+ "Partida"                    | n    |     8
+ "Partida"                    | p    |     1
+ "CorreoElectrónicoGerente"   | c    |     1
+ "CorreoElectrónicoGerente"   | f    |     1
+ "CorreoElectrónicoGerente"   | n    |     2
+ "CorreoElectrónicoGerente"   | p    |     1
+ "TeléfonoGerente"            | c    |     1
+ "TeléfonoGerente"            | f    |     1
+ "TeléfonoGerente"            | n    |     2
+ "TeléfonoGerente"            | p    |     1
+ "CorreoElectrónicoCajero"    | c    |     1
+ "CorreoElectrónicoCajero"    | f    |     1
+ "CorreoElectrónicoCajero"    | n    |     2
+ "CorreoElectrónicoCajero"    | p    |     1
+ "TeléfonoCajero"             | c    |     1
+ "TeléfonoCajero"             | f    |     1
+ "TeléfonoCajero"             | n    |     2
+ "TeléfonoCajero"             | p    |     1
+ "CorreoElectrónicoEncargado" | c    |     1
+ "CorreoElectrónicoEncargado" | f    |     1
+ "CorreoElectrónicoEncargado" | n    |     2
+ "CorreoElectrónicoEncargado" | p    |     1
+ "TeléfonoEncargado"          | c    |     1
+ "TeléfonoEncargado"          | f    |     1
+ "TeléfonoEncargado"          | n    |     2
+ "TeléfonoEncargado"          | p    |     1
+ "CorreoElectrónicoTécnico"   | c    |     1
+ "CorreoElectrónicoTécnico"   | n    |     2
+ "CorreoElectrónicoTécnico"   | p    |     1
+ "TeléfonoTécnivo"            | c    |     1
+ "TeléfonoTécnivo"            | n    |     2
+ "TeléfonoTécnivo"            | p    |     1
+ "Premio"                     | c    |     6
+ "Premio"                     | n    |     6
+ "Premio"                     | p    |     1
+ "Canje"                      | c    |     8
+ "Canje"                      | f    |     4
+ "Canje"                      | n    |     9
+ "Canje"                      | p    |     1
+ "Disponer"                   | c    |     3
+ "Disponer"                   | f    |     2
+ "Disponer"                   | n    |     3
+ "Disponer"                   | p    |     1
+ "SUCURSAL"                   | c    |     8
+ "SUCURSAL"                   | n    |     8
+ "SUCURSAL"                   | p    |     1
+ "HORARIO_SUCURSAL"           | c    |     2
+ "HORARIO_SUCURSAL"           | f    |     1
+ "HORARIO_SUCURSAL"           | n    |     2
+ "HORARIO_SUCURSAL"           | p    |     1
+ "VISITA"                     | c    |     5
+ "VISITA"                     | f    |     2
+ "VISITA"                     | n    |     5
+ "VISITA"                     | p    |     1
+ "RECARGA"                    | c    |     8
+ "RECARGA"                    | f    |     3
+ "RECARGA"                    | n    |     9
+ "RECARGA"                    | p    |     1
+ "Genrente"                   | c    |    10
+ "Genrente"                   | f    |     1
+ "Genrente"                   | n    |    10
+ "Genrente"                   | p    |     1
+ "Genrente"                   | u    |     1
+ "Cajero"                     | c    |    10
+ "Cajero"                     | f    |     1
+ "Cajero"                     | n    |    10
+ "Cajero"                     | p    |     1
+ "Cajero"                     | u    |     1
+ "Encargado de premios"       | c    |    10
+ "Encargado de premios"       | f    |     1
+ "Encargado de premios"       | n    |    10
+ "Encargado de premios"       | p    |     1
+ "Encargado de premios"       | u    |     1
+ "Administrar"                | c    |     2
+ "Administrar"                | f    |     2
+ "Administrar"                | n    |     2
+ "Administrar"                | p    |     1
+(95 rows)
+
+DO

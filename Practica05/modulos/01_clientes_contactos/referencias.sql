@@ -3,7 +3,7 @@
 -- Ejecutar después de tablas, dominios y claves de TODOS los módulos.
 -- Dependencias a confirmar en el contrato del equipo:
 -- módulo 02: "Máquina"("idMaquina" integer) y "Técnico"("CURP" char(18));
--- módulo 05: "Gerente", "Cajero" y "Encargado de premios", con "CURP" char(18).
+-- módulo 05: "Genrente", "Cajero" y "Encargado de premios", con "CURP" char(18).
 -- Cada columna destino debe tener PK/UNIQUE; se conservan los nombres del diagrama.
 -- NO ACTION impide cambios que dejen referencias sin destino.
 
@@ -35,12 +35,12 @@ ALTER TABLE "Partida"
 
 ALTER TABLE "CorreoElectrónicoGerente"
     ADD CONSTRAINT fk_correo_gerente FOREIGN KEY ("CURP")
-        REFERENCES "Gerente" ("CURP")
+        REFERENCES "Genrente" ("CURP")
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE "TeléfonoGerente"
     ADD CONSTRAINT fk_telefono_gerente FOREIGN KEY ("CURP")
-        REFERENCES "Gerente" ("CURP")
+        REFERENCES "Genrente" ("CURP")
         ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE "CorreoElectrónicoCajero"

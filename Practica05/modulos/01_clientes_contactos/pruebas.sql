@@ -14,7 +14,7 @@ SET LOCAL TIME ZONE 'UTC';
 -- Dependencias mínimas de los módulos 02 y 05, solo para estas pruebas.
 -- Cada puesto tiene su propia tabla; no se crea una tabla general Empleado.
 CREATE TABLE "Máquina" ("idMaquina" integer PRIMARY KEY);
-CREATE TABLE "Gerente" ("CURP" char(18) PRIMARY KEY);
+CREATE TABLE "Genrente" ("CURP" char(18) PRIMARY KEY);
 CREATE TABLE "Cajero" ("CURP" char(18) PRIMARY KEY);
 CREATE TABLE "Encargado de premios" ("CURP" char(18) PRIMARY KEY);
 CREATE TABLE "Técnico" ("CURP" char(18) PRIMARY KEY);
@@ -24,7 +24,7 @@ CREATE TABLE "Técnico" ("CURP" char(18) PRIMARY KEY);
 \ir claves.sql
 \ir referencias.sql
 
-INSERT INTO "Gerente" VALUES ('GGGG000101HDFBBB01'), ('GGGG000101HDFBBB02');
+INSERT INTO "Genrente" VALUES ('GGGG000101HDFBBB01'), ('GGGG000101HDFBBB02');
 INSERT INTO "Cajero" VALUES ('AAAA000101HDFBBB01'), ('BBBB000101HDFBBB01');
 INSERT INTO "Encargado de premios" VALUES ('EEEE000101HDFBBB01'), ('EEEE000101HDFBBB02');
 INSERT INTO "Técnico" VALUES ('TTTT000101HDFBBB01'), ('TTTT000101HDFBBB02');
@@ -200,8 +200,8 @@ BEGIN
         ('PK de TeléfonoGerente repetida', $q$INSERT INTO "TeléfonoGerente" VALUES ('GGGG000101HDFBBB01', '0012345678')$q$, '23505', 'pk_telefono_gerente'),
         ('TeléfonoGerente sin propietario existente', $q$INSERT INTO "TeléfonoGerente" VALUES ('ZZZZ000101HDFBBB01', '0012345678')$q$, '23503', 'fk_telefono_gerente'),
         ('TeléfonoGerente con propietario de otro puesto', $q$INSERT INTO "TeléfonoGerente" VALUES ('AAAA000101HDFBBB01', '0012345678')$q$, '23503', 'fk_telefono_gerente'),
-        ('Borrar gerente con contactos', $q$DELETE FROM "Gerente" WHERE "CURP" = 'GGGG000101HDFBBB02'$q$, '23503', NULL),
-        ('Cambiar CURP de gerente referenciada', $q$UPDATE "Gerente" SET "CURP" = 'ZZZZ000101HDFBBB01' WHERE "CURP" = 'GGGG000101HDFBBB02'$q$, '23503', NULL),
+        ('Borrar gerente con contactos', $q$DELETE FROM "Genrente" WHERE "CURP" = 'GGGG000101HDFBBB02'$q$, '23503', NULL),
+        ('Cambiar CURP de gerente referenciada', $q$UPDATE "Genrente" SET "CURP" = 'ZZZZ000101HDFBBB01' WHERE "CURP" = 'GGGG000101HDFBBB02'$q$, '23503', NULL),
         ('Correo de cajero sin arroba', $q$UPDATE "CorreoElectrónicoCajero" SET "correoCajero" = 'sin-arroba'$q$, '23514', 'ck_correo_cajero_formato'),
         ('Correo de cajero sin parte local', $q$UPDATE "CorreoElectrónicoCajero" SET "correoCajero" = '@example.test'$q$, '23514', 'ck_correo_cajero_formato'),
         ('Correo de cajero sin dominio', $q$UPDATE "CorreoElectrónicoCajero" SET "correoCajero" = 'uno@'$q$, '23514', 'ck_correo_cajero_formato'),

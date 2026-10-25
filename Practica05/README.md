@@ -1,95 +1,75 @@
-# Práctica 05 · Lenguaje de Definición de Datos (DDL)
+# Práctica 05 · Lenguaje de Definición de Datos
 
 Equipo **ÑIPGG** · Fundamentos de Bases de Datos · UNAM · 2027-I.
 
-**Entrega activa. Estado: estructura modular preparada; ejercicios pendientes.**
+**Avance local del 25 de octubre de 2026.** Repositorio actualizado a `8f2199f`.
+Están integrados los módulos 01 (Miguel), 03 (Omar), 04 (Yahir) y 05 (Diego).
+El módulo 02 (Ana) sigue pendiente en `main`. La restauración se hará después.
 
-## Consigna e insumos
+## Trabajo completado
 
-- [Práctica05.pdf](Práctica05.pdf): instrucciones originales; no confundir con el informe final `Docs/Práctica05.pdf`.
-- [RestaurarBackup.pdf](RestaurarBackup.pdf): material de apoyo para la restauración.
-- [ejemplo.backup](ejemplo.backup): respaldo proporcionado, todavía sin restaurar en esta estructura.
-- [Práctica 04](../Practica04/README.md): modelo relacional y antecedentes de dominios. Su README señala diferencias entre informe y diagrama; resolverlas antes de implementar.
+- Omar: `Premio`, `Canje` y `Disponer`, con tipos, dominios, PK, seis FK,
+  documentación y 58 casos de prueba correctos en PostgreSQL 18.
+- Integración disponible: 24 tablas. Se corrigieron identificadores de personal
+  para conservar mayúsculas, acentos y espacios del modelo; se completó la PK
+  de `Administrar` y se repararon sus pruebas para aislar los errores esperados.
+- Documentación de sucursales a partir del SQL de Yahir y ajustes de maquetación
+  de contactos, sin cambiar sus reglas de dominio.
+- Los dos modelos están en `Diagramas/`, como `.drawio` y `.png`.
+- Informe y README de avance con identificación del equipo y pendientes visibles.
 
-## Trabajo de la práctica
+## Archivos de avance
 
-1. Elaborar un único `SQL/DDL.sql` basado en el modelo relacional anterior, conservando nombres de tablas y columnas. Elegir tipos y definir restricciones de dominio, entidad y referencia mediante `ALTER TABLE`.
-2. Elaborar `Docs/Práctica05.pdf` con los dominios de cada columna y las evidencias de restauración.
-3. Incluir los modelos E-R y relacional, cada uno en `.png` y `.drawio`.
-4. Restaurar el respaldo y comprobar el resultado.
+| Archivo | Contenido |
+|---|---|
+| [SQL/DDL_disponible.sql](SQL/DDL_disponible.sql) | SQL autónomo ejecutable de los cuatro módulos disponibles. |
+| [SQL/referencias_pendientes.sql](SQL/referencias_pendientes.sql) | Tres FK hacia Máquina y Técnico; no ejecutarlas todavía. |
+| [Docs/Practica05_avance.pdf](Docs/Practica05_avance.pdf) | Informe parcial compilado y revisado visualmente. |
+| [README_ÑIPGG_avance.pdf](README_ÑIPGG_avance.pdf) | Identificación del equipo y contenido disponible. |
+| [acuerdos/contrato_modelo.md](acuerdos/contrato_modelo.md) | Fuente del modelo y decisiones de compatibilidad. |
+| [reporte/evidencias/validacion/](reporte/evidencias/validacion/) | Registros reales de ejecución del DDL y pruebas. |
 
-## Responsables confirmados
+Los PDF son artefactos locales ignorados por la regla general `*.pdf` del
+repositorio. Se regeneran desde las fuentes; no se incluyen automáticamente
+al publicar código.
 
-| Módulo | Responsable | Área | Tablas asignadas |
-|---|---|---|---|
-| 01 | Miguel | [Clientes y contactos](modulos/01_clientes_contactos/README.md) | `Cliente`, `CorreoCliente`, `TelefonoCliente`, `Tarjeta`, `Partida`, `CorreoEmpleado`, `TelefonoEmpleado` |
-| 02 | Ana | [Juegos, máquinas y técnicos](modulos/02_juegos_maquinas_tecnicos/README.md) | `TipoJuego`, `Juego`, `Máquina`, `Mantenimiento`, `Técnico`, `CertificacionTecnico` |
-| 03 | Omar | [Premios y canjes](modulos/03_premios_canjes/README.md) | `Premio`, `Canje`, `Disponer` |
-| 04 | Yahir | [Sucursales y operaciones](modulos/04_sucursales_operaciones/README.md) | `Sucursal`, `HorarioSucursal`, `Visita`, `Recarga` |
-| 05 | Diego | [Personal y administración](modulos/05_personal_administracion/README.md) | `Empleado`, `Gerente`, `Cajero`, `EncargadoDePremios`, `Administrar` |
+## Generación y pruebas
 
-**Omar también realiza la restauración**, escribe [su sección](reporte/secciones/06_restauracion.tex) y guarda las [evidencias](reporte/evidencias/restauracion/README.md).
+Desde esta carpeta:
 
-Los dos README de la entrega quedan a cargo de Omar. La recopilación de diagramas, integración y empaquetado no se distribuyen como ejercicios adicionales entre los cinco módulos. El README de identificación tiene una [fuente inicial](reporte/README_ÑIPGG.tex) pendiente de completar.
-
-## Estructura de trabajo
-
-```text
-Practica05/
-├── README.md
-├── Práctica05.pdf                 # consigna original
-├── RestaurarBackup.pdf            # guía original
-├── ejemplo.backup                 # insumo original
-├── acuerdos/contrato_modelo.md
-├── modulos/                      # cinco módulos con responsables
-│   └── <modulo>/
-│       ├── README.md
-│       ├── tablas.sql
-│       ├── dominios.sql
-│       ├── claves.sql
-│       ├── referencias.sql
-│       ├── documentacion.tex
-│       └── pruebas.sql
-├── reporte/
-│   ├── README.md
-│   ├── main.tex
-│   ├── README_ÑIPGG.tex
-│   ├── secciones/06_restauracion.tex
-│   └── evidencias/restauracion/
-├── Diagramas/README.md
-├── SQL/README.md
-└── Docs/README.md
+```bash
+python3 herramientas/ensamblar_ddl.py --disponible
+python3 herramientas/compilar_avance.py
 ```
 
-## Cómo trabajar en paralelo
+El ensamblado respeta el orden **tablas → dominios → claves → referencias**
+y los módulos 01 a 05 dentro de cada fase. Las fuentes se corrigen primero;
+no editar manualmente el SQL generado. El modo final, sin `--disponible`, se
+detiene mientras falte el módulo 02. No se han creado tablas ficticias para
+sustituirlo ni se han omitido referencias sin registrarlas.
 
-- Cada integrante edita los seis archivos técnicos de su módulo. Su README identifica el alcance y los archivos concretos.
-- Antes de escribir SQL, acordar los identificadores y las claves en [contrato_modelo.md](acuerdos/contrato_modelo.md). No renombrar objetos de forma unilateral.
-- Las FK se escriben en el módulo de la tabla origen y se acuerdan con el propietario de la tabla destino.
-- La documentación cubre todas las columnas del módulo y debe coincidir con el SQL.
-- Probar las restricciones con datos válidos e inválidos. Cada responsable soluciona los defectos encontrados en su área.
-- Las tablas de personal están repartidas: contactos con Miguel; Técnico y CertificacionTecnico con Ana; Empleado y los demás subtipos con Diego.
+Usar una **base vacía de pruebas** para ejecutar el avance:
 
-## Integración prevista
-
-El DDL final se ensamblará en cuatro fases: **todos los `tablas.sql` → todos los `dominios.sql` → todos los `claves.sql` → todos los `referencias.sql`**. Dentro de cada fase, usar el orden de módulo 01 a 05. Así las tablas y claves destino existen antes de agregar las FK.
-
-`SQL/DDL.sql` será un archivo autónomo con el SQL ensamblado; no debe depender de rutas locales o módulos externos. Se corrigen las fuentes y luego se regenera. Los `pruebas.sql` se ejecutan por separado y no forman parte del DDL entregable. El ensamblado y su automatización todavía no están implementados.
-
-[reporte/main.tex](reporte/main.tex) incorpora las cinco secciones mediante `\input` y la sección de restauración. Actualmente es una plantilla, no un informe terminado.
-
-## Contenido previsto del ZIP final
-
-```text
-Práctica05_ÑIPGG.zip
-├── Diagramas/
-│   ├── RelacionalÑIPGG.png
-│   ├── RelacionalÑIPGG.drawio
-│   ├── ERÑIPGG.png
-│   └── ERÑIPGG.drawio
-├── SQL/DDL.sql
-├── Docs/Práctica05.pdf
-└── README_ÑIPGG.pdf
+```bash
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f SQL/DDL_disponible.sql
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f modulos/03_premios_canjes/pruebas.sql
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f modulos/05_personal_administracion/pruebas.sql
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f modulos/01_clientes_contactos/pruebas.sql
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f modulos/04_sucursales_operaciones/pruebas.sql
 ```
 
-Los nombres y el contenido se contrastarán con los lineamientos de Classroom antes de entregar. Las carpetas de módulos, fuentes, consigna y respaldo son materiales de trabajo; no se añaden automáticamente al ZIP. Ninguno de los entregables finales se ha generado en esta etapa.
+Las pruebas 01 y 04 crean dependencias mínimas en esquemas aislados dentro de
+una transacción. Las pruebas de Omar y personal usan las tablas reales del
+avance integrado. Todas finalizan en `ROLLBACK` y no restauran el respaldo.
+
+## Pendiente para la entrega final
+
+1. Recibir e integrar el módulo de Ana y comprobar las tres FK aplazadas.
+2. Ejecutar la restauración en una base separada y agregar sus evidencias.
+3. Revisar documentación y diagramas contra el esquema completo.
+4. Generar `SQL/DDL.sql`, `Docs/Práctica05.pdf`, `README_ÑIPGG.pdf` y el ZIP final
+   conforme a la consigna y a los lineamientos de Classroom.
+
+La [consigna](Práctica05.pdf), la [guía de restauración](RestaurarBackup.pdf) y
+`ejemplo.backup` son insumos. El ZIP final no se genera mientras falten las
+actividades anteriores. Los cambios de esta sesión permanecen locales.

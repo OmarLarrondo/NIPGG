@@ -1,5 +1,29 @@
--- Práctica 05 | Premios y canjes
--- Responsable: Omar
--- Tablas asignadas: Premio, Canje, Disponer
--- Definir únicamente las tablas, columnas y tipos mediante CREATE TABLE. Las restricciones se escriben en los otros archivos mediante ALTER TABLE.
--- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
+-- Práctica 05 | Omar | Modelo: Practica04.drawio.xml proporcionado.
+-- Restricciones separadas mediante ALTER TABLE.
+
+CREATE TABLE "Premio" (
+    "idPremio" integer,
+    "valorAproximado" integer,
+    "puntosNecesarios" integer,
+    "nombre" varchar(50),
+    "categoría" varchar(50),
+    "rangoEdad" varchar(50)
+);
+
+CREATE TABLE "Canje" (
+    "idCanje" integer,
+    "idSucursal" integer,
+    "idCliente" integer,
+    "idPremio" integer,
+    "CURP" char(18),
+    "hora" time,
+    "puntosUtilizados" integer,
+    "cantidadPremios" integer,
+    "fecha" date
+);
+
+CREATE TABLE "Disponer" (
+    "idSucursal" integer,
+    "idPremio" integer,
+    "cantidadDisponible" integer
+);

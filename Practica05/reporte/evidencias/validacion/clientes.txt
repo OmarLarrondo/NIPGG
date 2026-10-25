@@ -1,0 +1,276 @@
+BEGIN
+CREATE SCHEMA
+SET
+SET
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 2
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+INSERT 0 3
+CREATE TABLE
+INSERT 0 3
+SAVEPOINT
+UPDATE 3
+UPDATE 2
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+ROLLBACK
+RELEASE
+INSERT 0 1
+CREATE FUNCTION
+DO
+DO
+                            caso                             |    resultado
+-------------------------------------------------------------+------------------
+ Apellido materno en blanco                                  | rechazado: 23514
+ Apellido paterno en blanco                                  | rechazado: 23514
+ Borrar cajero con contactos                                 | rechazado: 23503
+ Borrar cajero vendedor                                      | rechazado: 23503
+ Borrar cliente referenciado                                 | rechazado: 23503
+ Borrar encargado con contactos                              | rechazado: 23503
+ Borrar gerente con contactos                                | rechazado: 23503
+ Borrar máquina con partidas                                 | rechazado: 23503
+ Borrar tarjeta con partidas                                 | rechazado: 23503
+ Borrar tecnico con contactos                                | rechazado: 23503
+ Cambiar CURP de cajero referenciada                         | rechazado: 23503
+ Cambiar CURP de encargado referenciada                      | rechazado: 23503
+ Cambiar CURP de gerente referenciada                        | rechazado: 23503
+ Cambiar CURP de tecnico referenciada                        | rechazado: 23503
+ Cambiar dueño de tarjeta referenciada                       | rechazado: 23503
+ Cambiar identificador de cliente referenciado               | rechazado: 23503
+ Cambiar número de tarjeta referenciada                      | rechazado: 23503
+ Cliente con dos tarjetas                                    | rechazado: 23505
+ Cliente con identificador cero                              | rechazado: 23514
+ Cliente de partida sin tarjeta                              | rechazado: 23503
+ Compra con fecha infinita                                   | rechazado: 23514
+ Correo de cajero con dos arrobas                            | rechazado: 23514
+ Correo de cajero con espacios                               | rechazado: 23514
+ Correo de cajero demasiado largo                            | rechazado: 22001
+ Correo de cajero sin arroba                                 | rechazado: 23514
+ Correo de cajero sin dominio                                | rechazado: 23514
+ Correo de cajero sin parte local                            | rechazado: 23514
+ Correo de cliente con dos arrobas                           | rechazado: 23514
+ Correo de cliente con espacios                              | rechazado: 23514
+ Correo de cliente con propietario cero                      | rechazado: 23514
+ Correo de cliente demasiado largo                           | rechazado: 22001
+ Correo de cliente sin arroba                                | rechazado: 23514
+ Correo de cliente sin dominio                               | rechazado: 23514
+ Correo de cliente sin parte local                           | rechazado: 23514
+ Correo de encargado con dos arrobas                         | rechazado: 23514
+ Correo de encargado con espacios                            | rechazado: 23514
+ Correo de encargado demasiado largo                         | rechazado: 22001
+ Correo de encargado sin arroba                              | rechazado: 23514
+ Correo de encargado sin dominio                             | rechazado: 23514
+ Correo de encargado sin parte local                         | rechazado: 23514
+ Correo de gerente con dos arrobas                           | rechazado: 23514
+ Correo de gerente con espacios                              | rechazado: 23514
+ Correo de gerente demasiado largo                           | rechazado: 22001
+ Correo de gerente sin arroba                                | rechazado: 23514
+ Correo de gerente sin dominio                               | rechazado: 23514
+ Correo de gerente sin parte local                           | rechazado: 23514
+ Correo de tecnico con dos arrobas                           | rechazado: 23514
+ Correo de tecnico con espacios                              | rechazado: 23514
+ Correo de tecnico demasiado largo                           | rechazado: 22001
+ Correo de tecnico sin arroba                                | rechazado: 23514
+ Correo de tecnico sin dominio                               | rechazado: 23514
+ Correo de tecnico sin parte local                           | rechazado: 23514
+ CorreoElectrónicoCajero con propietario de otro puesto      | rechazado: 23503
+ CorreoElectrónicoCajero sin propietario existente           | rechazado: 23503
+ CorreoElectrónicoEncargado con propietario de otro puesto   | rechazado: 23503
+ CorreoElectrónicoEncargado sin propietario existente        | rechazado: 23503
+ CorreoElectrónicoGerente con propietario de otro puesto     | rechazado: 23503
+ CorreoElectrónicoGerente sin propietario existente          | rechazado: 23503
+ CorreoElectrónicoTécnico con propietario de otro puesto     | rechazado: 23503
+ CorreoElectrónicoTécnico sin propietario existente          | rechazado: 23503
+ Correo sin cliente existente                                | rechazado: 23503
+ Costo negativo                                              | rechazado: 23514
+ CURP vendedora demasiado larga                              | rechazado: 22001
+ Discriminantes reutilizados en contextos distintos          | aceptados
+ Estado de tarjeta vacío                                     | rechazado: 23514
+ Fecha inexistente                                           | rechazado: 22008
+ Hora de partida inválida                                    | rechazado: 22008
+ Identificador de partida cero                               | rechazado: 23514
+ Inserciones válidas y valores cero                          | aceptadas
+ Límites válidos de dominio                                  | aceptados
+ Nacimiento futuro                                           | rechazado: 23514
+ Nacimiento infinito                                         | rechazado: 23514
+ Nombre demasiado largo                                      | rechazado: 22001
+ Nombre vacío                                                | rechazado: 23514
+ NULL en Cliente.apellidoMaterno                             | rechazado: 23502
+ NULL en Cliente.apellidoPaterno                             | rechazado: 23502
+ NULL en Cliente.fechaNacimiento                             | rechazado: 23502
+ NULL en Cliente.idCliente                                   | rechazado: 23502
+ NULL en Cliente.nombre                                      | rechazado: 23502
+ NULL en Cliente.sexo                                        | rechazado: 23502
+ NULL en CorreoElectrónicoCajero.correoCajero                | rechazado: 23502
+ NULL en CorreoElectrónicoCajero.CURP                        | rechazado: 23502
+ NULL en correoElectrónico.correoElectrónico                 | rechazado: 23502
+ NULL en CorreoElectrónicoEncargado.correoEncargado          | rechazado: 23502
+ NULL en CorreoElectrónicoEncargado.CURP                     | rechazado: 23502
+ NULL en CorreoElectrónicoGerente.correoGerente              | rechazado: 23502
+ NULL en CorreoElectrónicoGerente.CURP                       | rechazado: 23502
+ NULL en correoElectrónico.idCliente                         | rechazado: 23502
+ NULL en CorreoElectrónicoTécnico.correoTécnico              | rechazado: 23502
+ NULL en CorreoElectrónicoTécnico.CURP                       | rechazado: 23502
+ NULL en Partida.fecha                                       | rechazado: 23502
+ NULL en Partida.hora                                        | rechazado: 23502
+ NULL en Partida.idCliente                                   | rechazado: 23502
+ NULL en Partida.idMaquina                                   | rechazado: 23502
+ NULL en Partida.idPartida                                   | rechazado: 23502
+ NULL en Partida.numeroTarjeta                               | rechazado: 23502
+ NULL en Partida.puntajeObtenido                             | rechazado: 23502
+ NULL en Partida.puntosGanados                               | rechazado: 23502
+ NULL en Tarjeta.costoAdquisición                            | rechazado: 23502
+ NULL en Tarjeta.CURP                                        | rechazado: 23502
+ NULL en Tarjeta.estado                                      | rechazado: 23502
+ NULL en Tarjeta.fechaCompra                                 | rechazado: 23502
+ NULL en Tarjeta.idCliente                                   | rechazado: 23502
+ NULL en Tarjeta.numeroTarjeta                               | rechazado: 23502
+ NULL en Tarjeta.puntosAcumulados                            | rechazado: 23502
+ NULL en Tarjeta.saldo                                       | rechazado: 23502
+ NULL en TeléfonoCajero.CURP                                 | rechazado: 23502
+ NULL en TeléfonoCajero.telefonoCajero                       | rechazado: 23502
+ NULL en TeléfonoEncargado.CURP                              | rechazado: 23502
+ NULL en TeléfonoEncargado.telefonoEncargado                 | rechazado: 23502
+ NULL en TeléfonoGerente.CURP                                | rechazado: 23502
+ NULL en TeléfonoGerente.telefonoGerente                     | rechazado: 23502
+ NULL en teléfono.idCliente                                  | rechazado: 23502
+ NULL en TeléfonoTécnivo.CURP                                | rechazado: 23502
+ NULL en TeléfonoTécnivo.telefonoTécnico                     | rechazado: 23502
+ NULL en teléfono.teléfono                                   | rechazado: 23502
+ Número de tarjeta cero                                      | rechazado: 23514
+ Número de tarjeta de partida cero                           | rechazado: 23514
+ Pareja de tarjeta inexistente en Partida                    | rechazado: 23503
+ Partida con cliente cero                                    | rechazado: 23514
+ Partida con fecha infinita                                  | rechazado: 23514
+ Partida con máquina cero                                    | rechazado: 23514
+ Partida sin máquina existente                               | rechazado: 23503
+ PK completa de Tarjeta repetida                             | rechazado: 23505
+ PK de Cliente repetida                                      | rechazado: 23505
+ PK de CorreoElectrónicoCajero repetida                      | rechazado: 23505
+ PK de CorreoElectrónicoEncargado repetida                   | rechazado: 23505
+ PK de CorreoElectrónicoGerente repetida                     | rechazado: 23505
+ PK de correoElectrónico repetida                            | rechazado: 23505
+ PK de CorreoElectrónicoTécnico repetida                     | rechazado: 23505
+ PK de Partida repetida                                      | rechazado: 23505
+ PK de TeléfonoCajero repetida                               | rechazado: 23505
+ PK de TeléfonoEncargado repetida                            | rechazado: 23505
+ PK de TeléfonoGerente repetida                              | rechazado: 23505
+ PK de teléfono repetida                                     | rechazado: 23505
+ PK de TeléfonoTécnivo repetida                              | rechazado: 23505
+ Puntaje obtenido negativo                                   | rechazado: 23514
+ Puntos acumulados negativos                                 | rechazado: 23514
+ Puntos ganados negativos                                    | rechazado: 23514
+ Saldo fuera del rango entero                                | rechazado: 22003
+ Saldo negativo                                              | rechazado: 23514
+ Sexo vacío                                                  | rechazado: 23514
+ Tarjeta con propietario cero                                | rechazado: 23514
+ Tarjeta sin cliente existente                               | rechazado: 23503
+ TeléfonoCajero con propietario de otro puesto               | rechazado: 23503
+ TeléfonoCajero sin propietario existente                    | rechazado: 23503
+ Teléfono de cajero con letras                               | rechazado: 23514
+ Teléfono de cajero corto                                    | rechazado: 23514
+ Teléfono de cajero demasiado largo                          | rechazado: 22001
+ Teléfono de cliente con letras                              | rechazado: 23514
+ Teléfono de cliente con propietario cero                    | rechazado: 23514
+ Teléfono de cliente corto                                   | rechazado: 23514
+ Teléfono de cliente demasiado largo                         | rechazado: 22001
+ Teléfono de encargado con letras                            | rechazado: 23514
+ Teléfono de encargado corto                                 | rechazado: 23514
+ Teléfono de encargado demasiado largo                       | rechazado: 22001
+ Teléfono de gerente con letras                              | rechazado: 23514
+ Teléfono de gerente corto                                   | rechazado: 23514
+ Teléfono de gerente demasiado largo                         | rechazado: 22001
+ Teléfono de tecnico con letras                              | rechazado: 23514
+ Teléfono de tecnico corto                                   | rechazado: 23514
+ Teléfono de tecnico demasiado largo                         | rechazado: 22001
+ TeléfonoEncargado con propietario de otro puesto            | rechazado: 23503
+ TeléfonoEncargado sin propietario existente                 | rechazado: 23503
+ TeléfonoGerente con propietario de otro puesto              | rechazado: 23503
+ TeléfonoGerente sin propietario existente                   | rechazado: 23503
+ Teléfono sin cliente existente                              | rechazado: 23503
+ TeléfonoTécnivo con propietario de otro puesto              | rechazado: 23503
+ TeléfonoTécnivo sin propietario existente                   | rechazado: 23503
+ Varios contactos y contactos compartidos entre propietarios | aceptados
+ Vendedor de otro puesto                                     | rechazado: 23503
+(171 rows)
+
+ grupos_validos | rechazos_correctos
+----------------+--------------------
+              4 |                167
+(1 row)
+
+ROLLBACK

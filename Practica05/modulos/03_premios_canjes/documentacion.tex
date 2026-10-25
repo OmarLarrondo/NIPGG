@@ -1,8 +1,86 @@
-% Práctica 05 | Responsable: Omar
+% Práctica 05 | Responsable: Omar Alejandro Juárez Larrondo
 \section{Premios y canjes}
-% Tablas asignadas: Premio, Canje, Disponer.
-% TODO: documentar cada columna: tabla, nombre exacto, tipo, longitud/precisión,
-% nulabilidad, dominio, valor predeterminado si aplica y justificación.
-% TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
-% TODO: distinguir reglas implementadas y reglas entre tablas que requieran
-% un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
+
+Se implementan \texttt{Premio}, \texttt{Canje} y \texttt{Disponer} conforme
+al diagrama relacional proporcionado. Los nombres y acentos se conservan
+mediante comillas dobles. Todas las columnas son obligatorias
+(\texttt{NOT NULL}) y ninguna tiene valor predeterminado: los valores deben
+proporcionarse de forma explícita. Los tipos \texttt{integer} admiten hasta
+2\,147\,483\,647; los límites inferiores se precisan a continuación.
+La creación declara únicamente nombres y tipos. Todas las restricciones
+se agregan con \texttt{ALTER TABLE}.
+
+\subsection{Premio}
+\begingroup\small\renewcommand{\arraystretch}{1.25}
+\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idPremio} & \texttt{integer} & Entero positivo; PK. \\
+\texttt{valorAproximado} & \texttt{integer} & Importe entero no negativo en pesos; se admite cero. \\
+\texttt{puntosNecesarios} & \texttt{integer} & Entero positivo; puntos requeridos por unidad. \\
+\texttt{nombre} & \texttt{varchar(50)} & Hasta 50 caracteres; al menos uno que no sea blanco. \\
+\texttt{categoría} & \texttt{varchar(50)} & Hasta 50 caracteres no vacíos; sin catálogo cerrado. \\
+\texttt{rangoEdad} & \texttt{varchar(50)} & Descriptor de hasta 50 caracteres no vacíos; sin formato cerrado. \\
+\hline\end{tabular}\endgroup
+
+No se declara unicidad sobre el nombre: distintos premios pueden compartirlo.
+
+\subsection{Canje}
+\begingroup\small\renewcommand{\arraystretch}{1.25}
+\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idCanje} & \texttt{integer} & Entero positivo; PK global del canje. \\
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; FK a SUCURSAL(idSucursal). \\
+\texttt{idCliente} & \texttt{integer} & Entero positivo; FK a Cliente(idCliente). \\
+\texttt{idPremio} & \texttt{integer} & Entero positivo; FK a Premio(idPremio). \\
+\texttt{CURP} & \texttt{char(18)} & CURP con formato de 18 caracteres; FK al encargado. \\
+\texttt{hora} & \texttt{time} & Hora válida sin zona horaria; tipo del diagrama. \\
+\texttt{puntosUtilizados} & \texttt{integer} & Entero positivo; puntos consumidos en la operación. \\
+\texttt{cantidadPremios} & \texttt{integer} & Entero positivo; unidades entregadas. \\
+\texttt{fecha} & \texttt{date} & Fecha válida y finita; se rechazan ambos infinitos. \\
+\hline\end{tabular}\endgroup
+
+La PK es únicamente \texttt{idCanje}, tal como aparece marcada en el
+modelo adjunto; no se utiliza la clave compuesta propuesta en el informe
+previo. La FK \texttt{CURP} apunta a \texttt{Encargado de premios(CURP)}.
+La validación de formato exige cuatro letras mayúsculas, seis dígitos,
+H o M, cinco letras mayúsculas y dos caracteres alfanuméricos finales.
+Esta expresión no certifica que la CURP haya sido expedida ni valida su
+fecha interna. La hora conserva \texttt{time}, sin añadir zona horaria.
+Las FK pueden repetirse: un cliente puede realizar varios canjes.
+
+\subsection{Disponer}
+\begingroup\small\renewcommand{\arraystretch}{1.25}
+\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; FK a SUCURSAL(idSucursal). \\
+\texttt{idPremio} & \texttt{integer} & Entero positivo; FK a Premio(idPremio). \\
+\texttt{cantidadDisponible} & \texttt{integer} & Entero no negativo; cero representa inventario agotado. \\
+\hline\end{tabular}\endgroup
+
+La PK compuesta es \texttt{(idSucursal, idPremio)}; identifica una sola
+fila de inventario por premio y sucursal. Un premio puede estar disponible
+en varias sucursales y cada sucursal puede disponer de varios premios.
+
+\subsection{Integridad referencial y alcance}
+Las seis FK usan \texttt{ON UPDATE NO ACTION} y \texttt{ON DELETE NO ACTION}.
+No se permite eliminar o cambiar una clave referenciada si quedan filas
+que dependan de ella. No se utilizan eliminaciones en cascada para el
+historial de canjes.
+
+La suficiencia de puntos, la existencia de inventario al momento del
+canje, el descuento de existencias y la correspondencia entre
+\texttt{puntosUtilizados}, \texttt{cantidadPremios} y el costo vigente
+requieren una operación transaccional entre tablas. Tampoco se valida aquí
+que el encargado trabaje en la sucursal del canje. No se presentan como
+reglas resueltas por estos \texttt{CHECK}. El costo del catálogo puede
+cambiar y el canje conserva sus puntos históricos.
+
+\subsection{Validación}
+Se ejecutaron 58 casos en PostgreSQL~18 sobre el DDL de avance: datos
+válidos, límites con cero, todas las columnas nulas, dominios inválidos,
+longitudes excesivas, fechas infinitas, PK duplicadas, las seis FK,
+protección de referencias y actualización a inventario negativo.
+Los fallos esperados se aislaron en bloques de excepción y se comprobaron
+por SQLSTATE y, cuando corresponde, por nombre de restricción. La ejecución
+terminó con 58 resultados correctos y \texttt{ROLLBACK}; no dejó datos de
+prueba. Esta validación no incluye la restauración del respaldo.

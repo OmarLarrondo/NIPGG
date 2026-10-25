@@ -1,8 +1,62 @@
-% Práctica 05 | Responsable: Yahir
+% Documentación de integración del SQL aportado por Yahir.
 \section{Sucursales y operaciones}
-% Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga.
-% TODO: documentar cada columna: tabla, nombre exacto, tipo, longitud/precisión,
-% nulabilidad, dominio, valor predeterminado si aplica y justificación.
-% TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
-% TODO: distinguir reglas implementadas y reglas entre tablas que requieran
-% un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
+Se documentan las restricciones recibidas del módulo de Yahir. Todas las
+columnas son obligatorias y no se asignan valores predeterminados.
+Las tablas y columnas mantienen los nombres literales del diagrama.
+
+\subsection{SUCURSAL}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\noindent\begin{tabular}{@{}p{.27\textwidth}p{.18\textwidth}p{.48\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; referencia a la sucursal cuando no es su PK. \\
+\texttt{nombre} & \texttt{varchar(50)} & Cadena de hasta 50 caracteres con al menos un carácter no blanco. \\
+\texttt{teléfono} & \texttt{char(10)} & Diez dígitos, incluidos posibles ceros iniciales. \\
+\texttt{calle} & \texttt{varchar(100)} & Cadena de hasta 100 caracteres, no vacía ni formada solo por blancos. \\
+\texttt{númeroExterior} & \texttt{integer} & Entero no negativo. \\
+\texttt{númeroInterior} & \texttt{integer} & Entero no negativo; cero es admitido por el SQL recibido. \\
+\texttt{colonia} & \texttt{varchar(50)} & Hasta 50 caracteres, con al menos uno no blanco. \\
+\texttt{estado} & \texttt{varchar(50)} & Hasta 50 caracteres, con al menos uno no blanco. \\
+\hline\end{tabular}\endgroup\par
+La PK es \texttt{(idSucursal)}.
+\subsection{HORARIO\_SUCURSAL}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\noindent\begin{tabular}{@{}p{.27\textwidth}p{.18\textwidth}p{.48\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; referencia a la sucursal cuando no es su PK. \\
+\texttt{horario} & \texttt{varchar(50)} & Descriptor de hasta 50 caracteres, con al menos uno no blanco. \\
+\hline\end{tabular}\endgroup\par
+La PK es \texttt{(idSucursal, horario)}.
+\subsection{VISITA}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\noindent\begin{tabular}{@{}p{.27\textwidth}p{.18\textwidth}p{.48\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idCliente} & \texttt{integer} & Entero positivo; participa en la FK compuesta hacia Tarjeta. \\
+\texttt{numeroTarjeta} & \texttt{integer} & Entero positivo; participa en la FK compuesta hacia Tarjeta. \\
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; referencia a la sucursal cuando no es su PK. \\
+\texttt{idVisita} & \texttt{integer} & Entero positivo; discriminante de la visita. \\
+\texttt{fecha} & \texttt{date} & Fecha válida y finita; se rechazan ambos infinitos. \\
+\hline\end{tabular}\endgroup\par
+La PK es \texttt{(idCliente, numeroTarjeta, idSucursal, idVisita)}.
+\subsection{RECARGA}
+\begingroup\small\renewcommand{\arraystretch}{1.2}
+\noindent\begin{tabular}{@{}p{.27\textwidth}p{.18\textwidth}p{.48\textwidth}@{}}
+\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
+\texttt{idCliente} & \texttt{integer} & Entero positivo; participa en la FK compuesta hacia Tarjeta. \\
+\texttt{numeroTarjeta} & \texttt{integer} & Entero positivo; participa en la FK compuesta hacia Tarjeta. \\
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; referencia a la sucursal cuando no es su PK. \\
+\texttt{idRecarga} & \texttt{integer} & Entero positivo; discriminante de la recarga. \\
+\texttt{CURP} & \texttt{char(18)} & Cadena no blanca de hasta 18 caracteres; FK a Cajero(CURP). \\
+\texttt{monto} & \texttt{integer} & Importe entero no negativo, incluido cero. \\
+\texttt{fecha} & \texttt{date} & Fecha válida y finita; se rechazan ambos infinitos. \\
+\texttt{hora} & \texttt{timetz} & Hora con zona horaria (timetz). \\
+\texttt{métodoAbono} & \texttt{varchar(50)} & Descriptor de hasta 50 caracteres, con al menos uno no blanco. \\
+\hline\end{tabular}\endgroup\par
+La PK es \texttt{(idCliente, numeroTarjeta, idSucursal, idRecarga, CURP)}.
+\subsection{Referencias y alcance}
+\texttt{HORARIO\_SUCURSAL}, \texttt{VISITA} y \texttt{RECARGA} apuntan a
+\texttt{SUCURSAL(idSucursal)}. Visita y recarga referencian
+\texttt{Tarjeta(idCliente, numeroTarjeta)} mediante una FK compuesta;
+recarga también referencia a \texttt{Cajero(CURP)}. Todas las acciones
+referenciales son \texttt{NO ACTION}. La PK de recarga incluye al cajero,
+conforme a las marcas del modelo. No se implementa aquí una actualización
+automática del saldo de tarjeta ni una validación de horarios entre tablas.

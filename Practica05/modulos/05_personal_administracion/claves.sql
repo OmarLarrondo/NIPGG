@@ -2,26 +2,29 @@
 -- Responsable: Diego
 -- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
 -- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
--- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
 
 -- 1. Gerente
-ALTER TABLE Gerente
-    ADD CONSTRAINT pkgerente PRIMARY KEY (CURP);
+ALTER TABLE "Genrente"
+    ADD CONSTRAINT pkgerente PRIMARY KEY ("CURP");
 
-ALTER TABLE Gerente
-    ADD CONSTRAINT uqgerenterfc UNIQUE (RFC);
+ALTER TABLE "Genrente"
+    ADD CONSTRAINT uqgerenterfc UNIQUE ("RFC");
 
 -- 2. Cajero
-ALTER TABLE Cajero
-    ADD CONSTRAINT pkcajero PRIMARY KEY (CURP);
+ALTER TABLE "Cajero"
+    ADD CONSTRAINT pkcajero PRIMARY KEY ("CURP");
 
-ALTER TABLE Cajero
-    ADD CONSTRAINT uqcajerorfc UNIQUE (RFC);
+ALTER TABLE "Cajero"
+    ADD CONSTRAINT uqcajerorfc UNIQUE ("RFC");
 
 -- 3. EncargadoDePremios
-ALTER TABLE EncargadoDePremios
-    ADD CONSTRAINT pkencargadodepremios PRIMARY KEY (CURP);
+ALTER TABLE "Encargado de premios"
+    ADD CONSTRAINT pkencargadodepremios PRIMARY KEY ("CURP");
 
-ALTER TABLE EncargadoDePremios
-    ADD CONSTRAINT uqencargadodepremiosrfc UNIQUE (RFC);
+ALTER TABLE "Encargado de premios"
+    ADD CONSTRAINT uqencargadodepremiosrfc UNIQUE ("RFC");
 
+
+-- Completar la clave de la asociación para impedir parejas repetidas.
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT pk_administrar PRIMARY KEY ("CURP", "idSucursal");

@@ -1,10 +1,10 @@
-# Diagramas de la entrega
+# Diagramas disponibles
 
-Destinos previstos, pendientes de incorporar:
+- `RelacionalÑIPGG.drawio`: copia del XML proporcionado por Omar en esta sesión.
+- `RelacionalÑIPGG.png`: exportación de ese editable con Draw.io.
+- `ERÑIPGG.drawio` y `ERÑIPGG.png`: recuperados de `Practica04/Diagramas/`.
 
-- `RelacionalÑIPGG.png`
-- `RelacionalÑIPGG.drawio`
-- `ERÑIPGG.png`
-- `ERÑIPGG.drawio`
-
-Consultar los archivos de Práctica 04 y el acuerdo del equipo en [contrato_modelo.md](../acuerdos/contrato_modelo.md). La consigna requiere los dos modelos anteriores en imagen y formato editable. Antes de incorporar las versiones definitivas, comprobar su correspondencia con el DDL. Reunir estos archivos no es una tarea adicional asignada a los módulos.
+Se conservan los rótulos originales, incluidas sus erratas. Las decisiones
+SQL y las diferencias con el informe anterior se registran en
+[contrato_modelo.md](../acuerdos/contrato_modelo.md). Falta contrastar el esquema
+completo cuando llegue el módulo 02.

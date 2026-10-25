@@ -25,7 +25,7 @@ Los nombres son el alcance acordado del reparto. Antes de implementar, contrasta
 
 Consulta el [contrato del modelo](../../acuerdos/contrato_modelo.md) y el [reparto completo](../../README.md). Quien posee la tabla origen escribe su FK; quien posee la tabla destino confirma su nombre, tipo y clave. Cada autor corrige su módulo y su documentación.
 
-No se asignan a este módulo tareas de README, recopilación de diagramas, empaquetado ni integración general. Las fuentes están pendientes de implementación.
+La integración general y los documentos de avance se prepararon por separado de estas tres tablas. Las seis fuentes técnicas están implementadas. Se validaron 58 casos en PostgreSQL 18; consulta `../../reporte/evidencias/validacion/omar.txt`.
 
 ## Actividad adicional: restauración
 
