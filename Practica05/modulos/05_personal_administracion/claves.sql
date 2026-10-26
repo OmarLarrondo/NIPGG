@@ -25,3 +25,11 @@ ALTER TABLE EncargadoDePremios
 ALTER TABLE EncargadoDePremios
     ADD CONSTRAINT uqencargadodepremiosrfc UNIQUE (RFC);
 
+-- 4. Administrar
+ALTER TABLE Administrar
+    ADD CONSTRAINT pkadministrar PRIMARY KEY (CURP);
+
+ALTER TABLE Administrar
+    ADD CONSTRAINT uqadministrarsucursal UNIQUE (idSucursal);
+
+
