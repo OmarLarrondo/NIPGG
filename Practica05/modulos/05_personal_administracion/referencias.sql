@@ -2,34 +2,33 @@
 -- Responsable: Diego
 -- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
 -- Definir mediante ALTER TABLE las FOREIGN KEY de las tablas de este módulo; acordar nombre, tipo y clave destino con su responsable.
--- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
 
 -- 1. Gerente -> Sucursal
-ALTER TABLE Gerente
-    ADD CONSTRAINT fkgerentesucursal
-    FOREIGN KEY (idSucursal)
-    REFERENCES "Sucursal" ("idSucursal");
+ALTER TABLE gerente
+	ADD CONSTRAINT fkgerentesucursal
+	FOREIGN KEY (idsucursal)
+	REFERENCES "SUCURSAL" ("idSucursal");
 
 -- 2. Cajero -> Sucursal
-ALTER TABLE Cajero
-    ADD CONSTRAINT fkcajerosucursal
-    FOREIGN KEY (idSucursal)
-    REFERENCES "Sucursal" ("idSucursal");
+ALTER TABLE cajero
+	ADD CONSTRAINT fkcajerosucursal
+	FOREIGN KEY (idsucursal)
+	REFERENCES "SUCURSAL" ("idSucursal");
 
 -- 3. EncargadoDePremios -> Sucursal
-ALTER TABLE EncargadoDePremios
-    ADD CONSTRAINT fkencargadopremiossucursal
-    FOREIGN KEY (idSucursal)
-    REFERENCES "Sucursal" ("idSucursal");
+ALTER TABLE encargadodepremios
+	ADD CONSTRAINT fkencargadopremiossucursal
+	FOREIGN KEY (idsucursal)
+	REFERENCES "SUCURSAL" ("idSucursal");
 
 -- 4. Administrar -> Gerente
-ALTER TABLE Administrar
-    ADD CONSTRAINT fkadministrargerente
-    FOREIGN KEY (CURP)
-    REFERENCES Gerente (CURP);
+ALTER TABLE administrar
+	ADD CONSTRAINT fkadministrargerente
+	FOREIGN KEY (CURP)
+	REFERENCES gerente (CURP);
 
 -- 5. Administrar -> Sucursal
-ALTER TABLE Administrar
-    ADD CONSTRAINT fkadministrarsucursal
-    FOREIGN KEY (idSucursal)
-    REFERENCES "Sucursal" ("idSucursal");
+ALTER TABLE administrar
+	ADD CONSTRAINT fkadministrarsucursal
+	FOREIGN KEY (idsucursal)
+	REFERENCES "SUCURSAL" ("idSucursal");
