@@ -2,7 +2,6 @@
 -- Responsable: Diego
 -- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
 -- Definir mediante ALTER TABLE la nulabilidad, CHECK y valores predeterminados que correspondan al modelo acordado.
--- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
 
 -- 1. Gerente
 ALTER TABLE Gerente
