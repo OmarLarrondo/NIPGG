@@ -6,3 +6,48 @@
 % TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
 % TODO: distinguir reglas implementadas y reglas entre tablas que requieran
 % un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
+
+En este módulo se implementaron cuatro tablas correspondientes a la gestión de sucursales, sus horarios de operación, el registro de las visitas realizadas por los clientes y el control de las recargas de saldo efectuadas en el sistema. 
+\subsection{Tabla Sucursal} La tabla \textit{SUCURSAL} almacena la información general de cada establecimiento de la empresa, incluyendo su ubicación física y su número de contacto.
+\begin{itemize}
+    \item \textbf{idSucursal (\texttt{INTEGER}):} Es la llave primaria de la tabla. No admite valores nulos, debe ser un entero positivo e identifica de manera única a cada sucursal.
+    \item \textbf{nombre (\texttt{VARCHAR(50)}):} Almacena el nombre de la sucursal con una longitud máxima de 50 caracteres. No admite valores nulos ni cadenas compuestas únicamente por espacios en blanco.
+    \item \textbf{teléfono (\texttt{CHAR(10)}):} Almacena el número telefónico de contacto de la sucursal. Tiene una longitud fija de 10 dígitos numéricos, no admite valores nulos y debe cumplir con el formato establecido.
+    \item \textbf{calle (\texttt{VARCHAR(100)}):} Almacena la calle correspondiente a la ubicación física de la sucursal. No admite valores nulos ni cadenas vacías.
+    \item \textbf{númeroExterior (\texttt{INTEGER}):} Registra el número exterior del domicilio. No admite valores nulos y debe ser un valor entero no negativo.
+    \item \textbf{númeroInterior (\texttt{INTEGER}):} Registra el número interior del domicilio. No admite valores nulos y debe ser un valor entero no negativo.
+    \item \textbf{colonia (\texttt{VARCHAR(50)}):} Almacena la colonia de la ubicación. No admite valores nulos ni cadenas vacías.
+    \item \textbf{estado (\texttt{VARCHAR(50)}):} Almacena el estado de la sucursal. No admite valores nulos ni cadenas vacías.
+\end{itemize}
+Además de las restricciones de dominio descritas, la tabla utiliza la llave primaria en \textit{idSucursal} para evitar duplicidad de establecimientos y garantizar la integridad referencial con los demás módulos que dependen de ella.
+
+\subsection{Tabla HorarioSucursal} La tabla \textit{HORARIO SUCURSAL} almacena los diferentes bloques de horarios de operación asociados a cada sucursal, permitiendo registrar múltiples horarios por establecimiento. Sus columnas son las siguientes:
+\begin{itemize}
+    \item \textbf{idSucursal (\texttt{INTEGER}):} Es una llave foránea que referencia la llave primaria de \textit{SUCURSAL}. No admite valores nulos, debe ser positiva y permite asociar el horario con el establecimiento correspondiente.
+    \item \textbf{horario (\texttt{VARCHAR(50)}):} Almacena la descripción o rango del horario de operación. No admite valores nulos ni cadenas vacías.
+\end{itemize}
+La llave primaria de esta tabla es compuesta (\textit{idSucursal, horario}). La llave foránea asegura que el horario pertenezca a una sucursal existente.
+
+\subsection{Tabla Visita}La tabla \textit{VISITA} registra las asistencias de los clientes a las sucursales.Las columnas que la conforman son:
+\begin{itemize}
+    \item \textbf{idCliente (\texttt{INTEGER}):} Forma parte de la llave foránea compuesta que referencia a la tabla \textit{Tarjeta}. No admite valores nulos y debe ser un entero positivo.
+    \item \textbf{numeroTarjeta (\texttt{INTEGER}):} Forma parte de la llave foránea compuesta que referencia a la tabla \textit{Tarjeta}. No admite valores nulos y debe ser un entero positivo.
+    \item \textbf{idSucursal (\texttt{INTEGER}):} Es una llave foránea que referencia la llave primaria de \textit{SUCURSAL}. Identifica el establecimiento visitado y no admite valores nulos.
+    \item \textbf{idVisita (\texttt{INTEGER}):} Funciona como identificador discriminante o secuencial de la visita. No admite valores nulos y debe ser positivo.
+    \item \textbf{fecha (\texttt{DATE}):} Registra la fecha en que se efectuó la visita. No admite valores nulos y debe corresponder a un valor temporal finito y válido.
+\end{itemize}
+La llave primaria compuesta por \textit{idCliente}, \textit{numeroTarjeta}, \textit{idSucursal} e \textit{idVisita} garantiza la unicidad de cada evento de visita registrado en el sistema. Las llaves foráneas validan la existencia tanto de la tarjeta del cliente como de la sucursal receptora.
+
+\subsection{Tabla Recarga}La tabla \textit{RECARGA} almacena el historial detallado de las recargas de saldo realizadas a las tarjetas de los clientes en las sucursales, vinculando la operación con el cajero responsable.Está compuesta por las siguientes columnas:
+\begin{itemize}
+    \item \textbf{idCliente (\texttt{INTEGER}):} Parte de la llave foránea compuesta que referencia a \textit{Tarjeta}. No admite valores nulos y debe ser un entero positivo.
+    \item \textbf{numeroTarjeta (\texttt{INTEGER}):} Parte de la llave foránea compuesta que referencia a \textit{Tarjeta}. No admite valores nulos y debe ser un entero positivo.
+    \item \textbf{idSucursal (\texttt{INTEGER}):} llave foránea que referencia a \textit{SUCURSAL} donde se efectúa la transacción. No admite valores nulos y debe ser un entero positivo.
+    \item \textbf{idRecarga (\texttt{INTEGER}):} Identificador discriminante de la recarga. No admite valores nulos y debe ser positivo.
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es una llave foránea que referencia al empleado de tipo \textit{Cajero} encargado de procesar la recarga. No admite valores nulos y debe cumplir con el formato de CURP.
+    \item \textbf{monto (\texttt{INTEGER}):} Almacena la cantidad monetaria abonada en la recarga. No admite valores nulos y debe ser un valor numérico mayor o igual a cero.
+    \item \textbf{fecha (\texttt{DATE}):} Registra la fecha en la que se realizó la recarga. No admite valores nulos y debe ser una fecha finita válida.
+    \item \textbf{hora (\texttt{TIMETZ}):} Registra la hora de la transacción. No admite valores nulos.
+    \item \textbf{métodoAbono (\texttt{VARCHAR(50)}):} Almacena la forma o método de pago utilizado . No admite valores nulos ni cadenas vacías.
+\end{itemize}
+La llave primaria de esta tabla es compuesta e integra a \textit{idCliente}, \textit{numeroTarjeta}, \textit{idSucursal} e \textit{idRecarga}. 
