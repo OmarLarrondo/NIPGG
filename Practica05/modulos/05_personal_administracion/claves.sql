@@ -2,7 +2,6 @@
 -- Responsable: Diego
 -- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
 -- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
--- Estado: pendiente de implementación. Este archivo contiene solo instrucciones.
 
 -- 1. Gerente
 ALTER TABLE Gerente
@@ -31,5 +30,3 @@ ALTER TABLE Administrar
 
 ALTER TABLE Administrar
     ADD CONSTRAINT uqadministrarsucursal UNIQUE (idSucursal);
-
-
