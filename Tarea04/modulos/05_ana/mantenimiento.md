@@ -1,10 +1,10 @@
-# Mantenimiento — Integrante 3
+# Mantenimiento — Ana
 
 Estado: pendiente.
 
-## M_e — Mantenimiento e
+## M_c — Mantenimiento c
 
-**Objetivo:** Disminuir 8% los precios de Furniture entre $600 y $900 y aumentar 5% los de Technology, subcategoría Machines.
+**Objetivo:** Registrar la compra de Lena Cacioppo de un producto de cada subcategoría de Furniture; elegir los productos e indicar toda la información que se agregará en cada caso.
 
 ### Interpretación y relaciones afectadas
 
@@ -23,4 +23,4 @@ Pendiente. Usar la notación vista en clase; mostrar cada relación que cambia.
 
 Resolver desde el dataset original, sin aplicar antes el mantenimiento de otro módulo.
 Para inserción, indicar los valores concretos de cada tupla nueva y justificar los identificadores elegidos.
-Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_e_`.
+Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_c_`.

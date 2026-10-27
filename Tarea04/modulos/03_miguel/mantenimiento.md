@@ -1,10 +1,10 @@
-# Mantenimiento — Integrante 4
+# Mantenimiento — Miguel
 
 Estado: pendiente.
 
-## M_b — Mantenimiento b
+## M_e — Mantenimiento e
 
-**Objetivo:** Borrar todas las órdenes de la ciudad Utah que tengan artículos de la subcategoría Tables.
+**Objetivo:** Disminuir 8% los precios de Furniture entre $600 y $900 y aumentar 5% los de Technology, subcategoría Machines.
 
 ### Interpretación y relaciones afectadas
 
@@ -23,4 +23,4 @@ Pendiente. Usar la notación vista en clase; mostrar cada relación que cambia.
 
 Resolver desde el dataset original, sin aplicar antes el mantenimiento de otro módulo.
 Para inserción, indicar los valores concretos de cada tupla nueva y justificar los identificadores elegidos.
-Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_b_`.
+Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_e_`.

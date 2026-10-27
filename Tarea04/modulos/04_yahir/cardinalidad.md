@@ -1,4 +1,4 @@
-# Cardinalidad — Integrante 4
+# Cardinalidad — Yahir
 
 Estado: pendiente. Numeración según las filas del ejercicio 1 del PDF, de arriba abajo.
 

@@ -2,7 +2,7 @@
 
 Fuente: `Tarea04_AlgebraRelacional.pdf`, páginas 1–2. Aunque se mencionó “práctica 04”, esta estructura corresponde a la **Tarea 4 de Álgebra Relacional** adjunta.
 
-Estado: estructura inicial creada; reparto propuesto, responsables nominales por definir y ejercicios sin resolver.
+Estado: estructura inicial creada; reparto y responsables confirmados y ejercicios sin resolver.
 
 ## Reparto técnico entre cinco integrantes
 
@@ -10,15 +10,15 @@ Se numeran C01–C10 las diez filas de cardinalidad en el orden del PDF. Q_a–Q
 
 | Módulo | Cardinalidad | Consultas | Mantenimiento | Motivo del balance |
 | --- | --- | --- | --- | --- |
-| 01 / Integrante 1 | C08, C10 | Q_c, Q_j | M_d | Filtros de varias tablas y máximo de órdenes, más agrupación con junta externa; actualización sencilla. |
-| 02 / Integrante 2 | C02, C05 | Q_a, Q_i | M_a | Dos juntas condicionales, filtros y ordenación, mínimo de órdenes y alcance del borrado de un cliente. |
-| 03 / Integrante 3 | C03, C04 | Q_b, Q_f | M_e | Juntas externas, productos sin órdenes y clientes con umbral de productos; dos reglas de actualización. |
-| 04 / Integrante 4 | C01, C06 | Q_d, Q_h | M_b | Producto cartesiano y renombrado, consulta sencilla y agregación de ventas exigente; borrado con varias relaciones. |
-| 05 / Integrante 5 | C07, C09 | Q_e, Q_g | M_c | Cardinalidades más ligeras para compensar clientes sin órdenes, máximo de productos vendidos e inserción por subcategoría. |
+| 01 / Diego | C08, C10 | Q_c, Q_j | M_d | Filtros de varias tablas y máximo de órdenes, más agrupación con junta externa; actualización sencilla. |
+| 02 / Omar | C02, C05 | Q_a, Q_i | M_a | Dos juntas condicionales, filtros y ordenación, mínimo de órdenes y alcance del borrado de un cliente. |
+| 03 / Miguel | C03, C04 | Q_b, Q_f | M_e | Juntas externas, productos sin órdenes y clientes con umbral de productos; dos reglas de actualización. |
+| 04 / Yahir | C01, C06 | Q_d, Q_h | M_b | Producto cartesiano y renombrado, consulta sencilla y agregación de ventas exigente; borrado con varias relaciones. |
+| 05 / Ana | C07, C09 | Q_e, Q_g | M_c | Cardinalidades más ligeras para compensar clientes sin órdenes, máximo de productos vendidos e inserción por subcategoría. |
 
 Todos tienen dos expresiones de cardinalidad, dos consultas y una operación de mantenimiento. La dificultad no es idéntica por inciso: el balance considera juntas, ausencia de coincidencias, agrupaciones, extremos, interpretación y construcción de tuplas. Es una estimación previa a ejecutar las consultas, no una medición de horas.
 
-Cada integrante resuelve, explica y comprueba sus propios ejercicios, incluidas sus capturas. La integración, portada, README general, empaquetado y entrega quedan a cargo de Omar y no cuentan como carga asignada a ninguno de los cinco módulos. Omar puede ocupar cualquiera de ellos.
+Cada integrante resuelve, explica y comprueba sus propios ejercicios, incluidas sus capturas. La integración, portada, README general, empaquetado y entrega quedan a cargo de Omar y no cuentan como carga asignada a ninguno de los cinco módulos. Omar tiene asignado el módulo 02, además de las tareas de integración que conserva.
 
 ## Carpetas creadas
 
@@ -27,11 +27,11 @@ Tarea04/
 ├── Tarea04_AlgebraRelacional.pdf
 ├── ESTRUCTURA_MODULAR.md
 └── modulos/
-    ├── 01_integrante_1/
-    ├── 02_integrante_2/
-    ├── 03_integrante_3/
-    ├── 04_integrante_4/
-    └── 05_integrante_5/
+    ├── 01_diego/
+    ├── 02_omar/
+    ├── 03_miguel/
+    ├── 04_yahir/
+    └── 05_ana/
 ```
 
 Cada módulo contiene:

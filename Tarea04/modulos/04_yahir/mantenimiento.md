@@ -1,10 +1,10 @@
-# Mantenimiento — Integrante 2
+# Mantenimiento — Yahir
 
 Estado: pendiente.
 
-## M_a — Mantenimiento a
+## M_b — Mantenimiento b
 
-**Objetivo:** Borrar toda la información del cliente Paul Stevenson.
+**Objetivo:** Borrar todas las órdenes de la ciudad Utah que tengan artículos de la subcategoría Tables.
 
 ### Interpretación y relaciones afectadas
 
@@ -23,4 +23,4 @@ Pendiente. Usar la notación vista en clase; mostrar cada relación que cambia.
 
 Resolver desde el dataset original, sin aplicar antes el mantenimiento de otro módulo.
 Para inserción, indicar los valores concretos de cada tupla nueva y justificar los identificadores elegidos.
-Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_a_`.
+Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_b_`.

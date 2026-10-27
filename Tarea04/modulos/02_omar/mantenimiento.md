@@ -1,10 +1,10 @@
-# Mantenimiento — Integrante 5
+# Mantenimiento — Omar
 
 Estado: pendiente.
 
-## M_c — Mantenimiento c
+## M_a — Mantenimiento a
 
-**Objetivo:** Registrar la compra de Lena Cacioppo de un producto de cada subcategoría de Furniture; elegir los productos e indicar toda la información que se agregará en cada caso.
+**Objetivo:** Borrar toda la información del cliente Paul Stevenson.
 
 ### Interpretación y relaciones afectadas
 
@@ -23,4 +23,4 @@ Pendiente. Usar la notación vista en clase; mostrar cada relación que cambia.
 
 Resolver desde el dataset original, sin aplicar antes el mantenimiento de otro módulo.
 Para inserción, indicar los valores concretos de cada tupla nueva y justificar los identificadores elegidos.
-Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_c_`.
+Las capturas de mantenimiento, si se generan como apoyo, llevan el prefijo `mantenimiento_a_`.

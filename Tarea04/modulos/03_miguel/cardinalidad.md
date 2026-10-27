@@ -1,4 +1,4 @@
-# Cardinalidad — Integrante 3
+# Cardinalidad — Miguel
 
 Estado: pendiente. Numeración según las filas del ejercicio 1 del PDF, de arriba abajo.
 

@@ -1,4 +1,4 @@
-# Cardinalidad — Integrante 2
+# Cardinalidad — Omar
 
 Estado: pendiente. Numeración según las filas del ejercicio 1 del PDF, de arriba abajo.
 

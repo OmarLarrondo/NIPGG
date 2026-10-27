@@ -1,34 +1,10 @@
-# Consultas — Integrante 1
+# Consultas — Ana
 
 Estado: pendiente. Cada consulta se verifica de forma independiente en Relax con el dataset original.
 
-## Q_c — Consulta 2.c
+## Q_e — Consulta 2.e
 
-**Objetivo:** Nombres de clientes de South que solicitaron Bookcases, Chairs, Appliances o Copiers, en el primer o tercer trimestre de 2015, con envío Standard Class.
-
-### Interpretación
-
-Pendiente: atributos de salida, filtros, unidad de conteo y supuestos que apliquen.
-
-### Expresión en notación de clase
-
-Pendiente.
-
-### Expresión ejecutable en Relax
-
-Pendiente. Guardar también la expresión exacta en `consulta_c.relax` al resolver.
-
-### Verificación y evidencias
-
-- Dataset: `31074567738afef8c497f6ca89335782`.
-- Resultado y explicación breve: pendiente.
-- Si el resultado está vacío, explicar por qué: pendiente/no aplica.
-- Captura del resultado: `evidencias/consulta_c_resultado.png` (pendiente).
-- Captura del árbol, si es legible: `evidencias/consulta_c_arbol.png` (pendiente).
-
-## Q_j — Consulta 2.j
-
-**Objetivo:** Información del cliente que más órdenes haya efectuado y número de órdenes realizadas.
+**Objetivo:** Estado, segmento y total de clientes que no han solicitado ninguna orden.
 
 ### Interpretación
 
@@ -40,12 +16,36 @@ Pendiente.
 
 ### Expresión ejecutable en Relax
 
-Pendiente. Guardar también la expresión exacta en `consulta_j.relax` al resolver.
+Pendiente. Guardar también la expresión exacta en `consulta_e.relax` al resolver.
 
 ### Verificación y evidencias
 
 - Dataset: `31074567738afef8c497f6ca89335782`.
 - Resultado y explicación breve: pendiente.
 - Si el resultado está vacío, explicar por qué: pendiente/no aplica.
-- Captura del resultado: `evidencias/consulta_j_resultado.png` (pendiente).
-- Captura del árbol, si es legible: `evidencias/consulta_j_arbol.png` (pendiente).
+- Captura del resultado: `evidencias/consulta_e_resultado.png` (pendiente).
+- Captura del árbol, si es legible: `evidencias/consulta_e_arbol.png` (pendiente).
+
+## Q_g — Consulta 2.g
+
+**Objetivo:** Modo de envío y categoría que más productos ha vendido.
+
+### Interpretación
+
+Pendiente: atributos de salida, filtros, unidad de conteo y supuestos que apliquen.
+
+### Expresión en notación de clase
+
+Pendiente.
+
+### Expresión ejecutable en Relax
+
+Pendiente. Guardar también la expresión exacta en `consulta_g.relax` al resolver.
+
+### Verificación y evidencias
+
+- Dataset: `31074567738afef8c497f6ca89335782`.
+- Resultado y explicación breve: pendiente.
+- Si el resultado está vacío, explicar por qué: pendiente/no aplica.
+- Captura del resultado: `evidencias/consulta_g_resultado.png` (pendiente).
+- Captura del árbol, si es legible: `evidencias/consulta_g_arbol.png` (pendiente).

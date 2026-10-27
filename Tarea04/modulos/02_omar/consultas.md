@@ -1,4 +1,4 @@
-# Consultas — Integrante 2
+# Consultas — Omar
 
 Estado: pendiente. Cada consulta se verifica de forma independiente en Relax con el dataset original.
 
