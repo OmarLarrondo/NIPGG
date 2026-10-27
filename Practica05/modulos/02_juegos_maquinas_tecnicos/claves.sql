@@ -17,6 +17,8 @@ ALTER TABLE "Mantenimiento"
 
 ALTER TABLE "Técnico"
     ADD CONSTRAINT pk_tecnico PRIMARY KEY ("CURP");
+    ADD CONSTRAINT ck_tecnico_rfc CHECK ("RFC" ~ '^[A-ZÑ&]{4}[0-9]{6}[A-Z0-9]{3}$');
 
 ALTER TABLE "CertificacionTecnico"
     ADD CONSTRAINT pk_certificacion_tecnico PRIMARY KEY ("CURP", "Certificaciones");
+    ADD CONSTRAINT ck_certificacion_tecnico_curp CHECK ("CURP" ~ '^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9A-Z]{2}$');
