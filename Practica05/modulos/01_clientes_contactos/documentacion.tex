@@ -5,7 +5,7 @@ Se implementan las trece tablas de este módulo a partir del diagrama
 relacional entregado en la Práctica~04. Se conservan sus nombres,
 columnas, tipos y llaves primarias, incluidos acentos y espacios mediante
 comillas dobles. Los contactos del personal se relacionan directamente
-con Gerente, Cajero, Encargado de premios y Técnico, conforme al criterio
+con Genrente, Cajero, Encargado de premios y Técnico, conforme al criterio
 señalado por Diego. Todas las columnas son obligatorias y carecen de
 valor predeterminado. Las restricciones se agregan mediante
 \texttt{ALTER TABLE}, separadas de la creación de las tablas.
@@ -311,7 +311,7 @@ lo que se comprueban al terminar cada sentencia.
 El módulo~02 debe proporcionar \texttt{"Máquina"} con
 \texttt{"idMaquina"} de tipo \texttt{integer} y \texttt{"Técnico"}
 con \texttt{"CURP"} de tipo \texttt{char(18)}. El módulo~05 debe
-proporcionar \texttt{"Gerente"}, \texttt{"Cajero"} y
+proporcionar \texttt{"Genrente"}, \texttt{"Cajero"} y
 \texttt{"Encargado de premios"}, cada una con \texttt{"CURP"}
 de tipo \texttt{char(18)}. Todas las columnas destino deben ser PK o
 UNIQUE. Las operaciones de otros módulos que identifiquen una tarjeta
@@ -346,6 +346,5 @@ Se esperan cuatro grupos válidos y 167 operaciones rechazadas. Un
 resultado distinto detiene la ejecución; se muestran los resultados y
 se revierte toda la transacción. Esta validación aislada no sustituye
 la ejecución del DDL con los cinco módulos reales ni las evidencias de
-restauración del respaldo. El contrato general y la integración del
-resto del equipo continúan pendientes.
+restauración del respaldo. El esquema completo también se valida con las tablas reales de los cinco módulos; los resultados se incluyen en la sección de validación integral.
 \endgroup

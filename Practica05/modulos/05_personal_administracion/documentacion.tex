@@ -2,30 +2,30 @@
 
 \section{Personal y administración}
 
-En este módulo se implementaron cuatro tablas correspondientes a tres de los cuatro tipos de empleados definidos en el modelo, así como la relación \textit{Administrar}, que vincula a un gerente con una sucursal. La implementación respeta el modelo relacional obtenido en la Práctica 04.
+En este módulo se implementaron cuatro tablas correspondientes a tres de los cuatro tipos de empleados definidos en el modelo, así como la relación \textit{Administrar}, que vincula a un gerente con una sucursal. Se conserva el nombre literal \texttt{Genrente} del diagrama, que contiene una errata en el rótulo de gerente. Los identificadores se delimitan con comillas dobles para conservar espacios, acentos y mayúsculas.
 
-\subsection{Tabla Gerente}
+\subsection{Tabla Genrente}
 
-La tabla \textit{Gerente} almacena la información de los empleados que desempeñan el puesto de gerente. Incluye los atributos generales del empleado, además de la cédula profesional, que es específica de este tipo.
+La tabla \textit{Genrente} almacena la información de los empleados que desempeñan el puesto de gerente. Incluye los atributos generales del empleado, además de la cédula profesional, que es específica de este tipo.
 
 \begin{itemize}
     \item \textbf{CURP (\texttt{CHAR(18)}):} Es la clave primaria de la tabla. Tiene una longitud fija de 18 caracteres, no admite valores nulos y debe cumplir con el formato establecido para una CURP.
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. No admite valores nulos, debe ser positiva y permite identificar la sucursal asociada con el gerente.
 
-    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del gerente con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del gerente con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
-    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
-    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
+    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del gerente, con una longitud máxima de 100 caracteres. No admite valores nulos ni cadenas vacías.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el Registro Federal de Contribuyentes. Tiene una longitud fija de 13 caracteres, no admite valores nulos, debe cumplir con el formato definido para el RFC y debe ser único dentro de la tabla.
 
-    \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha en que se contrató al gerente. No admite valores nulos y no puede ser posterior a la fecha actual.
+    \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha en que se contrató al gerente. No admite valores nulos y debe ser finita y no posterior a la fecha actual.
 
-    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario mediante un valor numérico con precisión de hasta 10 dígitos, incluidos los decimales, y una escala de 2 posiciones decimales. No admite valores nulos ni cantidades negativas.
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario mediante un valor numérico con precisión de hasta 10 dígitos, incluidos los decimales, y una escala de 2 posiciones decimales. No admite valores nulos ni cantidades negativas ni el valor especial NaN.
 
-    \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del gerente. No admite valores nulos y no puede ser posterior a la fecha actual.
+    \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del gerente. No admite valores nulos y debe ser finita y no posterior a la fecha actual.
 
     \item \textbf{cédulaProfesional (\texttt{VARCHAR(8)}):} Almacena la cédula profesional del gerente. No admite valores nulos y debe contener únicamente dígitos, con una longitud de 7 u 8 caracteres.
 \end{itemize}
@@ -34,7 +34,7 @@ Además de las restricciones de dominio descritas, la tabla utiliza la clave pri
 
 \subsection{Tabla Cajero}
 
-La tabla \textit{Cajero} almacena la información de los empleados que trabajan como cajeros. Al igual que \textit{Gerente}, incorpora los atributos generales del empleado y agrega el atributo específico \textit{horarioTrabajo}.
+La tabla \textit{Cajero} almacena la información de los empleados que trabajan como cajeros. Al igual que \textit{Genrente}, incorpora los atributos generales del empleado y agrega el atributo específico \textit{horarioTrabajo}.
 
 Sus columnas son las siguientes:
 
@@ -43,28 +43,28 @@ Sus columnas son las siguientes:
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
 
-    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del cajero. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del cajero. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
 
     \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha de contratación. No admite valores nulos ni fechas futuras.
 
-    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con dos posiciones decimales. No admite valores nulos ni cantidades negativas.
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con dos posiciones decimales. No admite valores nulos ni cantidades negativas ni el valor especial NaN.
 
     \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del cajero. No admite valores nulos ni fechas futuras.
 
-    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del cajero. Debe corresponder a uno de los horarios permitidos por las restricciones definidas para la tabla.
+    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del cajero. No admite valores nulos y debe ser 07:00:00 o 15:00:00.
 \end{itemize}
 
 La clave primaria garantiza que cada cajero tenga una CURP distinta. Asimismo, la clave foránea de \textit{idSucursal} asegura que la sucursal asociada exista, mientras que las restricciones de dominio validan los valores almacenados en las columnas.
 
-\subsection{Tabla EncargadoDePremios}
+\subsection{Tabla Encargado de premios}
 
-La tabla \textit{EncargadoDePremios} almacena la información de los empleados responsables de la administración de los premios. Su estructura incluye los atributos generales del empleado y el atributo específico \textit{horarioTrabajo}.
+La tabla \textit{Encargado de premios} almacena la información de los empleados responsables de la administración de los premios. Su estructura incluye los atributos generales del empleado y el atributo específico \textit{horarioTrabajo}.
 
 Las columnas que la conforman son:
 
@@ -73,33 +73,33 @@ Las columnas que la conforman son:
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia a \textit{Sucursal}. No admite valores nulos y debe ser un entero positivo.
 
-    \item \textbf{nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{Nombre (\texttt{VARCHAR(100)}):} Almacena el nombre del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{apellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{ApellidoMaterno (\texttt{VARCHAR(100)}):} Almacena el apellido materno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
-    \item \textbf{apellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
+    \item \textbf{ApellidoPaterno (\texttt{VARCHAR(100)}):} Almacena el apellido paterno del encargado. No admite valores nulos ni cadenas vacías y tiene una longitud máxima de 100 caracteres.
 
     \item \textbf{RFC (\texttt{CHAR(13)}):} Almacena el RFC del encargado. No admite valores nulos, debe cumplir con el formato definido y debe ser único dentro de la tabla.
 
     \item \textbf{fechaContratación (\texttt{DATE}):} Registra la fecha de contratación del encargado. No admite valores nulos ni fechas futuras.
 
-    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con una precisión de hasta 10 dígitos y dos posiciones decimales. No admite valores nulos ni cantidades negativas.
+    \item \textbf{salario (\texttt{NUMERIC(10,2)}):} Almacena el salario con una precisión de hasta 10 dígitos y dos posiciones decimales. No admite valores nulos ni cantidades negativas ni el valor especial NaN.
 
     \item \textbf{fechaNacimiento (\texttt{DATE}):} Registra la fecha de nacimiento del encargado. No admite valores nulos ni fechas futuras.
 
-    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del encargado. Su valor debe corresponder a uno de los horarios permitidos por las restricciones definidas para la tabla.
+    \item \textbf{horarioTrabajo (\texttt{TIME}):} Almacena el horario de trabajo del encargado. No admite valores nulos y debe ser 07:00:00 o 15:00:00.
 \end{itemize}
 
 La clave primaria permite identificar de manera única a cada encargado. La clave foránea mantiene la relación con una sucursal existente, y las restricciones de dominio evitan almacenar valores que incumplan las condiciones establecidas para cada atributo.
 
 \subsection{Tabla Administrar}
 
-La tabla \textit{Administrar} representa la relación entre \textit{Gerente} y \textit{Sucursal}. Su finalidad es registrar qué gerente administra cada sucursal, de acuerdo con el modelo relacional definido en la Práctica 04.
+La tabla \textit{Administrar} representa la relación entre \textit{Genrente} y \textit{Sucursal}. Su finalidad es registrar qué gerente administra cada sucursal, de acuerdo con el modelo relacional definido en la Práctica 04.
 
 Está compuesta por las siguientes columnas:
 
 \begin{itemize}
-    \item \textbf{CURP (\texttt{CHAR(18)}):} Es una clave foránea que referencia la clave primaria de \textit{Gerente}. Identifica al gerente que participa en la relación y no admite valores nulos.
+    \item \textbf{CURP (\texttt{CHAR(18)}):} Es una clave foránea que referencia la clave primaria de \textit{Genrente}. Identifica al gerente que participa en la relación y no admite valores nulos.
 
     \item \textbf{idSucursal (\texttt{INT}):} Es una clave foránea que referencia la clave primaria de \textit{Sucursal}. Identifica la sucursal administrada y no admite valores nulos.
 \end{itemize}
@@ -112,3 +112,25 @@ En conjunto, las cuatro tablas incorporan restricciones para preservar  la integ
 
 Con estas restricciones se busca que la información almacenada sea consistente con el modelo relacional de la Práctica 04 y con las reglas establecidas para el sistema.
 
+
+\subsection{Alcance de los dominios y la especialización}
+Todos los atributos son obligatorios y no tienen valores predeterminados.
+Las fechas deben ser finitas. Los salarios excluyen NaN. Los formatos de CURP
+y RFC son comprobaciones sintácticas mediante expresiones regulares, sin validar
+la existencia oficial del documento. El patrón de RFC exige un prefijo de tres o
+cuatro letras, seis dígitos y tres caracteres finales con el patrón definido en
+el DDL; CHAR(13) limita la longitud total. Los horarios permitidos para cajero y
+encargado son 07:00:00 y 15:00:00.
+
+Las claves foráneas de personal usan la acción predeterminada NO ACTION. La
+separación de puestos conserva la estructura del diagrama y no incorpora una
+tabla adicional Empleado. Las restricciones locales no fuerzan exclusión global
+de una misma CURP entre puestos, participación total de empleados, ni igualdad
+entre la sucursal de Genrente y la sucursal indicada en Administrar. Esas reglas
+entre tablas requerirían mecanismos adicionales; no se atribuyen a los CHECK
+locales.
+
+Las pruebas aisladas incluyen las fuentes reales del módulo y una sucursal
+mínima. Sus once resultados abarcan inserciones válidas y rechazos por clave,
+dominio y referencia. Se revierten mediante ROLLBACK. La prueba conjunta añade
+las dependencias reales de los demás módulos.

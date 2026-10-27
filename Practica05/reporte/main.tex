@@ -1,22 +1,30 @@
 \documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage{graphicx}
-\title{Práctica 05: Lenguaje de Definición de Datos}
-\author{Equipo ÑIPGG}
-\date{}
+\usepackage{estilo_practica}
 \begin{document}
-\maketitle
-\noindent\textbf{Plantilla de trabajo: contenido e identificación pendientes.}
-% TODO: completar portada conforme a los lineamientos de entrega.
+\input{portada_equipo.tex}
+\pagenumbering{roman}
 \tableofcontents
 \clearpage
+\pagenumbering{arabic}
+\begingroup
+\sloppy
+\renewcommand{\paragraph}[1]{\subsubsection*{#1}}
 \input{../modulos/01_clientes_contactos/documentacion.tex}
+\endgroup
+\clearpage
 \input{../modulos/02_juegos_maquinas_tecnicos/documentacion.tex}
+\clearpage
 \input{../modulos/03_premios_canjes/documentacion.tex}
+\clearpage
 \input{../modulos/04_sucursales_operaciones/documentacion.tex}
+\clearpage
 \input{../modulos/05_personal_administracion/documentacion.tex}
+\clearpage
+\input{secciones/05_validacion.tex}
+\clearpage
 \input{secciones/06_restauracion.tex}
+\clearpage
+\input{secciones/07_modelos.tex}
+\clearpage
+\input{secciones/08_referencias.tex}
 \end{document}

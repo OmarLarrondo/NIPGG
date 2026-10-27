@@ -1,0 +1,68 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{estilo_practica}[2026/10/26 Estilo academico de la practica]
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[spanish,es-nodecimaldot]{babel}
+\RequirePackage{lmodern}
+\RequirePackage{geometry}
+\geometry{a4paper,top=25mm,bottom=24mm,left=24mm,right=24mm,headheight=15pt,headsep=8mm}
+\RequirePackage{microtype}
+\RequirePackage{graphicx}
+\RequirePackage{pdflscape}
+\RequirePackage[table]{xcolor}
+\RequirePackage{booktabs,tabularx,array}
+\RequirePackage{ragged2e}
+\RequirePackage{setspace}
+\RequirePackage{titlesec}
+\RequirePackage{fancyhdr}
+\RequirePackage{caption}
+\RequirePackage{listings}
+\RequirePackage[authoryear,round]{natbib}
+\RequirePackage{hyperref}
+\definecolor{Tinta}{HTML}{173448}
+\definecolor{Acento}{HTML}{167780}
+\definecolor{GrisTexto}{HTML}{52616C}
+\definecolor{FondoTabla}{HTML}{F0F4F6}
+\definecolor{Linea}{HTML}{D7E1E6}
+\hypersetup{colorlinks=true,linkcolor=Tinta,urlcolor=Acento,citecolor=Tinta,
+ pdftitle={Práctica 05: Lenguaje de Definición de Datos},pdfauthor={Equipo ÑIPGG}}
+\urlstyle{same}
+\setstretch{1.10}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt plus 1pt minus 1pt}
+\setlength{\emergencystretch}{1.2em}
+\AtBeginDocument{\shorthandoff{"}\justifying\setlength{\parindent}{0pt}}
+\titleformat{\section}{\Large\sffamily\bfseries\color{Tinta}}{\thesection}{.6em}{}
+\titleformat{\subsection}{\large\sffamily\bfseries\color{Tinta}}{\thesubsection}{.6em}{}
+\titleformat{\subsubsection}{\normalsize\sffamily\bfseries\color{Tinta}}{\thesubsubsection}{.6em}{}
+\titlespacing*{\section}{0pt}{0pt}{14pt}
+\titlespacing*{\subsection}{0pt}{15pt}{8pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{GrisTexto}Fundamentos de Bases de Datos}
+\fancyhead[R]{\small\sffamily\color{GrisTexto}Práctica 05 · ÑIPGG}
+\fancyfoot[C]{\small\rmfamily\color{GrisTexto}\thepage}
+\renewcommand{\headrulewidth}{.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\captionsetup{font=small,labelfont={bf,color=Tinta},labelsep=period,
+ justification=justified,singlelinecheck=false,skip=10pt,hypcap=false}
+\captionsetup[figure]{name=Figura}
+\captionsetup[table]{name=Tabla}
+\setlength{\tabcolsep}{7pt}
+\newcolumntype{J}{>{\RaggedRight\arraybackslash}X}
+\newenvironment{tabladominios}{\begingroup\small\renewcommand{\arraystretch}{1.5}\rowcolors{2}{FondoTabla}{white}\begin{tabular}{@{}>{\RaggedRight\arraybackslash}p{.28\linewidth}>{\RaggedRight\arraybackslash}p{.17\linewidth}>{\RaggedRight\arraybackslash}p{\dimexpr.55\linewidth-4\tabcolsep\relax}@{}}\toprule\rowcolor{white}\textbf{Columna}&\textbf{Tipo}&\textbf{Dominio y restricciones}\\\midrule}{\bottomrule\end{tabular}\endgroup}
+\lstdefinestyle{sqlacademico}{basicstyle=\small\ttfamily,backgroundcolor=\color{FondoTabla},
+ frame=single,rulecolor=\color{Linea},framesep=9pt,breaklines=true,
+ columns=fullflexible,keepspaces=true,showstringspaces=false,
+ aboveskip=10pt,belowskip=10pt,xleftmargin=9pt,xrightmargin=9pt}
+\setlength{\bibsep}{12pt}
+\setlength{\bibhang}{1.27cm}
+\renewcommand{\bibfont}{\small}
+\newcommand{\paginaevidencia}[3]{%
+\thispagestyle{empty}%
+\noindent\makebox[\linewidth][c]{\includegraphics[width=\linewidth,height=.87\textwidth,keepaspectratio]{#1}}\par
+\captionof{figure}{#2}\label{#3}%
+\vfill
+{\centering\small\rmfamily\color{GrisTexto}\thepage\par}%
+\clearpage}

@@ -1,90 +1,97 @@
-% Práctica 05 | Responsable: Omar Alejandro Juárez Larrondo
-\section{Premios y canjes}
+% Práctica 05 | Premios y canjes.
+\section{Dominios y restricciones de premios y canjes}
+Se definen las tablas \texttt{Premio}, \texttt{Canje} y \texttt{Disponer}
+a partir del modelo relacional. Los identificadores conservan los nombres
+y acentos mediante comillas dobles. La creación de tablas establece las
+columnas y sus tipos; las restricciones se agregan con \texttt{ALTER TABLE}.
 
-Se implementan \texttt{Premio}, \texttt{Canje} y \texttt{Disponer} conforme
-al diagrama relacional proporcionado. Los nombres y acentos se conservan
-mediante comillas dobles. Todas las columnas son obligatorias
-(\texttt{NOT NULL}) y ninguna tiene valor predeterminado: los valores deben
-proporcionarse de forma explícita. Los tipos \texttt{integer} admiten hasta
-2\,147\,483\,647; los límites inferiores se precisan a continuación.
-La creación declara únicamente nombres y tipos. Todas las restricciones
-se agregan con \texttt{ALTER TABLE}.
+Todas las columnas son obligatorias (\texttt{NOT NULL}) y carecen de valor
+predeterminado. Los enteros admiten un máximo de 2\,147\,483\,647; las
+restricciones siguientes precisan su límite inferior. Las claves primarias
+identifican las filas y las claves foráneas mantienen la integridad
+referencial \citep{pg-constraints}.
 
 \subsection{Premio}
-\begingroup\small\renewcommand{\arraystretch}{1.25}
-\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
-\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
-\texttt{idPremio} & \texttt{integer} & Entero positivo; PK. \\
-\texttt{valorAproximado} & \texttt{integer} & Importe entero no negativo en pesos; se admite cero. \\
+El catálogo almacena el valor estimado, el costo en puntos y las
+características de cada premio. La clave primaria es \texttt{idPremio}.
+
+\begin{tabladominios}
+\texttt{idPremio} & \texttt{integer} & Entero positivo; clave primaria. \\
+\texttt{valorAproximado} & \texttt{integer} & Entero no negativo; importe estimado en pesos. Se admite cero. \\
 \texttt{puntosNecesarios} & \texttt{integer} & Entero positivo; puntos requeridos por unidad. \\
-\texttt{nombre} & \texttt{varchar(50)} & Hasta 50 caracteres; al menos uno que no sea blanco. \\
-\texttt{categoría} & \texttt{varchar(50)} & Hasta 50 caracteres no vacíos; sin catálogo cerrado. \\
-\texttt{rangoEdad} & \texttt{varchar(50)} & Descriptor de hasta 50 caracteres no vacíos; sin formato cerrado. \\
-\hline\end{tabular}\endgroup
+\texttt{nombre} & \texttt{varchar(50)} & Hasta 50 caracteres; debe contener al menos un carácter que no sea blanco. \\
+\texttt{categoría} & \texttt{varchar(50)} & Hasta 50 caracteres; debe contener al menos un carácter que no sea blanco. No se impone un catálogo cerrado. \\
+\texttt{rangoEdad} & \texttt{varchar(50)} & Descriptor de hasta 50 caracteres; debe contener al menos un carácter que no sea blanco. \\
+\end{tabladominios}
 
-No se declara unicidad sobre el nombre: distintos premios pueden compartirlo.
+No se exige unicidad en \texttt{nombre}, pues distintos premios pueden
+compartir una denominación. El inventario se registra por sucursal en
+\texttt{Disponer}, de forma independiente del catálogo.
 
+\clearpage
 \subsection{Canje}
-\begingroup\small\renewcommand{\arraystretch}{1.25}
-\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
-\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
-\texttt{idCanje} & \texttt{integer} & Entero positivo; PK global del canje. \\
-\texttt{idSucursal} & \texttt{integer} & Entero positivo; FK a SUCURSAL(idSucursal). \\
-\texttt{idCliente} & \texttt{integer} & Entero positivo; FK a Cliente(idCliente). \\
-\texttt{idPremio} & \texttt{integer} & Entero positivo; FK a Premio(idPremio). \\
-\texttt{CURP} & \texttt{char(18)} & CURP con formato de 18 caracteres; FK al encargado. \\
-\texttt{hora} & \texttt{time} & Hora válida sin zona horaria; tipo del diagrama. \\
+Cada registro identifica una operación de entrega de premios. La clave
+primaria es \texttt{idCanje}; las referencias a cliente, premio, sucursal
+y encargado pueden repetirse entre operaciones distintas.
+
+\begin{tabladominios}
+\texttt{idCanje} & \texttt{integer} & Entero positivo; clave primaria global del canje. \\
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; clave foránea.\newline\texttt{SUCURSAL(idSucursal)}. \\
+\texttt{idCliente} & \texttt{integer} & Entero positivo; clave foránea.\newline\texttt{Cliente(idCliente)}. \\
+\texttt{idPremio} & \texttt{integer} & Entero positivo; clave foránea.\newline\texttt{Premio(idPremio)}. \\
+\texttt{CURP} & \texttt{char(18)} & Cadena de 18 caracteres con formato de CURP; referencia a la clave del encargado de premios. \\
+\texttt{hora} & \texttt{time} & Hora válida sin zona horaria. \\
 \texttt{puntosUtilizados} & \texttt{integer} & Entero positivo; puntos consumidos en la operación. \\
-\texttt{cantidadPremios} & \texttt{integer} & Entero positivo; unidades entregadas. \\
-\texttt{fecha} & \texttt{date} & Fecha válida y finita; se rechazan ambos infinitos. \\
-\hline\end{tabular}\endgroup
+\texttt{cantidadPremios} & \texttt{integer} & Entero positivo; número de unidades entregadas. \\
+\texttt{fecha} & \texttt{date} & Fecha válida y finita; se rechazan los valores infinito positivo e infinito negativo. \\
+\end{tabladominios}
 
-La PK es únicamente \texttt{idCanje}, tal como aparece marcada en el
-modelo adjunto; no se utiliza la clave compuesta propuesta en el informe
-previo. La FK \texttt{CURP} apunta a \texttt{Encargado de premios(CURP)}.
-La validación de formato exige cuatro letras mayúsculas, seis dígitos,
-H o M, cinco letras mayúsculas y dos caracteres alfanuméricos finales.
-Esta expresión no certifica que la CURP haya sido expedida ni valida su
-fecha interna. La hora conserva \texttt{time}, sin añadir zona horaria.
-Las FK pueden repetirse: un cliente puede realizar varios canjes.
+La clave foránea \texttt{CURP} referencia a
+\texttt{Encargado de premios(CURP)}. La comprobación de formato exige
+cuatro letras mayúsculas, seis dígitos, H o M, cinco letras mayúsculas
+y dos caracteres alfanuméricos finales.
 
+Esta comprobación valida la estructura de la cadena; la expedición oficial
+de la CURP y la validez de su fecha interna quedan fuera de su alcance.
+La fecha y la hora de la operación se almacenan en columnas independientes.
+
+\clearpage
 \subsection{Disponer}
-\begingroup\small\renewcommand{\arraystretch}{1.25}
-\noindent\begin{tabular}{@{}p{.28\textwidth}p{.18\textwidth}p{.46\textwidth}@{}}
-\hline Columna & Tipo & Dominio (NULL: no; sin DEFAULT) \\ \hline
-\texttt{idSucursal} & \texttt{integer} & Entero positivo; FK a SUCURSAL(idSucursal). \\
-\texttt{idPremio} & \texttt{integer} & Entero positivo; FK a Premio(idPremio). \\
+Esta relación representa las existencias de cada premio en una sucursal.
+La clave primaria compuesta \texttt{(idSucursal, idPremio)} identifica una
+única fila de inventario por combinación de sucursal y premio.
+
+\begin{tabladominios}
+\texttt{idSucursal} & \texttt{integer} & Entero positivo; clave foránea.\newline\texttt{SUCURSAL(idSucursal)}. \\
+\texttt{idPremio} & \texttt{integer} & Entero positivo; clave foránea.\newline\texttt{Premio(idPremio)}. \\
 \texttt{cantidadDisponible} & \texttt{integer} & Entero no negativo; cero representa inventario agotado. \\
-\hline\end{tabular}\endgroup
+\end{tabladominios}
 
-La PK compuesta es \texttt{(idSucursal, idPremio)}; identifica una sola
-fila de inventario por premio y sucursal. Un premio puede estar disponible
-en varias sucursales y cada sucursal puede disponer de varios premios.
+Un premio puede estar disponible en varias sucursales y cada sucursal puede
+ofrecer varios premios. La clave compuesta evita duplicar una misma
+combinación y el dominio impide almacenar existencias negativas.
 
-\subsection{Integridad referencial y alcance}
-Las seis FK usan \texttt{ON UPDATE NO ACTION} y \texttt{ON DELETE NO ACTION}.
-No se permite eliminar o cambiar una clave referenciada si quedan filas
-que dependan de ella. No se utilizan eliminaciones en cascada para el
-historial de canjes.
+\subsection{Integridad referencial}
+Las seis claves foráneas utilizan \texttt{ON UPDATE NO ACTION} y
+\texttt{ON DELETE NO ACTION}. Una clave referenciada no puede modificarse
+o eliminarse si permanecen filas que dependen de ella. El historial de
+canjes se conserva sin eliminaciones en cascada.
 
-La suficiencia de puntos, la existencia de inventario al momento del
-canje, el descuento de existencias y la correspondencia entre
-\texttt{puntosUtilizados}, \texttt{cantidadPremios} y el costo vigente
-requieren una operación transaccional entre tablas. Tampoco se valida aquí
-que el encargado trabaje en la sucursal del canje. No se presentan como
-reglas resueltas por estos \texttt{CHECK}. El costo del catálogo puede
-cambiar y el canje conserva sus puntos históricos.
+La suficiencia de puntos, la disponibilidad al realizar un canje, el
+descuento de existencias y la relación entre el costo vigente y los puntos
+consumidos requieren operaciones transaccionales entre tablas. Lo mismo
+ocurre con la asignación del encargado a la sucursal. Estas reglas no se
+atribuyen a las restricciones \texttt{CHECK} de cada fila.
 
-\subsection{Validación}
-Se ejecutaron 58 casos en PostgreSQL~18 sobre este módulo aislado: datos
-válidos, límites con cero, todas las columnas nulas, dominios inválidos,
-longitudes excesivas, fechas infinitas, PK duplicadas, las seis FK,
-protección de referencias y actualización a inventario negativo.
-Los fallos esperados se aislaron en bloques de excepción y se comprobaron
-por SQLSTATE y, cuando corresponde, por nombre de restricción. La ejecución
-terminó con 58 resultados correctos y \texttt{ROLLBACK}; no dejó datos de
-prueba. Las tablas externas se representan mediante dependencias mínimas
-solo dentro del esquema de prueba; esta validación no acredita la integración
-completa ni incluye la restauración del respaldo. La integración deberá
-conciliar el nombre del encargado del diagrama con el SQL del módulo de
-personal, sin modificar ese módulo desde esta sección.
+\subsection{Validación de las restricciones}
+Se ejecutaron 58 casos sobre un esquema de prueba aislado en PostgreSQL 18
+y se repitieron satisfactoriamente en PostgreSQL 16.15. Se comprobaron datos
+válidos, límites con cero, valores nulos en cada columna, dominios
+inválidos, longitudes excesivas, fechas infinitas, claves primarias
+duplicadas, las seis claves foráneas y la protección de las referencias.
+
+Los rechazos esperados se comprobaron mediante SQLSTATE y, cuando
+correspondía, por el nombre de la restricción. Los 58 casos fueron correctos.
+La ejecución terminó con \texttt{ROLLBACK}, por lo que no dejó datos de
+prueba. Las tablas externas se representaron mediante dependencias mínimas
+para evaluar exclusivamente estas tres relaciones.

@@ -1,7 +1,5 @@
 # Informe final
 
-Destino previsto: `Práctica05.pdf`, todavía no generado.
+[Práctica05.pdf](Práctica05.pdf) integra dominios de las 146 columnas de las 30 tablas, portada con los cinco integrantes y números de cuenta, validación del esquema, evidencias de restauración y modelos E-R y relacional.
 
-Se obtendrá de [../reporte/main.tex](../reporte/main.tex) cuando estén completas las cinco secciones de dominios y las evidencias de restauración. El PDF `../Práctica05.pdf` es la consigna original, no el informe del equipo.
-
-Antes de entregar, compilar y revisar el contenido, la identificación y la presentación del PDF final.
+Se compila desde `../reporte/main.tex`. Los archivos con sufijo `avance` son históricos y quedan fuera del ZIP. La consigna original está en la raíz de la práctica.

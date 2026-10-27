@@ -1,32 +1,35 @@
 -- Práctica 05 | Personal y administración
 -- Responsable: Diego
--- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
+-- Tablas: "Genrente", "Cajero", "Encargado de premios", "Administrar"
 -- Definir mediante ALTER TABLE las PRIMARY KEY simples o compuestas y las restricciones UNIQUE.
 
--- 1. Gerente
-ALTER TABLE Gerente
-    ADD CONSTRAINT pkgerente PRIMARY KEY (CURP);
+-- 1. "Genrente"
+ALTER TABLE "Genrente"
+    ADD CONSTRAINT pkgerente PRIMARY KEY ("CURP");
 
-ALTER TABLE Gerente
-    ADD CONSTRAINT uqgerenterfc UNIQUE (RFC);
+ALTER TABLE "Genrente"
+    ADD CONSTRAINT uqgerenterfc UNIQUE ("RFC");
 
--- 2. Cajero
-ALTER TABLE Cajero
-    ADD CONSTRAINT pkcajero PRIMARY KEY (CURP);
+-- 2. "Cajero"
+ALTER TABLE "Cajero"
+    ADD CONSTRAINT pkcajero PRIMARY KEY ("CURP");
 
-ALTER TABLE Cajero
-    ADD CONSTRAINT uqcajerorfc UNIQUE (RFC);
+ALTER TABLE "Cajero"
+    ADD CONSTRAINT uqcajerorfc UNIQUE ("RFC");
 
--- 3. EncargadoDePremios
-ALTER TABLE EncargadoDePremios
-    ADD CONSTRAINT pkencargadodepremios PRIMARY KEY (CURP);
+-- 3. "Encargado de premios"
+ALTER TABLE "Encargado de premios"
+    ADD CONSTRAINT pkencargadodepremios PRIMARY KEY ("CURP");
 
-ALTER TABLE EncargadoDePremios
-    ADD CONSTRAINT uqencargadodepremiosrfc UNIQUE (RFC);
+ALTER TABLE "Encargado de premios"
+    ADD CONSTRAINT uqencargadodepremiosrfc UNIQUE ("RFC");
 
--- 4. Administrar
-ALTER TABLE Administrar
-    ADD CONSTRAINT pkadministrar PRIMARY KEY (CURP);
+-- 4. "Administrar"
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT pkadministrar PRIMARY KEY ("CURP", "idSucursal");
 
-ALTER TABLE Administrar
-    ADD CONSTRAINT uqadministrarsucursal UNIQUE (idSucursal);
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT uqadministrarsucursal UNIQUE ("idSucursal");
+
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT uqadministrargerente UNIQUE ("CURP");

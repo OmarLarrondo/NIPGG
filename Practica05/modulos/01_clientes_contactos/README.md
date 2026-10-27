@@ -48,13 +48,13 @@ Se usan comillas dobles para conservar los identificadores, incluidos acentos y 
 |---|---|---|
 | Ana (02) | `Máquina` | `idMaquina integer`, PK/UNIQUE |
 | Ana (02) | `Técnico` | `CURP char(18)`, PK/UNIQUE |
-| Diego (05) | `Gerente` | `CURP char(18)`, PK/UNIQUE |
+| Diego (05) | `Genrente` | `CURP char(18)`, PK/UNIQUE |
 | Diego (05) | `Cajero` | `CURP char(18)`, PK/UNIQUE |
 | Diego (05) | `Encargado de premios` | `CURP char(18)`, PK/UNIQUE |
 
 Las tablas de otros módulos que identifiquen una tarjeta conforme al diagrama deben usar `(idCliente, numeroTarjeta)`. Se conserva también la clave candidata `Tarjeta(idCliente)` por la relación 1:1.
 
-El [contrato del modelo](../../acuerdos/contrato_modelo.md) y los scripts de los otros módulos siguen pendientes en la copia actual del repo. No se han modificado aquí. La validación conjunta requiere sus implementaciones reales; la prueba aislada no confirma su compatibilidad. La participación total Cliente–Tarjeta y las reglas entre puestos o movimientos no se presentan como resueltas por un `CHECK` local.
+El [contrato del modelo](../../acuerdos/contrato_modelo.md) registra la versión final. La validación conjunta se completó con los cinco módulos reales. La participación total Cliente–Tarjeta y las reglas entre puestos o movimientos no se presentan como resueltas por un `CHECK` local.
 
 ## Verificación realizada
 
@@ -65,7 +65,7 @@ Revisión local del 24 de octubre de 2026:
 - Las pruebas de datos válidos e inválidos pasaron en PostgreSQL 18.6 mediante PGlite 0.5.11; se revirtió el esquema de prueba al terminar.
 - La documentación compiló dentro de una copia temporal del reporte completo con el compilador LaTeX de la aplicación.
 
-Es una validación aislada. Los módulos ajenos disponibles en esta copia todavía son plantillas, por lo que no se ha comprobado una integración con sus tablas reales. Las reglas entre tablas que exceden las PK, FK y restricciones locales se describen en la documentación sin presentarlas como implementadas.
+Es una validación aislada. El DDL final también se comprobó mediante la prueba conjunta con los cinco módulos reales. Las reglas entre tablas que exceden las PK, FK y restricciones locales se describen en la documentación sin presentarlas como implementadas.
 
 ## Pruebas
 
@@ -78,3 +78,5 @@ psql -X -v ON_ERROR_STOP=1 -d BASE_DE_PRUEBAS -f Practica05/modulos/01_clientes_
 El script usa comandos de `psql` (`\ir`), prepara dependencias mínimas, prueba las restricciones y revierte todo al terminar. No se incorpora a `DDL.sql` y no utiliza las tablas reales del equipo. Si el esquema de prueba ya existe, se detiene sin borrarlo ni reutilizarlo.
 
 La restauración, los README generales, la recopilación de diagramas, el empaquetado y la integración general conservan el reparto del equipo.
+
+Estado de cierre: integrado en `../../SQL/DDL.sql`; pruebas individuales y conjuntas aprobadas. Los identificadores exactos se consultan en `../../acuerdos/contrato_modelo.md`.

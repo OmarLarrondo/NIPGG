@@ -1,0 +1,42 @@
+\section{Validación integral del esquema}
+El archivo DDL.sql se ensambla por fases: creación de todas las tablas,
+dominios, claves primarias y candidatas, y finalmente referencias. Dentro de
+cada fase se incorporan los módulos 01 a 05. El resultado es SQL autónomo,
+sin instrucciones de inclusión ni dependencias de archivos locales.
+
+Se ejecutó en una base nueva con PostgreSQL 18, mediante psql con
+\texttt{ON\_ERROR\_STOP=1} y transacción única. La ejecución terminó sin errores.
+Las 30 tablas y los nombres literales de sus 146 columnas se contrastaron
+con el archivo Draw.io relacional. El catálogo confirma 30 claves primarias,
+38 claves foráneas, seis restricciones UNIQUE, 134 CHECK y 146 columnas
+NOT NULL. Ninguna restricción quedó sin validar.
+
+Se conservan los rótulos \texttt{Genrente} y \texttt{TeléfonoTécnivo}, que
+contienen erratas en el modelo original, para mantener correspondencia literal.
+Las tablas de contacto conservan sus propios nombres, por ejemplo
+\texttt{CorreoElectrónicoGerente}. La clave de Mantenimiento es compuesta.
+En Disponer y Administrar, cuyos atributos aparecen marcados como FK sin
+marcas PK explícitas, se define una clave primaria con la pareja de columnas.
+Administrar añade UNIQUE por gerente y por sucursal para la relación uno a uno.
+
+La prueba conjunta insertó datos válidos en las 30 tablas reales y comprobó
+363 operaciones que debían rechazarse: 146 por NULL, 138 por dominio,
+36 por unicidad y 43 por integridad referencial. Incluyó referencias entre
+los cinco módulos, pares de tarjeta inexistentes, puestos incorrectos en canjes,
+eliminaciones de filas referenciadas y un discriminante de mantenimiento
+reutilizado en otra máquina. Cada rechazo se contrastó con su SQLSTATE;
+un resultado inesperado detiene la ejecución. La transacción terminó en
+\texttt{ROLLBACK}, por lo que los datos sintéticos de prueba no forman
+parte del esquema entregado.
+
+También se ejecutaron las cinco pruebas aisladas: clientes y contactos
+(cuatro grupos válidos y 167 rechazos), juegos y técnicos (74 rechazos),
+premios y canjes (58 casos), sucursales y operaciones (36 resultados),
+y personal y administración (once resultados). Las pruebas aisladas usan
+dependencias mínimas; la comprobación conjunta utiliza las tablas reales.
+
+Los dominios locales no garantizan reglas operativas entre filas o tablas,
+como suficiencia de puntos, descuento de inventario y exclusión de puestos.
+Tales reglas requieren transacciones de aplicación u otros mecanismos
+adicionales. La validación aquí descrita acredita las restricciones incluidas
+en el DDL, sin atribuirles esas reglas operativas.

@@ -1,19 +1,54 @@
 \documentclass[11pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[spanish]{babel}
-\usepackage[margin=2.5cm]{geometry}
-\title{Práctica 05: identificación y contenido de la entrega}
-\author{Equipo ÑIPGG}
-\date{}
+\usepackage{estilo_practica}
 \begin{document}
-\maketitle
-\noindent\textbf{Plantilla pendiente de completar por Omar.}
-\section*{Integrantes}
-% TODO: sustituir por nombres completos y números de cuenta confirmados.
-Miguel, Ana, Omar, Yahir y Diego.
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\thispagestyle{empty}
+{\sffamily\color{Tinta}\large Universidad Nacional Autónoma de México\par
+\normalsize Facultad de Ciencias\par}
+\vspace{9mm}
+{\color{Acento}\rule{\linewidth}{1.2pt}\par}
+\vspace{14mm}
+{\sffamily\color{Acento}\large FUNDAMENTOS DE BASES DE DATOS\par}
+\vspace{6mm}
+{\sffamily\color{Tinta}\fontsize{32}{38}\selectfont\bfseries Práctica 05\par}
+\vspace{4mm}
+{\sffamily\color{Tinta}\fontsize{21}{27}\selectfont Lenguaje de Definición de Datos\par}
+\vspace{7mm}
+{\large Identificación y contenido de la entrega\par}
+\vfill
+{\sffamily\color{Tinta}\large\bfseries Equipo ÑIPGG\par}
+\vspace{4mm}
+\begin{tabularx}{\linewidth}{@{}Xr@{}}
+\toprule
+\textbf{Nombre completo} & \textbf{Número de cuenta}\\\midrule
+Omar Alejandro Juárez Larrondo & 322245244\\[5pt]
+Yahir León Bautista & 322176542\\[5pt]
+Diego Hernández Gómez & 321069942\\[5pt]
+Miguel Ángel Jiménez Ramírez & 119000887\\[5pt]
+Ana Lilia Carballido Camacateco & 315314601\\\bottomrule
+\end{tabularx}\par
+\vspace{9mm}
+Profesor: Gerardo Avilés Rosas\\
+Semestre 2027-I · 26 de octubre de 2026\par
+\vspace{7mm}
+{\color{Linea}\rule{\linewidth}{.6pt}\par}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
 \section*{Contenido de la entrega}
-% TODO: describir únicamente los archivos que realmente se incluyan en el ZIP final.
-% Destinos previstos: Diagramas/ (cuatro archivos), SQL/DDL.sql,
-% Docs/Práctica05.pdf y README_ÑIPGG.pdf.
+\begin{description}
+\item[README\_ÑIPGG.pdf] Identificación del equipo y descripción del contenido.
+\item[Docs/Práctica05.pdf] Dominios y restricciones de las 146 columnas de las 30 tablas,
+  evidencias de restauración del respaldo y modelos gráficos de referencia.
+\item[SQL/DDL.sql] SQL autónomo ensamblado por fases: tablas, dominios,
+  claves y referencias. Validado en una base vacía con PostgreSQL 18 y pruebas de integración.
+\item[Diagramas/ERÑIPGG.png] Imagen del modelo entidad--relación.
+\item[Diagramas/ERÑIPGG.drawio] Fuente editable del modelo entidad--relación.
+\item[Diagramas/RelacionalÑIPGG.png] Imagen del modelo relacional.
+\item[Diagramas/RelacionalÑIPGG.drawio] Fuente editable del modelo relacional.
+\end{description}
+El archivo comprimido contiene exclusivamente
+los siete archivos enumerados. Las fuentes de trabajo, pruebas y registros
+se conservan fuera del paquete.
 \end{document}

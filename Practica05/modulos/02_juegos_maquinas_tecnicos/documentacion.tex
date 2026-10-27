@@ -1,8 +1,99 @@
-% Práctica 05 | Responsable: Ana
 \section{Juegos, máquinas y técnicos}
-% Tablas asignadas: TipoJuego, Juego, Máquina, Mantenimiento, Técnico, CertificacionTecnico.
-% TODO: documentar cada columna: tabla, nombre exacto, tipo, longitud/precisión,
-% nulabilidad, dominio, valor predeterminado si aplica y justificación.
-% TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
-% TODO: distinguir reglas implementadas y reglas entre tablas que requieran
-% un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
+Se implementan las seis tablas del modelo relacional con sus nombres y columnas
+literales. Los identificadores se delimitan con comillas dobles para preservar
+acentos y mayúsculas. Se incluyen \texttt{tipoDeJuego}, \texttt{Certificaciones},
+\texttt{fechaContratación} y \texttt{áreaEspecialidad} tal como aparecen en el diagrama.
+Todas las columnas son obligatorias; no se definen valores predeterminados.
+Las restricciones de dominio, entidad y referencia se añaden mediante
+\texttt{ALTER TABLE}, separadas de la creación de tablas.
+\subsection{tipoDeJuego}
+Catálogo de tipos de juego y sus reglas de puntuación. Se conserva el nombre literal del diagrama.
+
+\begin{tabladominios}
+\texttt{idTipo} & \texttt{int} & Entero positivo; identifica un tipo de juego existente cuando actúa como referencia. No admite NULL.\\
+\texttt{reglaPuntuacion} & \texttt{text} & Texto no vacío ni compuesto únicamente por espacios; describe la regla de puntuación. No admite NULL.\\
+\texttt{condicion} & \texttt{text} & Texto no vacío ni compuesto únicamente por espacios; describe la condición del tipo de juego. No admite NULL.\\
+\texttt{nombre} & \texttt{varchar(50)} & Hasta 50 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(idTipo)}. Los valores que formarían duplicados se rechazan.
+\clearpage
+\subsection{Juego}
+Define los juegos disponibles y su tipo. La llave foránea idTipo apunta a tipoDeJuego.
+
+\begin{tabladominios}
+\texttt{idJuego} & \texttt{int} & Entero positivo; identifica un juego existente cuando actúa como referencia. No admite NULL.\\
+\texttt{costo} & \texttt{int} & Entero no negativo; admite costo cero y evita valores fraccionarios conforme al modelo. No admite NULL.\\
+\texttt{nombre} & \texttt{varchar(50)} & Hasta 50 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\texttt{idTipo} & \texttt{int} & Entero positivo; identifica un tipo de juego existente cuando actúa como referencia. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(idJuego)}. Los valores que formarían duplicados se rechazan.
+\clearpage
+\subsection{Máquina}
+Identifica cada máquina, su juego y su sucursal. Las referencias a Juego y SUCURSAL deben existir.
+
+\begin{tabladominios}
+\texttt{idMaquina} & \texttt{int} & Entero positivo; identifica una máquina existente cuando actúa como referencia. No admite NULL.\\
+\texttt{estado} & \texttt{varchar(50)} & Hasta 50 caracteres; texto no vacío. No se impone un catálogo cerrado ausente del modelo. No admite NULL.\\
+\texttt{idJuego} & \texttt{int} & Entero positivo; identifica un juego existente cuando actúa como referencia. No admite NULL.\\
+\texttt{idSucursal} & \texttt{int} & Entero positivo; referencia a SUCURSAL.idSucursal. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(idMaquina)}. Los valores que formarían duplicados se rechazan.
+\clearpage
+\subsection{Mantenimiento}
+Registra los servicios por máquina y el técnico responsable. La clave primaria compuesta es (idMaquina, idMantenimiento); un número de mantenimiento puede reutilizarse en otra máquina.
+
+\begin{tabladominios}
+\texttt{idMaquina} & \texttt{int} & Entero positivo; identifica una máquina existente cuando actúa como referencia. No admite NULL.\\
+\texttt{idMantenimiento} & \texttt{int} & Entero positivo; discriminante del mantenimiento dentro de su máquina. No admite NULL.\\
+\texttt{fecha} & \texttt{date} & Fecha finita, no posterior a CURRENT\_DATE al insertar o actualizar. No admite NULL.\\
+\texttt{descripcionProblema} & \texttt{text} & Texto no vacío ni compuesto únicamente por espacios; longitud variable. No admite NULL.\\
+\texttt{tipoMantenimiento} & \texttt{varchar(50)} & Hasta 50 caracteres; texto no vacío, sin catálogo cerrado adicional. No admite NULL.\\
+\texttt{CURP} & \texttt{char(18)} & Cadena fija de 18 caracteres: cuatro letras, seis dígitos, H o M, cinco letras y dos caracteres alfanuméricos. La expresión regular comprueba el formato básico. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(idMaquina, idMantenimiento)}. Los valores que formarían duplicados se rechazan.
+\clearpage
+\subsection{Técnico}
+Contiene los datos del puesto técnico y su especialidad; el modelo distribuye los atributos del empleado en cada puesto. CURP es la clave primaria e idSucursal referencia a SUCURSAL.
+
+\begin{tabladominios}
+\texttt{CURP} & \texttt{char(18)} & Cadena fija de 18 caracteres: cuatro letras, seis dígitos, H o M, cinco letras y dos caracteres alfanuméricos. La expresión regular comprueba el formato básico. No admite NULL.\\
+\texttt{idSucursal} & \texttt{int} & Entero positivo; referencia a SUCURSAL.idSucursal. No admite NULL.\\
+\texttt{Nombre} & \texttt{varchar(100)} & Hasta 100 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\texttt{ApellidoMaterno} & \texttt{varchar(100)} & Hasta 100 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\texttt{ApellidoPaterno} & \texttt{varchar(100)} & Hasta 100 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\texttt{RFC} & \texttt{char(13)} & Cadena fija de 13 caracteres; patrón básico de tres o cuatro letras, seis dígitos y tres caracteres alfanuméricos. El tamaño de CHAR limita el total a 13. No admite NULL.\\
+\texttt{fechaContratación} & \texttt{date} & Fecha finita, no posterior a CURRENT\_DATE al insertar o actualizar. No admite NULL.\\
+\texttt{salario} & \texttt{numeric(10,2)} & NUMERIC(10,2): hasta ocho dígitos enteros y dos decimales; no negativo y distinto del valor especial NaN. No admite NULL.\\
+\texttt{fechaNacimiento} & \texttt{date} & Fecha finita, no posterior a CURRENT\_DATE al insertar o actualizar. No admite NULL.\\
+\texttt{áreaEspecialidad} & \texttt{varchar(100)} & Hasta 100 caracteres; al menos uno distinto de espacio en blanco. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(CURP)}. Los valores que formarían duplicados se rechazan.
+\clearpage
+\subsection{Certificaciones}
+Almacena las certificaciones de cada técnico. Su clave primaria es (CURP, Certificaciones) y CURP referencia a Técnico.
+
+\begin{tabladominios}
+\texttt{CURP} & \texttt{char(18)} & Cadena fija de 18 caracteres: cuatro letras, seis dígitos, H o M, cinco letras y dos caracteres alfanuméricos. La expresión regular comprueba el formato básico. No admite NULL.\\
+\texttt{Certificaciones} & \texttt{varchar(80)} & Hasta 80 caracteres; texto no vacío. Se permite más de una certificación por técnico sin repetir la misma pareja. No admite NULL.\\
+\end{tabladominios}
+
+La clave primaria es \texttt{(CURP, Certificaciones)}. Los valores que formarían duplicados se rechazan.
+
+\subsection{Alcance y comprobación}
+Las siete llaves foráneas utilizan \texttt{NO ACTION} al actualizar y eliminar.
+Esto evita referencias huérfanas; no aplica cambios en cascada. El formato de CURP
+y RFC es una validación sintáctica, sin comprobar su emisión ni autenticidad.
+La nulabilidad se impide con \texttt{SET NOT NULL}; las longitudes y los tipos
+acotan el almacenamiento sin inventar enumeraciones para estado o mantenimiento.
+
+Las pruebas aisladas crean una sucursal mínima e incluyen las cuatro fuentes
+SQL del módulo. Comprueban inserciones válidas, duplicados, NULL, dominios y
+referencias, con 74 rechazos esperados. Verifican también que un discriminante
+de mantenimiento puede repetirse en otra máquina. La transacción termina con
+\texttt{ROLLBACK}. La prueba integrada adicional utiliza las tablas reales
+de los cinco módulos.

@@ -1,10 +1,10 @@
-# Fuentes del informe y del README de entrega
+# Fuentes del informe final
 
-- [main.tex](main.tex): plantilla del informe; incorpora la documentación de los cinco módulos. Cada responsable edita `documentacion.tex` en su módulo.
-- [secciones/06_restauracion.tex](secciones/06_restauracion.tex): procedimiento y resultados de restauración, a cargo de Omar.
-- [evidencias/restauracion/](evidencias/restauracion/): capturas y registros de respaldo.
-- [README_ÑIPGG.tex](README_ÑIPGG.tex): plantilla del README de identificación y contenido, a cargo de Omar.
+- `main.tex`: cinco módulos, validación integral, restauración, diagramas y referencias.
+- `portada_equipo.tex`: datos de los cinco integrantes.
+- `README_ÑIPGG.tex`: identificación y contenido exacto del paquete.
+- `estilo_practica.sty`: estilo compartido.
 
-Compilar desde esta carpeta para resolver correctamente las rutas de `\input`. Los destinos finales son `../Docs/Práctica05.pdf` y `../README_ÑIPGG.pdf`; los auxiliares de compilación no forman parte de la entrega.
+Compilar desde esta carpeta con dos pasadas de `pdflatex -halt-on-error main.tex` y dos de `pdflatex -halt-on-error README_ÑIPGG.tex`. Copiar los PDF a `../Docs/Práctica05.pdf` y `../README_ÑIPGG.pdf`. Los auxiliares y fuentes no se incluyen en la entrega.
 
-Las plantillas contienen pendientes visibles y aún no son documentos finales. No se han compilado ni validado visualmente. Completar identificación, contenido y evidencias antes de generar los PDF de entrega.
+Las cuatro capturas de `evidencias/restauracion/` se incluyen para recompilar el informe. Los registros y archivos auxiliares no se versionan.

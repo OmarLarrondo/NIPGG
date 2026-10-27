@@ -1,13 +1,8 @@
 % Práctica 05 | Responsable: Yahir
 \section{Sucursales y operaciones}
 % Tablas asignadas: Sucursal, HorarioSucursal, Visita, Recarga.
-% TODO: documentar cada columna: tabla, nombre exacto, tipo, longitud/precisión,
-% nulabilidad, dominio, valor predeterminado si aplica y justificación.
-% TODO: explicar PK, UNIQUE y FK y mantener correspondencia con el SQL.
-% TODO: distinguir reglas implementadas y reglas entre tablas que requieran
-% un mecanismo adicional; no presentarlas como resueltas por un CHECK local.
 
-En este módulo se implementaron cuatro tablas correspondientes a la gestión de sucursales, sus horarios de operación, el registro de las visitas realizadas por los clientes y el control de las recargas de saldo efectuadas en el sistema. 
+En este módulo se implementaron cuatro tablas correspondientes a la gestión de sucursales, sus horarios de operación, el registro de las visitas realizadas por los clientes y el control de las recargas de saldo efectuadas en el sistema.
 \subsection{Tabla Sucursal} La tabla \textit{SUCURSAL} almacena la información general de cada establecimiento de la empresa, incluyendo su ubicación física y su número de contacto.
 \begin{itemize}
     \item \textbf{idSucursal (\texttt{INTEGER}):} Es la llave primaria de la tabla. No admite valores nulos, debe ser un entero positivo e identifica de manera única a cada sucursal.
@@ -50,4 +45,4 @@ La llave primaria compuesta por \textit{idCliente}, \textit{numeroTarjeta}, \tex
     \item \textbf{hora (\texttt{TIMETZ}):} Registra la hora de la transacción. No admite valores nulos.
     \item \textbf{métodoAbono (\texttt{VARCHAR(50)}):} Almacena la forma o método de pago utilizado . No admite valores nulos ni cadenas vacías.
 \end{itemize}
-La llave primaria de esta tabla es compuesta e integra a \textit{idCliente}, \textit{numeroTarjeta}, \textit{idSucursal} e \textit{idRecarga}. 
+La llave primaria de esta tabla es compuesta e integra a \textit{idCliente}, \textit{numeroTarjeta}, \textit{idSucursal} e \textit{idRecarga}, además de \textit{CURP}, conforme a las marcas PK del diagrama.

@@ -1,7 +1,107 @@
-% Responsable: Omar.
+% Práctica 05 | Restauración del respaldo.
 \section{Restauración del respaldo}
-% TODO: describir el entorno y las versiones utilizadas.
-% TODO: registrar el procedimiento real con ejemplo.backup en una base separada.
-% TODO: documentar resultados y comprobación de tablas y datos restaurados.
-% TODO: insertar evidencias desde evidencias/restauracion/.
-% La restauración no se ha ejecutado en esta etapa.
+\subsection{Entorno de ejecución}
+La restauración de \texttt{ejemplo.backup} se realizó el 26 de octubre de
+2026 a las 22:15, hora de la Ciudad de México. Se utilizó PostgreSQL 16.15
+en un contenedor de la imagen oficial \texttt{postgres:16}, denominado
+\texttt{nipgg-p05-restauracion}, sin puertos publicados y con la red
+deshabilitada.
+
+Se creó la base \texttt{ejemplo} a partir de \texttt{template0}. Esta base
+se destinó exclusivamente a la restauración; las pruebas de restricciones
+se ejecutaron por separado. Antes de cargar el respaldo, se comprobó que
+el esquema \texttt{public} no contenía tablas.
+
+\subsection{Identificación del respaldo}
+\begingroup\small\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\linewidth}{@{}p{.30\linewidth}J@{}}
+\toprule\textbf{Propiedad} & \textbf{Valor observado}\\\midrule
+Archivo & \texttt{ejemplo.backup}\\
+Formato & \texttt{CUSTOM}, versión 1.15; compresión gzip\\
+Versión de origen & PostgreSQL 16.3; \texttt{pg\_dump} 16.3\\
+Fecha del respaldo & 24 de marzo de 2025, 00:57:23 UTC\\
+Índice de contenido & 310 entradas\\
+Extensión incluida & \texttt{adminpack}\\\bottomrule
+\end{tabularx}\endgroup
+
+Se eligió PostgreSQL 16 para mantener la compatibilidad con la extensión
+\texttt{adminpack} incluida en el archivo. La identificación del insumo y
+la comprobación de la base vacía se muestran en la figura~\ref{fig:inspeccion}.
+
+\subsection{Procedimiento de restauración}
+Se copió el respaldo al contenedor, se examinó su índice con
+\texttt{pg\_restore --list} y se ejecutó el siguiente comando:
+\begin{lstlisting}[style=sqlacademico]
+docker exec nipgg-p05-restauracion pg_restore \
+  --verbose --clean --if-exists --no-acl --no-owner \
+  --exit-on-error --single-transaction \
+  -U postgres -d ejemplo /tmp/ejemplo.backup
+\end{lstlisting}
+
+Las opciones \texttt{--clean --if-exists} eliminan los objetos anteriores
+solo si existen; \texttt{--no-acl --no-owner} omite los privilegios y
+propietarios del entorno de origen. La transacción única permite revertir
+la operación completa si ocurre un error \citep{pg-restore}.
+
+El proceso terminó con \textbf{código de salida 0}. La figura~\ref{fig:restauracion}
+muestra el comando y la finalización de la creación de las claves foráneas.
+
+\clearpage
+\subsection{Verificación de la restauración}
+Se compararon los nombres de las tablas recuperadas con el índice del
+respaldo. También se consultaron las secuencias, la extensión instalada
+y las restricciones de integridad. El conteo de filas se realizó con
+\texttt{count(*) FROM ONLY}, para evitar duplicidades por herencia.
+
+\begin{table}[h!]
+\centering
+\caption{Objetos y datos verificados en la base \texttt{ejemplo}.}
+\label{tab:restauracion}
+\begingroup\renewcommand{\arraystretch}{1.45}
+\rowcolors{2}{FondoTabla}{white}
+\begin{tabularx}{.94\linewidth}{@{}Jr@{}}
+\toprule\rowcolor{white}\textbf{Elemento} & \textbf{Resultado}\\\midrule
+Tablas en el esquema \texttt{public} & 46\\
+Secuencias en el esquema \texttt{public} & 31\\
+Claves primarias & 22\\
+Claves foráneas & 62\\
+Restricciones \texttt{CHECK} & 55\\
+Restricciones sin validar & 0\\
+Filas en las tablas restauradas & 0\\
+Extensión \texttt{adminpack} & Versión 2.1\\\bottomrule
+\end{tabularx}\endgroup
+\end{table}
+
+\subsubsection{Correspondencia con el contenido original}
+Las 46 tablas restauradas están vacías. Para verificar que este resultado
+correspondía al insumo, se contaron los registros de los bloques
+\texttt{COPY} del respaldo: los 46 bloques contienen cero filas y se
+incluyen 31 estados de secuencias.
+
+Las consultas sobre \texttt{linea}, \texttt{estacion} y su unión con
+\texttt{componerse} devolvieron cero filas, en concordancia con el contenido
+original. Por tanto, el respaldo suministrado permite recuperar la
+estructura y el estado de las secuencias, pero no incorpora registros
+en las tablas.
+
+\subsubsection{Resultado}
+La restauración se completó sin errores. Se recuperaron todas las tablas
+identificadas en el índice y las restricciones se encuentran validadas.
+Las figuras~\ref{fig:verificacion} y~\ref{fig:consultas} presentan las
+comprobaciones de objetos, integridad y contenido.
+
+\clearpage
+\begin{landscape}
+\paginaevidencia{evidencias/restauracion/01_inspeccion.png}
+{Inspección del respaldo y comprobación de la base de destino: formato,
+versiones y ausencia de tablas antes de la restauración.}{fig:inspeccion}
+\paginaevidencia{evidencias/restauracion/02_restauracion.png}
+{Ejecución de \texttt{pg\_restore}. Se presentan el comando, extractos del
+proceso y el código de salida 0.}{fig:restauracion}
+\paginaevidencia{evidencias/restauracion/03_verificacion.png}
+{Verificación de las tablas, secuencias y restricciones: 46 tablas,
+31 secuencias y ninguna restricción pendiente de validación.}{fig:verificacion}
+\paginaevidencia{evidencias/restauracion/04_consultas.png}
+{Consultas de comprobación y contraste con el archivo original:
+46 bloques de datos sin filas y 31 estados de secuencias.}{fig:consultas}
+\end{landscape}

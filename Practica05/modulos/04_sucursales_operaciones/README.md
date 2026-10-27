@@ -9,9 +9,9 @@
 - `Visita`
 - `Recarga`
 
-Los nombres son el alcance acordado del reparto. Antes de implementar, contrastarlos con el modelo relacional definitivo, incluidos acentos, mayúsculas y columnas.
+Los identificadores definitivos se conservan en los archivos SQL y en el contrato técnico del modelo.
 
-## Archivos que debes editar
+## Archivos del módulo
 
 | Archivo | Trabajo |
 |---|---|
@@ -26,4 +26,6 @@ Los nombres son el alcance acordado del reparto. Antes de implementar, contrasta
 
 Consulta el [contrato del modelo](../../acuerdos/contrato_modelo.md) y el [reparto completo](../../README.md). Quien posee la tabla origen escribe su FK; quien posee la tabla destino confirma su nombre, tipo y clave. Cada autor corrige su módulo y su documentación.
 
-No se asignan a este módulo tareas de README, recopilación de diagramas, empaquetado ni integración general. Las fuentes están pendientes de implementación.
+No se asignan a este módulo tareas de README, recopilación de diagramas, empaquetado ni integración general. Las fuentes están implementadas y validadas; véase la verificación final del equipo.
+
+Estado de cierre: integrado en `../../SQL/DDL.sql`; pruebas individuales y conjuntas aprobadas. Los identificadores exactos se consultan en `../../acuerdos/contrato_modelo.md`.

@@ -14,4 +14,3 @@ ALTER TABLE "VISITA"
 
 ALTER TABLE "RECARGA"
     ADD CONSTRAINT pk_recarga PRIMARY KEY ("idCliente", "numeroTarjeta", "idSucursal", "idRecarga", "CURP");
-

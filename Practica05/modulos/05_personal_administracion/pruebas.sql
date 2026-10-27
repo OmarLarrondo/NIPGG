@@ -1,51 +1,14 @@
--- Práctica 05 | Personal y administración
--- Responsable: Diego
--- Tablas asignadas: Empleado, Gerente, Cajero, EncargadoDePremios, Administrar
--- Preparar casos válidos y casos que deban rechazarse. Documentar resultado esperado y aislar cada fallo esperado para que no oculte otras pruebas. Este archivo no forma parte de DDL.sql.
-
+-- Módulo 05: fuentes reales y dependencia mínima de sucursal.
+\set ON_ERROR_STOP on
 BEGIN;
-
--- 1. Crear una tabla mínima para simular Sucursal
-CREATE TABLE "SUCURSAL" (
-    "idSucursal" INTEGER PRIMARY KEY,
-    CHECK ("idSucursal" > 0)
-);
-
-INSERT INTO "SUCURSAL" ("idSucursal")
-VALUES (1), (2), (3);
-
-
--- 2. Crear las llaves foráneas del módulo 05
-
--- 2.1. Gerente -> Sucursal
-ALTER TABLE gerente
-	ADD CONSTRAINT fk_gerente_sucursal
-	FOREIGN KEY (idsucursal)
-	REFERENCES "SUCURSAL" ("idSucursal");
-
--- 2.2. Cajero -> Sucursal
-ALTER TABLE cajero
-	ADD CONSTRAINT fk_cajero_sucursal
-	FOREIGN KEY (idsucursal)
-	REFERENCES "SUCURSAL" ("idSucursal");
-
--- 2.3. EncargadoDePremios -> Sucursal
-ALTER TABLE encargadodepremios
-	ADD CONSTRAINT fk_encargadopremios_sucursal
-	FOREIGN KEY (idsucursal)
-	REFERENCES "SUCURSAL" ("idSucursal");
-
--- 2.4. Administrar -> Gerente
-ALTER TABLE administrar
-	ADD CONSTRAINT fk_administrar_gerente
-	FOREIGN KEY (CURP)
-	REFERENCES gerente (CURP);
-
--- 2.5. Administrar -> Sucursal
-ALTER TABLE administrar
-	ADD CONSTRAINT fk_administrar_sucursal
-	FOREIGN KEY (idsucursal)
-	REFERENCES "SUCURSAL" ("idSucursal");
+CREATE SCHEMA prueba_personal_05;
+SET LOCAL search_path TO prueba_personal_05,pg_temp;
+CREATE TABLE "SUCURSAL" ("idSucursal" integer PRIMARY KEY CHECK ("idSucursal">0));
+INSERT INTO "SUCURSAL" VALUES (1),(2),(3);
+\ir tablas.sql
+\ir dominios.sql
+\ir claves.sql
+\ir referencias.sql
 
 -- 3. Tabla auxiliar para registrar los resultados
 CREATE TEMP TABLE resultados_personal (
@@ -54,10 +17,10 @@ CREATE TEMP TABLE resultados_personal (
 );
 
 -- 4. Insertar gerentes válidos
-INSERT INTO Gerente (
-    CURP, idSucursal, nombre, apellidoMaterno,
-    apellidoPaterno, RFC, fechaContratación,
-    salario, fechaNacimiento, cédulaProfesional
+INSERT INTO "Genrente" (
+    "CURP", "idSucursal", "Nombre", "ApellidoMaterno",
+    "ApellidoPaterno", "RFC", "fechaContratación",
+    "salario", "fechaNacimiento", "cédulaProfesional"
 )
 VALUES
     (
@@ -74,11 +37,11 @@ VALUES
 INSERT INTO resultados_personal
 VALUES ('Gerentes válidos', 'Aceptada');
 
--- 5. Insertar un cajero válido
-INSERT INTO Cajero (
-    CURP, idSucursal, nombre, apellidoMaterno,
-    apellidoPaterno, RFC, fechaContratación,
-    salario, fechaNacimiento, horarioTrabajo
+-- 5. Insertar un "Cajero" válido
+INSERT INTO "Cajero" (
+    "CURP", "idSucursal", "Nombre", "ApellidoMaterno",
+    "ApellidoPaterno", "RFC", "fechaContratación",
+    "salario", "fechaNacimiento", "horarioTrabajo"
 )
 VALUES (
     'CCCC900303HDFDDD03', 1, 'Ana', 'García',
@@ -87,13 +50,13 @@ VALUES (
 );
 
 INSERT INTO resultados_personal
-VALUES ('Cajero válido', 'Aceptada');
+VALUES ('"Cajero" válido', 'Aceptada');
 
 -- 6. Insertar un encargado de premios válido
-INSERT INTO EncargadoDePremios (
-    CURP, idSucursal, nombre, apellidoMaterno,
-    apellidoPaterno, RFC, fechaContratación,
-    salario, fechaNacimiento, horarioTrabajo
+INSERT INTO "Encargado de premios" (
+    "CURP", "idSucursal", "Nombre", "ApellidoMaterno",
+    "ApellidoPaterno", "RFC", "fechaContratación",
+    "salario", "fechaNacimiento", "horarioTrabajo"
 )
 VALUES (
     'EEEE950404MDFEEE04', 2, 'Luis', 'Ramírez',
@@ -105,11 +68,11 @@ INSERT INTO resultados_personal
 VALUES ('Encargado de premios válido', 'Aceptada');
 
 -- 7. Insertar una administración válida
-INSERT INTO Administrar (CURP, idSucursal)
+INSERT INTO "Administrar" ("CURP", "idSucursal")
 VALUES ('AAAA000101HDFBBB01', 1);
 
 INSERT INTO resultados_personal
-VALUES ('Administrar válido', 'Aceptada');
+VALUES ('"Administrar" válido', 'Aceptada');
 
 -- 8. Función auxiliar para probar errores esperados
 CREATE FUNCTION pg_temp.esperar_error(
@@ -153,13 +116,13 @@ $$;
 
 -- 9. Pruebas de restricciones
 
--- 9.1 Salario negativo: se espera una violación de CHECK.
+-- 9.1 "salario" negativo: se espera una violación de CHECK.
 SELECT pg_temp.esperar_error(
-    'Salario negativo',
+    '"salario" negativo',
     $q$
-        UPDATE Gerente
-        SET salario = -100
-        WHERE CURP = 'BBBB900202MDFCCC02'
+        UPDATE "Genrente"
+        SET "salario" = -100
+        WHERE "CURP" = 'BBBB900202MDFCCC02'
     $q$,
     '23514'
 );
@@ -167,11 +130,11 @@ SELECT pg_temp.esperar_error(
 
 -- 9.2 Horario inválido: se espera una violación de CHECK.
 SELECT pg_temp.esperar_error(
-    'Horario inválido de cajero',
+    'Horario inválido de "Cajero"',
     $q$
-        UPDATE Cajero
-        SET horarioTrabajo = TIME '10:00:00'
-        WHERE CURP = 'CCCC900303HDFDDD03'
+        UPDATE "Cajero"
+        SET "horarioTrabajo" = TIME '10:00:00'
+        WHERE "CURP" = 'CCCC900303HDFDDD03'
     $q$,
     '23514'
 );
@@ -179,12 +142,12 @@ SELECT pg_temp.esperar_error(
 
 -- 9.3 Sucursal inexistente: se espera una violación de FK.
 SELECT pg_temp.esperar_error(
-    'Gerente con sucursal inexistente',
+    '"Genrente" con sucursal inexistente',
     $q$
-        INSERT INTO Gerente (
-            CURP, idSucursal, nombre, apellidoMaterno,
-            apellidoPaterno, RFC, fechaContratación,
-            salario, fechaNacimiento, cédulaProfesional
+        INSERT INTO "Genrente" (
+            "CURP", "idSucursal", "Nombre", "ApellidoMaterno",
+            "ApellidoPaterno", "RFC", "fechaContratación",
+            "salario", "fechaNacimiento", "cédulaProfesional"
         )
         VALUES (
             'QRST800101HDFGGG05', 999999, 'Pedro', 'Díaz',
@@ -196,14 +159,14 @@ SELECT pg_temp.esperar_error(
 );
 
 
--- 9.4 CURP duplicada: se espera una violación de PK.
+-- 9.4 "CURP" duplicada: se espera una violación de PK.
 SELECT pg_temp.esperar_error(
-    'CURP de gerente duplicada',
+    '"CURP" de "Genrente" duplicada',
     $q$
-        INSERT INTO Gerente (
-            CURP, idSucursal, nombre, apellidoMaterno,
-            apellidoPaterno, RFC, fechaContratación,
-            salario, fechaNacimiento, cédulaProfesional
+        INSERT INTO "Genrente" (
+            "CURP", "idSucursal", "Nombre", "ApellidoMaterno",
+            "ApellidoPaterno", "RFC", "fechaContratación",
+            "salario", "fechaNacimiento", "cédulaProfesional"
         )
         VALUES (
             'AAAA000101HDFBBB01', 1, 'Carlos', 'Pérez',
@@ -215,33 +178,33 @@ SELECT pg_temp.esperar_error(
 );
 
 
--- 9.5 Gerente repetido en Administrar: se espera una violación de PK o UNIQUE, según las restricciones definidas.
+-- 9.5 "Genrente" repetido en "Administrar": se espera una violación de PK o UNIQUE, según las restricciones definidas.
 SELECT pg_temp.esperar_error(
-    'Gerente repetido en Administrar',
+    '"Genrente" repetido en "Administrar"',
     $q$
-        INSERT INTO Administrar (CURP, idSucursal)
+        INSERT INTO "Administrar" ("CURP", "idSucursal")
         VALUES ('AAAA000101HDFBBB01', 2)
     $q$,
     '23505'
 );
 
 
--- 9.6 Sucursal repetida en Administrar: se espera UNIQUE.
+-- 9.6 Sucursal repetida en "Administrar": se espera UNIQUE.
 SELECT pg_temp.esperar_error(
-    'Sucursal repetida en Administrar',
+    'Sucursal repetida en "Administrar"',
     $q$
-        INSERT INTO Administrar (CURP, idSucursal)
+        INSERT INTO "Administrar" ("CURP", "idSucursal")
         VALUES ('BBBB900202MDFCCC02', 1)
     $q$,
     '23505'
 );
 
 
--- 9.7 Gerente inexistente en Administrar: se espera una FK.
+-- 9.7 "Genrente" inexistente en "Administrar": se espera una FK.
 SELECT pg_temp.esperar_error(
-    'Gerente inexistente en Administrar',
+    '"Genrente" inexistente en "Administrar"',
     $q$
-        INSERT INTO Administrar (CURP, idSucursal)
+        INSERT INTO "Administrar" ("CURP", "idSucursal")
         VALUES ('QRST800101HDFGGG05', 3)
     $q$,
     '23503'
@@ -254,6 +217,3 @@ ORDER BY caso;
 
 -- 11. Deshacer los cambios de prueba
 ROLLBACK;
-
-
-

@@ -35,14 +35,17 @@ psql -X -v ON_ERROR_STOP=1 -d BASE_DE_PRUEBAS -f pruebas.sql
 La prueba crea un esquema aislado con dependencias mínimas, incluye los cuatro
 archivos DDL del módulo y comprueba 58 casos. Termina en `ROLLBACK`.
 No modifica los módulos de otros integrantes ni realiza la restauración.
-Las FK usan los nombres del diagrama; la integración debe conciliar el nombre
-`Encargado de premios` con `EncargadoDePremios` del SQL recibido de Diego.
+Las FK utilizan el identificador literal `Encargado de premios`, conservado también en el módulo de personal.
 
 ## Actividad adicional: restauración
 
 - Insumo: [ejemplo.backup](../../ejemplo.backup).
 - Guía: [RestaurarBackup.pdf](../../RestaurarBackup.pdf).
 - Editar [06_restauracion.tex](../../reporte/secciones/06_restauracion.tex).
-- Guardar capturas y registros seleccionados en [evidencias/restauracion/](../../reporte/evidencias/restauracion/).
+- Capturas incluidas en [evidencias/restauracion/](../../reporte/evidencias/restauracion/).
 - Usar una base separada de la destinada a probar el DDL. Registrar el entorno, procedimiento, resultado y comprobación de tablas/datos restaurados.
-- La restauración está pendiente; la existencia del respaldo no acredita su ejecución.
+- Restauración completada el 26 de octubre de 2026 en PostgreSQL 16.15: 46 tablas, 31 secuencias y todas las restricciones validadas. El respaldo original contiene cero filas. Se incluyen cuatro capturas de comprobación en la carpeta de evidencias.
+- La prueba del módulo volvió a pasar sus 58 casos en la base separada `omar_modulo03`, con `ROLLBACK`.
+- La contribución completa de Omar está en [Práctica05.pdf](../../Docs/Práctica05.pdf).
+
+Estado de cierre: integrado en `../../SQL/DDL.sql`; pruebas individuales y conjuntas aprobadas. Los identificadores exactos se consultan en `../../acuerdos/contrato_modelo.md`.

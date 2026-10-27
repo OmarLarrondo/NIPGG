@@ -1,12 +1,10 @@
 # SQL de entrega
 
-Destino previsto: `DDL.sql`, todavía no generado.
+`DDL.sql` es autónomo y crea las 30 tablas en una base vacía de PostgreSQL 18. Se ensambla a partir de los módulos por fases: tablas, dominios, claves y referencias.
 
-Ensamblar las fuentes de `../modulos/` por fases, con módulos 01 a 05 dentro de cada fase:
+```bash
+psql -X -v ON_ERROR_STOP=1 -1 -d BASE_VACIA -f DDL.sql
+psql -X -v ON_ERROR_STOP=1 -d BASE_VACIA -f pruebas_integracion.sql
+```
 
-1. Todos los `tablas.sql`.
-2. Todos los `dominios.sql`.
-3. Todos los `claves.sql`.
-4. Todos los `referencias.sql`.
-
-El resultado debe contener SQL autónomo y todas las restricciones requeridas mediante `ALTER TABLE`. No incluir `pruebas.sql`. Validar el archivo completo en una base vacía antes de entregarlo. No confundir ejecutar los marcadores actuales, que son solo comentarios, con validar un esquema implementado.
+La segunda instrucción ejecuta pruebas sobre las tablas reales, con datos sintéticos revertidos al terminar; **363 rechazos esperados**. Solo `DDL.sql` se incluye en el ZIP.
