@@ -1,0 +1,3 @@
+PorEstado = gamma state; count(orderid) -> total_ordenes (pi state, orderid (customer join orders))
+Minimo = gamma min(total_ordenes) -> minimo (PorEstado)
+pi state, total_ordenes (sigma total_ordenes = minimo (PorEstado cross join Minimo))

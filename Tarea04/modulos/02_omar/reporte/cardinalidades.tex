@@ -1,0 +1,26 @@
+\seccion{1. Cardinalidad de las consultas}
+Las relaciones iniciales son:\par $R(A,B)=\{(1,x),(2,y),(2,z),(3,x),(9,a)\}$\par $S(B,C,D)=\{(x,0,3),(y,2,1),(y,3,3),(w,3,0),(y,4,2)\}$.
+
+Se usa semántica de conjuntos. En estas juntas condicionales se evalúa exclusivamente el predicado escrito; no se añade $R.B=S.B$. Para distinguir los atributos homónimos, se conservan $R.B$ y $S.B$.
+\subsection*{C02. $R\bowtie_{D>A}S$}
+\[R\bowtie_{D>A}S=\sigma_{D>A}(R\times S).\]
+El producto tiene $5\cdot5=25$ tuplas. Por cada fila de $R$ con $A=1,2,2,3,9$ se obtienen respectivamente $3,2,2,0,0$ coincidencias.
+\begin{center}\begin{tabular}{ccccc}\toprule\rowcolor{Fondo} $A$ & $R.B$ & $S.B$ & $C$ & $D$\\\midrule
+1 & x & x & 0 & 3\\
+1 & x & y & 3 & 3\\
+1 & x & y & 4 & 2\\
+2 & y & x & 0 & 3\\
+2 & y & y & 3 & 3\\
+2 & z & x & 0 & 3\\
+2 & z & y & 3 & 3\\\bottomrule\end{tabular}\end{center}
+\textbf{Cardinalidad: 7 tuplas.} No hay tuplas duplicadas en el resultado.
+\subsection*{C05. $R\bowtie_{A=D}S$}
+\[R\bowtie_{A=D}S=\sigma_{A=D}(R\times S).\]
+Las filas de $R$ encuentran respectivamente $1,1,1,2,0$ coincidencias. Las dos tuplas con $A=2$ tienen valores diferentes de $B$ y ambas se conservan.
+\begin{center}\begin{tabular}{ccccc}\toprule\rowcolor{Fondo} $A$ & $R.B$ & $S.B$ & $C$ & $D$\\\midrule
+1 & x & y & 2 & 1\\
+2 & y & y & 4 & 2\\
+2 & z & y & 4 & 2\\
+3 & x & x & 0 & 3\\
+3 & x & y & 3 & 3\\\bottomrule\end{tabular}\end{center}
+\textbf{Cardinalidad: 5 tuplas.} No hay tuplas duplicadas en el resultado.

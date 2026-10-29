@@ -1,0 +1,35 @@
+customerid,customername,segment,country,city,state,postalcode,region,orderid,orderdate,shipdate,shipmode,productid,quantity
+CC-12370,Christopher Conant,Consumer,United States,New York City,New York,10035,East,CA-2016-135265,2016-07-07,2016-07-09,Second Class,OFF-PA-10002923,1
+HM-14980,Henry MacAllister,Consumer,United States,New York City,New York,10009,East,CA-2016-106075,2016-09-18,2016-09-23,Standard Class,OFF-BI-10004654,1
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,CA-2016-111409,2016-09-18,2016-09-22,Standard Class,OFF-LA-10002787,1
+PS-18760,Pamela Stobb,Consumer,United States,Seattle,Washington,98105,West,US-2016-101497,2016-09-29,2016-10-01,Second Class,OFF-PA-10000176,1
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,FUR-TA-10001307,1
+CC-12370,Christopher Conant,Consumer,United States,New York City,New York,10035,East,CA-2016-154690,2016-08-15,2016-08-17,Second Class,FUR-CH-10000988,2
+MO-17500,Mary ORourke,Consumer,United States,New York City,New York,10024,East,CA-2016-102981,2016-09-06,2016-09-09,Second Class,TEC-AC-10004761,2
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,US-2016-141544,2016-08-30,2016-09-01,First Class,OFF-ST-10000675,2
+RH-19600,Rob Haberlin,Consumer,United States,New York City,New York,10009,East,CA-2016-101378,2016-07-14,2016-07-14,Same Day,TEC-AC-10002345,2
+SE-20110,Sanjit Engle,Consumer,United States,Oceanside,New York,11572,East,US-2016-115455,2016-09-08,2016-09-14,Standard Class,FUR-FU-10004671,2
+MO-17500,Mary ORourke,Consumer,United States,New York City,New York,10024,East,CA-2016-102981,2016-09-06,2016-09-09,Second Class,FUR-BO-10001811,3
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,TEC-MA-10001972,3
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,US-2016-141544,2016-08-30,2016-09-01,First Class,TEC-PH-10003645,3
+RF-19735,Roland Fjeld,Consumer,United States,Seattle,Washington,98115,West,CA-2016-105585,2016-08-26,2016-08-27,First Class,OFF-FA-10002983,3
+SE-20110,Sanjit Engle,Consumer,United States,Oceanside,New York,11572,East,US-2016-115455,2016-09-08,2016-09-14,Standard Class,FUR-TA-10003569,3
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,OFF-PA-10000675,3
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,TEC-PH-10000011,3
+CB-12415,Christy Brittain,Consumer,United States,New York City,New York,10035,East,CA-2016-147417,2016-07-25,2016-07-27,First Class,TEC-CO-10001449,4
+CC-12370,Christopher Conant,Consumer,United States,New York City,New York,10035,East,CA-2016-135265,2016-07-07,2016-07-09,Second Class,FUR-CH-10003061,4
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,OFF-SU-10002189,4
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,US-2016-141544,2016-08-30,2016-09-01,First Class,FUR-CH-10003312,4
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,OFF-FA-10000735,4
+CC-12370,Christopher Conant,Consumer,United States,New York City,New York,10035,East,CA-2016-135265,2016-07-07,2016-07-09,Second Class,TEC-CO-10003763,5
+JJ-15445,Jennifer Jackson,Consumer,United States,Rochester,New York,14609,East,CA-2016-163986,2016-09-03,2016-09-10,Standard Class,OFF-ST-10000918,5
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,OFF-AP-10001492,5
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,OFF-EN-10002504,5
+RA-19285,Ralph Arnett,Consumer,United States,New York City,New York,10024,East,US-2016-128195,2016-08-04,2016-08-05,First Class,OFF-BI-10002003,5
+RF-19735,Roland Fjeld,Consumer,United States,Seattle,Washington,98115,West,CA-2016-105585,2016-08-26,2016-08-27,First Class,OFF-PA-10003625,5
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,OFF-BI-10000174,5
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,FUR-CH-10001973,6
+MS-17770,Maxwell Schwartz,Consumer,United States,New York City,New York,10024,East,CA-2016-150350,2016-08-23,2016-08-30,Standard Class,OFF-PA-10002160,6
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,US-2016-141544,2016-08-30,2016-09-01,First Class,OFF-BI-10001524,6
+TB-21055,Ted Butterfield,Consumer,United States,Troy,New York,12180,East,CA-2016-145982,2016-08-27,2016-09-01,Second Class,OFF-PA-10002666,9
+PO-18850,Patrick OBrill,Consumer,United States,New York City,New York,10024,East,US-2016-141544,2016-08-30,2016-09-01,First Class,OFF-LA-10001074,10

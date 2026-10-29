@@ -1,0 +1,3 @@
+ClienteBorrar = sigma customername = 'Paul Stevenson' (customer)
+OrdenesBorrar = orders join (pi customerid (ClienteBorrar))
+orders - OrdenesBorrar

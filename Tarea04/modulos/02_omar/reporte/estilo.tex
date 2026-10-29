@@ -1,0 +1,35 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[letterpaper,margin=1.8cm,top=1.9cm,bottom=1.8cm]{geometry}
+\usepackage{lmodern,microtype,amsmath,amssymb,booktabs,graphicx,fancyhdr,array,listings,tabularx,tikz,titlesec}
+\usepackage[table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+\definecolor{Tinta}{HTML}{152C45}
+\definecolor{Azul}{HTML}{164B70}
+\definecolor{Oro}{HTML}{B9955E}
+\definecolor{Fondo}{HTML}{F1F5F8}
+\definecolor{Gris}{HTML}{556475}
+\definecolor{Linea}{HTML}{D3DDE6}
+\color{Tinta}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\headheight}{21pt}
+\setlength{\headsep}{15pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\sffamily\scriptsize\color{Gris}FUNDAMENTOS DE BASES DE DATOS}
+\fancyhead[R]{\sffamily\scriptsize\color{Gris}TAREA 04 / ÁLGEBRA RELACIONAL}
+\fancyfoot[L]{\sffamily\scriptsize\color{Gris}UNAM · Facultad de Ciencias}
+\fancyfoot[C]{\sffamily\small\thepage}
+\fancyfoot[R]{\sffamily\scriptsize\color{Gris}Equipo ÑIPGG}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{Linea}\leaders\hrule height .4pt\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+\titleformat{\section}{\sffamily\Large\bfseries\color{Azul}}{}{0pt}{}[\vspace{2pt}{\color{Oro}\titlerule[.8pt]}]
+\titleformat{\subsection}{\sffamily\large\bfseries\color{Azul}}{}{0pt}{}
+\titlespacing*{\section}{0pt}{5pt}{12pt}
+\titlespacing*{\subsection}{0pt}{13pt}{7pt}
+\newcommand{\seccion}[1]{\phantomsection\section*{#1}\addcontentsline{toc}{section}{#1}}
+\lstset{basicstyle=\ttfamily\scriptsize\color{Tinta},breaklines=true,columns=fullflexible,frame=single,rulecolor=\color{Linea},backgroundcolor=\color{Fondo},framesep=6pt,xleftmargin=6pt,xrightmargin=6pt,aboveskip=9pt,belowskip=10pt,showstringspaces=false}
+\newcommand{\caprel}[3]{\begin{center}\includegraphics[width=\linewidth,height=#2cm,keepaspectratio]{\RutaOmar/evidencias/#1}\par\vspace{4pt}{\sffamily\footnotesize\color{Gris}#3}\end{center}}
+\hypersetup{pdftitle={Tarea 04 - Álgebra relacional},pdfauthor={Equipo ÑIPGG},pdfsubject={Fundamentos de Bases de Datos, semestre 2027-I}}

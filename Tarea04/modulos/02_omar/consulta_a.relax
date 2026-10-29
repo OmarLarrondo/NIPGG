@@ -1,0 +1,1 @@
+tau quantity asc (sigma (state = 'New York' or state = 'Washington') and segment = 'Consumer' and orderdate >= date('2016-07-01') and orderdate < date('2016-10-01') (customer join orders))

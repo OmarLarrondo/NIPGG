@@ -1,0 +1,42 @@
+\seccion{Mantenimiento a. Borrado de Paul Stevenson}
+La selección por nombre identifica un solo cliente: \texttt{PS-18970}. Se eliminan todos sus renglones de \texttt{orders} y después su información en \texttt{customer}. El catálogo \texttt{products} se conserva: no almacena datos del cliente y sus productos pueden ser compartidos.
+\textbf{Álgebra con asignación}
+\begin{align*}
+P &\leftarrow \sigma_{customername='Paul\ Stevenson'}(customer)\\
+I &\leftarrow \pi_{customerid}(P)\\
+B &\leftarrow orders\bowtie I\\
+orders &\leftarrow orders-B\\
+customer &\leftarrow customer-P.
+\end{align*}
+$P$, $I$ y $B$ se calculan sobre las relaciones originales. $B$ tiene el mismo esquema que \texttt{orders}, de modo que la diferencia está bien definida.
+
+\textbf{Información del cliente:} Paul Stevenson; segmento Home Office; United States; Chicago, Illinois; código postal 60610; región Central.
+
+\textbf{Renglones que se eliminan (customerid = PS-18970)}
+\begin{center}\scriptsize\begin{tabular}{llllr}\toprule\rowcolor{Fondo} Orden & Fecha & Producto & Envío & Cantidad\\\midrule
+US-2015-164175 & 2015-04-30 & FUR-CH-10001146 & Standard Class & 5\\
+CA-2015-140830 & 2015-11-30 & OFF-EN-10000461 & Second Class & 2\\
+CA-2015-140830 & 2015-11-30 & OFF-EN-10002831 & Second Class & 2\\
+US-2017-111920 & 2017-10-22 & OFF-AR-10003179 & Standard Class & 4\\
+CA-2017-163818 & 2017-10-04 & FUR-FU-10000076 & Standard Class & 1\\
+CA-2016-161158 & 2016-05-09 & OFF-AR-10000462 & Standard Class & 5\\
+\bottomrule\end{tabular}\end{center}
+Son 6 renglones de 5 órdenes distintas. La orden CA-2015-140830 tiene dos productos.
+\begin{center}\begin{tabular}{lrrr}\toprule\rowcolor{Fondo} Relación & Antes & Eliminadas & Después\\\midrule
+customer & 793 & 1 & 792\\orders & 5999 & 6 & 5993\\products & 1862 & 0 & 1862\\\bottomrule\end{tabular}\end{center}
+El archivo original contiene 6000 renglones de orders, pero uno aparece dos veces exactamente (US-2014-150119, FUR-CH-10002965). Bajo semántica de conjuntos quedan 5999 tuplas; ese duplicado no pertenece a Paul Stevenson.
+
+La comprobación posterior no encuentra al cliente ni órdenes con su identificador; tampoco encuentra referencias huérfanas. Las demás tuplas se conservan. Relax calcula las relaciones resultantes sin modificar permanentemente el gist.
+\newpage
+\section*{Mantenimiento a. Comprobación en Relax}
+\textbf{Renglones afectados}
+\lstinputlisting{\RutaOmar/mantenimiento_a_afectadas.relax}
+\caprel{mantenimiento_a_afectadas_resultado.png}{9}{Los seis renglones de órdenes que pertenecen a Paul Stevenson.}
+\textbf{Relaciones posteriores}
+\lstinputlisting{\RutaOmar/mantenimiento_a_ordenes.relax}
+\lstinputlisting{\RutaOmar/mantenimiento_a_cliente.relax}
+Las relaciones resultantes contienen 5993 y 792 tuplas respectivamente. Cada expresión parte del dataset original.
+
+\textbf{Datos utilizados}\par
+Dataset indicado en la tarea: \href{https://gist.github.com/cyrus96/31074567738afef8c497f6ca89335782}{31074567738afef8c497f6ca89335782}, archivo BDVentas.txt.\par Revisión: \texttt{4ae907368b34fbea9412ed9be30576f81d6b6612}.\par
+Las consultas y el mantenimiento se evaluaron de forma independiente sobre el mismo estado original, con semántica de conjuntos.

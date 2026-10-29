@@ -1,0 +1,14 @@
+\seccion{2.i. Estado con menor cantidad de órdenes}
+Se cuentan órdenes distintas por identificador, no renglones de productos. La ubicación corresponde al estado registrado del cliente. Se consideran las ubicaciones presentes en \texttt{customer}; todas tienen órdenes en este dataset. Se preservan todos los empates.
+
+El esquema contiene \texttt{shipdate}, pero no una confirmación de entrega física. El total se refiere a órdenes registradas con fecha de envío; todas las órdenes tienen ese dato.
+\begin{align*}
+E &\leftarrow \pi_{state,orderid}(customer\bowtie orders)\\
+N &\leftarrow \gamma_{state;\ COUNT(orderid)\to total\_ordenes}(E)\\
+M &\leftarrow \gamma_{MIN(total\_ordenes)\to minimo}(N)\\
+Resultado &\leftarrow \pi_{state,total\_ordenes}(\sigma_{total\_ordenes=minimo}(N\times M)).
+\end{align*}
+\lstinputlisting{\RutaOmar/consulta_i.relax}
+\textbf{Resultado: District of Columbia, 2 órdenes.} Se comparan 41 ubicaciones; el siguiente mínimo es Arkansas con 5. No hay empate. District of Columbia es el valor literal del atributo \texttt{state}, aunque sea un distrito federal.
+\caprel{consulta_i_resultado.png}{7}{Resultado de la consulta 2.i en Relax.}
+\newpage\section*{2.i. Árbol de consulta en Relax}\caprel{consulta_i_arbol.png}{21}{Árbol de ejecución de la consulta 2.i.}

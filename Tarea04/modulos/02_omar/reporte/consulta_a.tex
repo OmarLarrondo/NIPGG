@@ -1,0 +1,20 @@
+\seccion{2.a. Clientes y pedidos del tercer trimestre}
+Se consideran los estados New York y Washington, el segmento \texttt{Consumer} y la fecha de solicitud \texttt{orderdate}, desde el 1 de julio de 2016 inclusive hasta el 1 de octubre exclusive. Se muestra toda la información del cliente y de los renglones correspondientes. La cantidad es \texttt{quantity} por renglón, ordenada de menor a mayor. Un cliente puede aparecer en varios renglones.
+
+\textbf{Expresión en álgebra relacional}
+\begin{align*}
+J &\leftarrow customer\bowtie orders\\
+F &\leftarrow \sigma_{\substack{(state='New\ York'\,\lor\,state='Washington')\,\land\,segment='Consumer'\\\land\,orderdate\geq '2016\text{-}07\text{-}01'\,\land\,orderdate<'2016\text{-}10\text{-}01'}}(J)\\
+Resultado &\leftarrow \tau_{quantity\ ASC}(F).
+\end{align*}
+La junta natural usa \texttt{customerid}. $\tau$ es la extensión de ordenación; las relaciones clásicas no tienen orden.
+
+\textbf{Expresión ejecutada en Relax}
+\lstinputlisting{\RutaOmar/consulta_a.relax}
+\textbf{Resultado:} 34 renglones, 15 órdenes distintas y 13 clientes. El resultado no es vacío.
+\caprel{consulta_a_arbol.png}{10}{Árbol de ejecución de la consulta 2.a en Relax.}
+\newpage
+\section*{2.a. Resultado en Relax}
+La captura muestra una parte de los 34 renglones, ordenados por cantidad ascendente. Las columnas de la orden permiten identificar el origen de cada cantidad y las columnas del cliente conservan su información completa.
+\caprel{consulta_a_resultado.png}{9.5}{Resultado de la consulta 2.a.}
+\caprel{consulta_a_resultado_orden.png}{9.5}{Columnas de la orden y cantidad solicitada.}
