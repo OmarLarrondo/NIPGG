@@ -1,7 +1,5 @@
 # Consultas — Diego
 
-Estado: pendiente. Cada consulta se verifica de forma independiente en Relax con el dataset original.
-
 ## Q_c — Consulta 2.c
 
 **Objetivo:** Nombres de clientes de South que solicitaron Bookcases, Chairs, Appliances o Copiers, en el primer o tercer trimestre de 2015, con envío Standard Class.
@@ -60,15 +58,15 @@ Si existe un empate, se mostrarán todos los clientes que hayan realizado el má
 
 ### Expresión en notación de clase
 
-$$ O = \pi_{CustomerID,OrderID}(Orders) $$
+$$ O = \pi_{customerid,Orderid}(orders) $$
 
-$$ N = \gamma_{CustomerID;\ \text{count}(OrderID)\rightarrow \text{NumOrders}}(O) $$
+$$ N = \gamma_{customerID;\ \text{count}(orderid)\rightarrow \text{numorders}}(O) $$
 
-$$ M = \gamma_{text{max}(\text{NumOrders})\rightarrow \text{MaxOrders}}(N) $$
+$$ M = \gamma_{text{max}(\text{numorders})\rightarrow \text{maxorders}}(N) $$
 
-$$ T = \sigma_{\text{NumOrders}=\text{MaxOrders}}(N \times M) $$
+$$ T = \sigma_{\text{numorders}=\text{maxorders}}(N \times M) $$
 
-$$ J = \pi_{Customer.*,\text{NumOrders}}(Customer \bowtie T) $$
+$$ J = \pi_{customer.*,\text{numorders}}(customer \bowtie T) $$
 
 ### Expresión ejecutable en Relax
 La consulta se construye en los siguientes pasos:
