@@ -1,7 +1,5 @@
 # Mantenimiento — Diego
 
-Estado: pendiente.
-
 ## M_d — Mantenimiento d
 
 **Objetivo:** Aumentar los precios de productos de Phones en un 8%.
