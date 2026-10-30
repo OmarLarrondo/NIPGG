@@ -1,0 +1,54 @@
+\seccion{Mantenimiento d. Aumento de precios de Phones}
+
+Se aumentan en un 8\% los precios de todos los productos cuya subcategoría sea \texttt{Phones}. La operación actualiza el atributo \texttt{price} de los productos seleccionados. El nuevo precio se obtiene multiplicando el precio actual por $1.08$. La única relación afectada es \texttt{products}.
+
+\textbf{Álgebra relacional con asignación}
+
+\begin{align*}
+PP &\leftarrow \sigma_{subcategory='Phones'}(products)\\
+PA &\leftarrow \pi_{productid,category,subcategory,\ price\times1.08\to price}(PP)\\
+PO &\leftarrow products-PP\\
+productsupdated &\leftarrow PO\cup PA.
+\end{align*}
+
+La proyección conserva los atributos de la relación \texttt{products}; únicamente sustituye el valor de \texttt{price} por el precio multiplicado por $1.08$. Los productos que no pertenecen a \texttt{Phones} conservan sus precios originales.
+
+\textbf{Expresión ejecutada en RelaX}
+
+\begin{lstlisting}
+PP = σ subcategory = 'Phones' (products)
+
+PA = π productid,category,subcategory,price*1.08→price (PP)
+
+PO = products - PP
+
+productsupdated = PO∪PA
+
+productsupdated
+\end{lstlisting}
+
+\textbf{Datos y comprobación}
+
+Los productos afectados se encuentran en el archivo:
+
+\texttt{datos/mantenimiento\_d\_afectadas.csv}.
+
+Los productos con el precio actualizado se encuentran en:
+
+\texttt{datos/mantenimiento\_d\_productosActualizados.csv}.
+
+La relación final, que contiene los productos actualizados junto con los demás productos que conservaron su precio, se encuentra en:
+
+\texttt{datos/mantenimiento\_d\_final.csv}.
+
+La operación se comprobó en RelaX mediante el árbol y el resultado de la expresión:
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{mantenimento_d_arbol.png}{8.0}{Árbol de ejecución del mantenimiento d.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{mantenimento_d_resultado.png}{8.0}{Resultado del mantenimiento d en RelaX.}
+\end{minipage}
+\end{center}

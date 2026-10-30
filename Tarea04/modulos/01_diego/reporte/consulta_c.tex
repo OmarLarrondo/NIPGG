@@ -1,0 +1,70 @@
+\seccion{2.c. Clientes de South con productos y fechas determinados}
+
+Se buscan los nombres de los clientes que pertenecen a la región \texttt{South} y que solicitaron productos de las subcategorías \texttt{Bookcases}, \texttt{Chairs}, \texttt{Appliances} o \texttt{Copiers}. La orden debe haberse realizado durante el primer o tercer trimestre de 2015 y debe utilizar el modo de envío \texttt{Standard Class}.
+
+Se relacionan las tablas \texttt{customer}, \texttt{orders} y \texttt{products} mediante sus atributos correspondientes. Finalmente, se proyecta únicamente \texttt{customername}; por la semántica de conjuntos, los nombres repetidos se eliminan.
+
+Los intervalos considerados son del 1 de enero de 2015 inclusive al 1 de abril de 2015 exclusive para el primer trimestre, y del 1 de julio de 2015 inclusive al 1 de octubre de 2015 exclusive para el tercer trimestre.
+
+\textbf{Expresión en álgebra relacional}
+
+\[
+C = \pi_{\text{customername}} \Bigl( \sigma_{
+  \substack{
+    \text{region} = 'South' \,\land\, \text{shipmode} = 'Standard\ Class' \\
+    \land\, (\text{subcategory} = 'Bookcases' \,\lor\, \text{subcategory} = 'Chairs' \\
+    \lor\, \text{subcategory} = 'Appliances' \,\lor\, \text{subcategory} = 'Copiers') \\
+    \land\, ((\text{orderdate} \ge \text{date}('2015-01-01') \\
+    \land\, \text{orderdate} < \text{date}('2015-04-01')) \\
+    \lor\, (\text{orderdate} \ge \text{date}('2015-07-01') \\
+    \land\, \text{orderdate} < \text{date}('2015-10-01')))
+  }
+} (customer \bowtie orders \bowtie products) \Bigr)
+\]
+
+
+\textbf{Expresión ejecutada en RelaX}
+
+\begin{lstlisting}
+π customername (
+  σ region = 'South'
+    ∧ shipmode = 'Standard Class'
+    ∧ (subcategory = 'Bookcases'
+       ∨ subcategory = 'Chairs'
+       ∨ subcategory = 'Appliances'
+       ∨ subcategory = 'Copiers')
+    ∧ ((orderdate >= date('2015-01-01')
+        ∧ orderdate < date('2015-04-01'))
+       ∨ (orderdate >= date('2015-07-01')
+          ∧ orderdate < date('2015-10-01')))
+  (customer ⋈ orders ⋈ products)
+)
+\end{lstlisting}
+
+\textbf{Resultado: 9 nombres de clientes.} Los nombres obtenidos son:
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\toprule
+\rowcolor{Fondo}
+Cliente & Cliente & Cliente\\
+\midrule
+Paul Gonzalez & Victoria Wilson & Sarah Foster\\
+Bruce Degenhardt & Ann Steele & Todd Sumrall\\
+Ivan Liston & Nancy Lomonaco & Daniel Raglin\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El resultado completo se encuentra en \texttt{datos/consulta\_c\_resultado.csv}.
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{consulta_c_arbol.png}{8.0}{Árbol lógico de la consulta 2.c en RelaX.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{consulta_c_resultado.png}{8.0}{Resultado de la consulta 2.c en RelaX.}
+\end{minipage}
+\end{center}

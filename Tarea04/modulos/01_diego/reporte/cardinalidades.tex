@@ -1,0 +1,168 @@
+\lstset{literate=
+{π}{{$\pi$}}1
+{σ}{{$\sigma$}}1
+{γ}{{$\gamma$}}1
+{ρ}{{$\rho$}}1
+{∩}{{$\cap$}}1
+{←}{{$\leftarrow$}}1
+{→}{{$\to$}}1
+{⟗}{{$\Join_{\mathrm{full}}$}}1
+{⨯}{{$\times$}}1
+{⨝}{{$\Join$}}1
+{∪}{{$\cup$}}1
+{⋈}{{$\bowtie$}}1
+{∧}{{$\land$}}1
+{∨}{{$\lor$}}1
+{≥}{{$\geq$}}1
+{≤}{{$\leq$}}1
+{⟕}{{$\leftouterjoin$}}1
+{⟖}{{$\rightouterjoin$}}1
+}
+
+\seccion{1. Cardinalidad de las consultas}
+
+Las relaciones iniciales son:
+\[
+R(A,B)=\{(1,x),(2,y),(2,z),(3,x),(9,a)\},\qquad
+S(B,C,D)=\{(x,0,3),(y,2,1),(y,3,3),(w,3,0),(y,4,2)\}.
+\]
+
+Se usa semántica de conjuntos. Las proyecciones eliminan las tuplas duplicadas. En C10, el Join externo completo conserva las tuplas que no encuentran coincidencia y completa con \nulo{} los atributos faltantes.
+
+\subsection*{C08. Intersección de proyecciones}
+
+Primero se proyecta el atributo $A$ de $R$:
+\[
+\pi_A(R)=\{1,2,3,9\}.
+\]
+
+Aunque $R$ contiene dos tuplas con $A=2$, la proyección conserva ese valor una sola vez. Después se proyecta $D$ de $S$:
+\[
+\pi_D(S)=\{3,1,0,2\}.
+\]
+
+El valor $3$ aparece dos veces en $S$, pero se conserva una sola vez. Se renombra $D$ a $A$ y se calcula la intersección:
+\[
+\rho_{A\leftarrow D}(\pi_D(S))=\{3,1,0,2\},\qquad
+\{1,2,3,9\}\cap\{3,1,0,2\}=\{1,2,3\}.
+\]
+
+\begin{center}
+\begin{tabular}{c}
+\toprule
+\rowcolor{Fondo}
+$A$\\
+\midrule
+1\\
+2\\
+3\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Cardinalidad: 3.} Los valores comunes son 1, 2 y 3. El valor 9 no pertenece a la segunda relación, mientras que el 0 no pertenece a la primera.
+
+\subsection*{C10. Join externo completo y agrupación}
+
+EL join externo completo combina las tuplas que coinciden en $B$ y conserva las que no tienen pareja. En la expresión ejecutada en RelaX, se renombra el atributo $B$ de $S$ como $BS$ para evitar nombres de columna duplicados. Después, \texttt{coalesce} permite recuperar un único atributo $B$, tomando el valor no nulo de cualquiera de las relaciones.
+
+\[
+S_2\leftarrow\rho_{S_2}(\rho_{BS\leftarrow B}(S)).
+\]
+
+\begin{lstlisting}
+J = π A, coalesce(B,BS) → B, C, D (R ⟗ B = BS S2)
+\end{lstlisting}
+
+
+Las coincidencias son: $(1,x)$ con la tupla de $S$ cuyo $B=x$; $(2,y)$ con las tres tuplas de $S$ cuyo $B=y$; y $(3,x)$ con la tupla de $S$ cuyo $B=x$. También se conservan las tuplas de $R$ sin coincidencia, $(2,z)$ y $(9,a)$, así como la tupla de $S$ sin coincidencia, $(w,3,0)$.
+
+\textbf{Resultado de la join externo completo}
+
+\begin{center}
+\small
+\begin{tabular}{cccc}
+\toprule
+\rowcolor{Fondo}
+$A$ & $B$ & $C$ & $D$\\
+\midrule
+1 & x & 0 & 3\\
+2 & y & 2 & 1\\
+2 & y & 3 & 3\\
+2 & y & 4 & 2\\
+3 & x & 0 & 3\\
+2 & z & \nulo{} & \nulo{}\\
+9 & a & \nulo{} & \nulo{}\\
+\nulo{} & w & 3 & 0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Cardinalidad del join: 8.} Se obtienen cinco tuplas por coincidencias y tres tuplas sin coincidencia que se conservan mediante la join externo completo.
+
+Se agrupa el resultado por $A$ y se cuenta el número de valores de $B$ de cada grupo. Como $B$ tiene un valor en las ocho tuplas, todas contribuyen al conteo de su grupo:
+
+\[
+\gamma_{A;\ \operatorname{count}(B)\to t}(J).
+\]
+
+\begin{center}
+\begin{tabular}{cc}
+\toprule
+\rowcolor{Fondo}
+$A$ & $t=\operatorname{count}(B)$\\
+\midrule
+1 & 1\\
+2 & 4\\
+3 & 1\\
+9 & 1\\
+\nulo{} & 1\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Cardinalidad final: 5.} Se obtiene una tupla por cada grupo distinto de $A$: 1, 2, 3, 9 y \nulo{}. El grupo $A=2$ contiene cuatro tuplas: tres provenientes de las coincidencias con $B=y$ y una correspondiente a $(2,z)$. El grupo $A=\nulo{}$ corresponde a la tupla de $S$ con $B=w$.
+
+\clearpage
+
+\section*{1. Evidencias de cardinalidad en RelaX}
+
+\textbf{C08: expresión ejecutada y comprobación}
+
+\lstinputlisting{\RutaDiego/cardinalida_c08.relax}
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{cardinalida_c08_arbol.png}{5.0}{Árbol de la expresión C08.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{cardinalidad_c08_resultado.png}{5.0}{Resultado de C08: 3 tuplas.}
+\end{minipage}
+\end{center}
+
+\textbf{C10: join externo completo}
+
+\lstinputlisting{\RutaDiego/cardinalidad_c10.relax}
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{cardinalidad_c10_arbolJoinExterno.png}{6.0}{Árbol de la join externo completo.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{cardinalidad_c10_resultadoJoinExterno.png}{6.0}{Resultado intermedio del Join: 8 tuplas.}
+\end{minipage}
+\end{center}
+
+\textbf{C10: agrupación y conteo}
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{cardinalidad_c10_arbol.png}{5.0}{Árbol de la agrupación y el conteo.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{caridinalidad_c10_resultado.png}{5.0}{Resultado final de C10: 5 tuplas.}
+\end{minipage}
+\end{center}

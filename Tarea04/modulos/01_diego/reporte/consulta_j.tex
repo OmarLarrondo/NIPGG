@@ -1,0 +1,61 @@
+\seccion{2.j. Cliente con el mayor número de órdenes}
+
+Se obtiene la información del cliente que haya realizado el mayor número de órdenes, junto con la cantidad de órdenes que efectuó. Primero se proyectan los identificadores de cliente y orden para eliminar posibles repeticiones. Después, se agrupan las órdenes por cliente y se cuenta el número de órdenes realizadas por cada uno. Finalmente, se calcula el máximo, se seleccionan los clientes que alcanzan ese valor y se relaciona el resultado con \texttt{customer} para recuperar toda su información.
+
+Si existe un empate, se muestran todos los clientes que hayan realizado el máximo número de órdenes.
+
+\textbf{Expresión en álgebra relacional}
+
+\begin{align*}
+O &\leftarrow \pi_{customerid,orderid}(orders)\\
+N &\leftarrow \gamma_{customerid;\ \operatorname{count}(orderid)\to numorders}(O)\\
+M &\leftarrow \gamma_{\operatorname{max}(numorders)\to maxorders}(N)\\
+T &\leftarrow \sigma_{numorders=maxorders}(N\times M)\\
+J &\leftarrow \pi_{customer.*,\,numorders}(customer\bowtie T).
+\end{align*}
+
+\textbf{Expresión ejecutada en RelaX}
+
+\begin{lstlisting}
+O = π customerid, orderid (orders)
+
+N = γ customerid; count(orderid) → numorders (O)
+
+M = γ max(numorders) → maxorders (N)
+
+T = σ numorders = maxorders (N ⨯ M)
+
+J = π customer.*, numorders (customer ⨝ T)
+
+J
+\end{lstlisting}
+
+\textbf{Resultado: 1 cliente, con 13 órdenes.} No hubo empate; por lo tanto, se obtuvo un único cliente con la cantidad máxima de órdenes.
+
+\begin{center}
+\small
+\begin{tabular}{llll}
+\toprule
+\rowcolor{Fondo}
+Atributo & Valor & Atributo & Valor\\
+\midrule
+CustomerID & JE-15745 & Nombre & Joel Eaton\\
+Segmento & Consumer & País & United States\\
+Ciudad & Jackson & Estado & Michigan\\
+Código postal & 49201 & Región & Central\\
+\multicolumn{3}{r}{\textbf{Número de órdenes}} & \textbf{13}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+El resultado completo se encuentra en \texttt{datos/consulta\_j\_resultado.csv}.
+
+\begin{center}
+\begin{minipage}{.48\linewidth}
+\caprel{consulta_j_arbol.png}{8.0}{Árbol lógico de la consulta 2.j en RelaX.}
+\end{minipage}
+\hfill
+\begin{minipage}{.48\linewidth}
+\caprel{consulta_j_resultado.png}{8.0}{Resultado de la consulta 2.j en RelaX.}
+\end{minipage}
+\end{center}
