@@ -1,0 +1,39 @@
+\seccion{Mantenimiento b. Borrado de órdenes en Utah con subcategoría Tables}
+La consulta identifica las órdenes (`orderid`) que pertenecen a clientes de la ciudad de Utah y que, además, contienen al menos un producto de la subcategoría \texttt{Tables}. Una vez identificadas esas órdenes, se eliminan \textbf{todos} sus renglones de la tabla \texttt{orders}, independientemente de si el renglón específico correspondía a la subcategoría Tables o no. El catálogo de \texttt{customer} y \texttt{products} se conserva intacto.
+
+\textbf{Álgebra con asignación}
+\begin{align*}
+T_1 &\leftarrow \pi_{orderid} \Big( \sigma_{city='Utah' \,\land\, subcategory='Tables'} (customer \bowtie orders \bowtie products) \Big)\\
+T_2 &\leftarrow orders \bowtie T_1\\
+orders &\leftarrow orders - T_2.
+\end{align*}
+$T_1$ obtiene los identificadores únicos de las órdenes afectadas. $T_2$ proyecta esos identificadores sobre la tabla \texttt{orders} original para recuperar todos los renglones (productos) asociados a dichas órdenes. Finalmente, la diferencia de conjuntos elimina esas tuplas. $T_2$ tiene el mismo esquema que \texttt{orders}, por lo que la diferencia está bien definida.
+
+\textbf{Renglones que se eliminan (muestra)}
+\begin{center}\scriptsize\begin{tabular}{llllr}\toprule\rowcolor{Fondo} Orden & Fecha & Producto & Envío & Cantidad\\\midrule
+[US-XXXX-XXXXXX] & [Fecha] & [ProductID] & [ShipMode] & [Cant]\\
+[US-XXXX-XXXXXX] & [Fecha] & [ProductID] & [ShipMode] & [Cant]\\
+[US-XXXX-XXXXXX] & [Fecha] & [ProductID] & [ShipMode] & [Cant]\\
+\bottomrule\end{tabular}\end{center}
+
+\textbf{Impacto en las cardinalidades}
+\begin{center}\begin{tabular}{lrrr}\toprule\rowcolor{Fondo} Relación & Antes & Eliminadas & Después\\\midrule
+customer & 793 & 0 & 793\\
+orders & 5999 & [N] & [5999-N]\\
+products & 1862 & 0 & 1862\\\bottomrule\end{tabular}\end{center}
+Recordando la semántica de conjuntos, la tabla \texttt{orders} original cuenta con 5999 tuplas únicas (el dataset base tiene 6000 renglones, pero uno está duplicado exactamente). El borrado afecta únicamente a las tuplas que cumplen la condición. Las tablas \texttt{customer} y \texttt{products} no sufren modificaciones.
+
+La comprobación posterior muestra que la tabla \texttt{orders} resultante ya no contiene ninguna fila cuyo \texttt{orderid} pertenezca a las órdenes filtradas, y el resto de las tuplas se conserva. RelaX calcula las relaciones resultantes sin modificar permanentemente el gist original.
+
+\newpage
+\section*{Mantenimiento b. Comprobación en Relax}
+\textbf{Renglones afectados (Órdenes a borrar)}
+% Ruta correcta para Yahir
+\lstinputlisting{../mantenimiento_b.relax}
+\caprel{../evidencias/mantenimiento_b_arbol.png}{10}{Árbol de ejecución del mantenimiento b en Relax.}
+\caprel{../evidencias/mantenimiento_b_resultado.png}{9.5}{Renglones de órdenes que cumplen la condición y serán eliminados.}
+
+\textbf{Datos utilizados}\par
+Dataset indicado en la tarea: \href{https://gist.github.com/cyrus96/31074567738afef8c497f6ca89335782}{31074567738afef8c497f6ca89335782}, archivo BDVentas.txt.\par 
+Revisión: \texttt{4ae907368b34fbea9412ed9be30576f81d6b6612}.\par
+Las consultas y el mantenimiento se evaluaron de forma independiente sobre el mismo estado original, con semántica de conjuntos.

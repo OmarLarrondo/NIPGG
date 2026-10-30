@@ -1,0 +1,21 @@
+\seccion{2.d. Clientes Consumer con orden Second Class fuera de Nevada}
+Se buscan todos los atributos del cliente que pertenecen al segmento \texttt{Consumer}, que no radican en el estado de \texttt{Nevada} y que hayan realizado al menos una orden con modo de envío \texttt{Second Class}. Se utiliza una junta natural por \texttt{customerid}. La proyección final sobre los atributos del cliente garantiza que no existan filas duplicadas si un cliente tiene múltiples órdenes que cumplen la condición (semántica de conjuntos).
+
+\textbf{Expresión en álgebra relacional}
+\begin{align*}
+J &\leftarrow customer \bowtie orders\\
+F &\leftarrow \sigma_{segment='Consumer' \,\land\, state \neq 'Nevada' \,\land\, shipmode='Second\ Class'}(J)\\
+Resultado &\leftarrow \pi_{customerid, customername, segment, country, city, state, postalcode, region}(F).
+\end{align*}
+
+\textbf{Expresión ejecutada en Relax}
+% Ruta hacia el archivo .relax (sube un nivel)
+\lstinputlisting{../consulta_d.relax}
+
+\textbf{Resultado:} [Agregar aquí el número de renglones obtenidos]. El resultado no es vacío. La tabla muestra el perfil completo de los clientes que cumplen con los tres filtros solicitados.
+% Ruta hacia la imagen (sube un nivel y entra a evidencias)
+\caprel{../evidencias/consulta_d_arbol.png}{10}{Árbol de ejecución de la consulta 2.d en Relax.}
+\newpage
+\section*{2.d. Resultado en Relax}
+La captura muestra el conjunto de clientes únicos que cumplen con las condiciones de segmento, modo de envío y ubicación geográfica, tras haber sido filtrados a través de la junta con la tabla de órdenes.
+\caprel{../evidencias/consulta_d_resultado.png}{9.5}{Resultado de la consulta 2.d.}

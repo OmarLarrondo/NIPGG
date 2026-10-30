@@ -1,0 +1,21 @@
+\seccion{2.h. Ventas agrupadas por región, estado y ciudad}
+Se calcula la venta por renglón (\texttt{venta\_parcial}) multiplicando la cantidad (\texttt{quantity}) por el precio (\texttt{price}). Posteriormente, se agrupa por \texttt{region}, \texttt{state} y \texttt{city} para obtener la venta promedio, venta total, mayor venta, menor venta y el total de órdenes. Finalmente, se filtran los grupos cuyo promedio de venta se encuentre en el rango de \$900 a \$1,500 inclusive. Se utiliza una junta natural triple para unir clientes, órdenes y productos.
+
+\textbf{Expresión en álgebra relacional}
+\begin{align*}
+V &\leftarrow \pi_{region, state, city, orderid, (quantity * price) \to venta\_parcial}(customer \bowtie orders \bowtie products)\\
+G &\leftarrow \gamma_{\substack{region, state, city;\\ avg(venta\_parcial) \to avg\_venta, sum(venta\_parcial) \to total\_venta,\\ max(venta\_parcial) \to max\_venta, min(venta\_parcial) \to min\_venta,\\ count(orderid) \to total\_ordenes}}(V)\\
+Resultado &\leftarrow \sigma_{avg\_venta \geq 900 \,\land\, avg\_venta \leq 1500}(G).
+\end{align*}
+
+\textbf{Expresión ejecutada en Relax}
+% Ruta hacia el archivo .relax (sube un nivel)
+\lstinputlisting{../consulta_h.relax}
+
+\textbf{Resultado:} [Agregar aquí el número de renglones obtenidos]. El resultado no es vacío. La tabla presenta las métricas de ventas consolidadas por ubicación geográfica, mostrando únicamente aquellas agrupaciones cuyo ticket promedio por renglón se sitúa entre los \$900 y \$1,500.
+% Ruta hacia la imagen (sube un nivel y entra a evidencias)
+\caprel{../evidencias/consulta_h_arbol.png}{10}{Árbol de ejecución de la consulta 2.h en Relax.}
+\newpage
+\section*{2.h. Resultado en Relax}
+La captura muestra las columnas geográficas junto con los cálculos agregados. Se puede observar cómo el promedio de venta respeta el filtro aplicado, mientras que las ventas totales, máximas y mínimas reflejan la dispersión de los precios y cantidades de los productos solicitados en dichas zonas.
+\caprel{../evidencias/consulta_h_resultado.png}{9.5}{Resultado de la consulta 2.h.}
