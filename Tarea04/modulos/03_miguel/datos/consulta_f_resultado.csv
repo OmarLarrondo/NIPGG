@@ -1,0 +1,21 @@
+region,state,total_clientes
+Central,Illinois,2
+Central,Indiana,1
+Central,Iowa,1
+Central,Michigan,1
+Central,Texas,2
+Central,Wisconsin,1
+East,Massachusetts,1
+East,New Hampshire,2
+East,New York,9
+East,Ohio,1
+East,Pennsylvania,4
+South,Florida,1
+South,Georgia,2
+South,Kentucky,1
+South,North Carolina,1
+South,Tennessee,1
+West,Arizona,3
+West,California,9
+West,Colorado,1
+West,Washington,2

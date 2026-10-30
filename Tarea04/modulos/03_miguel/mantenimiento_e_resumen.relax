@@ -1,0 +1,3 @@
+FurnitureAfectado = sigma category = 'Furniture' and price >= 600 and price <= 900 (products)
+MachinesAfectado = sigma category = 'Technology' and subcategory = 'Machines' (products)
+gamma category; count(productid) -> afectados (FurnitureAfectado union MachinesAfectado)

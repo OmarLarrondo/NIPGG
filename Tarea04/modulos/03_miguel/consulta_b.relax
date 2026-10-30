@@ -1,0 +1,3 @@
+Candidatos = sigma category = 'Technology' and price > 400 and price < 850 (products)
+Solicitados = pi productid (orders)
+pi productid -> id, category -> categoria, subcategory -> tipo, price -> precio (Candidatos - (Candidatos join Solicitados))

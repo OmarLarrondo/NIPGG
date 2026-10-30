@@ -1,0 +1,5 @@
+FurnitureAfectado = sigma category = 'Furniture' and price >= 600 and price <= 900 (products)
+MachinesAfectado = sigma category = 'Technology' and subcategory = 'Machines' (products)
+FurnitureCambio = pi productid -> id, category -> categoria, price -> antes, price * 0.92 -> despues (FurnitureAfectado)
+MachinesCambio = pi productid -> id, category -> categoria, price -> antes, price * 1.05 -> despues (MachinesAfectado)
+FurnitureCambio union MachinesCambio

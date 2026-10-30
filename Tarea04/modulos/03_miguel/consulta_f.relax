@@ -1,0 +1,6 @@
+Periodo = sigma orderdate >= date('2016-01-01') and orderdate < date('2018-01-01') (orders)
+ProductosPorOrden = pi orderid, productid (Periodo)
+Conteo = gamma orderid; count(productid) -> total_productos (ProductosPorOrden)
+OrdenesElegibles = pi orderid (sigma total_productos >= 6 (Conteo))
+ClientesElegibles = pi region, state, customerid (customer join orders join OrdenesElegibles)
+tau region asc, state asc (gamma region, state; count(customerid) -> total_clientes (ClientesElegibles))

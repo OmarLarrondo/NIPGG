@@ -1,0 +1,6 @@
+FurnitureAfectado = sigma category = 'Furniture' and price >= 600 and price <= 900 (products)
+MachinesAfectado = sigma category = 'Technology' and subcategory = 'Machines' (products)
+FurnitureNuevo = pi productid, category, subcategory, price * 0.92 -> price (FurnitureAfectado)
+MachinesNuevo = pi productid, category, subcategory, price * 1.05 -> price (MachinesAfectado)
+Final = (products - FurnitureAfectado - MachinesAfectado) union FurnitureNuevo union MachinesNuevo
+gamma count(productid) -> total_productos (Final)
