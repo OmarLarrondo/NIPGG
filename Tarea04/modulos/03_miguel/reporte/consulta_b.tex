@@ -1,0 +1,42 @@
+\seccion{2.b. Productos de Technology sin órdenes}
+Se buscan productos de la categoría \texttt{Technology} con precio estrictamente mayor que \$400 y menor que \$850, cuyo identificador no figure en ninguna orden. Se conservan los cuatro atributos del producto; los encabezados se renombran para facilitar su lectura.
+
+\textbf{Expresión en álgebra relacional}
+\begin{align*}
+T &\leftarrow \sigma_{category='Technology'\,\land\,price>400\,\land\,price<850}(products)\\
+P &\leftarrow \pi_{productid}(orders)\\
+N &\leftarrow T-(T\bowtie P)\\
+Resultado &\leftarrow \pi_{\substack{productid\to id,\ category\to categoria,\\subcategory\to tipo,\ price\to precio}}(N).
+\end{align*}
+La junta natural usa \texttt{productid}. Como $P$ solo contiene ese atributo, $T\bowtie P$ conserva el esquema de $T$ y la diferencia está bien definida. La proyección final cambia únicamente los nombres de las columnas.
+
+\textbf{Expresión ejecutada en Relax}
+\lstinputlisting{\RutaMiguel/consulta_b.relax}
+\textbf{Resultado: 2 productos.} Hay 28 candidatos en el intervalo: 26 tienen al menos una orden y 2 no aparecen en ninguna. El resultado no es vacío.
+\begin{center}\small\begin{tabular}{lllr}\toprule\rowcolor{Fondo}
+id & categoria & tipo & precio\\\midrule
+TEC-PH-10004080 & Technology & Phones & 487.98\\
+TEC-MA-10004086 & Technology & Machines & 659.98\\\bottomrule
+\end{tabular}\end{center}
+\caprel{consulta_b_resultado.png}{7.6}{Resultado de la consulta 2.b en Relax, con las cuatro columnas.}
+
+\clearpage
+\section*{2.b. Árbol lógico de la consulta}
+El árbol representa los operadores de la expresión ejecutable. Se lee de abajo hacia arriba; las etiquetas indican las cardinalidades comprobadas con el dataset original.
+\begin{center}
+\begin{tikzpicture}
+\node[operador,text width=10cm] (out) at (0,0) {Proyección y renombrado\\$productid\to id$, $category\to categoria$,\\$subcategory\to tipo$, $price\to precio$\\\textbf{2 tuplas}};
+\node[operador] (diff) at (0,-2.5) {Diferencia $T-(T\bowtie P)$\\\textbf{2 tuplas}};
+\node[operador,text width=5cm] (t1) at (-3.7,-5) {$\sigma_{\substack{category='Technology'\\\land\,400<price<850}}$\\\textbf{28 tuplas}};
+\node[operador] (join) at (3.7,-5) {Junta natural por productid\\\textbf{26 tuplas}};
+\node[operador] (prod1) at (-3.7,-7.3) {products\\1862 tuplas};
+\node[operador,text width=4.5cm] (t2) at (1,-7.3) {La misma selección $T$\\28 tuplas};
+\node[operador] (proj) at (6,-7.3) {$\pi_{productid}$\\1770 tuplas};
+\node[operador] (orders) at (6,-9.4) {orders\\5999 tuplas};
+\draw[flujo] (diff)--(out);\draw[flujo] (t1)--(diff);\draw[flujo] (join)--(diff);
+\draw[flujo] (prod1)--(t1);\draw[flujo] (t2)--(join);\draw[flujo] (proj)--(join);\draw[flujo] (orders)--(proj);
+\end{tikzpicture}
+\end{center}
+\textbf{Lectura:} primero se filtra el catálogo; después se identifican los candidatos solicitados mediante la junta. La diferencia conserva únicamente los dos productos sin órdenes.
+
+Este es un esquema lógico elaborado a partir de la expresión; la captura de la página anterior es la evidencia del resultado en Relax. El resultado completo se incluye en \texttt{datos/consulta\_b\_resultado.csv}.

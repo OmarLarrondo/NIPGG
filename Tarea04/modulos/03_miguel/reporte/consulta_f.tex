@@ -1,0 +1,72 @@
+\seccion{2.f. Clientes con órdenes de al menos 6 productos}
+Se interpreta ``al menos 6 productos'' como seis identificadores de producto distintos \textbf{en una misma orden}, no como seis unidades de \texttt{quantity}. La fecha de solicitud debe pertenecer a 2016 o 2017: desde el 1 de enero de 2016 inclusive hasta el 1 de enero de 2018 exclusive. Cada cliente se cuenta una sola vez por región y estado, aunque tenga varias órdenes elegibles. La ubicación se toma de \texttt{customer}.
+
+\textbf{Expresión en álgebra relacional}
+\begin{align*}
+P &\leftarrow \sigma_{\substack{orderdate\geq '2016\text{-}01\text{-}01'\\\land\,orderdate<'2018\text{-}01\text{-}01'}}(orders)\\
+D &\leftarrow \pi_{orderid,productid}(P)\\
+N &\leftarrow \gamma_{orderid;\ COUNT(productid)\to total\_productos}(D)\\
+O &\leftarrow \pi_{orderid}(\sigma_{total\_productos\geq6}(N))\\
+C &\leftarrow \pi_{region,state,customerid}(customer\bowtie orders\bowtie O)\\
+Resultado &\leftarrow \tau_{region\ ASC,state\ ASC}\bigl(\gamma_{region,state;\ COUNT(customerid)\to total\_clientes}(C)\bigr).
+\end{align*}
+La proyección $D$ elimina las repeticiones de un producto en la misma orden; $C$ elimina las repeticiones de un cliente dentro de una ubicación. Las juntas usan \texttt{customerid} y \texttt{orderid}. $\tau$ es la extensión de ordenación; una relación clásica no tiene orden.
+
+\textbf{Expresión ejecutada en Relax}
+\lstinputlisting{\RutaMiguel/consulta_f.relax}
+\textbf{Resultado: 49 órdenes elegibles, 46 clientes distintos y 20 grupos.} El resultado no es vacío. La selección temporal conserva 3483 tuplas; al proyectar orden y producto quedan 3479 pares distintos, agrupados en 1787 órdenes.
+
+\clearpage
+\section*{2.f. Resultado completo y comprobación en Relax}
+\begin{center}\small\begin{tabular}{llr}\toprule\rowcolor{Fondo}
+region & state & total\_clientes\\\midrule
+Central & Illinois & 2\\
+Central & Indiana & 1\\
+Central & Iowa & 1\\
+Central & Michigan & 1\\
+Central & Texas & 2\\
+Central & Wisconsin & 1\\
+East & Massachusetts & 1\\
+East & New Hampshire & 2\\
+East & New York & 9\\
+East & Ohio & 1\\
+East & Pennsylvania & 4\\
+South & Florida & 1\\
+South & Georgia & 2\\
+South & Kentucky & 1\\
+South & North Carolina & 1\\
+South & Tennessee & 1\\
+West & Arizona & 3\\
+West & California & 9\\
+West & Colorado & 1\\
+West & Washington & 2\\\bottomrule
+\end{tabular}\end{center}
+\begin{center}
+\begin{minipage}{.48\linewidth}\caprel{consulta_f_resultado_p1.png}{10.5}{Primeras 10 filas en Relax.}\end{minipage}\hfill
+\begin{minipage}{.48\linewidth}\caprel{consulta_f_resultado_p2.png}{10.5}{Últimas 10 filas en Relax.}\end{minipage}
+\end{center}
+Las 20 filas suman 46 clientes. El CSV completo está en \texttt{datos/consulta\_f\_resultado.csv}.
+
+\clearpage
+\section*{2.f. Árbol lógico de la consulta}
+Los operadores siguen la expresión ejecutable. La proyección anterior al segundo conteo garantiza que cada cliente se cuente una sola vez por ubicación.
+\begin{center}
+\begin{tikzpicture}
+\node[operador,text width=8cm] (sort) at (0,0) {$\tau_{region\ ASC,state\ ASC}$\\\textbf{20 grupos}};
+\node[operador,text width=10cm] (count) at (0,-1.65) {$\gamma_{region,state;\ COUNT(customerid)\to total\_clientes}$\\\textbf{20 grupos}};
+\node[operador] (cust) at (0,-3.3) {$\pi_{region,state,customerid}$\\\textbf{46 clientes}};
+\node[operador] (join) at (0,-4.95) {customer $\bowtie$ orders $\bowtie$ órdenes elegibles\\337 renglones};
+\node[operador] (cl) at (-5,-6.8) {customer\\793 tuplas};
+\node[operador] (ol) at (-1,-6.8) {orders\\5999 tuplas};
+\node[operador] (ids) at (4,-6.8) {$\pi_{orderid}$\\49 órdenes};
+\node[operador] (sel) at (4,-8.6) {$\sigma_{total\_productos\geq6}$\\49 órdenes};
+\node[operador,text width=8cm] (gc) at (1,-10.5) {$\gamma_{orderid;\ COUNT(productid)\to total\_productos}$\\1787 órdenes};
+\node[operador] (pp) at (1,-12.3) {$\pi_{orderid,productid}$\\3479 pares distintos};
+\node[operador,text width=10cm] (period) at (1,-14.2) {$\sigma_{2016\text{-}01\text{-}01\leq orderdate<2018\text{-}01\text{-}01}$\\3483 tuplas};
+\node[operador] (src) at (1,-16) {orders\\5999 tuplas};
+\draw[flujo] (count)--(sort);\draw[flujo] (cust)--(count);\draw[flujo] (join)--(cust);
+\draw[flujo] (cl)--(join);\draw[flujo] (ol)--(join);\draw[flujo] (ids)--(join);
+\draw[flujo] (sel)--(ids);\draw[flujo] (gc)--(sel);\draw[flujo] (pp)--(gc);\draw[flujo] (period)--(pp);\draw[flujo] (src)--(period);
+\end{tikzpicture}
+\end{center}
+\small Esquema lógico elaborado a partir de la expresión; las capturas de la página anterior documentan el resultado obtenido en Relax.

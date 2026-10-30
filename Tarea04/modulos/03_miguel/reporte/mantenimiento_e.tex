@@ -1,0 +1,57 @@
+\seccion{Mantenimiento e. Ajuste de precios}
+Se parte del catálogo original. Los productos de \texttt{Furniture} con precio entre \$600 y \$900, ambos inclusive, reciben un descuento del 8\%. Todos los productos de \texttt{Technology}, subcategoría \texttt{Machines}, reciben un aumento del 5\%, sin restricción de precio. Los grupos son disjuntos por categoría.
+
+\textbf{Álgebra relacional con asignación}
+\begin{align*}
+F &\leftarrow \sigma_{category='Furniture'\,\land\,600\leq price\leq900}(products)\\
+M &\leftarrow \sigma_{category='Technology'\,\land\,subcategory='Machines'}(products)\\
+F' &\leftarrow \pi_{productid,category,subcategory,\ price\times0.92\to price}(F)\\
+M' &\leftarrow \pi_{productid,category,subcategory,\ price\times1.05\to price}(M)\\
+products &\leftarrow (products-F-M)\cup F'\cup M'.
+\end{align*}
+Las selecciones parten del estado original. Las proyecciones devuelven el mismo esquema de \texttt{products}; las diferencias y uniones son compatibles. Se conserva el identificador, la categoría y la subcategoría de cada producto; solo cambia \texttt{price}.
+
+\textbf{Expresión ejecutada en Relax}
+\lstinputlisting{\RutaMiguel/mantenimiento_e_final.relax}
+Relax calcula la relación resultante sin modificar permanentemente el dataset. No se modifican \texttt{orders} ni \texttt{customer}.
+\begin{center}\begin{tabular}{llr}\toprule\rowcolor{Fondo}
+Grupo & Cambio & Tuplas\\\midrule
+Furniture, $600\leq price\leq900$ & $-8\%$ & 13\\
+Technology / Machines & $+5\%$ & 63\\\midrule
+Total & & 76\\\bottomrule
+\end{tabular}\end{center}
+\begin{center}\begin{tabular}{lrrr}\toprule\rowcolor{Fondo}
+Relación & Antes & Sustituidas & Después\\\midrule
+products & 1862 & 76 & 1862\\
+orders & 5999 & 0 & 5999\\
+customer & 793 & 0 & 793\\\bottomrule
+\end{tabular}\end{center}
+La relación final contiene 1786 tuplas no afectadas, 13 nuevas de Furniture y 63 nuevas de Machines. Los 76 identificadores y sus precios se incluyen en el anexo y en \texttt{datos/mantenimiento\_e\_cambios.csv}.
+
+\clearpage
+\section*{Mantenimiento e. Comprobación en Relax}
+\textbf{Conteo de afectados por categoría}
+\lstinputlisting{\RutaMiguel/mantenimiento_e_resumen.relax}
+\caprel{mantenimiento_e_resumen.png}{2.7}{13 tuplas de Furniture y 63 de Technology/Machines.}
+\textbf{Precios anteriores y posteriores}
+\lstinputlisting{\RutaMiguel/mantenimiento_e_afectadas.relax}
+\begin{center}
+\begin{minipage}{.48\linewidth}\caprel{mantenimiento_e_afectadas_p1.png}{7.7}{Primera página de precios afectados.}\end{minipage}\hfill
+\begin{minipage}{.48\linewidth}\caprel{mantenimiento_e_afectadas_p2.png}{7.7}{Segunda página de precios afectados.}\end{minipage}
+\end{center}
+Las capturas muestran las primeras 20 de las 76 tuplas afectadas. El anexo presenta la lista completa. Se conservan cuatro decimales exactos del cálculo porcentual, sin redondear los precios nuevos a centavos. Por ejemplo, $617.70\times0.92=568.2840$; Relax puede mostrar $568.2840000000001$ por su representación numérica binaria.
+
+\clearpage
+\section*{Mantenimiento e. Comprobación del catálogo final}
+\lstinputlisting{\RutaMiguel/mantenimiento_e_comprobacion.relax}
+\caprel{mantenimiento_e_total.png}{2.6}{El catálogo resultante conserva 1862 tuplas.}
+\textbf{Verificación independiente}\par
+Se contrastaron los 76 registros del CSV con el catálogo original: cada identificador pertenece a uno de los dos grupos afectados y cada precio coincide con su factor de actualización. Se conservan las otras 1786 tuplas. Las cardinalidades y los resultados de las consultas también coinciden con los datos guardados en el módulo.
+
+\textbf{Datos utilizados}\par
+Dataset indicado en la estructura de la tarea: \href{https://gist.github.com/cyrus96/31074567738afef8c497f6ca89335782}{31074567738afef8c497f6ca89335782}, archivo \texttt{BDVentas.txt}.\par
+Revisión del archivo: \texttt{4ae907368b34fbea9412ed9be30576f81d6b6612}.\par
+La copia utilizada se incluye en \texttt{datos/BDVentas.txt}. Contiene 793 clientes, 1862 productos y 5999 tuplas distintas de órdenes. El archivo de origen tiene 6000 renglones de órdenes, con un duplicado exacto que se elimina bajo semántica de conjuntos.
+
+\textbf{Criterios de interpretación}\par
+Q\_b usa límites estrictos de precio; Q\_f cuenta productos distintos por orden y clientes distintos por ubicación; M\_e usa límites inclusivos para Furniture. Cada operación se evalúa de forma independiente sobre el estado original.

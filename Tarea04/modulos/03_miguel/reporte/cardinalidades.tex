@@ -1,0 +1,54 @@
+\seccion{1. Cardinalidad de las consultas}
+Las relaciones iniciales son:\par
+$R(A,B)=\{(1,x),(2,y),(2,z),(3,x),(9,a)\}$\par
+$S(B,C,D)=\{(x,0,3),(y,2,1),(y,3,3),(w,3,0),(y,4,2)\}$.
+
+Se usa semántica de conjuntos. C03 y C04 son juntas externas naturales: la coincidencia se establece por el atributo compartido $B$, que aparece una sola vez. La junta interna $R\bowtie S$ tiene cinco tuplas: dos para $B=x$ y tres para $B=y$. Los valores \nulo{} representan atributos faltantes.
+
+\subsection*{C03. Junta externa izquierda $R\leftouterjoin S$}
+Se conservan todas las tuplas de $R$. Las tuplas $(2,z)$ y $(9,a)$ no tienen pareja en $S$; se completan con \nulo{} en $C$ y $D$.
+\[
+R\leftouterjoin S=(R\bowtie S)\cup\{(2,z,\texttt{null},\texttt{null}),(9,a,\texttt{null},\texttt{null})\}.
+\]
+\begin{center}\begin{tabular}{cccc}\toprule\rowcolor{Fondo}
+$A$ & $B$ & $C$ & $D$\\\midrule
+1 & x & 0 & 3\\
+2 & y & 2 & 1\\
+2 & y & 3 & 3\\
+2 & y & 4 & 2\\
+2 & z & \nulo & \nulo\\
+3 & x & 0 & 3\\
+9 & a & \nulo & \nulo\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Cardinalidad: 7 tuplas} ($5$ coincidencias y $2$ tuplas de $R$ sin pareja). La tupla $(2,y)$ se combina con tres tuplas distintas de $S$; sus valores de $C$ o $D$ difieren, por lo que no se generan duplicados.
+
+\subsection*{C04. Junta externa derecha $R\rightouterjoin S$}
+Se conservan todas las tuplas de $S$. La tupla $(w,3,0)$ no tiene pareja en $R$; se completa con \nulo{} en $A$.
+\[
+R\rightouterjoin S=(R\bowtie S)\cup\{(\texttt{null},w,3,0)\}.
+\]
+\begin{center}\begin{tabular}{cccc}\toprule\rowcolor{Fondo}
+$A$ & $B$ & $C$ & $D$\\\midrule
+1 & x & 0 & 3\\
+3 & x & 0 & 3\\
+2 & y & 2 & 1\\
+2 & y & 3 & 3\\
+\nulo & w & 3 & 0\\
+2 & y & 4 & 2\\\bottomrule
+\end{tabular}\end{center}
+\textbf{Cardinalidad: 6 tuplas} ($5$ coincidencias y $1$ tupla de $S$ sin pareja). Las tuplas $(2,z)$ y $(9,a)$ de $R$ se excluyen. No hay duplicados.
+
+\clearpage
+\section*{1. Evidencias de cardinalidad en Relax}
+\textbf{C03: expresión y comprobación}
+\lstinputlisting{\RutaMiguel/cardinalidad_c03.relax}
+\begin{center}
+\begin{minipage}{.60\linewidth}\caprel{cardinalidad_c03_arbol.png}{4.4}{Árbol de la junta externa izquierda.}\end{minipage}\hfill
+\begin{minipage}{.33\linewidth}\caprel{cardinalidad_c03_resultado.png}{4.8}{Resultado: 7 tuplas.}\end{minipage}
+\end{center}
+\textbf{C04: expresión y comprobación}
+\lstinputlisting[firstline=15]{\RutaMiguel/cardinalidad_c04.relax}
+\begin{center}
+\begin{minipage}{.60\linewidth}\caprel{cardinalidad_c04_arbol.png}{4.4}{Árbol de la junta externa derecha.}\end{minipage}\hfill
+\begin{minipage}{.33\linewidth}\caprel{cardinalidad_c04_resultado.png}{4.8}{Resultado: 6 tuplas.}\end{minipage}
+\end{center}
