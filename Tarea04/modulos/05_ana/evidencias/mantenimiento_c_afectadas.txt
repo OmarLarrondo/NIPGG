@@ -1,0 +1,12 @@
+Lena = π customerid (σ customername = 'Lena Cacioppo' (customer))
+
+Prods = π productid (σ productid = 'FUR-BO-10001798' or productid = 'FUR-CH-10000454' or productid = 'FUR-TA-10000577' or productid = 'FUR-FU-10001487' (products))
+
+Info = {
+orderid:string, orderdate:date, shipdate:date, shipmode:string, quantity:number
+'CA-2026-900001', 2026-10-29, 2026-11-02, 'Standard Class', 1
+}
+
+orders1 = orders union π orderid, orderdate, shipdate, shipmode, customerid, productid, quantity (Lena x Prods x Info)
+
+orders1

@@ -1,0 +1,1 @@
+π productid, subcategory (σ category = 'Furniture' (products))
