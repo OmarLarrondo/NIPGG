@@ -1,0 +1,5 @@
+γ state,segment; count(customerid)→total((π customerid (customer)-π customerid(orders)) ⨝ customer)
+
+gamma count(CustomerID) -> total (
+  pi CustomerID (Customer) - pi CustomerID (Orders)
+)
