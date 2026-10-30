@@ -56,17 +56,31 @@ que se obtiene al hacer el join de la primera consulta.
 
 ### Interpretación
 
-Pendiente: atributos de salida, filtros, unidad de conteo y supuestos que apliquen.
+El producto que más se ha vendido es aquel en el cual productid de Product se repite más veces en las ordenes.
+De estas dos tablas, podemos obtener el número de ordenes por cada uno de los ids y obtener el máximo, además
+podemos obtener la categoría del producto y el modo de envío de la orden.
 
 ### Expresión en notación de clase
 
-Pendiente.
+$$
+\begin{aligned}
+T &= \gamma_{ShipMode,\ Category;\ count(ProductID) \rightarrow total}(Orders \bowtie Products) \\
+M &= \gamma_{max(total) \rightarrow total}(T) \\
+Resultado &= T \bowtie M
+\end{aligned}
+$$
 
 ### Expresión ejecutable en Relax
 
+T = gamma ShipMode, Category; count(ProductID) -> total (Orders natural join Products)
+M = gamma max(total) -> total (T)
+T natural join M
+
 Pendiente. Guardar también la expresión exacta en `consulta_g.relax` al resolver.
 
-### Verificación y evidencias
+### Resultados
+
+Se obtuvo una tabla con el modo de envío, cetegoría y número de productos ordenados del producto con mayor número de ventas-
 
 - Dataset: `31074567738afef8c497f6ca89335782`.
 - Resultado y explicación breve: pendiente.

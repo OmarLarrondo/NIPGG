@@ -1,0 +1,3 @@
+T = gamma shipmode, category; count(productid) -> total (orders natural join products)
+M = gamma max(total) -> total (T)
+T natural join M
