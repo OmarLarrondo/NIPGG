@@ -1,0 +1,5 @@
+pi customerid, customername, segment, country, city, state, postalcode, region (
+    sigma segment = 'Consumer' and state != 'Nevada' and shipmode = 'Second Class' (
+        customer natural join orders
+    )
+)

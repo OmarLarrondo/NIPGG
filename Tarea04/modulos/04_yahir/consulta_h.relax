@@ -1,0 +1,12 @@
+sigma avg_venta >= 900 and avg_venta <= 1500 (
+    gamma region, state, city; 
+        avg(venta_parcial) → avg_venta, 
+        sum(venta_parcial) → total_venta, 
+        max(venta_parcial) → max_venta, 
+        min(venta_parcial) → min_venta, 
+        count(orderid) → total_ordenes (
+        pi region, state, city, orderid, quantity * price → venta_parcial (
+            customer natural join orders natural join products
+        )
+    )
+)

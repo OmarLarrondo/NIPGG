@@ -1,0 +1,9 @@
+orders - (
+    orders natural join (
+        pi orderid (
+            sigma city = 'Utah' and subcategory = 'Tables' (
+                customer natural join orders natural join products
+            )
+        )
+    )
+)
