@@ -1,0 +1,7 @@
+tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
+HORARIO_SUCURSAL,fk_horario_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+VISITA,fk_visita_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
+VISITA,fk_visita_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+RECARGA,fk_recarga_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
+RECARGA,fk_recarga_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+RECARGA,fk_recarga_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE

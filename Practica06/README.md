@@ -3,7 +3,7 @@
 Estado: distribución confirmada de cinco módulos técnicos para trabajar en paralelo.
 **Responsables: Omar (01), Miguel (02), Ana (03), Yahir (04) y Diego (05).**
 Las actividades descritas definen el alcance de cada módulo; sus soluciones
-todavía no están implementadas.
+todavía no están implementadas. La estructura y las plantillas ya están creadas.
 
 Este README es de uso interno y es distinto del README en PDF de la entrega.
 
@@ -108,7 +108,7 @@ de varios puestos y contactos.
 Es un equilibrio estimado por complejidad y volumen, no una igualdad de horas.
 La integración adicional que retiene Omar no se usa para compensar el reparto técnico.
 
-## Estructura de trabajo propuesta
+## Estructura de trabajo
 
 ```text
 Practica06/
@@ -143,7 +143,7 @@ módulo asignado. Las rutas son relativas a `Practica06/`.
 | Yahir | Módulo 04 | `modulos/04_sucursales_operaciones/` |
 | Diego | Módulo 05 | `modulos/05_personal_administracion/` |
 
-Dentro de **cada una** de esas carpetas se deben crear estos archivos:
+Dentro de **cada una** de esas carpetas ya están creadas las siguientes plantillas:
 
 | Archivo | Contenido a producir |
 |---|---|
@@ -159,8 +159,12 @@ Por ejemplo, Omar edita en el módulo 01
 `politicas.sql`, `comentarios.sql`, `pruebas.sql` y `justificacion.md`, todos
 dentro de esa misma carpeta. El mismo criterio se aplica a los otros cuatro módulos.
 
-Las carpetas y sus archivos se crearán durante el trabajo de cada módulo; por
-ahora solo se ha creado este README interno. Todos consultan el DDL anterior como base.
+Las cinco carpetas y sus seis archivos por módulo ya están creados.
+`decisiones.csv` contiene el inventario real de FK, con las acciones y motivos
+pendientes de elegir. Las plantillas SQL todavía no ejecutan cambios ni pruebas.
+Todos parten de la copia fija `base/DDL_practica05.sql`, idéntica al DDL anterior.
+Las carpetas `SQL/`, `reporte/` y `Docs/` contienen un `.gitkeep`; el DDL final
+y los PDF se generarán durante la integración, no son entregables terminados.
 Los archivos compartidos `SQL/DDL.sql`, `reporte/`, `Docs/Práctica06.pdf` y
 `README_ÑIPGG.pdf` quedan para la integración que realizará Omar.
 

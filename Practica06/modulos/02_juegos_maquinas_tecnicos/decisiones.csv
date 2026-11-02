@@ -1,0 +1,10 @@
+tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
+CorreoElectrónicoTécnico,fk_correo_tecnico,"""CURP""",Técnico,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+TeléfonoTécnivo,fk_telefono_tecnico,"""CURP""",Técnico,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Mantenimiento,fk_mantenimiento_maquina,"""idMaquina""",Máquina,"""idMaquina""",PENDIENTE,PENDIENTE,PENDIENTE
+Mantenimiento,fk_mantenimiento_tecnico,"""CURP""",Técnico,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Máquina,fk_maquina_juego,"""idJuego""",Juego,"""idJuego""",PENDIENTE,PENDIENTE,PENDIENTE
+Máquina,fk_maquina_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Juego,fk_juego_tipo,"""idTipo""",tipoDeJuego,"""idTipo""",PENDIENTE,PENDIENTE,PENDIENTE
+Técnico,fk_tecnico_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Certificaciones,fk_certificacion_tecnico,"""CURP""",Técnico,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE

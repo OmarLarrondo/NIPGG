@@ -1,0 +1,10 @@
+tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
+CorreoElectrónicoEncargado,fk_correo_encargado,"""CURP""",Encargado de premios,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+TeléfonoEncargado,fk_telefono_encargado,"""CURP""",Encargado de premios,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Canje,fk_canje_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Canje,fk_canje_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
+Canje,fk_canje_premio,"""idPremio""",Premio,"""idPremio""",PENDIENTE,PENDIENTE,PENDIENTE
+Canje,fk_canje_encargado,"""CURP""",Encargado de premios,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Disponer,fk_disponer_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Disponer,fk_disponer_premio,"""idPremio""",Premio,"""idPremio""",PENDIENTE,PENDIENTE,PENDIENTE
+Encargado de premios,fkencargadopremiossucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE

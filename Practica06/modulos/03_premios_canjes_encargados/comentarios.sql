@@ -1,0 +1,13 @@
+-- Módulo 03 | Responsable: Ana
+-- Estado: plantilla; comentarios pendientes de implementar.
+-- Aplicar después de las políticas para no perder comentarios al recrear FK.
+-- Completar COMMENT ON TABLE, COLUMN y CONSTRAINT de todos los objetos propios.
+-- Describir finalidad, significado de columnas y reglas de las restricciones.
+-- Consultar nombres de constraints en ../../base/DDL_practica05.sql.
+
+-- TODO: documentar tabla "Premio", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Canje", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Disponer", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Encargado de premios", todas sus columnas y restricciones.
+-- TODO: documentar tabla "CorreoElectrónicoEncargado", todas sus columnas y restricciones.
+-- TODO: documentar tabla "TeléfonoEncargado", todas sus columnas y restricciones.

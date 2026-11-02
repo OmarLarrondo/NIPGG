@@ -1,0 +1,9 @@
+tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
+CorreoElectrónicoGerente,fk_correo_gerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+TeléfonoGerente,fk_telefono_gerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+CorreoElectrónicoCajero,fk_correo_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+TeléfonoCajero,fk_telefono_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Genrente,fkgerentesucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Cajero,fkcajerosucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+Administrar,fkadministrargerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Administrar,fkadministrarsucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE

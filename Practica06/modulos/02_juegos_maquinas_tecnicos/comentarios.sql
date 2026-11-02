@@ -1,0 +1,15 @@
+-- Módulo 02 | Responsable: Miguel
+-- Estado: plantilla; comentarios pendientes de implementar.
+-- Aplicar después de las políticas para no perder comentarios al recrear FK.
+-- Completar COMMENT ON TABLE, COLUMN y CONSTRAINT de todos los objetos propios.
+-- Describir finalidad, significado de columnas y reglas de las restricciones.
+-- Consultar nombres de constraints en ../../base/DDL_practica05.sql.
+
+-- TODO: documentar tabla "tipoDeJuego", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Juego", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Máquina", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Mantenimiento", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Técnico", todas sus columnas y restricciones.
+-- TODO: documentar tabla "Certificaciones", todas sus columnas y restricciones.
+-- TODO: documentar tabla "CorreoElectrónicoTécnico", todas sus columnas y restricciones.
+-- TODO: documentar tabla "TeléfonoTécnivo", todas sus columnas y restricciones.

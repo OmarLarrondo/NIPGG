@@ -1,0 +1,7 @@
+tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
+correoElectrónico,fk_correo_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
+teléfono,fk_telefono_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
+Tarjeta,fk_tarjeta_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
+Tarjeta,fk_tarjeta_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+Partida,fk_partida_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
+Partida,fk_partida_maquina,"""idMaquina""",Máquina,"""idMaquina""",PENDIENTE,PENDIENTE,PENDIENTE
