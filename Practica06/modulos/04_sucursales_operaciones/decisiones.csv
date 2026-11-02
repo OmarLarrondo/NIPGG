@@ -1,7 +1,7 @@
 tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
-HORARIO_SUCURSAL,fk_horario_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
-VISITA,fk_visita_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
-VISITA,fk_visita_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
-RECARGA,fk_recarga_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
-RECARGA,fk_recarga_sucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
-RECARGA,fk_recarga_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
+HORARIO_SUCURSAL,fk_horario_sucursal,idSucursal,SUCURSAL,idSucursal,CASCADE,CASCADE,"Entidad débil: depende de sucursal (parte de la PK). Al borrar sucursal se eliminan sus horarios."
+VISITA,fk_visita_tarjeta,"idCliente, numeroTarjeta",Tarjeta,"idCliente, numeroTarjeta",RESTRICT,CASCADE,"Historial de uso: RESTRICT impide borrar tarjetas con visitas asociadas. CASCADE en UPDATE mantiene sincronizada la clave compuesta."
+VISITA,fk_visita_sucursal,idSucursal,SUCURSAL,idSucursal,RESTRICT,CASCADE,"Historial por sucursal: RESTRICT evita la pérdida accidental de visitas. CASCADE en UPDATE propaga correcciones de idSucursal a la PK."
+RECARGA,fk_recarga_tarjeta,"idCliente, numeroTarjeta",Tarjeta,"idCliente, numeroTarjeta",RESTRICT,CASCADE,"Historial financiero: RESTRICT evita recargas perdidas. CASCADE en UPDATE mantiene la clave compuesta al corregirla."
+RECARGA,fk_recarga_sucursal,idSucursal,SUCURSAL,idSucursal,RESTRICT,CASCADE,"Historial de recargas: RESTRICT evita borrar sucursales con recargas activas. CASCADE en UPDATE propaga cambios en el identificador."
+RECARGA,fk_recarga_cajero,CURP,Cajero,CURP,RESTRICT,CASCADE,"Registro de cobro: RESTRICT impide borrar cajeros con recargas registradas. CASCADE en UPDATE actualiza la referencia si se corrige la CURP."
