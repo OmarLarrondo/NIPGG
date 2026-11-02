@@ -6,26 +6,104 @@
 -- Escribir ON DELETE y ON UPDATE explícitos. Ejecutar dentro de una transacción.
 -- Esta plantilla no cambia ninguna FK.
 
--- TODO: "CorreoElectrónicoGerente" / fk_correo_gerente
--- ("CURP") -> "Genrente" ("CURP")
+BEGIN;
 
--- TODO: "TeléfonoGerente" / fk_telefono_gerente
--- ("CURP") -> "Genrente" ("CURP")
+-- 1. CorreoElectrónicoGerente -> Genrente
+ALTER TABLE "CorreoElectrónicoGerente"
+    DROP CONSTRAINT fk_correo_gerente;
 
--- TODO: "CorreoElectrónicoCajero" / fk_correo_cajero
--- ("CURP") -> "Cajero" ("CURP")
+ALTER TABLE "CorreoElectrónicoGerente"
+    ADD CONSTRAINT fk_correo_gerente
+    FOREIGN KEY ("CURP")
+    REFERENCES "Genrente" ("CURP")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
 
--- TODO: "TeléfonoCajero" / fk_telefono_cajero
--- ("CURP") -> "Cajero" ("CURP")
+-- 2. TeléfonoGerente -> Genrente
+ALTER TABLE "TeléfonoGerente"
+    DROP CONSTRAINT fk_telefono_gerente;
 
--- TODO: "Genrente" / fkgerentesucursal
--- ("idSucursal") -> "SUCURSAL" ("idSucursal")
+ALTER TABLE "TeléfonoGerente"
+    ADD CONSTRAINT fk_telefono_gerente
+    FOREIGN KEY ("CURP")
+    REFERENCES "Genrente" ("CURP")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
 
--- TODO: "Cajero" / fkcajerosucursal
--- ("idSucursal") -> "SUCURSAL" ("idSucursal")
+-- 3. CorreoElectrónicoCajero -> Cajero
+ALTER TABLE "CorreoElectrónicoCajero"
+    DROP CONSTRAINT fk_correo_cajero;
 
--- TODO: "Administrar" / fkadministrargerente
--- ("CURP") -> "Genrente" ("CURP")
+ALTER TABLE "CorreoElectrónicoCajero"
+    ADD CONSTRAINT fk_correo_cajero
+    FOREIGN KEY ("CURP")
+    REFERENCES "Cajero" ("CURP")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
 
--- TODO: "Administrar" / fkadministrarsucursal
--- ("idSucursal") -> "SUCURSAL" ("idSucursal")
+-- 4. TeléfonoCajero -> Cajero
+ALTER TABLE "TeléfonoCajero"
+    DROP CONSTRAINT fk_telefono_cajero;
+
+ALTER TABLE "TeléfonoCajero"
+    ADD CONSTRAINT fk_telefono_cajero
+    FOREIGN KEY ("CURP")
+    REFERENCES "Cajero" ("CURP")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
+
+-- 5. Genrente -> SUCURSAL
+ALTER TABLE "Genrente"
+    DROP CONSTRAINT fkgerentesucursal;
+
+ALTER TABLE "Genrente"
+    ADD CONSTRAINT fkgerentesucursal
+    FOREIGN KEY ("idSucursal")
+    REFERENCES "SUCURSAL" ("idSucursal")
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
+
+-- 6. Cajero -> SUCURSAL
+ALTER TABLE "Cajero"
+    DROP CONSTRAINT fkcajerosucursal;
+
+ALTER TABLE "Cajero"
+    ADD CONSTRAINT fkcajerosucursal
+    FOREIGN KEY ("idSucursal")
+    REFERENCES "SUCURSAL" ("idSucursal")
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
+
+-- 7. Administrar -> Genrente
+ALTER TABLE "Administrar"
+    DROP CONSTRAINT fkadministrargerente;
+
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT fkadministrargerente
+    FOREIGN KEY ("CURP")
+    REFERENCES "Genrente" ("CURP")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
+
+-- 8. Administrar -> SUCURSAL
+ALTER TABLE "Administrar"
+    DROP CONSTRAINT fkadministrarsucursal;
+
+ALTER TABLE "Administrar"
+    ADD CONSTRAINT fkadministrarsucursal
+    FOREIGN KEY ("idSucursal")
+    REFERENCES "SUCURSAL" ("idSucursal")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+    NOT DEFERRABLE;
+
+
+COMMIT;
+
