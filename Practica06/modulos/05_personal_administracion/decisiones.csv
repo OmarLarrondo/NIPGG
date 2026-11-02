@@ -1,9 +1,9 @@
 tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
-CorreoElectrónicoGerente,fk_correo_gerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-TeléfonoGerente,fk_telefono_gerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-CorreoElectrónicoCajero,fk_correo_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-TeléfonoCajero,fk_telefono_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-Genrente,fkgerentesucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
-Cajero,fkcajerosucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
-Administrar,fkadministrargerente,"""CURP""",Genrente,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-Administrar,fkadministrarsucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",PENDIENTE,PENDIENTE,PENDIENTE
+CorreoElectrónicoGerente,fk_correo_gerente,"""CURP""",Genrente,"""CURP""",CASCADE,CASCADE,"Los correos dependen del gerente y deben eliminarse con él; las correcciones de CURP se propagan."
+TeléfonoGerente,fk_telefono_gerente,"""CURP""",Genrente,"""CURP""",CASCADE,CASCADE,"Los teléfonos dependen del gerente y deben eliminarse con él; las correcciones de CURP se propagan."
+CorreoElectrónicoCajero,fk_correo_cajero,"""CURP""",Cajero,"""CURP""",CASCADE,CASCADE,"Los correos dependen del cajero y deben eliminarse con él; las correcciones de CURP se propagan."
+TeléfonoCajero,fk_telefono_cajero,"""CURP""",Cajero,"""CURP""",CASCADE,CASCADE,"Los teléfonos dependen del cajero y deben eliminarse con él; las correcciones de CURP se propagan."
+Genrente,fkgerentesucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",NO ACTION,CASCADE,"Se impide eliminar una sucursal que todavía tiene gerentes asignados; se propagan las correcciones del identificador."
+Cajero,fkcajerosucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",NO ACTION,CASCADE,"Se impide eliminar una sucursal que todavía tiene cajeros asignados; se propagan las correcciones del identificador."
+Administrar,fkadministrargerente,"""CURP""",Genrente,"""CURP""",CASCADE,CASCADE,"La asignación administrativa depende del gerente y debe eliminarse con él; las correcciones de CURP se propagan."
+Administrar,fkadministrarsucursal,"""idSucursal""",SUCURSAL,"""idSucursal""",CASCADE,CASCADE,"La asignación administrativa depende de la sucursal y al eliminarla se elimina la relación; se propagan las correcciones de identificador."
