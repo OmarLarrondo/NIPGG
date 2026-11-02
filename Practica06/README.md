@@ -2,8 +2,10 @@
 
 Estado: distribución confirmada de cinco módulos técnicos para trabajar en paralelo.
 **Responsables: Omar (01), Miguel (02), Ana (03), Yahir (04) y Diego (05).**
-Las actividades descritas definen el alcance de cada módulo; sus soluciones
-todavía no están implementadas. La estructura y las plantillas ya están creadas.
+El módulo 01 de Omar está implementado y validado: 37 casos correctos en
+PostgreSQL 18.6. Los módulos 02 a 05 conservan sus plantillas pendientes.
+El PDF único en `Docs/Práctica06.pdf` tiene portada del equipo y contiene,
+por ahora, la aportación del módulo 01; falta integrar las demás aportaciones.
 
 Este README es de uso interno y es distinto del README en PDF de la entrega.
 
@@ -160,11 +162,15 @@ Por ejemplo, Omar edita en el módulo 01
 dentro de esa misma carpeta. El mismo criterio se aplica a los otros cuatro módulos.
 
 Las cinco carpetas y sus seis archivos por módulo ya están creados.
-`decisiones.csv` contiene el inventario real de FK, con las acciones y motivos
-pendientes de elegir. Las plantillas SQL todavía no ejecutan cambios ni pruebas.
+En el módulo 01, `decisiones.csv` contiene las seis decisiones justificadas;
+`politicas.sql`, `comentarios.sql` y `pruebas.sql` están implementados. En los
+módulos 02 a 05, las acciones, comentarios y pruebas siguen pendientes.
 Todos parten de la copia fija `base/DDL_practica05.sql`, idéntica al DDL anterior.
-Las carpetas `SQL/`, `reporte/` y `Docs/` contienen un `.gitkeep`; el DDL final
-y los PDF se generarán durante la integración, no son entregables terminados.
+`reporte/generar_informe.py` genera el PDF único `Docs/Práctica06.pdf` a partir
+de la investigación y justificación del módulo 01. Requiere Python, ReportLab
+y las fuentes DejaVu Sans y Liberation Mono; se ejecuta desde la raíz de
+Practica06 con `python3 reporte/generar_informe.py`. El DDL integrado, el
+README de entrega y el ZIP siguen pendientes de integración.
 Los archivos compartidos `SQL/DDL.sql`, `reporte/`, `Docs/Práctica06.pdf` y
 `README_ÑIPGG.pdf` quedan para la integración que realizará Omar.
 

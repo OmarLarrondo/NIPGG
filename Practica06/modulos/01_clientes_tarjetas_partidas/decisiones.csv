@@ -1,7 +1,7 @@
 tabla_origen,constraint,columnas_origen,tabla_destino,columnas_destino,on_delete,on_update,justificacion
-correoElectrónico,fk_correo_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
-teléfono,fk_telefono_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
-Tarjeta,fk_tarjeta_cliente,"""idCliente""",Cliente,"""idCliente""",PENDIENTE,PENDIENTE,PENDIENTE
-Tarjeta,fk_tarjeta_cajero,"""CURP""",Cajero,"""CURP""",PENDIENTE,PENDIENTE,PENDIENTE
-Partida,fk_partida_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",PENDIENTE,PENDIENTE,PENDIENTE
-Partida,fk_partida_maquina,"""idMaquina""",Máquina,"""idMaquina""",PENDIENTE,PENDIENTE,PENDIENTE
+correoElectrónico,fk_correo_cliente,"""idCliente""",Cliente,"""idCliente""",CASCADE,CASCADE,El contacto carece de utilidad sin su cliente; una corrección del identificador conserva su asociación.
+teléfono,fk_telefono_cliente,"""idCliente""",Cliente,"""idCliente""",CASCADE,CASCADE,El teléfono es dependiente del cliente; eliminar al propietario elimina sus contactos y corregir su identificador los conserva.
+Tarjeta,fk_tarjeta_cliente,"""idCliente""",Cliente,"""idCliente""",NO ACTION,CASCADE,La tarjeta conserva saldo y puntos: se impide eliminar al cliente que la posee; una corrección del identificador se propaga.
+Tarjeta,fk_tarjeta_cajero,"""CURP""",Cajero,"""CURP""",NO ACTION,CASCADE,Se conserva la atribución de la venta al cajero; se impide su eliminación y se propagan correcciones de CURP.
+Partida,fk_partida_tarjeta,"""idCliente"", ""numeroTarjeta""",Tarjeta,"""idCliente"", ""numeroTarjeta""",NO ACTION,CASCADE,La partida es historial: se impide eliminar su tarjeta y se propagan los dos componentes de la clave.
+Partida,fk_partida_maquina,"""idMaquina""",Máquina,"""idMaquina""",NO ACTION,CASCADE,La partida conserva la máquina usada; se impide eliminarla y se propagan correcciones de su identificador.

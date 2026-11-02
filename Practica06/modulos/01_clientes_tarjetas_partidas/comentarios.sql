@@ -1,12 +1,97 @@
--- Módulo 01 | Responsable: Omar
--- Estado: plantilla; comentarios pendientes de implementar.
--- Aplicar después de las políticas para no perder comentarios al recrear FK.
--- Completar COMMENT ON TABLE, COLUMN y CONSTRAINT de todos los objetos propios.
--- Describir finalidad, significado de columnas y reglas de las restricciones.
--- Consultar nombres de constraints en ../../base/DDL_practica05.sql.
-
--- TODO: documentar tabla "Cliente", todas sus columnas y restricciones.
--- TODO: documentar tabla "correoElectrónico", todas sus columnas y restricciones.
--- TODO: documentar tabla "teléfono", todas sus columnas y restricciones.
--- TODO: documentar tabla "Tarjeta", todas sus columnas y restricciones.
--- TODO: documentar tabla "Partida", todas sus columnas y restricciones.
+-- Práctica 06 | Módulo 01 | Omar Alejandro Juárez Larrondo
+-- Ejecutar después de politicas.sql. Incluye NOT NULL de PostgreSQL 18.
+BEGIN;
+COMMENT ON TABLE "Cliente" IS 'Personas registradas como clientes del centro de entretenimiento.';
+COMMENT ON COLUMN "Cliente"."idCliente" IS 'Identificador positivo del cliente; llave primaria. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Cliente"."fechaNacimiento" IS 'Fecha de nacimiento finita, no posterior al día actual. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Cliente"."nombre" IS 'Nombre del cliente, con al menos un carácter distinto de espacio. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Cliente"."apellidoMaterno" IS 'Apellido materno del cliente, no vacío. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Cliente"."apellidoPaterno" IS 'Apellido paterno del cliente, no vacío. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Cliente"."sexo" IS 'Dato de sexo registrado; texto no vacío, sin catálogo impuesto. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON TABLE "correoElectrónico" IS 'Direcciones de correo de cada cliente; dependientes de su propietario.';
+COMMENT ON COLUMN "correoElectrónico"."idCliente" IS 'Cliente propietario; parte de la llave primaria y referencia a Cliente. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "correoElectrónico"."correoElectrónico" IS 'Dirección de correo; parte de la llave primaria. Un @, sin espacios y con ambas partes no vacías; no certifica la existencia del buzón. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON TABLE "teléfono" IS 'Números telefónicos de cada cliente; dependientes de su propietario.';
+COMMENT ON COLUMN "teléfono"."idCliente" IS 'Cliente propietario; parte de la llave primaria y referencia a Cliente. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "teléfono"."teléfono" IS 'Número de exactamente diez dígitos; parte de la llave primaria. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON TABLE "Tarjeta" IS 'Tarjeta asociada al cliente, con saldo, puntos y cajero que realizó la venta.';
+COMMENT ON COLUMN "Tarjeta"."idCliente" IS 'Propietario de la tarjeta; parte de la llave primaria. UNIQUE limita a una tarjeta por cliente. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."numeroTarjeta" IS 'Número positivo de tarjeta; se identifica junto con idCliente, no se supone único globalmente. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."CURP" IS 'CURP del cajero que realizó la venta; debe existir en Cajero. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."costoAdquisición" IS 'Costo de adquisición entero no negativo; se conserva la unidad del esquema original. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."fechaCompra" IS 'Fecha finita de compra; el esquema no prohíbe fechas futuras. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."saldo" IS 'Saldo entero no negativo. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."estado" IS 'Estado de la tarjeta como texto no vacío; sin catálogo impuesto. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Tarjeta"."puntosAcumulados" IS 'Puntos disponibles acumulados, enteros no negativos. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON TABLE "Partida" IS 'Historial de partidas de una tarjeta en una máquina; se conserva frente al borrado de sus referencias.';
+COMMENT ON COLUMN "Partida"."idCliente" IS 'Primer componente de la referencia compuesta a Tarjeta y de la llave primaria. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."numeroTarjeta" IS 'Segundo componente de la referencia compuesta a Tarjeta y de la llave primaria. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."idMaquina" IS 'Máquina utilizada; referencia a Máquina y componente de la llave primaria. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."idPartida" IS 'Identificador positivo de partida dentro de la llave primaria compuesta. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."fecha" IS 'Fecha finita de la partida; el esquema no prohíbe fechas futuras. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."puntosGanados" IS 'Puntos ganados, enteros no negativos. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."hora" IS 'Hora de la partida con zona horaria (timetz). Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON COLUMN "Partida"."puntajeObtenido" IS 'Puntaje alcanzado, entero no negativo. Obligatorio (NOT NULL); sin valor predeterminado.';
+COMMENT ON CONSTRAINT "Cliente_apellidoMaterno_not_null" ON "Cliente" IS 'Exige un valor no nulo en "apellidoMaterno".';
+COMMENT ON CONSTRAINT "Cliente_apellidoPaterno_not_null" ON "Cliente" IS 'Exige un valor no nulo en "apellidoPaterno".';
+COMMENT ON CONSTRAINT "Cliente_fechaNacimiento_not_null" ON "Cliente" IS 'Exige un valor no nulo en "fechaNacimiento".';
+COMMENT ON CONSTRAINT "Cliente_idCliente_not_null" ON "Cliente" IS 'Exige un valor no nulo en "idCliente".';
+COMMENT ON CONSTRAINT "Cliente_nombre_not_null" ON "Cliente" IS 'Exige un valor no nulo en nombre.';
+COMMENT ON CONSTRAINT "Cliente_sexo_not_null" ON "Cliente" IS 'Exige un valor no nulo en sexo.';
+COMMENT ON CONSTRAINT "ck_cliente_apellido_materno" ON "Cliente" IS 'Valida el dominio de los datos: CHECK ((("apellidoMaterno")::text ~ ''[^[:space:]]''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_cliente_apellido_paterno" ON "Cliente" IS 'Valida el dominio de los datos: CHECK ((("apellidoPaterno")::text ~ ''[^[:space:]]''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_cliente_id" ON "Cliente" IS 'Valida el dominio de los datos: CHECK (("idCliente" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_cliente_nacimiento" ON "Cliente" IS 'Valida el dominio de los datos: CHECK ((isfinite("fechaNacimiento") AND ("fechaNacimiento" <= CURRENT_DATE))). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_cliente_nombre" ON "Cliente" IS 'Valida el dominio de los datos: CHECK (((nombre)::text ~ ''[^[:space:]]''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_cliente_sexo" ON "Cliente" IS 'Valida el dominio de los datos: CHECK (((sexo)::text ~ ''[^[:space:]]''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "pk_cliente" ON "Cliente" IS 'Identifica cada fila sin duplicados ni nulos mediante PRIMARY KEY ("idCliente").';
+COMMENT ON CONSTRAINT "Partida_fecha_not_null" ON "Partida" IS 'Exige un valor no nulo en fecha.';
+COMMENT ON CONSTRAINT "Partida_hora_not_null" ON "Partida" IS 'Exige un valor no nulo en hora.';
+COMMENT ON CONSTRAINT "Partida_idCliente_not_null" ON "Partida" IS 'Exige un valor no nulo en "idCliente".';
+COMMENT ON CONSTRAINT "Partida_idMaquina_not_null" ON "Partida" IS 'Exige un valor no nulo en "idMaquina".';
+COMMENT ON CONSTRAINT "Partida_idPartida_not_null" ON "Partida" IS 'Exige un valor no nulo en "idPartida".';
+COMMENT ON CONSTRAINT "Partida_numeroTarjeta_not_null" ON "Partida" IS 'Exige un valor no nulo en "numeroTarjeta".';
+COMMENT ON CONSTRAINT "Partida_puntajeObtenido_not_null" ON "Partida" IS 'Exige un valor no nulo en "puntajeObtenido".';
+COMMENT ON CONSTRAINT "Partida_puntosGanados_not_null" ON "Partida" IS 'Exige un valor no nulo en "puntosGanados".';
+COMMENT ON CONSTRAINT "ck_partida_cliente" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("idCliente" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_fecha" ON "Partida" IS 'Valida el dominio de los datos: CHECK (isfinite(fecha)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_id" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("idPartida" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_maquina" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("idMaquina" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_numero_tarjeta" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("numeroTarjeta" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_puntaje" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("puntajeObtenido" >= 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_partida_puntos" ON "Partida" IS 'Valida el dominio de los datos: CHECK (("puntosGanados" >= 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "fk_partida_maquina" ON "Partida" IS 'La partida conserva la máquina usada; se impide eliminarla y se propagan correcciones de su identificador. ON DELETE NO ACTION; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "fk_partida_tarjeta" ON "Partida" IS 'La partida es historial: se impide eliminar su tarjeta y se propagan los dos componentes de la clave. ON DELETE NO ACTION; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "pk_partida" ON "Partida" IS 'Identifica cada fila sin duplicados ni nulos mediante PRIMARY KEY ("idCliente", "numeroTarjeta", "idMaquina", "idPartida").';
+COMMENT ON CONSTRAINT "Tarjeta_CURP_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "CURP".';
+COMMENT ON CONSTRAINT "Tarjeta_costoAdquisición_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "costoAdquisición".';
+COMMENT ON CONSTRAINT "Tarjeta_estado_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en estado.';
+COMMENT ON CONSTRAINT "Tarjeta_fechaCompra_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "fechaCompra".';
+COMMENT ON CONSTRAINT "Tarjeta_idCliente_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "idCliente".';
+COMMENT ON CONSTRAINT "Tarjeta_numeroTarjeta_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "numeroTarjeta".';
+COMMENT ON CONSTRAINT "Tarjeta_puntosAcumulados_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en "puntosAcumulados".';
+COMMENT ON CONSTRAINT "Tarjeta_saldo_not_null" ON "Tarjeta" IS 'Exige un valor no nulo en saldo.';
+COMMENT ON CONSTRAINT "ck_tarjeta_cliente" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (("idCliente" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_costo" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (("costoAdquisición" >= 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_estado" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (((estado)::text ~ ''[^[:space:]]''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_fecha_compra" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (isfinite("fechaCompra")). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_numero" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (("numeroTarjeta" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_puntos" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK (("puntosAcumulados" >= 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_tarjeta_saldo" ON "Tarjeta" IS 'Valida el dominio de los datos: CHECK ((saldo >= 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "fk_tarjeta_cajero" ON "Tarjeta" IS 'Se conserva la atribución de la venta al cajero; se impide su eliminación y se propagan correcciones de CURP. ON DELETE NO ACTION; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "fk_tarjeta_cliente" ON "Tarjeta" IS 'La tarjeta conserva saldo y puntos: se impide eliminar al cliente que la posee; una corrección del identificador se propaga. ON DELETE NO ACTION; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "pk_tarjeta" ON "Tarjeta" IS 'Identifica cada fila sin duplicados ni nulos mediante PRIMARY KEY ("idCliente", "numeroTarjeta").';
+COMMENT ON CONSTRAINT "uq_tarjeta_cliente" ON "Tarjeta" IS 'Impide que un cliente tenga más de una tarjeta: UNIQUE ("idCliente").';
+COMMENT ON CONSTRAINT "ck_correo_cliente_direccion" ON "correoElectrónico" IS 'Valida el dominio de los datos: CHECK ((("correoElectrónico")::text ~ ''^[^[:space:]@]+@[^[:space:]@]+$''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_correo_cliente_id" ON "correoElectrónico" IS 'Valida el dominio de los datos: CHECK (("idCliente" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "correoElectrónico_correoElectrónico_not_null" ON "correoElectrónico" IS 'Exige un valor no nulo en "correoElectrónico".';
+COMMENT ON CONSTRAINT "correoElectrónico_idCliente_not_null" ON "correoElectrónico" IS 'Exige un valor no nulo en "idCliente".';
+COMMENT ON CONSTRAINT "fk_correo_cliente" ON "correoElectrónico" IS 'El contacto carece de utilidad sin su cliente; una corrección del identificador conserva su asociación. ON DELETE CASCADE; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "pk_correo_cliente" ON "correoElectrónico" IS 'Identifica cada fila sin duplicados ni nulos mediante PRIMARY KEY ("idCliente", "correoElectrónico").';
+COMMENT ON CONSTRAINT "ck_telefono_cliente_id" ON "teléfono" IS 'Valida el dominio de los datos: CHECK (("idCliente" > 0)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "ck_telefono_cliente_numero" ON "teléfono" IS 'Valida el dominio de los datos: CHECK (("teléfono" ~ ''^[0-9]{10}$''::text)). No sustituye la obligatoriedad de las columnas.';
+COMMENT ON CONSTRAINT "fk_telefono_cliente" ON "teléfono" IS 'El teléfono es dependiente del cliente; eliminar al propietario elimina sus contactos y corregir su identificador los conserva. ON DELETE CASCADE; ON UPDATE CASCADE; comprobación no diferible.';
+COMMENT ON CONSTRAINT "pk_telefono_cliente" ON "teléfono" IS 'Identifica cada fila sin duplicados ni nulos mediante PRIMARY KEY ("idCliente", "teléfono").';
+COMMENT ON CONSTRAINT "teléfono_idCliente_not_null" ON "teléfono" IS 'Exige un valor no nulo en "idCliente".';
+COMMENT ON CONSTRAINT "teléfono_teléfono_not_null" ON "teléfono" IS 'Exige un valor no nulo en "teléfono".';
+COMMIT;
