@@ -1,34 +1,67 @@
--- Módulo 02 | Responsable: Miguel
--- Estado: plantilla; políticas pendientes de implementar.
--- Base: ../../base/DDL_practica05.sql cargada en una base de pruebas.
--- Completar decisiones.csv y justificar cada acción antes de implementar.
--- Usar ALTER TABLE DROP CONSTRAINT y ADD CONSTRAINT con el mismo nombre.
--- Escribir ON DELETE y ON UPDATE explícitos. Ejecutar dentro de una transacción.
--- Esta plantilla no cambia ninguna FK.
+-- Práctica 06 | Módulo 02 | Miguel Ángel Jiménez Ramírez
+-- Requiere el DDL completo de práctica 05. Aplicar antes de comentarios.sql.
+BEGIN;
 
--- TODO: "CorreoElectrónicoTécnico" / fk_correo_tecnico
--- ("CURP") -> "Técnico" ("CURP")
+-- El correo depende del técnico; eliminarlo limpia sus contactos y corregir la CURP conserva su asociación.
+ALTER TABLE "CorreoElectrónicoTécnico" DROP CONSTRAINT fk_correo_tecnico;
+ALTER TABLE "CorreoElectrónicoTécnico" ADD CONSTRAINT fk_correo_tecnico
+    FOREIGN KEY ("CURP")
+    REFERENCES "Técnico" ("CURP")
+    ON DELETE CASCADE ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "TeléfonoTécnivo" / fk_telefono_tecnico
--- ("CURP") -> "Técnico" ("CURP")
+-- El teléfono depende del técnico; eliminarlo limpia sus contactos y corregir la CURP conserva su asociación.
+ALTER TABLE "TeléfonoTécnivo" DROP CONSTRAINT fk_telefono_tecnico;
+ALTER TABLE "TeléfonoTécnivo" ADD CONSTRAINT fk_telefono_tecnico
+    FOREIGN KEY ("CURP")
+    REFERENCES "Técnico" ("CURP")
+    ON DELETE CASCADE ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Mantenimiento" / fk_mantenimiento_maquina
--- ("idMaquina") -> "Máquina" ("idMaquina")
+-- El mantenimiento es historial del equipo: impide borrar la máquina referenciada y propaga correcciones de su identificador a la PK compuesta.
+ALTER TABLE "Mantenimiento" DROP CONSTRAINT fk_mantenimiento_maquina;
+ALTER TABLE "Mantenimiento" ADD CONSTRAINT fk_mantenimiento_maquina
+    FOREIGN KEY ("idMaquina")
+    REFERENCES "Máquina" ("idMaquina")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Mantenimiento" / fk_mantenimiento_tecnico
--- ("CURP") -> "Técnico" ("CURP")
+-- Se conserva la atribución del mantenimiento al técnico; se impide borrar al responsable y se propagan correcciones de CURP.
+ALTER TABLE "Mantenimiento" DROP CONSTRAINT fk_mantenimiento_tecnico;
+ALTER TABLE "Mantenimiento" ADD CONSTRAINT fk_mantenimiento_tecnico
+    FOREIGN KEY ("CURP")
+    REFERENCES "Técnico" ("CURP")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Máquina" / fk_maquina_juego
--- ("idJuego") -> "Juego" ("idJuego")
+-- El juego clasifica equipos con existencia propia; no se eliminan máquinas al borrar su juego y se propagan correcciones de idJuego.
+ALTER TABLE "Máquina" DROP CONSTRAINT fk_maquina_juego;
+ALTER TABLE "Máquina" ADD CONSTRAINT fk_maquina_juego
+    FOREIGN KEY ("idJuego")
+    REFERENCES "Juego" ("idJuego")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Máquina" / fk_maquina_sucursal
--- ("idSucursal") -> "SUCURSAL" ("idSucursal")
+-- Una sucursal no debe borrar equipos como efecto secundario; se impide eliminarla mientras tenga máquinas y se propaga su identificador.
+ALTER TABLE "Máquina" DROP CONSTRAINT fk_maquina_sucursal;
+ALTER TABLE "Máquina" ADD CONSTRAINT fk_maquina_sucursal
+    FOREIGN KEY ("idSucursal")
+    REFERENCES "SUCURSAL" ("idSucursal")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Juego" / fk_juego_tipo
--- ("idTipo") -> "tipoDeJuego" ("idTipo")
+-- El tipo es un catálogo compartido; se impide borrarlo mientras clasifique juegos y se propagan correcciones de idTipo.
+ALTER TABLE "Juego" DROP CONSTRAINT fk_juego_tipo;
+ALTER TABLE "Juego" ADD CONSTRAINT fk_juego_tipo
+    FOREIGN KEY ("idTipo")
+    REFERENCES "tipoDeJuego" ("idTipo")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Técnico" / fk_tecnico_sucursal
--- ("idSucursal") -> "SUCURSAL" ("idSucursal")
+-- La sucursal no es propietaria de la identidad laboral del técnico; se impide borrarla mientras tenga técnicos y se propaga su identificador.
+ALTER TABLE "Técnico" DROP CONSTRAINT fk_tecnico_sucursal;
+ALTER TABLE "Técnico" ADD CONSTRAINT fk_tecnico_sucursal
+    FOREIGN KEY ("idSucursal")
+    REFERENCES "SUCURSAL" ("idSucursal")
+    ON DELETE NO ACTION ON UPDATE CASCADE NOT DEFERRABLE;
 
--- TODO: "Certificaciones" / fk_certificacion_tecnico
--- ("CURP") -> "Técnico" ("CURP")
+-- La certificación es un valor dependiente de su técnico; se elimina con él y se conserva al corregir la CURP, incluida su PK compuesta.
+ALTER TABLE "Certificaciones" DROP CONSTRAINT fk_certificacion_tecnico;
+ALTER TABLE "Certificaciones" ADD CONSTRAINT fk_certificacion_tecnico
+    FOREIGN KEY ("CURP")
+    REFERENCES "Técnico" ("CURP")
+    ON DELETE CASCADE ON UPDATE CASCADE NOT DEFERRABLE;
+COMMIT;
