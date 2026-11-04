@@ -48,13 +48,15 @@ INSERT INTO "SUCURSAL" VALUES
  (6103,'Sucursal operaciones','5512345680','Calle operaciones',3,0,'Centro','CDMX');
 
 INSERT INTO "Cajero" VALUES
- ('AAAA000101HDFBBB01',6101,'Prueba','Materno','Paterno','AAAA000101AB1','2020-01-01',1000,'2000-01-01','07:00');
+ ('AAAA000101HDFBBB01',6101,'Prueba','Materno','Paterno','AAAA000101AB1','2020-01-01',1000,'2000-01-01','07:00'),
+ ('AAAA000101HDFBBB03',6101,'Venta','Materno','Paterno','AAAA000101AB2','2020-01-01',1000,'2000-01-01','07:00');
 
 INSERT INTO "Cliente" VALUES
- (6101,'2000-01-01','Cliente','Materno','Paterno','H');
+ (6101,'2000-01-01','Cliente','Materno','Paterno','H'),
+ (6111,'2000-01-01','Destino','Materno','Paterno','H');
 
 INSERT INTO "Tarjeta" VALUES
- (6101,6101,'AAAA000101HDFBBB01',10,'2026-01-01',100,'Activa',50);
+ (6101,6101,'AAAA000101HDFBBB03',10,'2026-01-01',100,'Activa',50);
 
 INSERT INTO "HORARIO_SUCURSAL" VALUES
  (6101,'Lunes a viernes 9-18'),
@@ -169,6 +171,8 @@ SELECT pg_temp.probar(
 -- ============================================================
 -- fk_recarga_tarjeta: ON DELETE RESTRICT / ON UPDATE CASCADE
 -- ============================================================
+SAVEPOINT aislar_restriccion;
+DELETE FROM "VISITA";
 SELECT pg_temp.probar(
   'fk_recarga_tarjeta: DELETE RESTRICT',
   $q$DELETE FROM "Tarjeta" WHERE "idCliente"=6101 AND "numeroTarjeta"=6101$q$,
@@ -176,6 +180,8 @@ SELECT pg_temp.probar(
        AND EXISTS(SELECT FROM "RECARGA" WHERE "idCliente"=6101 AND "numeroTarjeta"=6101)$q$,
   'fk_recarga_tarjeta'
 );
+INSERT INTO "VISITA" VALUES (6101,6101,6103,6101,'2026-01-01');
+RELEASE SAVEPOINT aislar_restriccion;
 
 SELECT pg_temp.probar(
   'fk_recarga_tarjeta: UPDATE CASCADE',
@@ -203,6 +209,8 @@ SELECT pg_temp.probar(
 -- ============================================================
 -- fk_recarga_sucursal: ON DELETE RESTRICT / ON UPDATE CASCADE
 -- ============================================================
+SAVEPOINT aislar_restriccion;
+DELETE FROM "VISITA";
 SELECT pg_temp.probar(
   'fk_recarga_sucursal: DELETE RESTRICT',
   $q$DELETE FROM "SUCURSAL" WHERE "idSucursal"=6103$q$,
@@ -210,6 +218,8 @@ SELECT pg_temp.probar(
        AND EXISTS(SELECT FROM "RECARGA" WHERE "idSucursal"=6103)$q$,
   'fk_recarga_sucursal'
 );
+INSERT INTO "VISITA" VALUES (6101,6101,6103,6101,'2026-01-01');
+RELEASE SAVEPOINT aislar_restriccion;
 
 SELECT pg_temp.probar(
   'fk_recarga_sucursal: UPDATE CASCADE',

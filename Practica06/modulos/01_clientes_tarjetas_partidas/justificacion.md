@@ -90,13 +90,11 @@ Las acciones CASCADE actualizan claves, pero no eliminan la validación de sus
 CHECK, PK o UNIQUE. Las políticas tampoco implementan una baja lógica ni un
 sistema de auditoría de cambios de identificadores.
 
-Las FK de VISITA y RECARGA hacia Tarjeta conservan en la base ON UPDATE
-NO ACTION. Probé que, cuando existen esas filas, una corrección de idCliente
-se bloquea y revierte la cadena Cliente-Tarjeta-Partida. Es un resultado válido
-de integridad con la base actual, no una propagación global garantizada. Yahir
-puede elegir UPDATE CASCADE en sus relaciones si el equipo desea permitir esa
-corrección a través de todo el historial. La elección debe quedar acordada
-antes de integrar; este módulo no modifica esas FK.
+En la integración final, las FK de VISITA y RECARGA hacia Tarjeta usan
+ON UPDATE CASCADE según la decisión del módulo 04. Las dos pruebas de cadena
+se ajustaron para comprobar la propagación de idCliente desde Cliente a Tarjeta,
+Partida y cada tabla de historial, verificando la ausencia del identificador
+anterior. Esta comprobación sustituye al bloqueo que correspondía al DDL base.
 
 Otras relaciones también pueden bloquear operaciones: Canje referencia Cliente;
 RECARGA y los contactos del cajero referencian Cajero; Mantenimiento referencia
@@ -114,7 +112,7 @@ tablas. El SHA-256 de la base es
 - 24 casos: DELETE y UPDATE del padre, INSERT y UPDATE huérfanos para cada FK.
 - 4 casos: cadena Cliente-Tarjeta-Partida, cambio de ambos componentes,
   referencia compuesta inexistente y borrado de cliente sin tarjeta.
-- 2 casos: bloqueo y reversión de la cadena por VISITA y por RECARGA.
+- 2 casos: propagación integrada de la cadena hacia VISITA y RECARGA.
 - 3 casos: NO ACTION inmediato, NO ACTION diferido reparado y RESTRICT.
 - 4 casos de catálogo: políticas de las seis FK y comentarios de 5 tablas,
   26 columnas y 62 constraints (incluidos 26 NOT NULL de PostgreSQL 18).
@@ -134,13 +132,15 @@ En una base PostgreSQL 18 nueva, desde la raíz de Practica06:
 
 ```sh
 psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f base/DDL_practica05.sql
-psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/01_clientes_tarjetas_partidas/politicas.sql
-psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/01_clientes_tarjetas_partidas/comentarios.sql
+for modulo in modulos/*; do
+    psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f "$modulo/politicas.sql" || exit 1
+done
+for modulo in modulos/*; do
+    psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f "$modulo/comentarios.sql" || exit 1
+done
 psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/01_clientes_tarjetas_partidas/pruebas.sql
 ```
 
-El resultado se reproduce ejecutando `pruebas.sql`: debe mostrar 37 casos
-correctos y confirmar que no quedan datos tras ROLLBACK. El PDF único
-`Docs/Práctica06.pdf` contiene por ahora la aportación de este módulo, con
-portada del equipo. La integración con las aportaciones de los otros cuatro
-integrantes queda fuera de esta validación individual.
+Resultado final integrado: 37 casos correctos y base vacía tras ROLLBACK.
+Las instrucciones utilizan únicamente la base común y los archivos de la
+estructura modular; no requieren el DDL ensamblado ni registros locales.

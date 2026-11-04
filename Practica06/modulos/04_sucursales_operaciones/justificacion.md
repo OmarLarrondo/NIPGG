@@ -151,3 +151,21 @@ psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f base/DDL_practica05.sql
 psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/04_sucursales_operaciones/politicas.sql
 psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/04_sucursales_operaciones/comentarios.sql
 psql -X -v ON_ERROR_STOP=1 -d BASE_PRUEBA -f modulos/04_sucursales_operaciones/pruebas.sql
+
+
+## Correcciones y ejecución de integración final
+
+La ejecución final del 3 de noviembre de 2026 confirmó los 29 casos en el
+DDL integrado. Se agregó el cliente destino 6111 para que las actualizaciones
+compuestas de Tarjeta no fallen antes por fk_tarjeta_cliente. Los rechazos de
+RECARGA se prueban sin la VISITA competidora y luego se restaura la visita;
+las filas de resultados se conservan. La tarjeta usa un cajero de venta distinto
+al de la recarga para aislar fk_recarga_cajero de fk_tarjeta_cajero. La CURP de
+ese cajero es distinta del destino de la prueba UPDATE para evitar una colisión
+de PK ajena al caso. No se modificaron las políticas para hacer pasar las pruebas.
+
+Para reproducir sobre PostgreSQL 18 con los archivos modulares, cargar
+`base/DDL_practica05.sql` en una base vacía; aplicar `politicas.sql` de los
+cinco módulos y después sus `comentarios.sql`. Ejecutar finalmente
+`modulos/04_sucursales_operaciones/pruebas.sql` con ON_ERROR_STOP.
+No se requieren el DDL ensamblado ni registros locales.

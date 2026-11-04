@@ -1,6 +1,7 @@
 -- Práctica 06 | Omar Alejandro Juárez Larrondo
 -- psql -X -v ON_ERROR_STOP=1 -f pruebas.sql
--- Base AISLADA con DDL completo, politicas.sql y comentarios.sql aplicados.
+-- Base AISLADA con DDL completo y políticas de los cinco módulos aplicadas.
+-- Requiere comentarios del módulo 01 y UPDATE CASCADE del módulo 04.
 -- Los identificadores 6101..6199 y las CURP sintéticas deben estar libres.
 -- Cualquier fallo inesperado aborta. ROLLBACK elimina datos y funciones de prueba.
 \set ON_ERROR_STOP on
@@ -107,14 +108,14 @@ SELECT pg_temp.probar('Cliente sin tarjeta: borrado permitido', $q$DELETE FROM "
 SAVEPOINT dependencia;
 INSERT INTO "VISITA" VALUES (6101,6101,6101,6101,'2026-01-01');
 
-SELECT pg_temp.probar('VISITA: bloqueo de cadena ajena', $q$UPDATE "Cliente" SET "idCliente"=6111 WHERE "idCliente"=6101$q$, $q$SELECT EXISTS(SELECT FROM "VISITA" WHERE "idCliente"=6101) AND EXISTS(SELECT FROM "Tarjeta" WHERE "idCliente"=6101) AND EXISTS(SELECT FROM "Partida" WHERE "idCliente"=6101) AND NOT EXISTS(SELECT FROM "Cliente" WHERE "idCliente"=6111)$q$, 'fk_visita_tarjeta');
+SELECT pg_temp.probar('VISITA: cadena integrada UPDATE CASCADE', $q$UPDATE "Cliente" SET "idCliente"=6111 WHERE "idCliente"=6101$q$, $q$SELECT EXISTS(SELECT FROM "VISITA" WHERE "idCliente"=6111) AND EXISTS(SELECT FROM "Tarjeta" WHERE "idCliente"=6111) AND EXISTS(SELECT FROM "Partida" WHERE "idCliente"=6111) AND NOT EXISTS(SELECT FROM "VISITA" WHERE "idCliente"=6101)$q$);
 DELETE FROM "VISITA" WHERE "idCliente"=6101;
 RELEASE SAVEPOINT dependencia;
 
 SAVEPOINT dependencia;
 INSERT INTO "RECARGA" VALUES (6101,6101,6101,6101,'AAAA000101HDFBBB01',10,'2026-01-01','12:00:00-06','Efectivo');
 
-SELECT pg_temp.probar('RECARGA: bloqueo de cadena ajena', $q$UPDATE "Cliente" SET "idCliente"=6111 WHERE "idCliente"=6101$q$, $q$SELECT EXISTS(SELECT FROM "RECARGA" WHERE "idCliente"=6101) AND EXISTS(SELECT FROM "Tarjeta" WHERE "idCliente"=6101) AND EXISTS(SELECT FROM "Partida" WHERE "idCliente"=6101) AND NOT EXISTS(SELECT FROM "Cliente" WHERE "idCliente"=6111)$q$, 'fk_recarga_tarjeta');
+SELECT pg_temp.probar('RECARGA: cadena integrada UPDATE CASCADE', $q$UPDATE "Cliente" SET "idCliente"=6111 WHERE "idCliente"=6101$q$, $q$SELECT EXISTS(SELECT FROM "RECARGA" WHERE "idCliente"=6111) AND EXISTS(SELECT FROM "Tarjeta" WHERE "idCliente"=6111) AND EXISTS(SELECT FROM "Partida" WHERE "idCliente"=6111) AND NOT EXISTS(SELECT FROM "RECARGA" WHERE "idCliente"=6101)$q$);
 DELETE FROM "RECARGA" WHERE "idCliente"=6101;
 RELEASE SAVEPOINT dependencia;
 
